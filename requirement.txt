@@ -1,0 +1,212 @@
+Smart Transport Management System for Kashmir
+1. Project Overview
+ 
+The proposed system is a web-based Smart Transport Management System designed for transport organizations operating in Kashmir. The main purpose of the system is to provide a centralized platform through which multiple transport organizations can manage their drivers, vehicles, routes, schedules, trips and passengers.
+ 
+The system will support multiple transport organizations through a multi-tenant architecture. A central Super Admin will manage different transport organizations, while each organization will have its own Admin who will manage the transport operations of that organization.
+ 
+Each organization will have a unique Organization ID and may have its own subdomain. For example:
+ 
+srinagar.transport-system.com
+anantnag.transport-system.com
+baramulla.transport-system.com
+ 
+The system will maintain proper data separation between organizations so that an administrator of one organization cannot access the private data of another organization.
+ 
+The system will also consider the low-internet-connectivity problem in some areas of Kashmir. Therefore, selected information such as previously loaded routes, schedules, tickets and assigned trips should remain available when the internet connection is weak or temporarily unavailable. Once the connection is restored, locally stored information can be synchronized with the central server where appropriate.
+ 
+The system will contain a limited Artificial Intelligence component. The recommended AI functionality is an ETA (Estimated Time of Arrival) prediction feature that will use historical transport data to estimate the expected travel time of a trip.
+ 
+2. Main Objectives
+ 
+The main objectives of the system are:
+ 
+To provide a centralized transport management platform.
+To allow multiple transport organizations to operate independently on the same platform.
+To provide separate access according to user roles.
+To manage drivers, vehicles, routes, stops, schedules and trips.
+To allow passengers to search and book available transport.
+To automatically maintain seat availability after booking and cancellation.
+To provide digital booking/ticket information to passengers.
+To maintain records of all important administrative activities.
+To provide basic offline/low-connectivity support.
+To use AI for estimated travel-time prediction.
+To provide reports and analytics to administrators.
+3. User Roles
+ 
+The system will have four primary user roles.
+ 
+3.1 Super Admin
+ 
+The Super Admin will have central control over the entire platform.
+ 
+The Super Admin will be able to:
+ 
+Create transport organizations.
+Update organization information.
+Activate or deactivate organizations.
+Create and manage organization administrators.
+View all organizations.
+View overall system statistics.
+View drivers, vehicles, routes and trips across organizations.
+Monitor system activity.
+View audit logs.
+Manage system-level settings.
+Generate overall reports.
+ 
+The Super Admin will not normally perform daily transport operations such as creating individual passenger bookings.
+ 
+4. Transport Organization
+ 
+Each transport organization will be treated as a separate tenant within the system.
+ 
+Each organization will have:
+ 
+Unique Organization ID.
+Organization name.
+Area/location.
+Assigned administrator.
+Drivers.
+Vehicles.
+Routes.
+Stops.
+Schedules.
+Trips.
+Bookings.
+ 
+Example:
+ 
+Organization ID: ORG-001
+ 
+Organization Name: Srinagar Transport
+ 
+Subdomain:
+ 
+srinagar.transport-system.com
+ 
+Another organization may have:
+ 
+Organization ID: ORG-002
+ 
+Organization Name: Anantnag Transport
+ 
+Subdomain:
+ 
+anantnag.transport-system.com
+ 
+The organization data must remain isolated from other organizations.
+ 
+5. Transport Admin Requirements
+ 
+The Transport Admin will manage the daily transport operations of a particular organization.
+ 
+The Admin will be able to:
+ 
+Driver Management
+Add new drivers.
+Update driver information.
+View driver details.
+Activate/deactivate drivers.
+Maintain license information.
+Assign drivers to vehicles and trips.
+Vehicle Management
+Add vehicles.
+Update vehicle information.
+Set vehicle capacity.
+Maintain vehicle registration information.
+Activate/deactivate vehicles.
+Assign vehicles to trips.
+Route Management
+Create routes.
+Update routes.
+Add stops to routes.
+Remove or update stops.
+Define route direction.
+Activate/deactivate routes.
+Schedule Management
+Create departure schedules.
+Define operating days.
+Assign vehicles and drivers.
+Modify schedules.
+Trip Management
+Create trips.
+Assign driver and vehicle.
+Monitor active trips.
+View completed trips.
+Cancel or modify trips when required.
+Passenger/Booking Management
+View bookings.
+View available seats.
+View passenger lists for trips.
+Manage booking-related issues.
+Handle complaints.
+Reporting
+ 
+The Admin will be able to view:
+ 
+Number of trips.
+Number of bookings.
+Number of passengers.
+Vehicle usage.
+Driver activity.
+Cancelled bookings.
+Popular routes.
+Trip statistics.
+6. Driver Requirements
+ 
+The Driver will have a simplified dashboard designed for mobile/web use.
+ 
+The Driver will be able to:
+ 
+Login to the system.
+View assigned vehicle.
+View assigned trips.
+View route and stops.
+View passenger information for assigned trips.
+Start a trip.
+Mark stops as reached.
+End a trip.
+View trip history.
+Report vehicle or trip issues.
+ 
+When a driver starts a trip, the trip status will change from:
+ 
+Scheduled → Active
+ 
+When the driver completes the trip:
+ 
+Active → Completed
+ 
+If internet connectivity is temporarily unavailable, the driver should still be able to access previously synchronized trip information and record basic trip status locally. The data can be synchronized when connectivity is restored.
+ 
+7. Passenger Requirements
+ 
+The Passenger will be the primary public user of the system.
+ 
+The Passenger will be able to:
+ 
+Register an account.
+Login/logout.
+Search transport.
+Select origin and destination.
+Select travel date.
+View available trips.
+View departure times.
+View vehicle information.
+View available seats.
+Select a seat.
+Book a seat.
+View booking
+
+8. Public Landing Page
+
+The system will have a modern, visually impressive public landing page at the root domain to introduce the platform.
+
+The Landing Page will:
+Act as the entry point for passengers to search trips.
+Provide information about the transport system.
+Link to tenant subdomains.
+Provide login links for Super Admin, Transport Admin, Driver, and Passengers.
+ 
+Frontend angular 
+Backend dotnet
