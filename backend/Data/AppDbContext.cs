@@ -24,6 +24,7 @@ namespace backend.Data
         public DbSet<backend.Models.Route> Routes { get; set; }
         public DbSet<RouteStop> RouteStops { get; set; }
         public DbSet<Trip> Trips { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -36,6 +37,10 @@ namespace backend.Data
                         .HasQueryFilter(CreateTenantFilter(entityType.ClrType));
                 }
             }
+
+            modelBuilder.Entity<Booking>()
+                .HasIndex(b => new { b.TripId, b.SeatNumber })
+                .IsUnique();
         }
         
         private LambdaExpression CreateTenantFilter(Type type)

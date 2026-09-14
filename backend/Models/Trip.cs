@@ -16,5 +16,7 @@ public class Trip : BaseEntity, IMustHaveTenant
     public DateTime DepartureTime { get; set; }
     public DateTime EstimatedArrivalTime { get; set; }
     
+    public decimal Price { get; set; }
+    
     public string Status { get; set; } = "Scheduled"; // Scheduled, Active, Completed, Cancelled
 }
