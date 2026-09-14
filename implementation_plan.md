@@ -38,7 +38,7 @@ This document outlines the detailed step-by-step implementation phases for the S
 *   **Step 4.4 - Schedule & Trip Management:** Build APIs and UI to create departure schedules and assign drivers/vehicles to specific trips.
 *   **Step 4.5 - Dashboard:** Create the Organization Dashboard UI for analytics (number of bookings, popular routes, etc.).
 
-## Phase 5: Passenger Portal & Booking System
+## Phase 5: Passenger Portal & Booking System (COMPLETED)
 **Goal:** Provide the public-facing features for searching and booking transport.
 
 *   **Step 5.1:** Build the Trip Search API based on origin, destination, and travel date.
