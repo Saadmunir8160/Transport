@@ -166,3 +166,5 @@ D:\Transport\backend\obj\Debug\net10.0\ref\backend.dll
 D:\Transport\backend\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Transport\backend\bin\Debug\net10.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 D:\Transport\backend\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+D:\Transport\backend\obj\Debug\net10.0\backend.sourcelink.json
+D:\Transport\backend\bin\Debug\net10.0\dotnet-tools.json

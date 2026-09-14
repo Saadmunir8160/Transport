@@ -18,7 +18,12 @@ namespace backend.Data
         }
 
         public DbSet<Organization> Organizations { get; set; }
-
+        public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Stop> Stops { get; set; }
+        public DbSet<backend.Models.Route> Routes { get; set; }
+        public DbSet<RouteStop> RouteStops { get; set; }
+        public DbSet<Trip> Trips { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
