@@ -46,7 +46,7 @@ This document outlines the detailed step-by-step implementation phases for the S
 *   **Step 5.3:** Passenger UI: Develop the Search Page, Trip Listings, and interactive Seat Map.
 *   **Step 5.4:** Passenger UI: Develop the Checkout flow and digital ticket/booking history view.
 
-## Phase 6: Driver Portal & Offline Capabilities
+## Phase 6: Driver Portal & Offline Capabilities (COMPLETED)
 **Goal:** Create a resilient, mobile-friendly interface for drivers, even in low-connectivity areas in Kashmir.
 
 *   **Step 6.1:** Build APIs for the Driver to fetch assigned trips and update trip status (`Scheduled` → `Active` → `Completed`).
