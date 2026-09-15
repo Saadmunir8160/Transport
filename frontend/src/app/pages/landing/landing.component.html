@@ -1,0 +1,141 @@
+<div class="landing-container">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <span class="logo-text">Kashmir<span class="highlight">Transit</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#organizations">Organizations</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-login" (click)="login()">Login</button>
+      <button class="btn-primary" (click)="searchTrips()">Book a Trip</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="badge">🚀 The Future of Transport in Kashmir</div>
+      <h1 class="hero-title">Seamless Travel, <br/> <span class="gradient-text">Unified Platform.</span></h1>
+      <p class="hero-subtitle">
+        One central platform connecting passengers with all transport organizations across the valley.
+        Experience AI-powered ETA, real-time tracking, and effortless booking.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn-primary btn-large" (click)="searchTrips()">
+          Find Your Ride
+          <span class="arrow">→</span>
+        </button>
+        <button class="btn-secondary btn-large">Join as Organization</button>
+      </div>
+      
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Organizations</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">5k+</span>
+          <span class="stat-label">Daily Trips</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">2M+</span>
+          <span class="stat-label">Happy Passengers</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-visual">
+      <!-- We will create an abstract visual for the hero -->
+      <div class="glass-card main-card">
+        <div class="card-header">
+          <div class="dot-group">
+            <div class="dot r"></div>
+            <div class="dot y"></div>
+            <div class="dot g"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="route-viz">
+            <div class="point origin">
+              <span class="label">Srinagar</span>
+              <span class="time">09:00 AM</span>
+            </div>
+            <div class="path-line">
+              <div class="vehicle"></div>
+            </div>
+            <div class="point destination">
+              <span class="label">Anantnag</span>
+              <span class="time">10:45 AM</span>
+              <span class="eta-badge">AI ETA</span>
+            </div>
+          </div>
+          <div class="trip-details">
+            <div class="detail-pill">Vehicle: JK01-X-1234</div>
+            <div class="detail-pill">Seats: 4 Available</div>
+          </div>
+          <button class="btn-primary w-full">Book Now</button>
+        </div>
+      </div>
+      
+      <!-- Decorative elements -->
+      <div class="blur-blob blob-1"></div>
+      <div class="blur-blob blob-2"></div>
+    </div>
+  </header>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="section-header">
+      <h2>Why Choose <span class="gradient-text">KashmirTransit</span>?</h2>
+      <p>Built with cutting-edge technology for passengers, drivers, and administrators.</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon icon-ai"></div>
+        <h3>AI-Powered ETA</h3>
+        <p>Our machine learning models analyze historical data to provide you with the most accurate arrival times.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-offline"></div>
+        <h3>Offline Ready</h3>
+        <p>Drivers can continue operations even in low-connectivity zones, syncing data automatically when online.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon icon-tenant"></div>
+        <h3>Multi-Organization</h3>
+        <p>Each transport company operates its own isolated tenant environment with customized management tools.</p>
+      </div>
+    </div>
+  </section>
+  
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="brand">
+        <span class="logo-text">Kashmir<span class="highlight">Transit</span></span>
+        <p>Simplifying travel across the valley.</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <h4>Portals</h4>
+          <a href="#">Super Admin</a>
+          <a href="#">Organization Admin</a>
+          <a href="#">Driver Portal</a>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      &copy; 2026 KashmirTransit. All rights reserved.
+    </div>
+  </footer>
+</div>

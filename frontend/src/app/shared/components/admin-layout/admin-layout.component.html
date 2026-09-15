@@ -1,0 +1,24 @@
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Smart Transport</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li><a routerLink="/superadmin/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/superadmin/organizations" routerLinkActive="active">Organizations</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <div class="main-content">
+    <header class="top-header">
+      <div class="header-title">Super Admin Portal</div>
+      <div class="header-user">
+        <button (click)="logout()">Logout</button>
+      </div>
+    </header>
+    <main class="content-area">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

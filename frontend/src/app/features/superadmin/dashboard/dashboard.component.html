@@ -1,0 +1,18 @@
+<div class="dashboard-container">
+  <h1>Super Admin Dashboard</h1>
+  <div class="stats-grid" *ngIf="stats">
+    <div class="stat-card">
+      <h3>Total Organizations</h3>
+      <p>{{ stats.totalOrganizations }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Users</h3>
+      <p>{{ stats.totalUsers }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Transport Admins</h3>
+      <p>{{ stats.totalTransportAdmins }}</p>
+    </div>
+  </div>
+  <p *ngIf="!stats">Loading statistics...</p>
+</div>
