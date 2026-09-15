@@ -15,6 +15,8 @@ public class CreateDriverDto
     public string LicenseNumber { get; set; } = string.Empty;
     public DateTime LicenseExpiryDate { get; set; }
     public string ContactNumber { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }
 
 public class UpdateDriverDto
