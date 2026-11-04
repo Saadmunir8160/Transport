@@ -886,18 +886,38 @@
             <!-- Payment Methods -->
             <div class="checkout-card">
               <h3>Payment Method</h3>
-              <div class="payment-options">
+              <div class="payment-options" style="display: flex; flex-direction: column; gap: 0.85rem;">
                 <!-- Easypaisa -->
-                <label class="payment-radio" [class.selected]="paymentMethod === 'Easypaisa'">
-                  <div class="radio-circle">
-                    <div class="inner-circle" *ngIf="paymentMethod === 'Easypaisa'"></div>
+                <label class="payment-radio" [class.selected]="paymentMethod === 'Easypaisa'" style="display:flex; align-items:center; gap: 1rem; padding: 1.1rem; border: 2px solid; border-color: paymentMethod === 'Easypaisa' ? '#0D766E' : '#E2E8F0'; border-radius: 14px; cursor: pointer; transition: all 0.2s; background: paymentMethod === 'Easypaisa' ? '#F0FDFA' : 'white';">
+                  <input type="radio" name="payment" value="Easypaisa" [(ngModel)]="paymentMethod" style="accent-color: #0D766E; width: 18px; height: 18px;">
+                  <div style="font-size: 1.8rem;">🟢</div>
+                  <div class="payment-info" style="flex:1;">
+                    <div style="font-weight: 700; color: #0F172A; font-size: 1.05rem;">Easypaisa Mobile Account</div>
+                    <div style="font-size: 0.85rem; color: #64748B;">Instant debit via registered Telenor/Easypaisa mobile wallet</div>
                   </div>
-                  <div class="payment-info">
-                    <span class="title">Easypaisa</span>
-                    <span class="desc">Fast and secure mobile wallet payment</span>
+                  <span style="background: #CCFBF1; color: #0F766E; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px;">0% Fee</span>
+                </label>
+
+                <!-- JazzCash -->
+                <label class="payment-radio" [class.selected]="paymentMethod === 'JazzCash'" style="display:flex; align-items:center; gap: 1rem; padding: 1.1rem; border: 2px solid; border-color: paymentMethod === 'JazzCash' ? '#0D766E' : '#E2E8F0'; border-radius: 14px; cursor: pointer; transition: all 0.2s; background: paymentMethod === 'JazzCash' ? '#F0FDFA' : 'white';">
+                  <input type="radio" name="payment" value="JazzCash" [(ngModel)]="paymentMethod" style="accent-color: #0D766E; width: 18px; height: 18px;">
+                  <div style="font-size: 1.8rem;">🔴</div>
+                  <div class="payment-info" style="flex:1;">
+                    <div style="font-weight: 700; color: #0F172A; font-size: 1.05rem;">JazzCash Wallet</div>
+                    <div style="font-size: 0.85rem; color: #64748B;">Direct MPIN verification on your Jazz mobile account</div>
                   </div>
-                  <span class="payment-badge">Recommended</span>
-                  <input type="radio" name="payment" value="Easypaisa" [(ngModel)]="paymentMethod" style="display:none;">
+                  <span style="background: #FEE2E2; color: #B91C1C; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px;">Instant</span>
+                </label>
+
+                <!-- Debit/Credit Card -->
+                <label class="payment-radio" [class.selected]="paymentMethod === 'Card'" style="display:flex; align-items:center; gap: 1rem; padding: 1.1rem; border: 2px solid; border-color: paymentMethod === 'Card' ? '#0D766E' : '#E2E8F0'; border-radius: 14px; cursor: pointer; transition: all 0.2s; background: paymentMethod === 'Card' ? '#F0FDFA' : 'white';">
+                  <input type="radio" name="payment" value="Card" [(ngModel)]="paymentMethod" style="accent-color: #0D766E; width: 18px; height: 18px;">
+                  <div style="font-size: 1.8rem;">💳</div>
+                  <div class="payment-info" style="flex:1;">
+                    <div style="font-weight: 700; color: #0F172A; font-size: 1.05rem;">Debit / Credit Card</div>
+                    <div style="font-size: 0.85rem; color: #64748B;">Visa, Mastercard, PayPak, UnionPay (3D Secure)</div>
+                  </div>
+                  <span style="background: #E0E7FF; color: #4338CA; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px;">Global</span>
                 </label>
               </div>
             </div>
@@ -1221,7 +1241,7 @@
 
         <div class="ticket-actions">
           <div class="secondary-actions">
-            <button class="action-chip">?? Download PDF</button>
+            <button class="action-chip" (click)="printTicketReceipt()">🖨️ Print / Download Ticket</button>
             <button class="action-chip">??? Save to Gallery</button>
             <button class="action-chip">?? Share Ticket</button>
           </div>
@@ -1711,6 +1731,125 @@
                 <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">SMS Delivered</span>
               </div>
             </div>
-          </div></div></div></div>
+          </div></div></div>
+      <!-- ========================================== -->
+      <!-- SECURE PAYMENT GATEWAY INTERACTIVE MODAL  -->
+      <!-- ========================================== -->
+      <div *ngIf="showPaymentModal" class="payment-modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 99999; animation: fadeIn 0.2s ease-out; padding: 1rem;">
+        
+        <div class="payment-modal-card" style="background: white; width: 100%; max-width: 480px; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); overflow: hidden; border: 1px solid #E2E8F0; position: relative;">
+          
+          <!-- Modal Header -->
+          <div style="background: linear-gradient(135deg, #0D766E 0%, #0F172A 100%); color: white; padding: 1.8rem 2rem; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="display:flex; align-items:center; gap: 10px;">
+                <span style="font-size: 1.5rem;">🔒</span>
+                <div>
+                  <h3 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: white;">AJK Gateway Checkout</h3>
+                  <div style="font-size: 0.8rem; color: #A7F3D0;">Encrypted 256-Bit SSL Sandbox</div>
+                </div>
+              </div>
+              <button (click)="closePaymentModal()" style="background: rgba(255,255,255,0.15); border: none; color: white; width: 34px; height: 34px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">✕</button>
+            </div>
+
+            <!-- Amount Display -->
+            <div style="margin-top: 1.5rem; background: rgba(255,255,255,0.1); padding: 1rem 1.2rem; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.15);">
+              <div>
+                <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.85;">Payable Amount</span>
+                <div style="font-size: 1.6rem; font-weight: 800; color: #34D399;">Rs. {{ (selectedTrip.fare * selectedSeats.length) + 50 }}</div>
+              </div>
+              <div style="text-align: right; font-size: 0.85rem;">
+                <span style="opacity: 0.85;">Selected Method:</span>
+                <div style="font-weight: 700; color: #FBBF24;">{{ paymentMethod }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Body: Wallet Flow (Easypaisa / JazzCash) -->
+          <div *ngIf="paymentMethod === 'Easypaisa' || paymentMethod === 'JazzCash'" style="padding: 2rem;">
+            
+            <div *ngIf="!paymentOtpSent && !paymentSuccess">
+              <label style="display: block; font-weight: 700; color: #334155; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                {{ paymentMethod }} Registered Mobile Number
+              </label>
+              <div style="position: relative;">
+                <span style="position: absolute; left: 14px; top: 12px; font-weight: 700; color: #64748B;">🇵🇰 +92</span>
+                <input type="text" [(ngModel)]="paymentAccountNo" placeholder="300 1234567" style="width: 100%; padding: 0.85rem 1rem 0.85rem 4.5rem; border: 2px solid #CBD5E1; border-radius: 12px; font-size: 1.05rem; font-weight: 600; outline: none; box-sizing: border-box;">
+              </div>
+              <p style="font-size: 0.8rem; color: #64748B; margin-top: 0.6rem;">A secure one-time authorization push prompt will be dispatched to this mobile number.</p>
+
+              <button [disabled]="paymentProcessing" (click)="sendPaymentOtp()" style="margin-top: 1.5rem; width: 100%; background: #0D766E; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
+                {{ paymentProcessing ? 'Contacting ' + paymentMethod + '...' : 'Send Approval Prompt' }}
+              </button>
+            </div>
+
+            <!-- OTP Verification Step -->
+            <div *ngIf="paymentOtpSent && !paymentSuccess">
+              <div style="background: #F0FDFA; border: 1px solid #99F6E4; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; display: flex; gap: 12px; align-items: center;">
+                <span style="font-size: 1.5rem;">📱</span>
+                <div style="font-size: 0.85rem; color: #0F766E;">
+                  Approval request sent to <strong>0{{ paymentAccountNo }}</strong>. Enter test authorization code:
+                </div>
+              </div>
+
+              <label style="display: block; font-weight: 700; color: #334155; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                Enter MPIN / OTP Code
+              </label>
+              <input type="password" [(ngModel)]="paymentOtp" maxlength="4" placeholder="••••" style="width: 100%; padding: 0.85rem; border: 2px solid #0D766E; border-radius: 12px; font-size: 1.5rem; letter-spacing: 8px; text-align: center; font-weight: 800; outline: none; box-sizing: border-box;">
+
+              <button [disabled]="paymentProcessing" (click)="processGatewayPayment()" style="margin-top: 1.5rem; width: 100%; background: #0D766E; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
+                {{ paymentProcessing ? 'Verifying & Debiting...' : 'Authorize Payment' }}
+              </button>
+            </div>
+
+            <!-- Payment Success State -->
+            <div *ngIf="paymentSuccess" style="text-align: center; padding: 1.5rem 0;">
+              <div style="width: 72px; height: 72px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.2rem auto;">✓</div>
+              <h3 style="margin: 0 0 0.5rem 0; font-size: 1.4rem; color: #0F172A; font-weight: 800;">Payment Successful!</h3>
+              <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1rem;">Transaction ID: <strong style="color: #0F766E;">{{ paymentTxnId }}</strong></p>
+              <div style="font-size: 0.85rem; color: #10B981; font-weight: 600;">Generating official digital boarding pass...</div>
+            </div>
+          </div>
+
+          <!-- Modal Body: Card Flow -->
+          <div *ngIf="paymentMethod === 'Card'" style="padding: 2rem;">
+            <div *ngIf="!paymentSuccess">
+              <label style="display: block; font-weight: 700; color: #334155; font-size: 0.9rem; margin-bottom: 0.5rem;">Card Number</label>
+              <input type="text" [(ngModel)]="paymentCardNo" placeholder="4242 4242 4242 4242" style="width: 100%; padding: 0.85rem; border: 2px solid #CBD5E1; border-radius: 12px; font-size: 1rem; font-weight: 600; outline: none; box-sizing: border-box; margin-bottom: 1rem;">
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                <div>
+                  <label style="display: block; font-weight: 700; color: #334155; font-size: 0.9rem; margin-bottom: 0.5rem;">Expiry Date</label>
+                  <input type="text" [(ngModel)]="paymentCardExpiry" placeholder="MM/YY" style="width: 100%; padding: 0.85rem; border: 2px solid #CBD5E1; border-radius: 12px; font-size: 1rem; font-weight: 600; outline: none; box-sizing: border-box;">
+                </div>
+                <div>
+                  <label style="display: block; font-weight: 700; color: #334155; font-size: 0.9rem; margin-bottom: 0.5rem;">CVV / CVC</label>
+                  <input type="password" maxlength="4" [(ngModel)]="paymentCardCvc" placeholder="•••" style="width: 100%; padding: 0.85rem; border: 2px solid #CBD5E1; border-radius: 12px; font-size: 1rem; font-weight: 600; outline: none; box-sizing: border-box;">
+                </div>
+              </div>
+
+              <button [disabled]="paymentProcessing" (click)="processGatewayPayment()" style="width: 100%; background: #0D766E; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
+                {{ paymentProcessing ? 'Processing 3DS Bank Token...' : 'Pay Rs. ' + ((selectedTrip.fare * selectedSeats.length) + 50) }}
+              </button>
+            </div>
+
+            <!-- Card Success State -->
+            <div *ngIf="paymentSuccess" style="text-align: center; padding: 1.5rem 0;">
+              <div style="width: 72px; height: 72px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.2rem auto;">✓</div>
+              <h3 style="margin: 0 0 0.5rem 0; font-size: 1.4rem; color: #0F172A; font-weight: 800;">Card Payment Verified!</h3>
+              <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1rem;">Transaction Ref: <strong style="color: #0F766E;">{{ paymentTxnId }}</strong></p>
+              <div style="font-size: 0.85rem; color: #10B981; font-weight: 600;">Issuing electronic ticket...</div>
+            </div>
+          </div>
+
+          <!-- Modal Footer Badges -->
+          <div style="background: #F8FAFC; padding: 0.8rem 1.5rem; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-around; align-items: center; font-size: 0.75rem; color: #64748B;">
+            <span>🛡️ SBP Compliant</span>
+            <span>🔒 PCI-DSS Certified</span>
+            <span>⚡ Instant Settlement</span>
+          </div>
+        </div>
+      </div>
+</div>
 
 

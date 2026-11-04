@@ -106,6 +106,17 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
   bookingId = '';
   ticketCode = '';
   paymentMethod = 'Easypaisa';
+  showPaymentModal = false;
+  paymentAccountNo = '03451234567';
+  paymentCardNo = '4242 •••• •••• 4242';
+  paymentCardExpiry = '12/28';
+  paymentCardCvc = '321';
+  paymentOtp = '';
+  paymentOtpSent = false;
+  paymentProcessing = false;
+  paymentSuccess = false;
+  paymentTxnId = '';
+  paymentReceiptDate = '';
   smartSearchQuery = '';
   sidebarActive = false;
   feedbackMessage = '';
@@ -414,6 +425,50 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
+
+  openPaymentModal() {
+    this.showPaymentModal = true;
+    this.paymentOtpSent = false;
+    this.paymentProcessing = false;
+    this.paymentSuccess = false;
+    this.paymentOtp = '';
+    this.paymentTxnId = 'TXN-' + Math.floor(10000000 + Math.random() * 90000000);
+    this.paymentReceiptDate = new Date().toLocaleString();
+  }
+
+  closePaymentModal() {
+    if (!this.paymentProcessing) {
+      this.showPaymentModal = false;
+    }
+  }
+
+  sendPaymentOtp() {
+    this.paymentProcessing = true;
+    setTimeout(() => {
+      this.paymentProcessing = false;
+      this.paymentOtpSent = true;
+      this.paymentOtp = '4829';
+    }, 1200);
+  }
+
+  processGatewayPayment() {
+    this.paymentProcessing = true;
+    setTimeout(() => {
+      this.paymentProcessing = false;
+      this.paymentSuccess = true;
+      this.bookingId = 'AJK-' + Math.floor(100000 + Math.random() * 900000);
+      this.ticketCode = 'TKT-' + Math.floor(1000 + Math.random() * 9000);
+      
+      setTimeout(() => {
+        this.showPaymentModal = false;
+        this.activeTab = 'booking-confirmed';
+      }, 1500);
+    }, 1800);
+  }
+
+  printTicketReceipt() {
+    window.print();
+  }
   confirmPayment() {
     this.activeTab = 'booking-confirmed';
     this.bookingId = 'AJK-' + Math.floor(Math.random() * 100000);
