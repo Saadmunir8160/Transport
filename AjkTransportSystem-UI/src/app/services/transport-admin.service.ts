@@ -23,8 +23,8 @@ export class TransportAdminService {
   addRoute(p1?: any, p2?: any, p3?: any): Observable<any> { return this.http.post(this.baseUrl + '/routes', p1, { headers: this.getHeaders() }); }
   getVehicles(p1?: any, p2?: any): Observable<any> { return this.http.get(this.baseUrl + '/vehicles', { headers: this.getHeaders() }); }
   addVehicle(p1?: any, p2?: any, p3?: any): Observable<any> { return this.http.post(this.baseUrl + '/vehicles', p1, { headers: this.getHeaders() }); }
-  getDrivers(p1?: any, p2?: any): Observable<any> { return this.http.get(this.baseUrl + '/drivers', { headers: this.getHeaders() }); }
-  addDriver(p1?: any, p2?: any, p3?: any): Observable<any> { return this.http.post(this.baseUrl + '/drivers', p1, { headers: this.getHeaders() }); }
+  getDrivers(p1?: any, p2?: any): Observable<any> { return this.http.get(this.baseUrl + '/transportadmin/drivers', { headers: this.getHeaders() }); }
+  addDriver(p1?: any, p2?: any, p3?: any): Observable<any> { return this.http.post(this.baseUrl + '/transportadmin/drivers', p1, { headers: this.getHeaders() }); }
   getSchedules(p1?: any, p2?: any): Observable<any> { return this.http.get(this.baseUrl + '/timings', { headers: this.getHeaders() }); }
   addSchedule(p1?: any, p2?: any, p3?: any): Observable<any> { return this.http.post(this.baseUrl + '/timings', p1, { headers: this.getHeaders() }); }
   getTrips(p1?: any, p2?: any): Observable<any> { return this.http.get(this.baseUrl + '/trips', { headers: this.getHeaders() }); }

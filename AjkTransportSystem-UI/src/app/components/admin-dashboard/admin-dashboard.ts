@@ -105,6 +105,9 @@ export class AdminDashboardComponent implements OnInit {
   driverLicenseIssueDate = '';
   driverLicenseExpiryDate = '';
   driverPassword = '';
+  showTempPasswordModal = false;
+  generatedTempPassword = '';
+  copiedTempPassword = false;
   driverJoiningDate = '';
   driverStatus = 'Active';
   
@@ -381,14 +384,16 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   addDriver() {
-    const driver = {
+    const driver: any = {
       name: this.driverName,
       email: this.driverEmail,
       phone: this.driverPhone,
       licenseNumber: this.driverLicense
-      // In a real app we'd pass all the new fields to the backend here, and the backend would create the User account with role Driver
     };
-    this.transportAdminService.addDriver(driver).subscribe(() => {
+    if (this.driverPassword && this.driverPassword.trim().length > 0) {
+      driver.passwordHash = this.driverPassword.trim();
+    }
+    this.transportAdminService.addDriver(driver).subscribe((res: any) => {
       this.loadDrivers();
       this.driverName = '';
       this.driverEmail = '';
@@ -397,7 +402,27 @@ export class AdminDashboardComponent implements OnInit {
       this.driverIdNumber = '';
       this.driverPassword = '';
       this.activeDriverSubTab = 'all';
+
+      if (res && res.temporaryPassword) {
+        this.generatedTempPassword = res.temporaryPassword;
+        this.showTempPasswordModal = true;
+        this.copiedTempPassword = false;
+      }
     });
+  }
+
+  copyTempPassword() {
+    if (this.generatedTempPassword) {
+      navigator.clipboard.writeText(this.generatedTempPassword);
+      this.copiedTempPassword = true;
+      setTimeout(() => this.copiedTempPassword = false, 2500);
+    }
+  }
+
+  closeTempPasswordModal() {
+    this.showTempPasswordModal = false;
+    this.generatedTempPassword = '';
+    this.copiedTempPassword = false;
   }
 
   handleDriverAction(event: any, driverId: number) {

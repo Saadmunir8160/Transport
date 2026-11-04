@@ -1496,8 +1496,8 @@
                 <input [(ngModel)]="driverEmail" name="driverEmail" type="email" required>
               </div>
               <div class="form-group">
-                <label>Temporary Password *</label>
-                <input [(ngModel)]="driverPassword" name="driverPassword" type="password" required>
+                <label>Password <span style="font-size: 0.8rem; font-weight: normal; color: #64748b;">(Optional - auto-generated if left blank)</span></label>
+                <input [(ngModel)]="driverPassword" name="driverPassword" type="password" placeholder="Leave blank to auto-generate">
               </div>
               <div class="form-group">
                 <label>Joining Date *</label>
@@ -2103,3 +2103,36 @@
     </div>
   </div>
 </div>
+
+
+    <!-- Temporary Password Dialog for Newly Added Driver -->
+    <div *ngIf="showTempPasswordModal" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 99999;">
+      <div style="background: white; border-radius: 14px; max-width: 480px; width: 90%; padding: 28px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); border: 1px solid #e2e8f0; animation: fadeIn 0.2s ease-out;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: #FEF3C7; color: #D97706; display: flex; align-items: center; justify-content: center; font-size: 20px;">
+            🔑
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.2rem; font-weight: 700; color: #0F172A;">Temporary Driver Password</h3>
+            <p style="margin: 2px 0 0; font-size: 0.82rem; color: #64748B;">Generated credentials for new driver</p>
+          </div>
+        </div>
+
+        <p style="font-size: 0.95rem; color: #DC2626; font-weight: 600; margin: 0 0 14px 0; background: #FEF2F2; padding: 10px 14px; border-radius: 8px; border: 1px solid #FCA5A5;">
+          ⚠️ Share this with the driver. It will not be shown again.
+        </p>
+
+        <div style="background: #0F172A; border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 20px;">
+          <code style="color: #2DD4BF; font-size: 1.15rem; font-family: monospace; letter-spacing: 0.08em; word-break: break-all;">{{ generatedTempPassword }}</code>
+          <button type="button" (click)="copyTempPassword()" style="background: #1E293B; border: 1px solid #334155; color: white; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; flex-shrink: 0; transition: all 0.2s;">
+            {{ copiedTempPassword ? '✓ Copied!' : '📋 Copy' }}
+          </button>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+          <button type="button" (click)="closeTempPasswordModal()" class="btn-primary" style="padding: 10px 24px; border-radius: 8px;">
+            Done & Close
+          </button>
+        </div>
+      </div>
+    </div>

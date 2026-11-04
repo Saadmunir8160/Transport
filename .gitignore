@@ -30,3 +30,5 @@ Thumbs.db
 FYP_Final_Backup/
 *.log
 
+
+AjkTransportSystem.API/appsettings.Development.json

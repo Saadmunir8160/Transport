@@ -5,21 +5,38 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Port binding for Render / Railway / Cloud hosts (respect PORT environment variable)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5242";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 builder.Services.AddControllers();
+
+// Configure CORS
+var defaultOrigins = new[] { "https://transport-bleo.vercel.app", "http://localhost:4200" };
+var configuredOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? defaultOrigins;
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy("AllowConfiguredOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:4200", "file://")
+        policy.WithOrigins(configuredOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .SetIsOriginAllowed(origin => true);
+              .AllowCredentials();
     });
 });
+
+var jwtKey = builder.Configuration["Jwt:Key"];
+if (string.IsNullOrWhiteSpace(jwtKey) || jwtKey.Length < 32)
+{
+    throw new InvalidOperationException("Configuration 'Jwt:Key' is missing, empty, or shorter than 32 characters. A secure 256-bit key is required for JWT signing.");
+}
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "AjkTransportSystem";
+var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "AjkTransportSystemUsers";
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -30,85 +47,156 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
     });
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AjkTransportSystem.API.Services.ITenantProvider, AjkTransportSystem.API.Services.TenantProvider>();
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrEmpty(connectionString))
+{
+    connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
+        ?? Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configure Forwarded Headers for reverse proxies (Render, Railway, Nginx)
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 var app = builder.Build();
 
-// Create default users if not exist
+app.UseForwardedHeaders();
+
+// Automatically apply database migrations and seed default demo users on startup
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     
-    // Ensure database is created/migrated
-    context.Database.Migrate();
-
-    if (!context.Users.Any(u => u.Role == "SuperAdmin"))
+    // Automatically apply any pending EF Core migrations
+    try
     {
-        context.Users.Add(new User
-        {
-            Name = "Super Admin",
-            Email = "superadmin@ajk.com",
-            PasswordHash = AuthService.HashPassword("Admin@123"),
-            Role = "SuperAdmin"
-        });
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while applying database migrations.");
     }
 
-    if (!context.Users.Any(u => u.Role == "Admin"))
+    var demoPassword = builder.Configuration["Seed:DemoPassword"];
+    if (string.IsNullOrWhiteSpace(demoPassword) || demoPassword.Length < 10)
     {
-        context.Users.Add(new User
-        {
-            Name = "System Admin",
-            Email = "admin@ajk.com",
-            PasswordHash = AuthService.HashPassword("Admin@123"),
-            Role = "Admin"
-        });
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogWarning("Seed:DemoPassword configuration is missing, blank, or shorter than 10 characters. Skipping demo user seeding.");
     }
-
-    if (!context.Users.Any(u => u.Role == "TransportAdmin"))
+    else
     {
-        context.Users.Add(new User
-        {
-            Name = "Transport Admin",
-            Email = "transportadmin@ajk.com",
-            PasswordHash = AuthService.HashPassword("Transport@123"),
-            Role = "TransportAdmin"
-        });
-    }
+        var passwordHash = AuthService.HashPassword(demoPassword);
 
-    if (!context.Users.Any(u => u.Role == "Passenger"))
-    {
-        context.Users.Add(new User
+        if (!context.Users.Any(u => u.Role == "SuperAdmin"))
         {
-            Name = "Test Passenger",
-            Email = "passenger@ajk.com",
-            PasswordHash = AuthService.HashPassword("Pass@123"),
-            Role = "Passenger"
-        });
-    }
+            context.Users.Add(new User
+            {
+                Name = "Super Admin",
+                Email = "superadmin@ajk.com",
+                PasswordHash = passwordHash,
+                Role = "SuperAdmin"
+            });
+        }
 
-    context.SaveChanges();
+        if (!context.Users.Any(u => u.Role == "Admin"))
+        {
+            context.Users.Add(new User
+            {
+                Name = "System Admin",
+                Email = "admin@ajk.com",
+                PasswordHash = passwordHash,
+                Role = "Admin"
+            });
+        }
+
+        if (!context.Users.Any(u => u.Role == "TransportAdmin"))
+        {
+            context.Users.Add(new User
+            {
+                Name = "Transport Admin",
+                Email = "transportadmin@ajk.com",
+                PasswordHash = passwordHash,
+                Role = "TransportAdmin"
+            });
+        }
+
+        if (!context.Users.Any(u => u.Role == "Driver"))
+        {
+            context.Users.Add(new User
+            {
+                Name = "Demo Driver",
+                Email = "driver@ajk.com",
+                PasswordHash = passwordHash,
+                Role = "Driver"
+            });
+        }
+
+        if (!context.Users.Any(u => u.Role == "Passenger"))
+        {
+            context.Users.Add(new User
+            {
+                Name = "Test Passenger",
+                Email = "passenger@ajk.com",
+                PasswordHash = passwordHash,
+                Role = "Passenger"
+            });
+        }
+
+        try
+        {
+            context.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "An error occurred while seeding demo users.");
+        }
+    }
 }
-if (app.Environment.IsDevelopment())
+
+// Swagger enabled in production too for live demo/testing
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "AJK Transport System API v1");
+    c.RoutePrefix = "swagger";
+});
 
-app.UseCors("AllowAngular");
-app.UseHttpsRedirection();
+// Health check endpoint
+app.MapGet("/health", () => Results.Ok(new { status = "Healthy", timestamp = DateTime.UtcNow }));
+
+app.UseCors("AllowConfiguredOrigins");
+
+// Respect forwarded proto behind HTTPS reverse proxy
+app.Use((context, next) =>
+{
+    if (context.Request.Headers.TryGetValue("X-Forwarded-Proto", out var proto) && proto == "https")
+    {
+        context.Request.Scheme = "https";
+    }
+    return next();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<AjkTransportSystem.API.Middleware.SessionValidationMiddleware>();

@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AjkTransportSystem.API.Data;
@@ -168,11 +169,38 @@ namespace AjkTransportSystem.API.Controllers
             var orgId = GetCurrentOrganizationId();
             driver.Role = "Driver";
             driver.OrganizationId = orgId;
-            driver.PasswordHash = Services.AuthService.HashPassword("Driver@123"); // Default password
+            string? temporaryPassword = null;
+            if (string.IsNullOrWhiteSpace(driver.PasswordHash))
+            {
+                temporaryPassword = GenerateSecurePassword(16);
+                driver.PasswordHash = Services.AuthService.HashPassword(temporaryPassword);
+            }
+            else
+            {
+                driver.PasswordHash = Services.AuthService.HashPassword(driver.PasswordHash);
+            }
             
             _context.Users.Add(driver);
             await _context.SaveChangesAsync();
-            return Ok(new { message = "Driver added successfully" });
+            return Ok(new 
+            { 
+                message = "Driver added successfully", 
+                userId = driver.UserId,
+                temporaryPassword = temporaryPassword 
+            });
+        }
+
+        private static string GenerateSecurePassword(int length = 16)
+        {
+            const string chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$*";
+            var bytes = new byte[length];
+            RandomNumberGenerator.Fill(bytes);
+            var result = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = chars[bytes[i] % chars.Length];
+            }
+            return new string(result);
         }
 
         // ==========================================
