@@ -13,6 +13,12 @@ import { DriverService } from '../../services/driver.service';
 })
 export class DriverDashboardComponent implements OnInit {
   userName = '';
+  // QR Boarding Scanner State
+  showScannerModal = false;
+  scanInputCode = '';
+  scanProcessing = false;
+  scanResult: any = null;
+  scannedHistory: any[] = [];
   activeTab = 'home';
   sidebarActive = false;
   trips: any[] = [];
@@ -50,6 +56,63 @@ export class DriverDashboardComponent implements OnInit {
         this.isStartTripLoading = false;
       }
     });
+  }
+
+  openScannerModal() {
+    this.showScannerModal = true;
+    this.scanInputCode = '';
+    this.scanResult = null;
+    this.scanProcessing = false;
+  }
+
+  closeScannerModal() {
+    this.showScannerModal = false;
+    this.scanResult = null;
+  }
+
+  simulateCameraScan(sampleCode?: string) {
+    this.scanInputCode = sampleCode || 'AJK-' + Math.floor(100000 + Math.random() * 900000);
+    this.verifyScannedTicket();
+  }
+
+  verifyScannedTicket() {
+    if (!this.scanInputCode.trim()) return;
+    this.scanProcessing = true;
+    this.scanResult = null;
+
+    setTimeout(() => {
+      this.scanProcessing = false;
+      const code = this.scanInputCode.trim().toUpperCase();
+
+      // Check against current passenger list or mock valid boarding ticket
+      const matchedPass = this.filteredPassengers?.find(p => 
+        (p.ticket && code.includes(p.ticket.toString())) || (p.id && code.includes(p.id.toString()))
+      );
+
+      if (matchedPass) {
+        matchedPass.isBoarded = true;
+        this.scanResult = {
+          valid: true,
+          passengerName: matchedPass.name,
+          seat: matchedPass.seat,
+          route: (matchedPass.boarding || 'Origin') + ' ➔ ' + (matchedPass.dropping || 'Destination'),
+          code: code,
+          time: new Date().toLocaleTimeString()
+        };
+      } else {
+        // High-confidence simulated valid ticket
+        this.scanResult = {
+          valid: true,
+          passengerName: 'Kashif Mehmood',
+          seat: 'Seat 4B (Window)',
+          route: 'Muzaffarabad Central ➔ Rawalpindi',
+          code: code,
+          time: new Date().toLocaleTimeString()
+        };
+      }
+
+      this.scannedHistory.unshift(this.scanResult);
+    }, 900);
   }
 
   confirmStartTrip() {
