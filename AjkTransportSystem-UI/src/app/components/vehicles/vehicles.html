@@ -1,0 +1,54 @@
+<div class="card">
+  <h2>Vehicles Management</h2>
+  
+  <form (ngSubmit)="addVehicle()" class="mt-4">
+    <div class="form-group" style="display: flex; gap: 1rem; align-items: flex-end;">
+      <div style="flex: 1;">
+        <label class="form-label">Vehicle Number</label>
+        <input [(ngModel)]="vehicleNumber" name="vehicleNumber" class="input-field" placeholder="Vehicle Number" required>
+      </div>
+      <div style="flex: 1;">
+        <label class="form-label">Vehicle Type</label>
+        <input [(ngModel)]="vehicleType" name="vehicleType" class="input-field" placeholder="Vehicle Type" required>
+      </div>
+      <div style="flex: 1;">
+        <label class="form-label">Capacity</label>
+        <input [(ngModel)]="capacity" name="capacity" type="number" class="input-field" placeholder="Capacity" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Vehicle</button>
+    </div>
+  </form>
+
+  <div class="table-container mt-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Number</th>
+          <th>Type</th>
+          <th>Capacity</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehicle of vehicles">
+          <td>{{ vehicle.vehicleNumber }}</td>
+          <td>
+            <span class="badge" [ngClass]="{'badge-success': vehicle.vehicleType === 'Bus', 'badge-info': vehicle.vehicleType !== 'Bus'}">
+              {{ vehicle.vehicleType }}
+            </span>
+          </td>
+          <td>{{ vehicle.capacity }}</td>
+          <td>
+            <span class="badge" [ngClass]="vehicle.status === 'Active' ? 'badge-success' : 'badge-warning'">
+              {{ vehicle.status || 'Active' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteVehicle(vehicle.vehicleId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

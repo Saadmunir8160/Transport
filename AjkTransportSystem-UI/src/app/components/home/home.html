@@ -1,0 +1,346 @@
+<div class="home-container">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a routerLink="/" class="nav-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+      AJK TMS
+    </a>
+
+    <div class="nav-auth">
+      <button class="btn-ghost" routerLink="/login">Log in</button>
+      <button class="btn-primary" routerLink="/register">Sign up</button>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+        Serving Azad Jammu and Kashmir
+      </div>
+      <h1>Smart travel across<br>the AJK Region</h1>
+      <p>Search, book and track buses across Muzaffarabad, Mirpur,<br>Kotli and more — all from one platform.</p>
+    </div>
+  </section>
+
+  <!-- SEARCH WIDGET -->
+  <div class="search-widget">
+    <div class="search-row">
+      <div class="search-field">
+        <label>From</label>
+        <select>
+          <option>Muzaffarabad</option>
+          <option>Mirpur</option>
+          <option>Kotli</option>
+          <option>Rawalakot</option>
+          <option>Bagh</option>
+          <option>Bhimber</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label>To</label>
+        <select>
+          <option>Mirpur</option>
+          <option>Muzaffarabad</option>
+          <option>Kotli</option>
+          <option>Rawalakot</option>
+          <option>Bagh</option>
+          <option>Bhimber</option>
+        </select>
+      </div>
+    </div>
+    <div class="search-row">
+      <div class="search-field">
+        <label>Date</label>
+        <input type="date" [value]="'2026-09-28'">
+      </div>
+      <div class="search-field">
+        <label>Passengers</label>
+        <select>
+          <option>1 passenger</option>
+          <option>2 passengers</option>
+          <option>3 passengers</option>
+          <option>4 passengers</option>
+        </select>
+      </div>
+    </div>
+    
+    <button class="btn-search" routerLink="/passenger">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      Search buses
+    </button>
+    
+    <div class="highlights">
+      <span class="highlight-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Secure booking</span>
+      <span class="highlight-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"/><path d="M20 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8"/><path d="M4 12V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8"/></svg> Digital ticket</span>
+      <span class="highlight-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Offline ticket</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="stat-box">
+      <h3>6</h3>
+      <p>Organizations</p>
+    </div>
+    <div class="stat-box">
+      <h3>48</h3>
+      <p>Active routes</p>
+    </div>
+    <div class="stat-box">
+      <h3>120+</h3>
+      <p>Daily trips</p>
+    </div>
+    <div class="stat-box">
+      <h3>12K+</h3>
+      <p>Passengers/month</p>
+    </div>
+  </section>
+
+  <!-- ROAD ADVISORY -->
+  <div class="advisory">
+    <div class="advisory-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </div>
+    <div class="advisory-content">
+      <h4>Road advisory — Muzaffarabad-Kohala Road</h4>
+      <p>Shooting stones near Kohala. Trips on this route may be delayed. Check status before boarding.</p>
+    </div>
+  </div>
+
+  <!-- POPULAR ROUTES -->
+  <section class="popular-routes">
+    <h2 class="section-title">Popular routes</h2>
+    <p class="section-subtitle">Most booked this week</p>
+    
+    <div class="routes-grid">
+      <!-- Route 1 -->
+      <div class="route-card" routerLink="/passenger">
+        <div class="route-header">
+          <div class="route-locations">Muzaffarabad &rarr; Mirpur</div>
+          <span class="route-freq">12/day</span>
+        </div>
+        <div class="route-meta">
+          <span class="route-meta-dot">&bull;</span> 5 seats &middot; Next 09:30
+        </div>
+      </div>
+      <!-- Route 2 -->
+      <div class="route-card" routerLink="/passenger">
+        <div class="route-header">
+          <div class="route-locations">Muzaffarabad &rarr; Kotli</div>
+          <span class="route-freq">8/day</span>
+        </div>
+        <div class="route-meta">
+          <span class="route-meta-dot">&bull;</span> 11 seats &middot; Next 10:00
+        </div>
+      </div>
+      <!-- Route 3 -->
+      <div class="route-card" routerLink="/passenger">
+        <div class="route-header">
+          <div class="route-locations">Mirpur &rarr; Rawalakot</div>
+          <span class="route-freq">4/day</span>
+        </div>
+        <div class="route-meta">
+          <span class="route-meta-dot">&bull;</span> 3 seats &middot; Next 11:15
+        </div>
+      </div>
+      <!-- Route 4 -->
+      <div class="route-card" routerLink="/passenger">
+        <div class="route-header">
+          <div class="route-locations">Muzaffarabad &rarr; Bagh</div>
+          <span class="route-freq">6/day</span>
+        </div>
+        <div class="route-meta">
+          <span class="route-meta-dot">&bull;</span> 8 seats &middot; Next 08:45
+        </div>
+      </div>
+      <!-- Route 5 -->
+      <div class="route-card" routerLink="/passenger">
+        <div class="route-header">
+          <div class="route-locations">Bagh &rarr; Rawalakot</div>
+          <span class="route-freq">5/day</span>
+        </div>
+        <div class="route-meta">
+          <span class="route-meta-dot">&bull;</span> 14 seats &middot; Next 12:30
+        </div>
+      </div>
+      <!-- Route 6 -->
+      <div class="route-card" routerLink="/passenger">
+        <div class="route-header">
+          <div class="route-locations">Kotli &rarr; Bhimber</div>
+          <span class="route-freq">7/day</span>
+        </div>
+        <div class="route-meta">
+          <span class="route-meta-dot">&bull;</span> 2 seats &middot; Next 14:00
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works">
+    <h2 class="section-title">How it works</h2>
+    <p class="section-subtitle" style="margin-bottom: 0;">Book your seat in 4 simple steps</p>
+    <div class="steps-container">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h4>Search</h4>
+        <p>Enter origin, destination<br>and date</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h4>Select trip</h4>
+        <p>Pick a bus and view seat<br>map</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h4>Pay</h4>
+        <p>UPI, card or cash on bus</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h4>Travel</h4>
+        <p>Show QR code to board</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY AJK TMS -->
+  <section class="why-us">
+    <h2 class="section-title">Why AJK TMS</h2>
+    <p class="section-subtitle">Built for AJK's roads and connectivity</p>
+    
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <h4>Offline tickets</h4>
+        <p>QR works without internet on mountain routes</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+        </div>
+        <h4>AI ETA</h4>
+        <p>Predicted arrival from real historical data</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h4>Road advisories</h4>
+        <p>Landslide and snow alerts before you book</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+        </div>
+        <h4>Seat selection</h4>
+        <p>Live seat map with real-time hold</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/></svg>
+        </div>
+        <h4>Live tracking</h4>
+        <p>See your bus approach your stop</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon-box">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h4>Multi-org</h4>
+        <p>All AJK operators on one platform</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSPORT ORGANIZATIONS -->
+  <section class="orgs-section">
+    <h2 class="section-title">Transport organizations</h2>
+    <p class="section-subtitle">Choose your region to book directly</p>
+    
+    <div class="org-grid">
+      <div class="org-card" routerLink="/passenger">
+        <div class="org-avatar"><span>MZ</span></div>
+        <div class="org-info">
+          <h4>Muzaffarabad Transport</h4>
+          <p>Muzaffarabad Division</p>
+        </div>
+      </div>
+      <div class="org-card" routerLink="/passenger">
+        <div class="org-avatar"><span>MR</span></div>
+        <div class="org-info">
+          <h4>Mirpur Transport</h4>
+          <p>Mirpur Division</p>
+        </div>
+      </div>
+      <div class="org-card" routerLink="/passenger">
+        <div class="org-avatar"><span>KT</span></div>
+        <div class="org-info">
+          <h4>Kotli Transport</h4>
+          <p>Mirpur Division</p>
+        </div>
+      </div>
+      <div class="org-card" routerLink="/passenger">
+        <div class="org-avatar"><span>RW</span></div>
+        <div class="org-info">
+          <h4>Rawalakot Transport</h4>
+          <p>Poonch Division</p>
+        </div>
+      </div>
+      <div class="org-card" routerLink="/passenger">
+        <div class="org-avatar"><span>BG</span></div>
+        <div class="org-info">
+          <h4>Bagh Transport</h4>
+          <p>Poonch Division</p>
+        </div>
+      </div>
+      <div class="org-card" routerLink="/passenger">
+        <div class="org-avatar"><span>BM</span></div>
+        <div class="org-info">
+          <h4>Bhimber Transport</h4>
+          <p>Mirpur Division</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h2>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+          AJK TMS
+        </h2>
+        <p>A centralized transport platform for Azad Jammu and Kashmir. Multi-org, offline-ready, AI-powered ETA.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>PASSENGERS</h4>
+          <a routerLink="/login">Passenger login</a>
+          <a routerLink="/passenger">Search trips</a>
+          <a routerLink="/my-bookings">My bookings</a>
+          <a routerLink="/passenger">Track my bus</a>
+          <a routerLink="/help">Help and support</a>
+        </div>
+        <div class="footer-col">
+          <h4>ORGANIZATIONS</h4>
+          <a routerLink="/admin-login">Admin login</a>
+          <a routerLink="/login">Driver login</a>
+          <a routerLink="/superadmin-login">Contact Super Admin</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 AJK Transport Management System</div>
+      <div class="footer-bottom-links">
+        <a routerLink="/">Privacy</a>
+        <a routerLink="/">Terms</a>
+      </div>
+    </div>
+  </footer>
+</div>

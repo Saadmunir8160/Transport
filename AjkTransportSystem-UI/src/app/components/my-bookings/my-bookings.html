@@ -1,0 +1,118 @@
+<div class="bookings-container">
+  <!-- Top Bar Context -->
+  <header class="bookings-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <a routerLink="/passenger" class="portal-back-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Passenger Portal
+        </a>
+        <h1>My Travel Bookings</h1>
+      </div>
+      <div class="user-info">
+        <div class="passenger-avatar-chip">
+          <div class="avatar-circle">{{ userName.charAt(0) || 'P' }}</div>
+          <span class="user-name">{{ userName }}</span>
+        </div>
+        <button class="logout-btn" (click)="logout()" title="Sign out">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign out
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="bookings-content">
+    <div class="content-header-row">
+      <div class="header-badge-wrap">
+        <span class="section-badge">Active Bookings ({{ activeBookingsCount }})</span>
+      </div>
+      <a routerLink="/passenger" class="btn btn-primary btn-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        Search New Trip
+      </a>
+    </div>
+
+    <!-- Booking Cards Grid -->
+    <div class="bookings-grid">
+      <div class="booking-ticket-card" *ngFor="let booking of bookings" [class.is-cancelled]="booking.status === 'Cancelled'">
+        <div class="ticket-header">
+          <div class="ticket-ref">
+            <span class="ref-label">Booking Reference</span>
+            <span class="ref-id">#{{ booking.bookingId }}</span>
+          </div>
+          <span class="status-badge" [ngClass]="{
+            'status-confirmed': booking.status === 'Confirmed',
+            'status-pending': booking.status === 'Pending',
+            'status-cancelled': booking.status === 'Cancelled'
+          }">
+            {{ booking.status }}
+          </span>
+        </div>
+
+        <div class="ticket-body">
+          <div class="passenger-meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">Passenger Name</span>
+              <strong class="meta-value">{{ booking.passengerName }}</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Contact</span>
+              <strong class="meta-value">{{ booking.passengerPhone }}</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Seats Reserved</span>
+              <strong class="meta-value seat-highlight">{{ booking.seatNumber }} ({{ booking.seats }} Total)</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Total Fare</span>
+              <strong class="meta-value fare-highlight">Rs. {{ booking.totalFare }}</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Travel Date</span>
+              <strong class="meta-value">{{ booking.travelDate | date:'fullDate' }}</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Booked On</span>
+              <span class="meta-value date-subtle">{{ booking.bookingDate | date:'medium' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-footer" *ngIf="booking.status !== 'Cancelled'">
+          <button class="btn btn-secondary action-btn-ticket" (click)="printTicket(booking.bookingId)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print Ticket
+          </button>
+          <button class="btn btn-danger action-btn-ticket" (click)="cancelBooking(booking.bookingId)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Cancel Booking
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cancellation Notification Banner -->
+    <div class="feedback-banner" *ngIf="activeBookingsCount === 0 && showCancelledMessage">
+      <div class="banner-icon success">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      </div>
+      <div class="banner-body">
+        <h4>Booking Cancelled Successfully</h4>
+        <p>Your seat has been released to the inventory and the cancellation recorded.</p>
+        <a routerLink="/passenger" class="btn btn-primary btn-sm" style="margin-top: 0.5rem;">Explore Other Trips &rarr;</a>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="bookings.length === 0">
+      <div class="empty-icon-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+      </div>
+      <h3>No Bookings Found</h3>
+      <p>You haven't reserved any bus tickets yet. Search routes connecting Muzaffarabad, Rawalakot, Mirpur, and more.</p>
+      <a routerLink="/passenger" class="btn btn-primary">Book Your First Journey</a>
+    </div>
+  </main>
+</div>
+

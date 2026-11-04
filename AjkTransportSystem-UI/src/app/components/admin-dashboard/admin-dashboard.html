@@ -1,0 +1,2105 @@
+<div class="admin-wrapper">
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-menu-toggle" (click)="toggleSidebar()">☰</button>
+
+  <!-- Sidebar -->
+  <div class="sidebar" [class.active]="sidebarActive">
+    <div class="sidebar-header">
+      <div class="brand-block">
+        <div class="logo-mark">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2" />
+            <path d="M8 4v16" />
+            <path d="M16 4v16" />
+            <path d="M4 8h16" />
+            <path d="M4 16h16" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-name">Transport admin</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="Main navigation" class="sidebar-nav">
+      
+      <!-- Overview -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Overview')"
+        (click)="toggleGroup('Overview')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span class="group-title">Overview</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Overview')" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Overview')">
+        <button class="nav-item" [class.active]="activeTab === 'dashboard'" (click)="setActiveTab('dashboard')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /></svg>
+          <span class="item-label">Dashboard</span>
+        </button>
+      </div>
+
+      <!-- Fleet and people -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Fleet and people')"
+        (click)="toggleGroup('Fleet and people')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span class="group-title">Fleet and people</span>
+        <span class="group-dot" [ngClass]="'bg-' + hasGroupAlert('Fleet and people')" *ngIf="hasGroupAlert('Fleet and people')"></span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Fleet and people')" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Fleet and people')">
+        <button class="nav-item" [class.active]="activeTab === 'drivers'" (click)="setActiveTab('drivers')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
+          <span class="item-label">Drivers</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'vehicles'" (click)="setActiveTab('vehicles')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" /></svg>
+          <span class="item-label">Vehicles</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'compliance'" (click)="setActiveTab('compliance')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+          <span class="item-label">Compliance</span>
+          <span class="nav-badge badge-new" style="background:#ff9800; color:white; font-size:10px; padding:2px 6px; border-radius:10px; margin-left:auto;">new</span>
+        </button>
+      </div>
+
+      <!-- Network -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Network')"
+        (click)="toggleGroup('Network')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" />
+        </svg>
+        <span class="group-title">Network</span>
+        <span class="group-dot" [ngClass]="'bg-' + hasGroupAlert('Network')" *ngIf="hasGroupAlert('Network')"></span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Network')" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Network')">
+        <button class="nav-item" [class.active]="activeTab === 'routes'" (click)="setActiveTab('routes')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></svg>
+          <span class="item-label">Routes and stops</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'timings'" (click)="setActiveTab('timings')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+          <span class="item-label">Schedules</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'advisories'" (click)="setActiveTab('advisories')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+          <span class="item-label">Road advisories</span>
+          <span class="nav-badge badge-new" style="background:#ff9800; color:white; font-size:10px; padding:2px 6px; border-radius:10px; margin-left:auto;">new</span>
+        </button>
+      </div>
+
+      <!-- Operations -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Operations')"
+        (click)="toggleGroup('Operations')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <span class="group-title">Operations</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Operations')" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Operations')">
+        <button class="nav-item" [class.active]="activeTab === 'trips'" (click)="setActiveTab('trips')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11" /></svg>
+          <span class="item-label">Trips</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'bookings'" (click)="setActiveTab('bookings')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
+          <span class="item-label">Bookings</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'complaints'" (click)="setActiveTab('complaints')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /><line x1="12" y1="7" x2="12" y2="11" /><line x1="12" y1="15" x2="12.01" y2="15" /></svg>
+          <span class="item-label">Complaints & issues</span>
+        </button>
+      </div>
+
+      <!-- Insights -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Insights')"
+        (click)="toggleGroup('Insights')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        <span class="group-title">Insights</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Insights')" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Insights')">
+        <button class="nav-item" [class.active]="activeTab === 'reports'" (click)="setActiveTab('reports')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
+          <span class="item-label">Reports</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'eta_insights'" (click)="setActiveTab('eta_insights')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
+          <span class="item-label">ETA insights</span>
+        </button>
+      </div>
+
+      <!-- Settings -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Settings')"
+        (click)="toggleGroup('Settings')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <span class="group-title">Settings</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Settings')" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Settings')">
+        <button class="nav-item" [class.active]="activeTab === 'organization'" (click)="setActiveTab('organization')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
+          <span class="item-label">Organization</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'profile'" (click)="setActiveTab('profile')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+          <span class="item-label">Notifications & profile</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="profile-card" (click)="logout()">
+        <div class="avatar-sa">AD</div>
+        <div class="profile-info">
+          <span class="profile-name">Transport admin</span>
+          <span class="profile-email">Log out</span>
+        </div>
+        <div class="logout-icon-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button class="topbar-toggle-btn" (click)="toggleSidebar()" title="Toggle Menu" aria-label="Toggle Navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="page-title-wrap">
+          <h1>{{ getPageTitle() }}</h1>
+          <span class="portal-badge">Transport Organization</span>
+        </div>
+      </div>
+
+      <div class="user-section">
+        <div class="user-details-top">
+          <span class="user-name-label">{{ userName }}</span>
+          <span class="user-role-label">Transport Admin &bull; Verified</span>
+        </div>
+        <div class="user-avatar" [title]="userName">{{ userName.charAt(0).toUpperCase() || 'A' }}</div>
+        <button class="logout-btn" (click)="logout()" title="Sign out of Transport Admin">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Dashboard Tab -->
+      <div *ngIf="activeTab === 'dashboard'">
+        
+        <!-- KPI Cards -->
+        <h3 style="margin-bottom: 1rem; color: #2c3e50;">Key Performance Indicators (Today)</h3>
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.todayTrips || 0 }}</h3>
+              <p>Today's trips</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3 style="font-size: 1.5rem; color: #27ae60;">{{ dashboardStats?.activeTrips || 0 }}</h3>
+              <p>Active trips now</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.todayBookings || 0 }}</h3>
+              <p>Today's bookings</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.seatsAvailable || 0 }}</h3>
+              <p>Seats still available</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3 style="font-size: 1.5rem; color: #e74c3c;">{{ dashboardStats?.cancelledToday || 0 }}</h3>
+              <p>Cancelled today</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.activeDrivers || 0 }}</h3>
+              <p>Active drivers</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.activeVehicles || 0 }}</h3>
+              <p>Active vehicles</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-top: 2rem;">
+          
+          <!-- Charts Section -->
+          <div class="charts-section">
+            <div class="content-card" style="margin-bottom: 1.5rem;">
+              <div class="card-header" style="margin-bottom: 1rem; padding-bottom: 0.5rem;">
+                <h2 style="font-size: 1.1rem;">Bookings (Last 7 & 30 days)</h2>
+              </div>
+              <div style="height: 200px; background: #f8fafc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94a3b8; border: 1px dashed #cbd5e1;">
+                [Chart: Bookings Timeline]
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+              <div class="content-card">
+                <div class="card-header" style="margin-bottom: 1rem; padding-bottom: 0.5rem;">
+                  <h2 style="font-size: 1.1rem;">Trips by Status</h2>
+                </div>
+                <div style="height: 180px; background: #f8fafc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94a3b8; border: 1px dashed #cbd5e1;">
+                  [Chart: Pie/Donut Chart]
+                </div>
+              </div>
+              <div class="content-card">
+                <div class="card-header" style="margin-bottom: 1rem; padding-bottom: 0.5rem;">
+                  <h2 style="font-size: 1.1rem;">Top 5 Popular Routes</h2>
+                </div>
+                <div style="height: 180px; background: #f8fafc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #94a3b8; border: 1px dashed #cbd5e1;">
+                  [Chart: Horizontal Bar Chart]
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alert Widgets Section -->
+          <div class="alerts-section">
+            <div class="content-card" style="height: 100%;">
+              <div class="card-header" style="margin-bottom: 1rem; border-bottom: none; padding-bottom: 0;">
+                <h2 style="font-size: 1.1rem; color: #e74c3c;">⚠️ Action Required</h2>
+              </div>
+              
+              <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                
+                <div style="padding: 12px; background: #fff5f5; border-left: 4px solid #e53e3e; border-radius: 4px;">
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #c53030;">Licences Expiring Soon ({{ dashboardStats?.expiringLicences || 0 }})</div>
+                  <div style="font-size: 0.85rem; color: #718096; margin-top: 4px;">Drivers have licences expiring within 30 days.</div>
+                </div>
+
+                <div style="padding: 12px; background: #fff5f5; border-left: 4px solid #e53e3e; border-radius: 4px;">
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #c53030;">Vehicle Documents Expiring ({{ dashboardStats?.expiringVehicleDocs || 0 }})</div>
+                  <div style="font-size: 0.85rem; color: #718096; margin-top: 4px;">Vehicles require fitness certificate renewal.</div>
+                </div>
+
+                <div style="padding: 12px; background: #fffff0; border-left: 4px solid #d69e2e; border-radius: 4px;">
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #b7791f;">Unassigned Trips ({{ dashboardStats?.unassignedTrips || 0 }})</div>
+                  <div style="font-size: 0.85rem; color: #718096; margin-top: 4px;">Trips starting soon missing driver/vehicle.</div>
+                </div>
+
+                <div style="padding: 12px; background: #fff5f5; border-left: 4px solid #e53e3e; border-radius: 4px;">
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #c53030;">Open Complaints ({{ dashboardStats?.openComplaints || 0 }})</div>
+                  <div style="font-size: 0.85rem; color: #718096; margin-top: 4px;">Unresolved passenger or driver issues.</div>
+                </div>
+
+                <div style="padding: 12px; background: #ebf8ff; border-left: 4px solid #3182ce; border-radius: 4px;">
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #2b6cb0;">Road Advisories ({{ dashboardStats?.activeAdvisories || 0 }})</div>
+                  <div style="font-size: 0.85rem; color: #718096; margin-top: 4px;">Advisories touching today's active routes.</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Routes Tab -->
+      <div *ngIf="activeTab === 'routes'">
+        
+        <!-- Routes Sub-Tabs -->
+        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <button 
+            [style.border-bottom]="activeRouteSubTab === 'all' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeRouteSubTab === 'all' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeRouteSubTab = 'all'">
+            All routes
+          </button>
+          <button 
+            [style.border-bottom]="activeRouteSubTab === 'add' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeRouteSubTab === 'add' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeRouteSubTab = 'add'">
+            Add route
+          </button>
+          <button 
+            [style.border-bottom]="activeRouteSubTab === 'stops' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeRouteSubTab === 'stops' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeRouteSubTab = 'stops'">
+            Stop manager
+          </button>
+        </div>
+
+        <!-- ALL ROUTES SUB-TAB -->
+        <div *ngIf="activeRouteSubTab === 'all'" class="content-card">
+          <div class="card-header">
+            <h2>Routes Master</h2>
+          </div>
+          <table class="data-table" *ngIf="routes.length > 0">
+            <thead>
+              <tr>
+                <th>Route Name</th>
+                <th>Origin &rarr; Destination</th>
+                <th>Distance</th>
+                <th>Base Fare</th>
+                <th>Est. Duration</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let route of routes">
+                <td><strong>{{ route.routeName }}</strong> <span style="font-size: 0.75rem; background: #e0e7ff; color: #4338ca; padding: 2px 6px; border-radius: 4px; margin-left: 6px;">Seasonal</span></td>
+                <td>{{ route.startPoint }} &rarr; {{ route.endPoint }}</td>
+                <td>{{ route.distance }} km</td>
+                <td>Rs. 500</td>
+                <td>120 mins</td>
+                <td><span style="color: #27ae60; font-weight: 600; background: #e6f4ea; padding: 4px 8px; border-radius: 4px;">Active</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleRouteAction($event, route.routeId)">
+                    <option value="">Actions...</option>
+                    <option value="edit">Edit</option>
+                    <option value="duplicate">Duplicate (Return)</option>
+                    <option value="deactivate">Deactivate</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="routes.length === 0">
+            <p>No routes defined yet.</p>
+          </div>
+        </div>
+
+        <!-- ADD ROUTE SUB-TAB -->
+        <div *ngIf="activeRouteSubTab === 'add'" class="content-card">
+          <div class="card-header">
+            <h2>Define New Route</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">A route needs at least 2 stops (Origin and Destination).</p>
+          </div>
+          <form (ngSubmit)="addRoute()">
+            
+            <h4 style="margin: 1.5rem 0 1rem; color: #334155;">Route Basics</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Route Name *</label>
+                <input [(ngModel)]="routeName" name="routeName" placeholder="e.g. Muzaffarabad Express" required>
+              </div>
+              <div class="form-group">
+                <label>Direction</label>
+                <select [(ngModel)]="routeDirection" name="routeDirection">
+                  <option value="Outbound">Outbound</option>
+                  <option value="Inbound">Inbound</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select [(ngModel)]="routeStatus" name="routeStatus">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Seasonal Flag</label>
+                <select [(ngModel)]="routeSeasonal" name="routeSeasonal">
+                  <option value="No">No (Regular)</option>
+                  <option value="Yes">Yes (Seasonal)</option>
+                </select>
+              </div>
+            </div>
+
+            <h4 style="margin: 2rem 0 1rem; color: #334155;">Path & Economics</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Origin *</label>
+                <select [(ngModel)]="startPoint" name="startPoint" (change)="calculateDistance()" required>
+                  <option value="">Select Start City</option>
+                  <option value="Muzaffarabad">Muzaffarabad</option>
+                  <option value="Mirpur">Mirpur</option>
+                  <option value="Rawalpindi">Rawalpindi</option>
+                  <option value="Islamabad">Islamabad</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Destination *</label>
+                <select [(ngModel)]="endPoint" name="endPoint" (change)="calculateDistance()" required>
+                  <option value="">Select End City</option>
+                  <option value="Muzaffarabad">Muzaffarabad</option>
+                  <option value="Mirpur">Mirpur</option>
+                  <option value="Rawalpindi">Rawalpindi</option>
+                  <option value="Islamabad">Islamabad</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Total Distance (km) *</label>
+                <input [(ngModel)]="distance" name="distance" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Base Fare (Rs.) *</label>
+                <input [(ngModel)]="routeBaseFare" name="routeBaseFare" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Baseline Duration (mins)</label>
+                <input [(ngModel)]="routeDuration" name="routeDuration" type="number">
+              </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; display: flex; gap: 1rem;">
+              <button type="submit" class="add-btn">Create Route</button>
+              <button type="button" class="add-btn" style="background: #f1f5f9; color: #475569;" (click)="activeRouteSubTab = 'all'">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- STOPS SUB-TAB -->
+        <div *ngIf="activeRouteSubTab === 'stops'" class="content-card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h2>Stop Manager</h2>
+              <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Drag to reorder stops. Changes affect future trips only.</p>
+            </div>
+            <select style="padding: 8px 12px; border-radius: 6px; border: 1px solid #cbd5e1; outline: none; font-weight: 600;">
+              <option value="">Select a Route to manage stops...</option>
+              <option *ngFor="let r of routes" [value]="r.routeId">{{ r.routeName }}</option>
+            </select>
+          </div>
+          
+          <div style="margin-top: 1.5rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 15px 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; cursor: move; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+              <div style="display: flex; align-items: center; gap: 15px;">
+                <span style="color: #94a3b8; font-size: 1.2rem;">⣿</span>
+                <span style="background: #5d87ff; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; font-size: 0.85rem;">1</span>
+                <div>
+                  <strong style="display: block; font-size: 1rem; color: #1e293b;">Muzaffarabad Terminal</strong>
+                  <span style="color: #64748b; font-size: 0.85rem;">Origin &bull; 0 km &bull; Rs. 0</span>
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button style="border: none; background: transparent; color: #5d87ff; cursor: pointer; font-weight: 600;">Edit</button>
+                <button style="border: none; background: transparent; color: #e53e3e; cursor: pointer; font-weight: 600;">Remove</button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 15px 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; cursor: move; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+              <div style="display: flex; align-items: center; gap: 15px;">
+                <span style="color: #94a3b8; font-size: 1.2rem;">⣿</span>
+                <span style="background: #cbd5e1; color: #334155; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; font-size: 0.85rem;">2</span>
+                <div>
+                  <strong style="display: block; font-size: 1rem; color: #1e293b;">Kohala Bridge</strong>
+                  <span style="color: #64748b; font-size: 0.85rem;">Lat: 34.10, Lng: 73.49 &bull; +35 km &bull; +45 mins &bull; +Rs. 150</span>
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button style="border: none; background: transparent; color: #5d87ff; cursor: pointer; font-weight: 600;">Edit</button>
+                <button style="border: none; background: transparent; color: #e53e3e; cursor: pointer; font-weight: 600;">Remove</button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 15px 20px; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 10px; cursor: move; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+              <div style="display: flex; align-items: center; gap: 15px;">
+                <span style="color: #94a3b8; font-size: 1.2rem;">⣿</span>
+                <span style="background: #10b981; color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600; font-size: 0.85rem;">3</span>
+                <div>
+                  <strong style="display: block; font-size: 1rem; color: #1e293b;">Islamabad Faizabad</strong>
+                  <span style="color: #64748b; font-size: 0.85rem;">Destination &bull; +130 km &bull; +150 mins &bull; +Rs. 500</span>
+                </div>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <button style="border: none; background: transparent; color: #5d87ff; cursor: pointer; font-weight: 600;">Edit</button>
+                <button style="border: none; background: transparent; color: #e53e3e; cursor: pointer; font-weight: 600;">Remove</button>
+              </div>
+            </div>
+            
+            <button class="add-btn" style="background: white; color: #5d87ff; border: 2px dashed #5d87ff; margin-top: 10px; width: 100%;">➕ Add Stop</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Vehicles Tab -->
+      <div *ngIf="activeTab === 'vehicles'">
+        
+        <!-- Vehicle Sub-Tabs -->
+        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <button 
+            [style.border-bottom]="activeVehicleSubTab === 'all' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeVehicleSubTab === 'all' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeVehicleSubTab = 'all'">
+            All vehicles
+          </button>
+          <button 
+            [style.border-bottom]="activeVehicleSubTab === 'add' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeVehicleSubTab === 'add' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeVehicleSubTab = 'add'">
+            Add vehicle
+          </button>
+          <button 
+            [style.border-bottom]="activeVehicleSubTab === 'alerts' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeVehicleSubTab === 'alerts' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+            (click)="activeVehicleSubTab = 'alerts'">
+            Document expiry alerts
+            <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">1</span>
+          </button>
+        </div>
+
+        <!-- ALL VEHICLES SUB-TAB -->
+        <div *ngIf="activeVehicleSubTab === 'all'" class="content-card">
+          <div class="card-header">
+            <h2>Vehicles Register</h2>
+          </div>
+          <table class="data-table" *ngIf="vehicles.length > 0">
+            <thead>
+              <tr>
+                <th>Registration no.</th>
+                <th>Type</th>
+                <th>Make & Model</th>
+                <th>Capacity</th>
+                <th>Status</th>
+                <th>Next document expiry</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vehicle of vehicles">
+                <td><strong>{{ vehicle.vehicleNumber }}</strong></td>
+                <td>{{ vehicle.vehicleType }}</td>
+                <td>Toyota Hiace 2022</td>
+                <td>{{ vehicle.capacity }} seats</td>
+                <td>
+                  <span [style.color]="vehicle.status === 'Active' ? '#1e8e3e' : '#e53e3e'" style="background: #f8fafc; padding: 4px 8px; border-radius: 4px; font-weight: 600;">
+                    {{ vehicle.status }}
+                  </span>
+                </td>
+                <td><span style="color: #d69e2e;">2024-11-01 (Fitness)</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleVehicleAction($event, vehicle.vehicleId)">
+                    <option value="">Actions...</option>
+                    <option value="edit">Edit</option>
+                    <option value="view">View details</option>
+                    <option value="assign">Assign to trip</option>
+                    <option value="history">Usage history</option>
+                    <option value="deactivate">Deactivate</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="vehicles.length === 0">
+            <p>No vehicles added to the fleet yet.</p>
+          </div>
+        </div>
+
+        <!-- ADD VEHICLE SUB-TAB -->
+        <div *ngIf="activeVehicleSubTab === 'add'" class="content-card">
+          <div class="card-header">
+            <h2>Register New Vehicle</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Capacity drives the seat map and available seats for bookings.</p>
+          </div>
+          <form (ngSubmit)="addVehicle()">
+            
+            <h4 style="margin: 1.5rem 0 1rem; color: #334155;">Vehicle Identity</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Registration Number (Unique) *</label>
+                <input [(ngModel)]="vehicleNumber" name="vehicleNumber" placeholder="e.g. AJK-1234" required>
+              </div>
+              <div class="form-group">
+                <label>Vehicle Type *</label>
+                <select [(ngModel)]="vehicleType" name="vehicleType" (change)="onVehicleTypeChange()" required>
+                  <option value="">Select Vehicle Type</option>
+                  <option value="Coaster">Coaster</option>
+                  <option value="Hiace">Hiace</option>
+                  <option value="Bus">Bus</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Make, Model & Year</label>
+                <input [(ngModel)]="vehicleMakeModel" name="vehicleMakeModel" placeholder="e.g. Toyota Hiace 2022">
+              </div>
+              <div class="form-group">
+                <label>Fuel Type</label>
+                <select [(ngModel)]="vehicleFuelType" name="vehicleFuelType">
+                  <option value="Diesel">Diesel</option>
+                  <option value="Petrol">Petrol</option>
+                  <option value="CNG">CNG</option>
+                </select>
+              </div>
+            </div>
+
+            <h4 style="margin: 2rem 0 1rem; color: #334155;">Seating Configuration</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Passenger Capacity *</label>
+                <input [(ngModel)]="capacity" name="capacity" type="number" required>
+              </div>
+              <div class="form-group">
+                <label>Seat Layout Pattern</label>
+                <select [(ngModel)]="vehicleSeatLayout" name="vehicleSeatLayout">
+                  <option value="2x2">2x2 Standard</option>
+                  <option value="2x1">2x1 Executive</option>
+                  <option value="Van">Van / Hiace Layout</option>
+                </select>
+              </div>
+            </div>
+
+            <h4 style="margin: 2rem 0 1rem; color: #334155;">Compliance Documents</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Insurance Expiry Date</label>
+                <input [(ngModel)]="vehicleDocInsurance" name="vehicleDocInsurance" type="date">
+              </div>
+              <div class="form-group">
+                <label>Fitness Expiry Date</label>
+                <input [(ngModel)]="vehicleDocFitness" name="vehicleDocFitness" type="date">
+              </div>
+              <div class="form-group">
+                <label>Route Permit Expiry Date</label>
+                <input [(ngModel)]="vehicleDocPermit" name="vehicleDocPermit" type="date">
+              </div>
+              <div class="form-group">
+                <label>PUC Expiry Date</label>
+                <input [(ngModel)]="vehicleDocPUC" name="vehicleDocPUC" type="date">
+              </div>
+              <div class="form-group" style="grid-column: span 2;">
+                <label>Document Uploads (PDF/Images)</label>
+                <input type="file" multiple style="padding: 0.5rem; background: white; width: 100%; max-width: 400px;">
+              </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; display: flex; gap: 1rem;">
+              <button type="submit" class="add-btn">Register Vehicle</button>
+              <button type="button" class="add-btn" style="background: #f1f5f9; color: #475569;" (click)="activeVehicleSubTab = 'all'">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ALERTS SUB-TAB -->
+        <div *ngIf="activeVehicleSubTab === 'alerts'" class="content-card">
+          <div class="card-header">
+            <h2 style="color: #e53e3e;">Document Expiry Alerts</h2>
+            <p>Vehicles with expired documents cannot be assigned to upcoming trips.</p>
+          </div>
+          
+          <div style="padding: 2rem; text-align: center; color: #64748b; background: #fff5f5; border: 1px dashed #feb2b2; border-radius: 8px; margin-top: 1rem;">
+            [API Data Placeholder] 1 Vehicle has documents expiring in the next 30 days.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Compliance Tab -->
+      <div *ngIf="activeTab === 'compliance'">
+        
+        <!-- Compliance Sub-Tabs -->
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <div style="display: flex; gap: 2rem;">
+            <button 
+              [style.border-bottom]="activeComplianceSubTab === 'expiring' ? '3px solid #5d87ff' : '3px solid transparent'"
+              [style.color]="activeComplianceSubTab === 'expiring' ? '#5d87ff' : '#5a6a85'"
+              style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+              (click)="activeComplianceSubTab = 'expiring'">
+              Expiring in 30 days
+              <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">5</span>
+            </button>
+            <button 
+              [style.border-bottom]="activeComplianceSubTab === 'expired' ? '3px solid #5d87ff' : '3px solid transparent'"
+              [style.color]="activeComplianceSubTab === 'expired' ? '#5d87ff' : '#5a6a85'"
+              style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+              (click)="activeComplianceSubTab = 'expired'">
+              Expired & Blocking
+              <span style="background: #c53030; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">2</span>
+            </button>
+            <button 
+              [style.border-bottom]="activeComplianceSubTab === 'missing' ? '3px solid #5d87ff' : '3px solid transparent'"
+              [style.color]="activeComplianceSubTab === 'missing' ? '#5d87ff' : '#5a6a85'"
+              style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+              (click)="activeComplianceSubTab = 'missing'">
+              Missing Documents
+              <span style="background: #d69e2e; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">1</span>
+            </button>
+          </div>
+          <div>
+            <button class="add-btn" style="background: #10b981; margin-right: 10px;">⬇️ Export Report</button>
+            <button class="add-btn" style="background: #3b82f6;">⚙️ Reminder Settings</button>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-header">
+            <h2 *ngIf="activeComplianceSubTab === 'expiring'" style="color: #d69e2e;">Documents Expiring Soon</h2>
+            <h2 *ngIf="activeComplianceSubTab === 'expired'" style="color: #e53e3e;">Expired Documents (Trip Assignment Blocked)</h2>
+            <h2 *ngIf="activeComplianceSubTab === 'missing'" style="color: #6b7280;">Missing Documents</h2>
+          </div>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Entity Name</th>
+                <th>Type</th>
+                <th>Document Name</th>
+                <th>Expiry Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>AJK-1234</strong></td>
+                <td>Vehicle</td>
+                <td>Fitness Certificate</td>
+                <td>2024-11-01</td>
+                <td><span style="color: #d69e2e; font-weight: 600; background: #fefcbf; padding: 4px 8px; border-radius: 4px;">Expiring in 26 days</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;">
+                    <option value="">Actions...</option>
+                    <option value="upload">Upload/Replace</option>
+                    <option value="reminders">Set reminder (30/15/7)</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Ali Khan</strong></td>
+                <td>Driver</td>
+                <td>Driving Licence</td>
+                <td>2024-10-15</td>
+                <td><span style="color: #d69e2e; font-weight: 600; background: #fefcbf; padding: 4px 8px; border-radius: 4px;">Expiring in 10 days</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;">
+                    <option value="">Actions...</option>
+                    <option value="upload">Upload/Replace</option>
+                    <option value="reminders">Set reminder (30/15/7)</option>
+                  </select>
+                </td>
+              </tr>
+              <tr *ngIf="activeComplianceSubTab === 'expired'">
+                <td><strong>AJK-9999</strong></td>
+                <td>Vehicle</td>
+                <td>Insurance</td>
+                <td>2024-09-01</td>
+                <td><span style="color: #e53e3e; font-weight: 600; background: #fed7d7; padding: 4px 8px; border-radius: 4px;">Expired (Blocked)</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;">
+                    <option value="">Actions...</option>
+                    <option value="upload">Upload/Replace</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Reports Tab -->
+      <div *ngIf="activeTab === 'reports'">
+        <div class="content-card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
+            <div>
+              <h2>Analytics & Reports</h2>
+              <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">View revenue, fleet usage, and performance metrics.</p>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button (click)="exportReport('pdf')" class="action-btn" style="background: #e2e8f0; color: #1e293b; border: none; font-weight: 600; padding: 8px 16px; border-radius: 6px;">📄 Export PDF</button>
+              <button (click)="exportReport('excel')" class="action-btn" style="background: #e2e8f0; color: #1e293b; border: none; font-weight: 600; padding: 8px 16px; border-radius: 6px;">📊 Export Excel</button>
+              <button (click)="exportReport('print')" class="action-btn" style="background: #5d87ff; color: white; border: none; font-weight: 600; padding: 8px 16px; border-radius: 6px;">🖨️ Print</button>
+            </div>
+          </div>
+          
+          <div style="margin-top: 1.5rem; background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+            <div class="form-grid" style="margin-bottom: 0;">
+              <div class="form-group">
+                <label>Report Type</label>
+                <select [(ngModel)]="reportType">
+                  <option value="trips">Trips Report</option>
+                  <option value="bookings">Bookings & Revenue</option>
+                  <option value="cancellations">Cancellations</option>
+                  <option value="popular-routes">Popular Routes</option>
+                  <option value="vehicle-usage">Vehicle Usage</option>
+                  <option value="driver-activity">Driver Activity</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" [(ngModel)]="reportStartDate">
+              </div>
+              <div class="form-group">
+                <label>End Date</label>
+                <input type="date" [(ngModel)]="reportEndDate">
+              </div>
+              <div class="form-group">
+                <label>Filter Route (Optional)</label>
+                <select [(ngModel)]="reportRouteId">
+                  <option [ngValue]="null">All Routes</option>
+                  <option *ngFor="let route of routes" [value]="route.routeId">{{ route.routeName }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Filter Vehicle (Optional)</label>
+                <select [(ngModel)]="reportVehicleId">
+                  <option [ngValue]="null">All Vehicles</option>
+                  <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleId">{{ vehicle.vehicleNumber }}</option>
+                </select>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: flex-start; margin-top: 1.5rem;">
+              <button (click)="generateReport()" class="add-btn" style="width: auto; padding: 10px 24px; font-size: 0.95rem;">Generate Data</button>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem; overflow-x: auto;">
+            <table class="data-table" *ngIf="reportData.length > 0">
+              <thead>
+                <tr *ngIf="reportType === 'popular-routes'">
+                  <th>Route ID</th>
+                  <th>Total Bookings</th>
+                  <th>Total Revenue</th>
+                </tr>
+                <tr *ngIf="reportType === 'vehicle-usage'">
+                  <th>Vehicle ID</th>
+                  <th>Trips Completed</th>
+                  <th>Total Distance</th>
+                </tr>
+                <tr *ngIf="reportType === 'driver-activity'">
+                  <th>Driver ID</th>
+                  <th>Trips Completed</th>
+                </tr>
+                <tr *ngIf="['trips', 'bookings', 'cancellations'].includes(reportType)">
+                  <th *ngFor="let key of reportData[0] | keyvalue">{{ key.key }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of reportData">
+                  <td *ngFor="let key of row | keyvalue">{{ key.value }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="empty-state" *ngIf="reportData.length === 0">
+              <p>No data generated. Adjust filters and click "Generate Data".</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETA Insights Tab -->
+      <div *ngIf="activeTab === 'eta_insights'">
+        <!-- ETA Stats Cards -->
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+          <div class="stat-card" style="padding: 1.25rem;">
+            <div class="stat-icon green" style="width: 48px; height: 48px; font-size: 1.25rem;">🎯</div>
+            <div class="stat-info">
+              <h3 style="font-size: 1.6rem; color: #10b981;">{{ etaModelAccuracy || '94%' }}</h3>
+              <p>ETA Model Accuracy</p>
+            </div>
+          </div>
+          <div class="stat-card" style="padding: 1.25rem;">
+            <div class="stat-icon orange" style="width: 48px; height: 48px; font-size: 1.25rem;">⏱️</div>
+            <div class="stat-info">
+              <h3 style="font-size: 1.6rem; color: #f59e0b;">+{{ etaAvgDelay || '12' }} min</h3>
+              <p>Avg System-wide Delay</p>
+            </div>
+          </div>
+          <div class="stat-card" style="padding: 1.25rem;">
+            <div class="stat-icon purple" style="width: 48px; height: 48px; font-size: 1.25rem;">🚧</div>
+            <div class="stat-info">
+              <h3 style="font-size: 1.6rem; color: #8b5cf6;">Traffic</h3>
+              <p>Top Delay Factor</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h2>AI ETA Predictions vs Reality</h2>
+              <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Compare the machine learning model estimates with real completed trip times.</p>
+            </div>
+          </div>
+          
+          <table class="data-table" style="margin-top: 1.5rem;">
+            <thead>
+              <tr>
+                <th>Trip ID & Route</th>
+                <th>Predicted ETA</th>
+                <th>Actual Arrival</th>
+                <th>Variance (Delay)</th>
+                <th>Primary Factor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>#TRP-1033</strong><br><span style="font-size: 0.8rem; color: #64748b;">MZD to ISB</span></td>
+                <td>3 hrs 15 mins</td>
+                <td>3 hrs 40 mins</td>
+                <td><span style="color: #e74c3c; font-weight: 600;">+25 mins</span></td>
+                <td>Landslide (Kohala)</td>
+              </tr>
+              <tr>
+                <td><strong>#TRP-1034</strong><br><span style="font-size: 0.8rem; color: #64748b;">RWP to MZD</span></td>
+                <td>3 hrs 10 mins</td>
+                <td>3 hrs 12 mins</td>
+                <td><span style="color: #10b981; font-weight: 600;">+2 mins</span></td>
+                <td>Normal Traffic</td>
+              </tr>
+              <tr>
+                <td><strong>#TRP-1035</strong><br><span style="font-size: 0.8rem; color: #64748b;">ISB to Bagh</span></td>
+                <td>4 hrs 00 mins</td>
+                <td>4 hrs 45 mins</td>
+                <td><span style="color: #e74c3c; font-weight: 600;">+45 mins</span></td>
+                <td>Vehicle Breakdown</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Organization Tab -->
+      <div *ngIf="activeTab === 'organization'">
+        <div class="content-card">
+          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+            <div>
+              <h2>Organization Settings</h2>
+              <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Manage company profile, contact details, and branding.</p>
+            </div>
+            <button (click)="updateSuperAdminFields()" class="action-btn" style="background: #e74c3c; color: white; border: none; font-weight: 600; padding: 8px 16px; border-radius: 6px;">🔒 Super Admin Override</button>
+          </div>
+          
+          <div *ngIf="orgProfile" style="margin-top: 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+              
+              <!-- Left Col: Read-Only Info -->
+              <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <h3 style="margin-bottom: 1rem; color: #334155; font-size: 1.1rem;">System Identity</h3>
+                <p style="margin-bottom: 0.5rem; color: #64748b; font-size: 0.9rem;">Organization ID</p>
+                <p style="margin-bottom: 1.5rem; font-weight: 600; color: #1e293b;">ORG-{{ orgProfile.organizationId }}</p>
+                
+                <p style="margin-bottom: 0.5rem; color: #64748b; font-size: 0.9rem;">Name & Location</p>
+                <p style="margin-bottom: 1.5rem; font-weight: 600; color: #1e293b;">{{ orgProfile.organizationName }} <br> <span style="font-weight: 400; font-size: 0.85rem; color: #64748b;">{{ orgProfile.location }}</span></p>
+                
+                <p style="margin-bottom: 0.5rem; color: #64748b; font-size: 0.9rem;">Subdomain</p>
+                <p style="margin-bottom: 1.5rem; font-weight: 600; color: #5d87ff;">{{ orgProfile.subdomain }}.ajktransport.com</p>
+                
+                <p style="margin-bottom: 0.5rem; color: #64748b; font-size: 0.9rem;">Platform Status</p>
+                <span [ngStyle]="{'background': orgProfile.status === 'Active' ? '#10b981' : '#ef4444', 'color': 'white', 'padding': '4px 10px', 'border-radius': '99px', 'font-size': '0.85rem', 'font-weight': '600'}">
+                  {{ orgProfile.status }}
+                </span>
+              </div>
+              
+              <!-- Right Col: Editable Profile -->
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Contact Phone</label>
+                  <input type="text" [(ngModel)]="orgProfile.contactPhone">
+                </div>
+                <div class="form-group">
+                  <label>Contact Email</label>
+                  <input type="email" [(ngModel)]="orgProfile.contactEmail">
+                </div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label>Physical Address</label>
+                  <input type="text" [(ngModel)]="orgProfile.address">
+                </div>
+                <div class="form-group">
+                  <label>Logo URL (Brand)</label>
+                  <input type="text" [(ngModel)]="orgProfile.logoUrl">
+                </div>
+                <div class="form-group">
+                  <label>Office Hours</label>
+                  <input type="text" [(ngModel)]="orgProfile.officeHours" placeholder="e.g. 9 AM - 6 PM">
+                </div>
+                <div class="form-group">
+                  <label>Default Language</label>
+                  <select [(ngModel)]="orgProfile.defaultLanguage">
+                    <option value="English">English</option>
+                    <option value="Urdu">Urdu</option>
+                  </select>
+                </div>
+              </div>
+              
+            </div>
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; text-align: right;">
+              <button class="add-btn" (click)="updateOrganizationProfile()">Save Settings</button>
+            </div>
+          </div>
+          <div *ngIf="!orgProfile" class="empty-state">
+            <p>Loading Organization Profile...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Tab -->
+      <div *ngIf="activeTab === 'profile'">
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+          
+          <!-- Profile Card -->
+          <div class="content-card">
+            <div class="card-header">
+              <h2>My Profile</h2>
+            </div>
+            <div style="text-align: center; margin-top: 1.5rem; margin-bottom: 2rem;">
+              <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #5d87ff, #3b82f6); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 600; margin: 0 auto 1rem auto; box-shadow: 0 4px 12px rgba(93, 135, 255, 0.3);">{{ userName.charAt(0).toUpperCase() }}</div>
+              <h3 style="margin-bottom: 0.25rem;">{{ myProfile?.name || userName }}</h3>
+              <p style="color: #64748b; font-size: 0.9rem;">Transport Admin</p>
+            </div>
+            
+            <div *ngIf="myProfile">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" [(ngModel)]="myProfile.name">
+              </div>
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" [(ngModel)]="myProfile.email">
+              </div>
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="text" [(ngModel)]="myProfile.phone">
+              </div>
+            </div>
+            
+            <button class="add-btn" style="width: 100%; margin-top: 1rem; padding: 12px 24px !important; height: auto !important; min-height: 48px !important; line-height: 1.5 !important;" (click)="updateMyProfile()">Save Profile</button>
+            <button class="action-btn" style="width: 100%; margin-top: 1rem; border: 1px solid #e2e8f0; background: white; color: #1e293b; padding: 12px 24px !important; height: auto !important; min-height: 48px !important; line-height: 1.5 !important; font-size: 0.95rem; justify-content: center; display: inline-flex; align-items: center;" (click)="changeMyPassword()">🔒 Change Password</button>
+          </div>
+
+          <!-- Notifications Center -->
+          <div class="content-card">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h2>Notification Center</h2>
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Live system alerts and reports.</p>
+              </div>
+              <button (click)="chooseChannels()" class="action-btn" style="background: #e2e8f0; color: #1e293b; border: none; font-size: 0.85rem;">⚙️ Alert Preferences</button>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+              <!-- Dummy Notifications -->
+              <div style="display: flex; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: flex-start; background: #f8fafc; border-left: 3px solid #e74c3c;">
+                <div style="font-size: 1.5rem;">🚨</div>
+                <div style="flex: 1;">
+                  <h4 style="margin: 0 0 0.25rem 0; color: #1e293b;">Vehicle Document Expiring!</h4>
+                  <p style="margin: 0; color: #64748b; font-size: 0.9rem;">The Insurance for Vehicle AJK-1111 expires in 7 days.</p>
+                  <span style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem; display: block;">Just now</span>
+                </div>
+                <button style="border: none; background: none; color: #5d87ff; font-size: 0.85rem; font-weight: 600; cursor: pointer;">Mark Read</button>
+              </div>
+              
+              <div style="display: flex; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: flex-start; background: #f8fafc; border-left: 3px solid #f59e0b;">
+                <div style="font-size: 1.5rem;">⚠️</div>
+                <div style="flex: 1;">
+                  <h4 style="margin: 0 0 0.25rem 0; color: #1e293b;">New Driver Complaint</h4>
+                  <p style="margin: 0; color: #64748b; font-size: 0.9rem;">Driver Ali Raza (Trip TRP-1040) reported a mechanical issue.</p>
+                  <span style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem; display: block;">2 hours ago</span>
+                </div>
+                <button style="border: none; background: none; color: #5d87ff; font-size: 0.85rem; font-weight: 600; cursor: pointer;">Mark Read</button>
+              </div>
+
+              <div style="display: flex; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f1f5f9; align-items: flex-start;">
+                <div style="font-size: 1.5rem;">✅</div>
+                <div style="flex: 1;">
+                  <h4 style="margin: 0 0 0.25rem 0; color: #1e293b;">Trip Completed</h4>
+                  <p style="margin: 0; color: #64748b; font-size: 0.9rem;">Trip TRP-1033 arrived safely in Islamabad.</p>
+                  <span style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.5rem; display: block;">Yesterday</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Schedules / Timings Tab -->
+      <div *ngIf="activeTab === 'timings'">
+        
+        <!-- Schedules Sub-Tabs -->
+        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <button 
+            [style.border-bottom]="activeScheduleSubTab === 'all' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeScheduleSubTab === 'all' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeScheduleSubTab = 'all'">
+            All schedules
+          </button>
+          <button 
+            [style.border-bottom]="activeScheduleSubTab === 'add' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeScheduleSubTab === 'add' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeScheduleSubTab = 'add'">
+            Add schedule
+          </button>
+        </div>
+
+        <!-- ALL SCHEDULES SUB-TAB -->
+        <div *ngIf="activeScheduleSubTab === 'all'" class="content-card">
+          <div class="card-header">
+            <h2>Active Schedules</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Repeating departure patterns that generate trips automatically.</p>
+          </div>
+          <table class="data-table" *ngIf="timings.length > 0">
+            <thead>
+              <tr>
+                <th>Route</th>
+                <th>Departure Time</th>
+                <th>Operating Days</th>
+                <th>Default Vehicle</th>
+                <th>Default Driver</th>
+                <th>Valid From/To</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let timing of timings">
+                <td><strong>{{ getRouteName(timing.routeId) }}</strong></td>
+                <td>{{ timing.departureTime }}</td>
+                <td>Mon, Wed, Fri</td>
+                <td>{{ getVehicleNumber(timing.vehicleId) }}</td>
+                <td>Ali Khan</td>
+                <td><span style="color: #64748b; font-size: 0.85rem;">2024-01-01 <br> 2024-12-31</span></td>
+                <td><span style="color: #27ae60; font-weight: 600; background: #e6f4ea; padding: 4px 8px; border-radius: 4px;">Active</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleScheduleAction($event, timing.timingId)">
+                    <option value="">Actions...</option>
+                    <option value="edit">Edit</option>
+                    <option value="pause">Pause</option>
+                    <option value="generate">Generate trips (Next 7 days)</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="timings.length === 0">
+            <p>No schedules added yet. Add your first pattern above!</p>
+          </div>
+        </div>
+
+        <!-- ADD SCHEDULE SUB-TAB -->
+        <div *ngIf="activeScheduleSubTab === 'add'" class="content-card">
+          <div class="card-header">
+            <h2>Create New Schedule</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">The same vehicle or driver cannot have overlapping schedules.</p>
+          </div>
+          <form (ngSubmit)="addTiming()">
+            
+            <h4 style="margin: 1.5rem 0 1rem; color: #334155;">Schedule Definition</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Select Route *</label>
+                <select [(ngModel)]="selectedRouteId" name="selectedRouteId" required>
+                  <option value="0">Select Route</option>
+                  <option *ngFor="let route of routes" [value]="route.routeId">{{ route.routeName }} ({{ route.startPoint }} - {{ route.endPoint }})</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Departure Time *</label>
+                <input [(ngModel)]="departureTime" name="departureTime" type="time" required>
+              </div>
+              <div class="form-group" style="grid-column: span 2;">
+                <label>Operating Days *</label>
+                <div style="display: flex; gap: 10px; margin-top: 5px;">
+                  <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" checked> Mon</label>
+                  <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" checked> Tue</label>
+                  <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" checked> Wed</label>
+                  <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" checked> Thu</label>
+                  <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox" checked> Fri</label>
+                  <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox"> Sat</label>
+                  <label style="display: flex; align-items: center; gap: 5px;"><input type="checkbox"> Sun</label>
+                </div>
+              </div>
+            </div>
+
+            <h4 style="margin: 2rem 0 1rem; color: #334155;">Assignments & Validity</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Default Vehicle *</label>
+                <select [(ngModel)]="selectedVehicleId" name="selectedVehicleId" required>
+                  <option value="0">Select Vehicle</option>
+                  <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleId">{{ vehicle.vehicleNumber }} - {{ vehicle.vehicleType }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Default Driver *</label>
+                <select [(ngModel)]="scheduleDriverId" name="scheduleDriverId" required>
+                  <option value="0">Select Driver</option>
+                  <option *ngFor="let driver of drivers" [value]="driver.id">{{ driver.name }} ({{ driver.licenseNumber }})</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Valid From *</label>
+                <input [(ngModel)]="scheduleValidFrom" name="scheduleValidFrom" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Valid To *</label>
+                <input [(ngModel)]="scheduleValidTo" name="scheduleValidTo" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select [(ngModel)]="scheduleStatus" name="scheduleStatus">
+                  <option value="Active">Active</option>
+                  <option value="Paused">Paused</option>
+                </select>
+              </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; display: flex; gap: 1rem;">
+              <button type="submit" class="add-btn">Create Schedule</button>
+              <button type="button" class="add-btn" style="background: #f1f5f9; color: #475569;" (click)="activeScheduleSubTab = 'all'">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Fares Tab -->
+      <div *ngIf="activeTab === 'fares'">
+        <div class="content-card">
+          <div class="card-header">
+            <h2>Add New Fare</h2>
+          </div>
+          <form (ngSubmit)="addFare()">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Select Route</label>
+                <select [(ngModel)]="fareRouteId" name="fareRouteId" required>
+                  <option value="0">Select Route</option>
+                  <option *ngFor="let route of routes" [value]="route.routeId">{{ route.routeName }} ({{ route.startPoint }} - {{ route.endPoint }})</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Passenger Type</label>
+                <select [(ngModel)]="passengerType" name="passengerType" required>
+                  <option value="">Select Type</option>
+                  <option value="Adult">Adult</option>
+                  <option value="Child">Child</option>
+                  <option value="Student">Student</option>
+                  <option value="Senior">Senior Citizen</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Fare Amount (Rs.)</label>
+                <input [(ngModel)]="fareAmount" name="fareAmount" type="number" placeholder="e.g., 500" required>
+              </div>
+            </div>
+            <button type="submit" class="add-btn">➕ Add Fare</button>
+          </form>
+        </div>
+
+        <div class="content-card">
+          <div class="card-header">
+            <h2>All Fares</h2>
+          </div>
+          <table class="data-table" *ngIf="fares.length > 0">
+            <thead>
+              <tr>
+                <th>Route</th>
+                <th>Passenger Type</th>
+                <th>Amount</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fare of fares">
+                <td><strong>{{ getRouteName(fare.routeId) }}</strong></td>
+                <td>{{ fare.passengerType }}</td>
+                <td>Rs. {{ fare.amount }}</td>
+                <td><button class="action-btn" (click)="deleteFare(fare.fareId)">🗑️ Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="fares.length === 0">
+            <p>No fares added yet. Add your first fare above!</p>
+          </div>
+        </div>
+      </div>
+      <!-- Drivers Tab -->
+      <div *ngIf="activeTab === 'drivers'">
+        
+        <!-- Driver Sub-Tabs -->
+        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <button 
+            [style.border-bottom]="activeDriverSubTab === 'all' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeDriverSubTab === 'all' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeDriverSubTab = 'all'">
+            All drivers
+          </button>
+          <button 
+            [style.border-bottom]="activeDriverSubTab === 'add' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeDriverSubTab === 'add' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeDriverSubTab = 'add'">
+            Add driver
+          </button>
+          <button 
+            [style.border-bottom]="activeDriverSubTab === 'alerts' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeDriverSubTab === 'alerts' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+            (click)="activeDriverSubTab = 'alerts'">
+            Licence expiry alerts
+            <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">3</span>
+          </button>
+        </div>
+
+        <!-- ALL DRIVERS SUB-TAB -->
+        <div *ngIf="activeDriverSubTab === 'all'" class="content-card">
+          <div class="card-header">
+            <h2>Drivers List</h2>
+          </div>
+          <table class="data-table" *ngIf="drivers.length > 0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Licence no.</th>
+                <th>Licence expiry</th>
+                <th>Assigned vehicle</th>
+                <th>Joining date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let driver of drivers">
+                <td>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #475569;">
+                      {{ driver.name.charAt(0) }}
+                    </div>
+                    <strong>{{ driver.name }}</strong>
+                  </div>
+                </td>
+                <td>{{ driver.phone }}</td>
+                <td>{{ driver.licenseNumber || 'N/A' }}</td>
+                <td>2028-05-15</td>
+                <td>Not Assigned</td>
+                <td>2024-01-10</td>
+                <td>
+                  <span style="background: #e6f4ea; color: #1e8e3e; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Active</span>
+                </td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleDriverAction($event, driver.id)">
+                    <option value="">Actions...</option>
+                    <option value="edit">Edit</option>
+                    <option value="view">View details</option>
+                    <option value="assign">Assign vehicle</option>
+                    <option value="history">Trip history</option>
+                    <option value="deactivate">Deactivate (Soft Delete)</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="drivers.length === 0">
+            <p>No drivers found in the system.</p>
+          </div>
+        </div>
+
+        <!-- ADD DRIVER SUB-TAB -->
+        <div *ngIf="activeDriverSubTab === 'add'" class="content-card">
+          <div class="card-header">
+            <h2>Add New Driver</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Saving creates a user account with role DRIVER automatically.</p>
+          </div>
+          <form (ngSubmit)="addDriver()">
+            
+            <h4 style="margin: 1.5rem 0 1rem; color: #334155;">Personal Information</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Full Name *</label>
+                <input [(ngModel)]="driverName" name="driverName" required>
+              </div>
+              <div class="form-group">
+                <label>Phone Number *</label>
+                <input [(ngModel)]="driverPhone" name="driverPhone" required>
+              </div>
+              <div class="form-group">
+                <label>ID Number (CNIC) *</label>
+                <input [(ngModel)]="driverIdNumber" name="driverIdNumber" required>
+              </div>
+              <div class="form-group">
+                <label>Home Address</label>
+                <input [(ngModel)]="driverAddress" name="driverAddress">
+              </div>
+              <div class="form-group">
+                <label>Emergency Contact</label>
+                <input [(ngModel)]="driverEmergencyContact" name="driverEmergencyContact">
+              </div>
+              <div class="form-group">
+                <label>Profile Photo</label>
+                <input type="file" accept="image/*" style="padding: 0.5rem; background: white;">
+              </div>
+            </div>
+
+            <h4 style="margin: 2rem 0 1rem; color: #334155;">Licence Details</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Licence Number *</label>
+                <input [(ngModel)]="driverLicense" name="driverLicense" required>
+              </div>
+              <div class="form-group">
+                <label>Licence Type</label>
+                <select [(ngModel)]="driverLicenseType" name="driverLicenseType">
+                  <option value="LTV">LTV (Light Transport Vehicle)</option>
+                  <option value="HTV">HTV (Heavy Transport Vehicle)</option>
+                  <option value="PSV">PSV (Public Service Vehicle)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Issue Date</label>
+                <input [(ngModel)]="driverLicenseIssueDate" name="driverLicenseIssueDate" type="date">
+              </div>
+              <div class="form-group">
+                <label>Expiry Date *</label>
+                <input [(ngModel)]="driverLicenseExpiryDate" name="driverLicenseExpiryDate" type="date" required>
+              </div>
+              <div class="form-group" style="grid-column: span 2;">
+                <label>Licence Upload (PDF/Image)</label>
+                <input type="file" style="padding: 0.5rem; background: white; width: 100%; max-width: 400px;">
+              </div>
+            </div>
+
+            <h4 style="margin: 2rem 0 1rem; color: #334155;">Account Setup</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Login Email *</label>
+                <input [(ngModel)]="driverEmail" name="driverEmail" type="email" required>
+              </div>
+              <div class="form-group">
+                <label>Temporary Password *</label>
+                <input [(ngModel)]="driverPassword" name="driverPassword" type="password" required>
+              </div>
+              <div class="form-group">
+                <label>Joining Date *</label>
+                <input [(ngModel)]="driverJoiningDate" name="driverJoiningDate" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Status</label>
+                <select [(ngModel)]="driverStatus" name="driverStatus">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; display: flex; gap: 1rem;">
+              <button type="submit" class="add-btn">Create Driver Profile</button>
+              <button type="button" class="add-btn" style="background: #f1f5f9; color: #475569;" (click)="activeDriverSubTab = 'all'">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ALERTS SUB-TAB -->
+        <div *ngIf="activeDriverSubTab === 'alerts'" class="content-card">
+          <div class="card-header">
+            <h2 style="color: #e53e3e;">Licence Expiry Alerts</h2>
+            <p>Drivers with expired licences cannot be assigned to upcoming trips.</p>
+          </div>
+          
+          <div style="padding: 2rem; text-align: center; color: #64748b; background: #fff5f5; border: 1px dashed #feb2b2; border-radius: 8px; margin-top: 1rem;">
+            [API Data Placeholder] 3 Drivers have licences expiring in the next 30 days.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Road Advisories Tab -->
+      <div *ngIf="activeTab === 'advisories'">
+        
+        <!-- Advisories Sub-Tabs -->
+        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <button 
+            [style.border-bottom]="activeAdvisorySubTab === 'active' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeAdvisorySubTab === 'active' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+            (click)="activeAdvisorySubTab = 'active'">
+            Active Advisories
+            <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">1</span>
+          </button>
+          <button 
+            [style.border-bottom]="activeAdvisorySubTab === 'add' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeAdvisorySubTab === 'add' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeAdvisorySubTab = 'add'">
+            Log Advisory
+          </button>
+          <button 
+            [style.border-bottom]="activeAdvisorySubTab === 'history' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeAdvisorySubTab === 'history' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeAdvisorySubTab = 'history'">
+            Past Advisories
+          </button>
+        </div>
+
+        <!-- ACTIVE ADVISORIES -->
+        <div *ngIf="activeAdvisorySubTab === 'active'" class="content-card">
+          <div class="card-header">
+            <h2>Current Road Closures & Hazards</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Active advisories flag affected trips, update ETAs, and notify drivers.</p>
+          </div>
+          
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Road/Segment</th>
+                <th>Reason</th>
+                <th>Started At</th>
+                <th>Est. Reopening</th>
+                <th>Affected Routes</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #fff5f5;">
+                <td><strong>Kohala - Muzaffarabad</strong><br><span style="font-size: 0.8rem; color: #718096;">Source: NHA</span></td>
+                <td><span style="background: #fed7d7; color: #9b2c2c; padding: 3px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">Landslide</span></td>
+                <td>Oct 5, 08:00 AM</td>
+                <td>Oct 6, 12:00 PM</td>
+                <td>Rawalpindi Express<br><span style="font-size: 0.8rem; color: #e53e3e;">(3 trips affected)</span></td>
+                <td><span style="color: #e53e3e; font-weight: 600;">Active</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;">
+                    <option value="">Actions...</option>
+                    <option value="edit">Edit Advisory</option>
+                    <option value="link">Link to more routes</option>
+                    <option value="delay">Delay/Cancel Trips</option>
+                    <option value="notify">Notify booked passengers</option>
+                    <option value="close">Close advisory (Resolved)</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ADD ADVISORY -->
+        <div *ngIf="activeAdvisorySubTab === 'add'" class="content-card">
+          <div class="card-header">
+            <h2>Log Road Advisory</h2>
+          </div>
+          <form (ngSubmit)="activeAdvisorySubTab = 'active'">
+            <div class="form-grid">
+              <div class="form-group" style="grid-column: span 2;">
+                <label>Road or Segment Name *</label>
+                <input type="text" placeholder="e.g. Murree Expressway (Km 15-20)" required>
+              </div>
+              <div class="form-group">
+                <label>Hazard Reason *</label>
+                <select required>
+                  <option value="Landslide">Landslide</option>
+                  <option value="Snow">Heavy Snow</option>
+                  <option value="Flood">Flooding</option>
+                  <option value="Accident">Accident</option>
+                  <option value="Construction">Construction/Repairs</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Information Source</label>
+                <input type="text" placeholder="e.g. Traffic Police, NHA, Driver Report">
+              </div>
+              <div class="form-group">
+                <label>Started At *</label>
+                <input type="datetime-local" required>
+              </div>
+              <div class="form-group">
+                <label>Expected Reopening</label>
+                <input type="datetime-local">
+              </div>
+              
+              <div class="form-group" style="grid-column: span 2;">
+                <label>Link Affected Routes</label>
+                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 8px;">Select which routes are blocked or delayed by this hazard. Trips on these routes will be flagged.</p>
+                <select multiple style="height: 100px;">
+                  <option *ngFor="let route of routes" [value]="route.routeId">{{ route.routeName }} ({{ route.startPoint }} - {{ route.endPoint }})</option>
+                </select>
+              </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; display: flex; gap: 1rem;">
+              <button type="submit" class="add-btn" style="background: #e74c3c;">Log Advisory & Flag Trips</button>
+              <button type="button" class="add-btn" style="background: #f1f5f9; color: #475569;" (click)="activeAdvisorySubTab = 'active'">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Trips Tab -->
+      <!-- Trips Tab -->
+      <div *ngIf="activeTab === 'trips'">
+        
+        <!-- Trips Sub-Tabs -->
+        <div style="display: flex; gap: 1.5rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <button 
+            [style.border-bottom]="activeTripSubTab === 'upcoming' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeTripSubTab === 'upcoming' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeTripSubTab = 'upcoming'">
+            Today & Upcoming
+          </button>
+          <button 
+            [style.border-bottom]="activeTripSubTab === 'live' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeTripSubTab === 'live' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+            (click)="activeTripSubTab = 'live'">
+            Active (Live)
+            <span style="background: #27ae60; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem; animation: pulse 2s infinite;">2</span>
+          </button>
+          <button 
+            [style.border-bottom]="activeTripSubTab === 'completed' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeTripSubTab === 'completed' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeTripSubTab = 'completed'">
+            Completed
+          </button>
+          <button 
+            [style.border-bottom]="activeTripSubTab === 'cancelled' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeTripSubTab === 'cancelled' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeTripSubTab = 'cancelled'">
+            Cancelled
+          </button>
+          <button 
+            [style.border-bottom]="activeTripSubTab === 'add' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeTripSubTab === 'add' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeTripSubTab = 'add'">
+            + Create Trip
+          </button>
+        </div>
+
+        <!-- UPCOMING / COMPLETED / CANCELLED TABLE VIEW -->
+        <div *ngIf="activeTripSubTab !== 'add' && activeTripSubTab !== 'live'" class="content-card">
+          <div class="card-header">
+            <h2 *ngIf="activeTripSubTab === 'upcoming'">Scheduled & Upcoming Trips</h2>
+            <h2 *ngIf="activeTripSubTab === 'completed'">Completed Trips</h2>
+            <h2 *ngIf="activeTripSubTab === 'cancelled'">Cancelled Trips</h2>
+          </div>
+          
+          <!-- Alert Banner for Trips -->
+          <div *ngIf="activeTripSubTab === 'upcoming'" style="background: #fff5f5; border-left: 4px solid #e53e3e; padding: 12px 16px; margin-bottom: 20px; border-radius: 0 4px 4px 0;">
+            <p style="color: #c53030; font-weight: 600; font-size: 0.9rem;">⚠️ 3 trips are affected by active road advisories.</p>
+          </div>
+
+          <table class="data-table" *ngIf="trips.length > 0">
+            <thead>
+              <tr>
+                <th>Trip ID</th>
+                <th>Date & Time</th>
+                <th>Route</th>
+                <th>Vehicle & Driver</th>
+                <th>Booked / Total</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let trip of trips">
+                <td>#TRP-{{ trip.tripId }}</td>
+                <td>{{ trip.travelDate | date }}<br><span style="color: #64748b;">{{ trip.departureTime }}</span></td>
+                <td><strong>{{ getRouteName(trip.routeId) }}</strong></td>
+                <td>{{ getVehicleNumber(trip.vehicleId) }}<br><span style="color: #64748b; font-size: 0.8rem;">Driver ID: {{ trip.driverId }}</span></td>
+                <td>
+                  <div style="width: 100%; background: #e2e8f0; height: 6px; border-radius: 4px; margin-bottom: 4px;">
+                    <div style="width: 75%; background: #5d87ff; height: 100%; border-radius: 4px;"></div>
+                  </div>
+                  <span style="font-size: 0.85rem; color: #475569;">15 / 20 seats</span>
+                </td>
+                <td><span style="color: #2980b9; font-weight: 600; background: #ebf5fb; padding: 4px 8px; border-radius: 4px;">{{ trip.status }}</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleTripAction($event, trip.tripId)">
+                    <option value="">Actions...</option>
+                    <option value="view">👥 View Bookings</option>
+                    <option value="modify" *ngIf="activeTripSubTab === 'upcoming'">✏️ Modify/Reassign</option>
+                    <option value="cancel" *ngIf="activeTripSubTab === 'upcoming'">🚫 Cancel Trip</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="empty-state" *ngIf="trips.length === 0">
+            <p>No trips found in this category.</p>
+          </div>
+        </div>
+
+        <!-- LIVE TRIPS VIEW -->
+        <div *ngIf="activeTripSubTab === 'live'" class="content-card" style="background: transparent; box-shadow: none; border: none; padding: 0;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 1.5rem;">
+            
+            <!-- Live Trip Card -->
+            <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+              <div style="background: #f8fafc; padding: 15px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <h3 style="margin: 0; color: #1e293b; font-size: 1.1rem;">Muzaffarabad Express</h3>
+                  <p style="margin: 0; color: #64748b; font-size: 0.85rem;">#TRP-1042 &bull; Vehicle AJK-1111</p>
+                </div>
+                <span style="background: #10b981; color: white; padding: 4px 10px; border-radius: 99px; font-size: 0.8rem; font-weight: 600; animation: pulse 2s infinite;">Live</span>
+              </div>
+              <div style="padding: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                  <div>
+                    <p style="margin: 0; color: #64748b; font-size: 0.85rem;">Started At</p>
+                    <p style="margin: 0; font-weight: 600; color: #334155;">08:15 AM</p>
+                  </div>
+                  <div style="text-align: right;">
+                    <p style="margin: 0; color: #64748b; font-size: 0.85rem;">Predicted ETA</p>
+                    <p style="margin: 0; font-weight: 600; color: #5d87ff;">11:45 AM</p>
+                  </div>
+                </div>
+                
+                <div style="background: #fff5f5; border: 1px solid #fed7d7; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                  <p style="margin: 0; color: #c53030; font-size: 0.85rem; font-weight: 600;">⚠️ +20m Delay: Landslide Advisory Active</p>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; position: relative; margin-top: 30px; padding-top: 20px;">
+                  <!-- Background Line -->
+                  <div style="position: absolute; top: 4px; left: 10%; right: 10%; height: 2px; background: #e2e8f0; z-index: 1;"></div>
+                  
+                  <!-- Origin -->
+                  <div style="position: relative; z-index: 2; text-align: center; flex: 1;">
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981; margin: -25px auto 10px auto;"></div>
+                    <p style="margin: 0; font-size: 0.85rem; color: #64748b;">Origin</p>
+                    <p style="margin: 0; font-weight: 600; font-size: 0.85rem;">MZD Terminal<br><span style="color: #10b981; font-size: 0.8rem;">(Departed)</span></p>
+                  </div>
+                  
+                  <!-- Last Stop -->
+                  <div style="position: relative; z-index: 2; text-align: center; flex: 1;">
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #10b981; margin: -25px auto 10px auto;"></div>
+                    <p style="margin: 0; font-size: 0.85rem; color: #64748b;">Last Stop</p>
+                    <p style="margin: 0; font-weight: 600; font-size: 0.85rem;">Kohala Bridge<br><span style="color: #10b981; font-size: 0.8rem;">(09:30 AM)</span></p>
+                  </div>
+                  
+                  <!-- Next Stop -->
+                  <div style="position: relative; z-index: 2; text-align: center; flex: 1;">
+                    <div style="width: 10px; height: 10px; border-radius: 50%; background: #5d87ff; box-shadow: 0 0 0 3px rgba(93, 135, 255, 0.2); margin: -25px auto 10px auto;"></div>
+                    <p style="margin: 0; font-size: 0.85rem; color: #64748b;">Next Stop</p>
+                    <p style="margin: 0; font-weight: 600; font-size: 0.85rem;">Murree Toll<br><span style="color: #f59e0b; font-size: 0.8rem;">(ETA 10:45)</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- CREATE TRIP TAB -->
+        <div *ngIf="activeTripSubTab === 'add'" class="content-card">
+          <div class="card-header">
+            <h2>Manual Trip Override</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Trips are normally auto-generated from Schedules. Use this to create manual extra trips.</p>
+          </div>
+          <form (ngSubmit)="addTrip()">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Select Route *</label>
+                <select [(ngModel)]="tripRouteId" name="tripRouteId" required>
+                  <option value="0">Select Route</option>
+                  <option *ngFor="let route of routes" [value]="route.routeId">{{ route.routeName }} ({{ route.startPoint }} - {{ route.endPoint }})</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Select Driver *</label>
+                <select [(ngModel)]="tripDriverId" name="tripDriverId" required>
+                  <option value="0">Select Driver</option>
+                  <option *ngFor="let driver of drivers" [value]="driver.id">{{ driver.name }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Select Vehicle *</label>
+                <select [(ngModel)]="tripVehicleId" name="tripVehicleId" required>
+                  <option value="0">Select Vehicle</option>
+                  <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleId">{{ vehicle.vehicleNumber }} (Cap: 40)</option>
+                </select>
+                <p style="font-size: 0.75rem; color: #e53e3e; margin-top: 4px;">Validation: Vehicle capacity cannot be lower than existing bookings.</p>
+              </div>
+              <div class="form-group">
+                <label>Travel Date *</label>
+                <input [(ngModel)]="tripDate" name="tripDate" type="date" required>
+              </div>
+              <div class="form-group">
+                <label>Planned Departure *</label>
+                <input [(ngModel)]="tripDeparture" name="tripDeparture" type="time" required>
+              </div>
+            </div>
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0;">
+              <button type="submit" class="add-btn">➕ Schedule Extra Trip</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+      
+      <!-- Bookings Tab -->
+      <div *ngIf="activeTab === 'bookings'">
+        <!-- Bookings Sub-Tabs -->
+        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <button 
+            [style.border-bottom]="activeBookingSubTab === 'all' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeBookingSubTab === 'all' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeBookingSubTab = 'all'">
+            All Bookings
+          </button>
+          <button 
+            [style.border-bottom]="activeBookingSubTab === 'seats' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeBookingSubTab === 'seats' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeBookingSubTab = 'seats'">
+            Seat Availability Map
+          </button>
+          <button 
+            [style.border-bottom]="activeBookingSubTab === 'manifest' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeBookingSubTab === 'manifest' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
+            (click)="activeBookingSubTab = 'manifest'">
+            Passenger Lists
+          </button>
+        </div>
+
+        <!-- ALL BOOKINGS -->
+        <div *ngIf="activeBookingSubTab === 'all'" class="content-card">
+          <div class="card-header">
+            <h2>Passenger Bookings Master</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Manage tickets, modifications, and cancellations.</p>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Booking ID / Code</th>
+                <th>Passenger</th>
+                <th>Trip & Date</th>
+                <th>Seat(s)</th>
+                <th>Boarding &rarr; Drop-off</th>
+                <th>Fare & Payment</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>#BKG-509</strong><br><span style="font-family: monospace; color: #64748b;">TX-A12X9</span></td>
+                <td>Saad Ahmed<br><span style="color: #64748b; font-size: 0.8rem;">0300-1234567</span></td>
+                <td>TRP-1042<br><span style="color: #64748b; font-size: 0.8rem;">Oct 5, 2024</span></td>
+                <td><strong>3, 4</strong></td>
+                <td>Muzaffarabad<br>&darr;<br>Islamabad</td>
+                <td>Rs. 1000<br><span style="color: #27ae60; font-size: 0.8rem; font-weight: 600;">Paid (Card)</span></td>
+                <td><span style="color: #27ae60; font-weight: 600; background: #e6f4ea; padding: 4px 8px; border-radius: 4px;">Confirmed</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleBookingAction($event, 509)">
+                    <option value="">Actions...</option>
+                    <option value="view">View Details</option>
+                    <option value="move">Modify (Move Seat/Trip)</option>
+                    <option value="cancel">Cancel Booking</option>
+                    <option value="pdf">⬇️ Download PDF</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>#BKG-510</strong><br><span style="font-family: monospace; color: #64748b;">TX-B89L2</span></td>
+                <td>Bilal Khan<br><span style="color: #64748b; font-size: 0.8rem;">0333-9876543</span></td>
+                <td>TRP-1045<br><span style="color: #64748b; font-size: 0.8rem;">Oct 6, 2024</span></td>
+                <td><strong>12</strong></td>
+                <td>Kohala<br>&darr;<br>Rawalpindi</td>
+                <td>Rs. 450<br><span style="color: #f59e0b; font-size: 0.8rem; font-weight: 600;">Pending (Cash)</span></td>
+                <td><span style="color: #2980b9; font-weight: 600; background: #ebf5fb; padding: 4px 8px; border-radius: 4px;">Reserved</span></td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleBookingAction($event, 510)">
+                    <option value="">Actions...</option>
+                    <option value="view">View Details</option>
+                    <option value="move">Modify (Move Seat/Trip)</option>
+                    <option value="cancel">Cancel Booking</option>
+                    <option value="pdf">⬇️ Download PDF</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SEAT MAP / MANIFEST STUB -->
+        <div *ngIf="activeBookingSubTab !== 'all'" class="content-card">
+          <div style="padding: 3rem; text-align: center; color: #64748b;">
+            <p>Select a specific trip from the <strong>Trips</strong> tab to view its detailed Seat Map and Passenger Manifest.</p>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- Complaints Tab -->
+      <div *ngIf="activeTab === 'complaints'">
+        <!-- Complaints Sub-Tabs -->
+        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
+          <button 
+            [style.border-bottom]="activeComplaintSubTab === 'passengers' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeComplaintSubTab === 'passengers' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+            (click)="activeComplaintSubTab = 'passengers'">
+            Passenger Complaints
+            <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">1</span>
+          </button>
+          <button 
+            [style.border-bottom]="activeComplaintSubTab === 'drivers' ? '3px solid #5d87ff' : '3px solid transparent'"
+            [style.color]="activeComplaintSubTab === 'drivers' ? '#5d87ff' : '#5a6a85'"
+            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
+            (click)="activeComplaintSubTab = 'drivers'">
+            Driver Issue Reports
+            <span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">2</span>
+          </button>
+        </div>
+
+        <!-- PASSENGER COMPLAINTS -->
+        <div *ngIf="activeComplaintSubTab === 'passengers'" class="content-card">
+          <div class="card-header">
+            <h2>Passenger Complaints Inbox</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Manage feedback, lost items, and service issues.</p>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Ticket ID</th>
+                <th>Passenger</th>
+                <th>Trip & Date</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #fff5f5;">
+                <td><strong>#CMP-102</strong><br><span style="font-size: 0.8rem; color: #64748b;">BKG-509</span></td>
+                <td>Saad Ahmed<br><span style="color: #64748b; font-size: 0.8rem;">0300-1234567</span></td>
+                <td>TRP-1042<br><span style="color: #64748b; font-size: 0.8rem;">Oct 5, 2024</span></td>
+                <td><span style="background: #fed7d7; color: #9b2c2c; padding: 3px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">Lost Item</span></td>
+                <td><span style="color: #e53e3e; font-weight: 600;">Open</span></td>
+                <td>Oct 5, 10:15 AM</td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleComplaintAction($event, 102, 'passenger')">
+                    <option value="">Actions...</option>
+                    <option value="view">View Details & Chat</option>
+                    <option value="status">Change Status</option>
+                    <option value="resolve">Add Resolution Note</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- DRIVER REPORTS -->
+        <div *ngIf="activeComplaintSubTab === 'drivers'" class="content-card">
+          <div class="card-header">
+            <h2>Driver Issue Reports</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">Breakdowns, accidents, and route issues reported by drivers.</p>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Report ID</th>
+                <th>Driver & Vehicle</th>
+                <th>Trip</th>
+                <th>Issue Type / Severity</th>
+                <th>Status</th>
+                <th>Reported At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: #fffbeb;">
+                <td><strong>#REP-44</strong></td>
+                <td>Ali Raza<br><span style="color: #64748b; font-size: 0.8rem;">AJK-1111</span></td>
+                <td>TRP-1040<br><span style="color: #64748b; font-size: 0.8rem;">Oct 5, 2024</span></td>
+                <td><span style="font-weight: 600;">Mechanical Breakdown</span><br><span style="background: #fef3c7; color: #b45309; padding: 2px 6px; border-radius: 4px; font-size: 0.75rem;">High Severity</span></td>
+                <td><span style="color: #f59e0b; font-weight: 600;">In Progress</span></td>
+                <td>Oct 5, 09:30 AM</td>
+                <td>
+                  <select style="padding: 4px 8px; border-radius: 4px; border: 1px solid #cbd5e1; font-size: 0.85rem;" (change)="handleComplaintAction($event, 44, 'driver')">
+                    <option value="">Actions...</option>
+                    <option value="view">View Attachments (Photos)</option>
+                    <option value="link">Link to Trip Action (Replace Vehicle)</option>
+                    <option value="resolve">Mark Resolved</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bookings Modal -->
+  <div class="modal-overlay" *ngIf="showBookingsModal">
+    <div class="modal-content" style="max-width: 800px; width: 90%;">
+      <div class="modal-header">
+        <h2>Trip Bookings</h2>
+        <button class="close-btn" (click)="closeBookingsModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <table class="data-table" *ngIf="selectedTripBookings.length > 0">
+          <thead>
+            <tr>
+              <th>Passenger Name</th>
+              <th>Phone</th>
+              <th>Seats</th>
+              <th>Seat Nos.</th>
+              <th>Total Fare</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of selectedTripBookings">
+              <td><strong>{{ booking.passengerName }}</strong></td>
+              <td>{{ booking.passengerPhone }}</td>
+              <td>{{ booking.seats }}</td>
+              <td>{{ booking.seatNumber }}</td>
+              <td>Rs. {{ booking.totalFare }}</td>
+              <td>
+                <span [ngStyle]="{'color': booking.status === 'Cancelled' ? '#e74c3c' : '#27ae60', 'font-weight': '600'}">
+                  {{ booking.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="empty-state" *ngIf="selectedTripBookings.length === 0">
+          <p>No bookings found for this trip.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

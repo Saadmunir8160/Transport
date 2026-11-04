@@ -1,0 +1,1717 @@
+<div class="passenger-wrapper">
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-menu-toggle" (click)="toggleSidebar()">☰</button>
+
+  <!-- Sidebar -->
+  <div class="sidebar" [class.active]="sidebarActive">
+    <div class="sidebar-header">
+      <div class="brand-block">
+        <div class="logo-mark">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2" />
+            <path d="M8 4v16" />
+            <path d="M16 4v16" />
+            <path d="M4 8h16" />
+            <path d="M4 16h16" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-name">Smart Transport</div>
+          <div class="brand-role">Passenger Portal</div>
+        </div>
+      </div>
+    </div>
+
+        <nav aria-label="Main navigation" class="sidebar-nav">
+      
+      <!-- Discover -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Discover')"
+        (click)="toggleGroup('Discover')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span class="group-title">DISCOVER</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Discover')" xmlns="http://www.w3.org/2000/svg"
+          width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Discover')">
+        <button class="nav-item" [class.active]="activeTab === 'home'" (click)="setActiveTab('home')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="item-label">Home</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'search'" (click)="setActiveTab('search')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span class="item-label">Search trips</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'results'" (click)="setActiveTab('results')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <span class="item-label">Trip results</span>
+        </button>
+      </div>
+
+      <!-- Booking Flow -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Booking flow')"
+        (click)="toggleGroup('Booking flow')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+        <span class="group-title">BOOKING FLOW</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Booking flow')" xmlns="http://www.w3.org/2000/svg"
+          width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Booking flow')">
+        <button class="nav-item" [class.active]="activeTab === 'trip-detail'" (click)="setActiveTab('trip-detail')">
+          <span class="item-label" style="padding-left: 2rem;">Trip detail</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'seat-selection'" (click)="setActiveTab('seat-selection')">
+          <span class="item-label" style="padding-left: 2rem;">Seat selection</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'checkout'" (click)="setActiveTab('checkout')">
+          <span class="item-label" style="padding-left: 2rem;">Checkout</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'booking-confirmed'" (click)="setActiveTab('booking-confirmed')">
+          <span class="item-label" style="padding-left: 2rem;">Booking confirmed</span>
+        </button>
+      </div>
+
+      <!-- Bookings -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('My bookings')"
+        (click)="toggleGroup('My bookings')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+          <path d="M9 22v-4h6v4" />
+          <path d="M8 6h.01" />
+          <path d="M16 6h.01" />
+          <path d="M12 6h.01" />
+        </svg>
+        <span class="group-title">MY BOOKINGS</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('My bookings')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('My bookings')">
+        <button class="nav-item" [class.active]="activeTab === 'bookings'" (click)="setActiveTab('bookings')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v12" /><path d="M20 10v12" /><path d="M12 2v20" /><path d="M4 10h16" /><path d="M4 15h16" /><path d="M8 2v8" /><path d="M16 2v8" /></svg>
+          <span class="item-label">All bookings</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'ticket'" (click)="setActiveTab('ticket')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span class="item-label">My ticket</span>
+          <span class="nav-badge" style="background:#64748B;">offline</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'cancel-booking'" (click)="setActiveTab('cancel-booking')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <span class="item-label">Cancel booking</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'track-bus'" (click)="setActiveTab('track-bus')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="item-label">Track my bus</span>
+          <span class="nav-badge" style="background:#10B981;">live</span>
+        </button>
+      </div>
+
+      <!-- Account -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Account')"
+        (click)="toggleGroup('Account')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        <span class="group-title">ACCOUNT</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Account')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Account')">
+        <button class="nav-item" [class.active]="activeTab === 'register'" (click)="setActiveTab('register')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="8.5" cy="7" r="4" /><line x1="20" y1="8" x2="20" y2="14" /><line x1="23" y1="11" x2="17" y2="11" /></svg>
+          <span class="item-label">Register</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'profile'" (click)="setActiveTab('profile')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          <span class="item-label">My profile</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'complaints'" (click)="setActiveTab('complaints')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span class="item-label">Complaints</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'notifications'" (click)="setActiveTab('notifications')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="item-label">Notifications</span>
+          <span class="nav-badge">3</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-profile">
+        <div class="user-avatar">SA</div>
+        <div class="user-details">
+          <div class="user-name">Passenger</div>
+          <div class="user-title">Account settings</div>
+        </div>
+        <button class="logout-btn" title="Sign out" (click)="logout()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button class="topbar-toggle-btn" (click)="toggleSidebar()" title="Toggle Navigation" aria-label="Toggle Navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="page-title-wrap">
+          <h1>{{ getPageTitle() }}</h1>
+          <span class="portal-badge">Passenger Portal</span>
+        </div>
+      </div>
+
+      <div class="user-section">
+        <div class="user-details-top">
+          <span class="user-name-label">{{ userName || 'Passenger' }}</span>
+          <span class="user-role-label">Verified Traveler</span>
+        </div>
+        <div class="user-avatar" [title]="userName || 'Passenger'">{{ (userName || 'P').charAt(0).toUpperCase() }}</div>
+        <button class="logout-btn" (click)="logout()" title="Sign out of Passenger portal">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Dashboard Stats -->
+      <div class="stats-grid" *ngIf="activeTab === 'search'">
+        <div class="stat-card">
+          <div class="stat-icon green">🗺️</div>
+          <div class="stat-info">
+            <h3>{{ trips.length }}</h3>
+            <p>Available Trips</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">🤖</div>
+          <div class="stat-info">
+            <h3>AI</h3>
+            <p>Smart Recommendations</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">⭐</div>
+          <div class="stat-info">
+            <h3>4.8</h3>
+            <p>Service Rating</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home Tab -->
+      <div *ngIf="activeTab === 'home'" class="home-tab">
+        
+        <!-- Alert Banners -->
+        <div class="alert-banner warning">
+          <span class="alert-icon">⚠️</span>
+          <span>Road advisory on a booked route: Landslide reported near Muzaffarabad. Expect 30 mins delay.</span>
+        </div>
+        
+        <!-- Upcoming Trip Card -->
+        <div class="upcoming-trip-card" *ngIf="upcomingTrip">
+          <div class="trip-header">
+            <h3>Upcoming Trip</h3>
+            <span class="badge live">On Time</span>
+          </div>
+          <div class="trip-body">
+            <div class="trip-route">{{ upcomingTrip.routeName }}</div>
+            <div class="trip-details-grid">
+              <div class="detail">
+                <span class="label">Departure</span>
+                <span class="value">{{ upcomingTrip.travelDate | date:'mediumDate' }} at {{ upcomingTrip.departureTime }}</span>
+              </div>
+              <div class="detail">
+                <span class="label">Seat Number</span>
+                <span class="value">{{ upcomingTrip.seatNumber }}</span>
+              </div>
+              <div class="detail">
+                <span class="label">Boarding Stop</span>
+                <span class="value">{{ upcomingTrip.boardingStop }}</span>
+              </div>
+              <div class="detail">
+                <span class="label">ETA</span>
+                <span class="value">{{ upcomingTrip.eta }}</span>
+              </div>
+            </div>
+            <div class="trip-actions">
+              <button class="btn-secondary" (click)="setActiveTab('bookings')">View ticket</button>
+              <button class="btn-primary">Track bus</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Search Bar -->
+        <div class="quick-search-card">
+          <h3>Quick Search</h3>
+          <div class="quick-search-form">
+            <input type="text" [(ngModel)]="searchFrom" placeholder="Origin stop (e.g. Muzaffarabad)" class="home-input">
+            <span class="exchange-icon">⇄</span>
+            <input type="text" [(ngModel)]="searchTo" placeholder="Destination stop" class="home-input">
+            <input type="date" [(ngModel)]="searchDate" class="home-input">
+            <button class="search-btn-large" (click)="setActiveTab('search'); searchRoutes()">Search Trips</button>
+          </div>
+        </div>
+
+        <!-- Recent Routes -->
+        <div class="recent-routes-section" *ngIf="recentRoutes && recentRoutes.length > 0">
+          <h3>Recent Routes</h3>
+          <div class="recent-routes-grid">
+            <div class="recent-card" *ngFor="let route of recentRoutes" (click)="searchFrom = route.startPoint; searchTo = route.endPoint; setActiveTab('search'); searchRoutes()">
+              <div class="recent-icon">🕒</div>
+              <div class="recent-info">
+                <h4>{{ route.startPoint }} → {{ route.endPoint }}</h4>
+                <p>One-tap to re-search</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Routes Tab -->
+      <div *ngIf="activeTab === 'search'" class="search-tab-container">
+        
+        <!-- Primary Search Card -->
+        <div class="search-hero-card">
+          <div class="search-header-flex">
+            <h2>Find your next journey</h2>
+            <span class="badge ai-enhanced">AI Optimized</span>
+          </div>
+          
+          <div class="search-form-grid">
+            <div class="input-group">
+              <label>Origin</label>
+              <div class="input-wrapper">
+                <span class="input-icon">📍</span>
+                <input type="text" [(ngModel)]="searchFrom" list="cities-from" placeholder="Where from?">
+              </div>
+            </div>
+            
+            <div class="input-group">
+              <label>Destination</label>
+              <div class="input-wrapper">
+                <span class="input-icon">🎯</span>
+                <input type="text" [(ngModel)]="searchTo" list="cities-to" placeholder="Where to?">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Travel Date</label>
+              <div class="input-wrapper">
+                <span class="input-icon">📅</span>
+                <input type="date" [(ngModel)]="searchDate">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label>Passengers</label>
+              <div class="input-wrapper">
+                <span class="input-icon">👥</span>
+                <select [(ngModel)]="passengerCount" class="modern-select">
+                  <option value="1">1 Passenger</option>
+                  <option value="2">2 Passengers</option>
+                  <option value="3">3 Passengers</option>
+                  <option value="4">4 Passengers (Max)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advanced Filters Toggle -->
+          <div class="advanced-filters-toggle" (click)="showFilters = !showFilters">
+            <span>{{ showFilters ? 'Hide' : 'Show' }} advanced filters</span>
+            <svg [class.rotated]="showFilters" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+
+          <!-- Optional Filters -->
+          <div class="optional-filters" *ngIf="showFilters">
+            <div class="filter-group">
+              <label>Departure Time</label>
+              <select [(ngModel)]="filterTimeRange" class="modern-select">
+                <option value="all">Any Time</option>
+                <option value="morning">Morning (6 AM - 12 PM)</option>
+                <option value="afternoon">Afternoon (12 PM - 6 PM)</option>
+                <option value="evening">Evening (6 PM - 10 PM)</option>
+              </select>
+            </div>
+            
+            <div class="filter-group">
+              <label>Vehicle Type</label>
+              <select [(ngModel)]="filterVehicleType" class="modern-select">
+                <option value="all">Any Vehicle</option>
+                <option value="Bus">Bus</option>
+                <option value="Minibus">Minibus</option>
+                <option value="Coaster">Coaster</option>
+                <option value="Sumo">Sumo</option>
+              </select>
+            </div>
+
+            <div class="filter-group toggle-group">
+              <label class="switch">
+                <input type="checkbox" [(ngModel)]="filterAvailableOnly">
+                <span class="slider round"></span>
+              </label>
+              <span>Available seats only</span>
+            </div>
+          </div>
+
+          <button class="btn-primary search-btn-huge" (click)="setActiveTab('results'); searchRoutes()">Search Trips</button>
+        </div>
+      </div>
+
+      <!-- Trip Results Tab -->
+      <div *ngIf="activeTab === 'results'" class="results-tab-container">
+        
+        <div class="results-header-block">
+          <div class="results-title-row">
+            <div>
+              <h2 style="margin: 0; color: var(--text-main); font-size: 1.5rem;">{{ searchFrom || 'Any Origin' }} → {{ searchTo || 'Any Destination' }}</h2>
+              <p style="margin: 0.25rem 0 0 0; color: var(--text-muted);">{{ searchDate | date:'longDate' }} • {{ passengerCount }} Passenger(s)</p>
+            </div>
+            <button class="btn-secondary" (click)="setActiveTab('search')">Edit Search</button>
+          </div>
+
+          <!-- Sort & Filter Chips -->
+          <div class="sort-filter-bar">
+            <div class="sort-dropdown">
+              <span class="icon">↕️</span>
+              <select [(ngModel)]="sortOption" class="minimal-select">
+                <option value="earliest">Earliest departure</option>
+                <option value="lowest_fare">Lowest fare</option>
+                <option value="most_seats">Most seats available</option>
+                <option value="shortest">Shortest duration</option>
+              </select>
+            </div>
+            
+            <div class="filter-chips">
+              <span class="chip" [class.active]="filterTimeRange === 'morning'" (click)="filterTimeRange = filterTimeRange === 'morning' ? 'all' : 'morning'">Morning</span>
+              <span class="chip" [class.active]="filterTimeRange === 'afternoon'" (click)="filterTimeRange = filterTimeRange === 'afternoon' ? 'all' : 'afternoon'">Afternoon</span>
+              <span class="chip" [class.active]="filterTimeRange === 'evening'" (click)="filterTimeRange = filterTimeRange === 'evening' ? 'all' : 'evening'">Evening</span>
+              <span class="chip" [class.active]="filterVehicleType === 'Bus'" (click)="filterVehicleType = filterVehicleType === 'Bus' ? 'all' : 'Bus'">Bus</span>
+              <span class="chip" [class.active]="filterVehicleType === 'Minibus'" (click)="filterVehicleType = filterVehicleType === 'Minibus' ? 'all' : 'Minibus'">Minibus</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-count">
+          <strong>{{ filteredTrips.length }}</strong> trips found
+        </div>
+
+        <!-- Trips List -->
+        <div class="trips-list">
+          <div class="trip-result-card" *ngFor="let trip of filteredTrips" [class.sold-out]="trip.availableSeats === 0">
+            <!-- Advisory Badge -->
+            <div class="advisory-banner warning" *ngIf="trip.advisory">
+              ⚠️ {{ trip.advisory }}
+            </div>
+
+            <div class="trip-card-content">
+              <div class="trip-time-block">
+                <div class="time">{{ trip.departureTime }}</div>
+                <div class="duration">{{ trip.duration || '4h 30m' }}</div>
+                <div class="time">{{ trip.eta || '1:00 PM' }}</div>
+              </div>
+              
+              <div class="trip-route-block">
+                <div class="route-line">
+                  <div class="dot top"></div>
+                  <div class="line"></div>
+                  <div class="dot bottom"></div>
+                </div>
+                <div class="locations">
+                  <div class="location">
+                    <h4>{{ trip.startPoint }}</h4>
+                    <p>Boarding Stop</p>
+                  </div>
+                  <div class="location">
+                    <h4>{{ trip.endPoint }}</h4>
+                    <p>Drop-off Stop</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="trip-info-block">
+                <div class="vehicle-reg">
+                  <span class="vehicle-badge">{{ trip.vehicleType }}</span>
+                  <span class="reg-number">{{ trip.registration || 'AJK-202' }}</span>
+                </div>
+                <div class="seats-left" [class.low]="trip.availableSeats > 0 && trip.availableSeats < 5" [class.zero]="trip.availableSeats === 0">
+                  <span *ngIf="trip.availableSeats > 0">{{ trip.availableSeats }} / {{ trip.totalSeats || 45 }} seats available</span>
+                  <span *ngIf="trip.availableSeats === 0">Full (0 seats)</span>
+                </div>
+              </div>
+
+              <div class="trip-action-block">
+                <div class="fare">
+                  <span class="currency">Rs.</span>
+                  <span class="amount">{{ trip.fare }}</span>
+                </div>
+                <button *ngIf="trip.availableSeats > 0" class="btn-primary" (click)="goToTripDetail(trip)">Select Seat</button>
+                <button *ngIf="trip.availableSeats === 0" class="btn-secondary waitlist-btn">Join Waitlist</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="filteredTrips.length === 0">
+          <div class="empty-icon">❌</div>
+          <h3>No trips today</h3>
+          <p>We couldn't find any trips for this specific date.</p>
+          
+          <div class="suggestions-box">
+            <h4>Check next available dates:</h4>
+            <div class="suggestion-tags">
+              <span class="suggestion-tag" (click)="searchDate = '2026-10-02'; searchRoutes()">Oct 2 (3 trips)</span>
+              <span class="suggestion-tag" (click)="searchDate = '2026-10-03'; searchRoutes()">Oct 3 (5 trips)</span>
+            </div>
+            <button class="btn-secondary" style="margin-top: 1rem; width: 100%;">🔔 Notify me when a seat opens</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trip Detail Tab -->
+      <div *ngIf="activeTab === 'trip-detail' && selectedTrip" class="trip-detail-container">
+        
+        <!-- Back Button -->
+        <div class="back-link" (click)="setActiveTab('results')">
+          <span>← Back to results</span>
+        </div>
+
+        <!-- Cancelled Banner -->
+        <div class="advisory-banner error" *ngIf="selectedTrip.isCancelled">
+          ❌ This trip has been cancelled. Please select another trip.
+        </div>
+
+        <!-- Road Advisory Panel -->
+        <div class="advisory-panel" *ngIf="selectedTrip.advisory && !selectedTrip.isCancelled">
+          <div class="advisory-header">
+            <span class="icon">⚠️</span>
+            <h3>Road Advisory: {{ selectedTrip.advisoryType || 'Landslide' }}</h3>
+          </div>
+          <div class="advisory-body">
+            <p><strong>Affected Segment:</strong> {{ selectedTrip.advisorySegment || 'Kohala Bridge to Muzaffarabad' }}</p>
+            <p><strong>Expected Delay:</strong> {{ selectedTrip.advisoryDelay || '30 - 45 minutes' }}</p>
+            <div class="recommendation">
+              <strong>AI Recommendation:</strong> Proceed with booking. Delays are minor and manageable.
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-grid">
+          <!-- Left Column: Trip Info -->
+          <div class="trip-info-column">
+            
+            <div class="detail-card">
+              <h2>{{ selectedTrip.routeName }}</h2>
+              <div class="eta-confidence">
+                <span class="badge ai-eta">AI ETA Available</span>
+                <span class="confidence-text">Predicted from 120+ historical trips</span>
+              </div>
+
+              <div class="route-timeline-expanded">
+                <!-- Departure -->
+                <div class="timeline-stop main-stop">
+                  <div class="timeline-indicator">
+                    <div class="dot"></div>
+                    <div class="line"></div>
+                  </div>
+                  <div class="stop-content">
+                    <div class="stop-time">{{ selectedTrip.departureTime }}</div>
+                    <div class="stop-name">{{ selectedTrip.startPoint }}</div>
+                    <div class="stop-type">Boarding Stop</div>
+                  </div>
+                </div>
+
+                <!-- Intermediate Stops Toggle -->
+                <div class="intermediate-stops-toggle">
+                  <details>
+                    <summary>Show 2 intermediate stops</summary>
+                    <div class="intermediate-list">
+                      <div class="timeline-stop sub-stop">
+                        <div class="timeline-indicator">
+                          <div class="dot small"></div>
+                          <div class="line"></div>
+                        </div>
+                        <div class="stop-content">
+                          <div class="stop-time">09:15 AM</div>
+                          <div class="stop-name">Kohala Checkpost</div>
+                        </div>
+                      </div>
+                      <div class="timeline-stop sub-stop">
+                        <div class="timeline-indicator">
+                          <div class="dot small"></div>
+                          <div class="line"></div>
+                        </div>
+                        <div class="stop-content">
+                          <div class="stop-time">10:30 AM</div>
+                          <div class="stop-name">Murree Expressway Toll</div>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+
+                <!-- Arrival -->
+                <div class="timeline-stop main-stop">
+                  <div class="timeline-indicator">
+                    <div class="dot end"></div>
+                  </div>
+                  <div class="stop-content">
+                    <div class="stop-time">{{ selectedTrip.eta || '12:30 PM' }}</div>
+                    <div class="stop-name">{{ selectedTrip.endPoint }}</div>
+                    <div class="stop-type">Drop-off Stop</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail-card">
+              <h3>Vehicle & Driver</h3>
+              <div class="vehicle-driver-grid">
+                <div class="info-item">
+                  <span class="label">Vehicle</span>
+                  <span class="value">{{ selectedTrip.vehicleType }} (Toyota Coaster)</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Registration</span>
+                  <span class="value reg-plate">{{ selectedTrip.registration || 'AJK-4402' }}</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Driver</span>
+                  <span class="value">Ahmed</span>
+                </div>
+                <div class="info-item">
+                  <span class="label">Total Distance</span>
+                  <span class="value">135 km</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Fare Breakdown & Action -->
+          <div class="fare-column">
+            <div class="detail-card sticky-card">
+              <h3>Fare Breakdown</h3>
+              
+              <div class="fare-rows">
+                <div class="fare-row">
+                  <span>Base fare (1 Seat)</span>
+                  <span>Rs. {{ selectedTrip.fare }}</span>
+                </div>
+                <div class="fare-row">
+                  <span>Booking fee</span>
+                  <span>Rs. 50</span>
+                </div>
+                <div class="fare-divider"></div>
+                <div class="fare-row total-per-seat">
+                  <span>Total per seat</span>
+                  <span>Rs. {{ selectedTrip.fare + 50 }}</span>
+                </div>
+                <div class="fare-row passengers">
+                  <span>Passengers</span>
+                  <span>x {{ passengerCount }}</span>
+                </div>
+                <div class="fare-divider"></div>
+                <div class="fare-row grand-total">
+                  <span>Total Amount</span>
+                  <span>Rs. {{ (selectedTrip.fare + 50) * passengerCount }}</span>
+                </div>
+              </div>
+
+              <button class="btn-primary search-btn-huge" style="margin-top: 1.5rem;" [disabled]="selectedTrip.isCancelled" (click)="setActiveTab('seat-selection')">
+                Select Seats
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Seat Selection Tab -->
+      <div *ngIf="activeTab === 'seat-selection' && selectedTrip" class="seat-selection-container">
+        
+        <div class="back-link" (click)="setActiveTab('trip-detail')">
+          <span>← Back to trip details</span>
+        </div>
+
+        <div class="seat-grid-container">
+          <!-- Left: The Seat Map -->
+          <div class="seat-map-card">
+            <h3>Select your seats</h3>
+            <p class="subtitle">Please select up to {{ passengerCount }} seat(s).</p>
+            
+            <div class="bus-layout">
+              <div class="driver-section">
+                <div class="steering-wheel">Driver</div>
+              </div>
+              
+              <div class="seats-area">
+                <div class="seat-row" *ngFor="let row of seatMap">
+                  <div class="seat-cell" *ngFor="let seat of row">
+                    <div 
+                      class="seat" 
+                      *ngIf="seat"
+                      [ngClass]="{
+                        'available': seat.status === 'available',
+                        'held': seat.status === 'held',
+                        'booked': seat.status === 'booked',
+                        'selected': isSelected(seat)
+                      }"
+                      (click)="toggleSeat(seat)"
+                    >
+                      {{ seat.id }}
+                    </div>
+                    <!-- Aisle space -->
+                    <div class="aisle" *ngIf="!seat"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="seat-legend">
+              <div class="legend-item"><div class="seat available sm"></div> Available</div>
+              <div class="legend-item"><div class="seat held sm"></div> Held (10m)</div>
+              <div class="legend-item"><div class="seat booked sm"></div> Booked</div>
+              <div class="legend-item"><div class="seat selected sm"></div> Yours</div>
+            </div>
+          </div>
+
+          <!-- Right: Summary & Checkout Action -->
+          <div class="seat-summary-card">
+            <h3>Selection Summary</h3>
+            <div class="summary-details">
+              <p><strong>Route:</strong> {{ selectedTrip.routeName }}</p>
+              <p><strong>Date:</strong> {{ selectedTrip.travelDate | date }}</p>
+            </div>
+            
+            <div class="selected-seats-list">
+              <h4>Selected Seats ({{ selectedSeats.length }} / {{ passengerCount }})</h4>
+              <div class="empty-seats-msg" *ngIf="selectedSeats.length === 0">
+                No seats selected yet.
+              </div>
+              <div class="seat-item" *ngFor="let seat of selectedSeats">
+                <div class="seat-info">
+                  <span class="seat-id">Seat {{ seat.id }}</span>
+                  <span class="seat-type">{{ seat.type }}</span>
+                </div>
+                <div class="seat-price">Rs. {{ selectedTrip.fare }}</div>
+              </div>
+            </div>
+
+            <div class="fare-divider"></div>
+            
+            <div class="fare-row grand-total">
+              <span>Total Fare</span>
+              <span>Rs. {{ selectedSeats.length * selectedTrip.fare }}</span>
+            </div>
+
+            <button class="btn-primary search-btn-huge" style="margin-top: 1.5rem;" [disabled]="selectedSeats.length !== passengerCount" (click)="goToCheckout()">
+              {{ selectedSeats.length === passengerCount ? 'Proceed to Checkout' : 'Select ' + (passengerCount - selectedSeats.length) + ' more seat(s)' }}
+            </button>
+            <p class="hold-warning">Seats are held for 10 minutes upon selection.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Complaints Tab -->
+            <div *ngIf="activeTab === 'complaints'" class="complaints-container">
+        <div class="content-header">
+          <h2>Complaints & Grievances</h2>
+          <p>Submit and track your feedback or issues</p>
+        </div>
+
+        <div class="complaints-layout">
+          
+          <!-- Submit New Complaint -->
+          <div class="submit-card">
+            <h3>Submit a New Complaint</h3>
+            
+            <div class="form-group">
+              <label>Category</label>
+              <select [(ngModel)]="newComplaint.category">
+                <option value="">-- Select Category --</option>
+                <option value="driver behaviour">Driver Behaviour</option>
+                <option value="vehicle condition">Vehicle Condition</option>
+                <option value="booking issue">Booking Issue</option>
+                <option value="route problem">Route Problem</option>
+                <option value="payment issue">Payment Issue</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Booking or Trip Reference (Optional)</label>
+              <input type="text" [(ngModel)]="newComplaint.bookingRef" placeholder="e.g., AJK-839212">
+            </div>
+
+            <div class="form-group">
+              <label>Description (Min 20 chars)</label>
+              <textarea [(ngModel)]="newComplaint.description" rows="4" placeholder="Please provide details..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Photo Upload (Optional)</label>
+              <input type="file" class="file-input">
+            </div>
+
+            <div class="form-group">
+              <label>Preferred Resolution</label>
+              <select [(ngModel)]="newComplaint.resolution">
+                <option value="">-- Select --</option>
+                <option value="refund">Refund</option>
+                <option value="apology">Apology</option>
+                <option value="other">Other Action</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Preferred Contact Method</label>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" [(ngModel)]="newComplaint.contact" name="contact" value="sms"> SMS</label>
+                <label class="radio-label"><input type="radio" [(ngModel)]="newComplaint.contact" name="contact" value="email"> Email</label>
+                <label class="radio-label"><input type="radio" [(ngModel)]="newComplaint.contact" name="contact" value="in-app"> In-App</label>
+              </div>
+            </div>
+
+            <div *ngIf="complaintError" class="error-message">{{ complaintError }}</div>
+
+            <button class="bc-btn primary submit-btn" (click)="submitComplaint()">Submit Complaint</button>
+          </div>
+
+          <!-- My Complaints List -->
+          <div class="my-complaints">
+            <h3>My Complaints</h3>
+            
+            <div *ngIf="myComplaints.length === 0" class="empty-state">
+              <div class="empty-icon">??</div>
+              <h4>No complaints submitted yet</h4>
+            </div>
+
+            <div class="complaints-list">
+              <div *ngFor="let c of myComplaints" class="complaint-card">
+                <div class="complaint-header">
+                  <div class="complaint-id-cat">
+                    <div class="c-id">{{ c.id }}</div>
+                    <div class="c-category">{{ c.category }}</div>
+                  </div>
+                  <div class="c-status" [ngClass]="c.status === 'resolved' ? 'resolved' : c.status === 'in progress' ? 'in-progress' : 'open'">{{ c.status }}</div>
+                </div>
+                
+                <div class="c-date">Submitted: {{ c.date | date:'mediumDate' }}</div>
+                
+                <div *ngIf="c.adminResponse" class="admin-response">
+                  <div class="ar-title">Admin Response</div>
+                  <div class="ar-text">{{ c.adminResponse }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Checkout Tab -->
+      <div *ngIf="activeTab === 'checkout' && selectedTrip" class="checkout-container">
+        <div class="back-link" (click)="setActiveTab('seat-selection')">
+          <span>← Back to seat selection</span>
+        </div>
+
+        <div class="checkout-grid">
+          <!-- Left: Details & Payment -->
+          <div class="checkout-main">
+            <!-- Passenger Details -->
+            <div class="checkout-card">
+              <div class="card-header-flex">
+                <h3>Passenger Details</h3>
+                <span class="edit-btn">Edit</span>
+              </div>
+              <div class="passenger-form">
+                <div class="input-group">
+                  <label>Full Name</label>
+                  <input type="text" [(ngModel)]="passengerName" class="home-input">
+                </div>
+                <div class="input-group">
+                  <label>Phone Number</label>
+                  <input type="text" [(ngModel)]="passengerPhone" class="home-input">
+                </div>
+                <div class="input-group">
+                  <label>Govt ID (Optional)</label>
+                  <input type="text" [(ngModel)]="passengerId" class="home-input" placeholder="CNIC or Passport">
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="checkout-card">
+              <h3>Payment Method</h3>
+              <div class="payment-options">
+                <!-- Easypaisa -->
+                <label class="payment-radio" [class.selected]="paymentMethod === 'Easypaisa'">
+                  <div class="radio-circle">
+                    <div class="inner-circle" *ngIf="paymentMethod === 'Easypaisa'"></div>
+                  </div>
+                  <div class="payment-info">
+                    <span class="title">Easypaisa</span>
+                    <span class="desc">Fast and secure mobile wallet payment</span>
+                  </div>
+                  <span class="payment-badge">Recommended</span>
+                  <input type="radio" name="payment" value="Easypaisa" [(ngModel)]="paymentMethod" style="display:none;">
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Order Summary (Sticky) -->
+          <div class="checkout-sidebar">
+            <div class="checkout-card sticky-card">
+              <!-- Timer Banner -->
+              <div class="timer-banner" [class.urgent]="holdTimeLeft < 60">
+                <span class="timer-icon">⏱️</span>
+                <span class="timer-text">Seats held for <strong>{{ holdTimerDisplay }}</strong></span>
+              </div>
+
+              <h3>Order Summary</h3>
+              
+              <div class="order-route-info">
+                <h4>{{ selectedTrip.startPoint }} → {{ selectedTrip.endPoint }}</h4>
+                <p>{{ selectedTrip.travelDate | date:'mediumDate' }} | {{ selectedTrip.departureTime }} - {{ selectedTrip.eta }}</p>
+              </div>
+
+              <div class="order-seats-info">
+                <div class="seat-badge" *ngFor="let seat of selectedSeats">
+                  {{ seat.id }}
+                </div>
+              </div>
+
+              <div class="fare-rows" style="margin-top: 1.5rem;">
+                <div class="fare-row">
+                  <span>Base fare (x{{ selectedSeats.length }})</span>
+                  <span>Rs. {{ selectedTrip.fare * selectedSeats.length }}</span>
+                </div>
+                <div class="fare-row">
+                  <span>Booking fee</span>
+                  <span>Rs. 50</span>
+                </div>
+                <div class="fare-divider"></div>
+                <div class="fare-row grand-total">
+                  <span>Total Amount</span>
+                  <span>Rs. {{ (selectedTrip.fare * selectedSeats.length) + 50 }}</span>
+                </div>
+              </div>
+
+              <button class="btn-primary search-btn-huge" style="margin-top: 1.5rem;" (click)="confirmPayment()">
+                {{ paymentMethod === 'Cash' ? 'Reserve Seat' : 'Pay Rs. ' + ((selectedTrip.fare * selectedSeats.length) + 50) }}
+              </button>
+              
+              <div class="secure-badge">
+                🔒 256-bit Secure Encrypted Payment
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Confirmed Tab -->
+      <div *ngIf="activeTab === 'booking-confirmed' && selectedTrip" class="booking-confirmed-container">
+        <div class="success-header">
+          <div class="success-icon">✅</div>
+          <h2>Booking Confirmed!</h2>
+          <p>Your ticket has been sent via SMS and cached offline.</p>
+        </div>
+
+        <div class="ticket-wrapper">
+          <div class="ticket-card">
+            <!-- Top Section -->
+            <div class="ticket-top">
+              <div class="ticket-ids">
+                <span class="booking-id">Booking ID: {{ bookingId }}</span>
+                <span class="ticket-code">Code: {{ ticketCode }}</span>
+              </div>
+              <h3 class="ticket-route">{{ selectedTrip.startPoint }} to {{ selectedTrip.endPoint }}</h3>
+              <div class="ticket-date-time">
+                <span>📅 {{ selectedTrip.travelDate | date:'fullDate' }}</span>
+                <span>🕒 {{ selectedTrip.departureTime }}</span>
+              </div>
+            </div>
+
+            <!-- Middle Section (Tear Line) -->
+            <div class="ticket-divider">
+              <div class="tear-line"></div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="ticket-bottom">
+              <div class="ticket-info-grid">
+                <div class="t-item">
+                  <span class="label">Boarding Stop</span>
+                  <span class="value">{{ selectedTrip.startPoint }} Terminal</span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Drop-off Stop</span>
+                  <span class="value">{{ selectedTrip.endPoint }} Stop</span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Seat(s)</span>
+                  <span class="value seats-val">
+                    <span *ngFor="let s of selectedSeats; let last = last">{{ s.id }}{{ !last ? ', ' : '' }}</span>
+                  </span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Vehicle</span>
+                  <span class="value">{{ selectedTrip.registration || 'AJK-4402' }}</span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Driver</span>
+                  <span class="value">Ahmed</span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Total Paid</span>
+                  <span class="value payment-val">Rs. {{ (selectedTrip.fare * selectedSeats.length) + 50 }} ({{ paymentMethod }})</span>
+                </div>
+              </div>
+
+              <!-- QR Code -->
+              <div class="qr-section">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ bookingId }}-{{ ticketCode }}" alt="Ticket QR Code" class="qr-code">
+                <p>Scan to board</p>
+              </div>
+            </div>
+            
+            <div class="cancellation-reminder">
+              ⚠️ Free cancellation available until {{ selectedTrip.travelDate | date }} 06:00 AM.
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-actions">
+          <div class="primary-actions">
+            <button class="btn-primary" (click)="setActiveTab('bookings')"><span class="icon">🎟️</span> View All Bookings</button>
+            <button class="btn-secondary"><span class="icon">📍</span> Track My Bus</button>
+          </div>
+          <div class="secondary-actions">
+            <button class="action-chip">💾 Download PDF</button>
+            <button class="action-chip">🖼️ Save to Gallery</button>
+            <button class="action-chip">📤 Share Ticket</button>
+            <button class="action-chip">📅 Add to Calendar</button>
+          </div>
+        </div>
+      </div>
+
+            <!-- Bookings Tab -->
+      <div *ngIf="activeTab === 'bookings'" class="bookings-container">
+        <div class="content-header" style="margin-bottom: 2rem;">
+          <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">My Bookings</h2>
+          <p style="color: #64748B;">View your past, active, and upcoming trips.</p>
+        </div>
+
+        <div class="bookings-tabs">
+          <button [class.active]="activeBookingsTab === 'upcoming'" (click)="activeBookingsTab = 'upcoming'">Upcoming</button>
+          <button [class.active]="activeBookingsTab === 'active'" (click)="activeBookingsTab = 'active'">Active</button>
+          <button [class.active]="activeBookingsTab === 'completed'" (click)="activeBookingsTab = 'completed'">Completed</button>
+          <button [class.active]="activeBookingsTab === 'cancelled'" (click)="activeBookingsTab = 'cancelled'">Cancelled</button>
+        </div>
+
+        <div class="bookings-list">
+          <ng-container *ngFor="let b of myBookings">
+            <div class="booking-card" *ngIf="b.status === activeBookingsTab">
+              <!-- Header -->
+              <div class="bc-header">
+                <span class="bc-id">ID: {{ b.id }}</span>
+                <span class="bc-status" [ngClass]="b.status">{{ b.status | uppercase }}</span>
+              </div>
+              
+              <!-- Cancel Alert -->
+              <div class="bc-alert" *ngIf="b.status === 'cancelled'">
+                {{ b.cancelReason }} &mdash; <strong>{{ b.refundStatus }}</strong>
+              </div>
+
+              <!-- Body -->
+              <div class="bc-body">
+                <div class="bc-main-info">
+                  <div class="bc-route">
+                    <h3>{{ b.route }}</h3>
+                    <div class="bc-datetime">
+                      <span>?? {{ b.date | date:'mediumDate' }}</span>
+                      <span>?? {{ b.time }}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="bc-stops">
+                    <div style="display:flex; flex-direction: column; align-items:flex-start; width: 120px;">
+                      <span class="stop-name">{{ b.startPoint }}</span>
+                    </div>
+                    <div class="stop-dot"></div>
+                    <div class="stop-line"></div>
+                    <div class="stop-dot"></div>
+                    <div style="display:flex; flex-direction: column; align-items:flex-end; width: 120px; text-align:right;">
+                      <span class="stop-name">{{ b.endPoint }}</span>
+                    </div>
+                  </div>
+                  
+                  <div *ngIf="b.status === 'completed'" style="margin-top: 1.5rem; color: #059669; font-weight: 600; font-size: 0.9rem;">
+                    ? Arrived at {{ b.arrivalTime }} ({{ b.delay }})
+                  </div>
+                </div>
+
+                <div class="bc-details">
+                  <div class="bc-detail-item">
+                    <span>Seat(s)</span>
+                    <span>{{ b.seats }}</span>
+                  </div>
+                  <div class="bc-detail-item amount">
+                    <span>Amount Paid</span>
+                    <span>Rs. {{ b.amountPaid }}</span>
+                  </div>
+                  <div class="bc-detail-item">
+                    <span>Payment</span>
+                    <span style="font-size: 0.95rem; font-weight:600;">{{ b.paymentMethod }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Footer Actions -->
+              <div class="bc-footer">
+                <!-- Upcoming Actions -->
+                <button class="bc-btn outline" *ngIf="b.status === 'upcoming'" (click)="setActiveTab('ticket')">View Ticket</button>
+                <button class="bc-btn danger" *ngIf="b.status === 'upcoming'" (click)="cancellingBooking = b; setActiveTab('cancel-booking')">Cancel Booking</button>
+
+                <!-- Active Actions -->
+                <button class="bc-btn outline" *ngIf="b.status === 'active'" (click)="setActiveTab('ticket')">View Ticket (QR)</button>
+                <button class="bc-btn primary" *ngIf="b.status === 'active'" (click)="setActiveTab('track-bus')">Track Bus</button>
+
+                <!-- Completed/Cancelled Actions -->
+                <button class="bc-btn outline" *ngIf="b.status === 'completed' || b.status === 'cancelled'">View Invoice</button>
+                <button class="bc-btn primary" *ngIf="b.status === 'completed' || b.status === 'cancelled'" (click)="setActiveTab('search')">Rebook Trip</button>
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="empty-state" *ngIf="!myBookings || myBookings.length === 0">
+            <div class="empty-icon">???</div>
+            <h3>No bookings found</h3>
+            <p>You don't have any {{ activeBookingsTab }} bookings at the moment.</p>
+            <button class="btn-primary" (click)="setActiveTab('search')" style="margin-top: 1rem;">Book a trip</button>
+          </div>
+        </div>
+      </div>
+      </div>
+
+            <!-- Digital Ticket Tab -->
+      <div *ngIf="activeTab === 'ticket' && selectedTrip" class="booking-confirmed-container">
+        
+        <div class="content-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">My Ticket</h2>
+            <p style="color: #64748B;">Digital Boarding Pass &mdash; <span style="color: #10B981; font-weight:600;">Available Offline</span></p>
+          </div>
+          <button class="bc-btn outline" (click)="setActiveTab('bookings')">Back to bookings</button>
+        </div>
+
+        <div class="ticket-wrapper">
+          <div class="ticket-card">
+            <!-- Offline / Org Header -->
+            <div style="background: #F8FAFC; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0;">
+              <div style="font-weight: 800; color: #0D766E; font-size: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
+                <div style="width: 32px; height: 32px; background: #0D766E; border-radius: 50%; display: flex; align-items:center; justify-content:center; color:white; font-size: 1rem;">?</div>
+                AJK Transport
+              </div>
+              <span class="bc-status active" style="font-size: 0.85rem;">{{ selectedTrip.status | uppercase }}</span>
+            </div>
+
+            <!-- Top Section -->
+            <div class="ticket-top" style="background: #0F172A;">
+              <div class="ticket-ids">
+                <span class="booking-id">ID: {{ bookingId }}</span>
+                <span class="ticket-code">Code: {{ ticketCode }}</span>
+              </div>
+              <h3 class="ticket-route">{{ selectedTrip.startPoint }} to {{ selectedTrip.endPoint }}</h3>
+              <div class="ticket-date-time">
+                <span>?? {{ selectedTrip.travelDate | date:'fullDate' }}</span>
+                <span>?? {{ selectedTrip.departureTime }}</span>
+              </div>
+            </div>
+
+            <!-- Middle Section (Tear Line) -->
+            <div class="ticket-divider">
+              <div class="tear-line"></div>
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="ticket-bottom">
+              <div class="ticket-info-grid">
+                <div class="t-item" style="grid-column: span 2;">
+                  <span class="label">Passenger</span>
+                  <span class="value">{{ userName || 'Ahmed' }}</span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Boarding</span>
+                  <span class="value">{{ selectedTrip.startPoint }} Terminal</span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Drop-off</span>
+                  <span class="value">{{ selectedTrip.endPoint }} Stop</span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Seat(s)</span>
+                  <span class="value" style="color: #0D766E;">
+                    <span *ngFor="let s of selectedSeats; let last = last">{{ s.id }}{{ !last ? ', ' : '' }}</span>
+                  </span>
+                </div>
+                <div class="t-item">
+                  <span class="label">Vehicle & Driver</span>
+                  <span class="value">{{ selectedTrip.registration || 'AJK-4402' }} &bull; Ahmed</span>
+                </div>
+                <div class="t-item" style="grid-column: span 2; border-top: 1px dashed #E2E8F0; padding-top: 1rem;">
+                  <span class="label">Amount Paid</span>
+                  <span class="value" style="color: #10B981; font-size: 1.25rem;">Rs. {{ selectedTrip.fare * selectedSeats.length + 50 }}</span>
+                </div>
+              </div>
+
+              <!-- QR Code -->
+              <div class="qr-section" style="background: white;">
+                <img [src]="selectedTrip.status === 'cancelled' ? 'assets/invalid-qr.png' : 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + bookingId + '-' + ticketCode + '-HASH'" alt="Ticket QR Code" class="qr-code" [style.opacity]="selectedTrip.status === 'cancelled' ? '0.3' : '1'" style="width: 180px; height: 180px;">
+                <p *ngIf="selectedTrip.status !== 'cancelled'">Scan at boarding</p>
+                <p *ngIf="selectedTrip.status === 'cancelled'" class="danger-text" style="color: #EF4444;">INVALID TICKET</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-actions">
+          <div class="secondary-actions">
+            <button class="action-chip">?? Download PDF</button>
+            <button class="action-chip">??? Save to Gallery</button>
+            <button class="action-chip">?? Share Ticket</button>
+          </div>
+        </div>
+      </div>
+
+                  <!-- Track My Bus Tab -->
+      <div *ngIf="activeTab === 'track-bus' && selectedTrip" class="track-bus-view animation-fade-in" style="width: 100%;">
+        
+        <div class="content-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px;">Track My Bus</h2>
+            <p style="color: var(--text-secondary); margin-top: 0.25rem;">Live GPS tracking for {{ selectedTrip.route }}</p>
+          </div>
+          <button class="bc-btn outline" (click)="setActiveTab('bookings')">← Back to Bookings</button>
+        </div>
+
+        <!-- Advisory Banner -->
+        <div class="advisory-banner" style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid #F59E0B; padding: 1.25rem 1.5rem; border-radius: 12px; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 2rem;">
+          <div style="color: #D97706; font-size: 1.5rem;">⚠️</div>
+          <div>
+            <h4 style="margin: 0 0 0.25rem 0; color: #92400E; font-size: 1.05rem; font-weight: 600;">Road Advisory: Heavy Rain</h4>
+            <p style="margin: 0; color: #B45309; font-size: 0.95rem;">Expect delays of 10-15 minutes near Kohala Bridge due to heavy rain and slippery roads.</p>
+          </div>
+        </div>
+
+        <!-- Tracking Layout -->
+        <div class="tracking-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+          
+          <!-- Left: Map Area -->
+          <div class="bc-card map-card" style="padding: 0; overflow: hidden; height: 600px; position: relative; border-radius: 24px;">
+            
+            <!-- Map Placeholder Background (mocking a map) -->
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, #F8FAFC 0%, #E2E8F0 100%);"></div>
+            
+            <!-- Route Path Mock -->
+            <svg style="position: absolute; width: 100%; height: 100%;" viewBox="0 0 400 400" preserveAspectRatio="none">
+              <path d="M 50 350 C 150 300, 100 150, 350 50" fill="none" stroke="var(--primary-color)" stroke-width="4" stroke-dasharray="8,4" opacity="0.6" />
+            </svg>
+
+            <!-- Bus Marker -->
+            <div class="bus-marker" style="position: absolute; top: 40%; left: 45%; display: flex; flex-direction: column; align-items: center; z-index: 10; animation: bounceMarker 2s infinite;">
+              <div style="background: var(--primary-color); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); margin-bottom: 0.5rem; white-space: nowrap;">AJK-4402 (Ahmed)</div>
+              <div style="width: 24px; height: 24px; background: #1E293B; border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative;">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 8px; height: 8px; background: var(--primary-color); border-radius: 50%;"></div>
+              </div>
+            </div>
+
+            <!-- Offline Notice overlay -->
+            <div class="offline-notice" style="position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); background: rgba(30, 41, 59, 0.9); backdrop-filter: blur(10px); color: white; padding: 0.75rem 1.5rem; border-radius: 30px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 20; white-space: nowrap;">
+              <div style="width: 8px; height: 8px; background: #F59E0B; border-radius: 50%; box-shadow: 0 0 10px #F59E0B;"></div>
+              Location last updated 4 min ago (Poor network)
+            </div>
+          </div>
+
+          <!-- Right: Journey Info -->
+          <div class="journey-sidebar" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            
+            <div class="bc-card status-card" style="border-left: 4px solid var(--primary-color);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h4 style="margin: 0; color: var(--text-primary); font-size: 1.1rem; font-weight: 700;">Status</h4>
+                <span style="background: #FEF2F2; color: #DC2626; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 700;">10 MIN LATE</span>
+              </div>
+              <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Current Location</div>
+              <div style="font-size: 1.25rem; font-weight: 800; color: var(--primary-color);">Approaching {{ selectedTrip.startPoint }}</div>
+            </div>
+
+            <div class="bc-card journey-timeline-card">
+              <h4 style="margin: 0 0 1.5rem 0; color: var(--text-primary); font-size: 1.1rem; font-weight: 700;">Your Journey</h4>
+              
+              <div class="timeline" style="position: relative; padding-left: 1.5rem;">
+                <!-- Timeline line -->
+                <div style="position: absolute; left: 7px; top: 5px; bottom: 5px; width: 2px; background: #E2E8F0;"></div>
+                <div style="position: absolute; left: 7px; top: 5px; height: 30%; width: 2px; background: var(--primary-color);"></div>
+
+                <!-- Stop 1 (Passed) -->
+                <div class="tl-item" style="position: relative; margin-bottom: 2rem;">
+                  <div style="position: absolute; left: -1.5rem; width: 16px; height: 16px; background: var(--primary-color); border-radius: 50%; top: 2px;"></div>
+                  <div style="font-weight: 700; color: var(--text-secondary); text-decoration: line-through;">Muzaffarabad Terminal (Origin)</div>
+                  <div style="font-size: 0.85rem; color: #94A3B8; margin-top: 0.25rem;">Departed at 08:35 AM</div>
+                </div>
+
+                <!-- Stop 2 (Your Boarding) -->
+                <div class="tl-item" style="position: relative; margin-bottom: 2rem;">
+                  <div style="position: absolute; left: -1.5rem; width: 16px; height: 16px; background: white; border: 3px solid var(--primary-color); border-radius: 50%; top: 2px; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);"></div>
+                  <div style="font-weight: 800; color: var(--text-primary); font-size: 1.05rem;">{{ selectedTrip.startPoint }} (Your Boarding)</div>
+                  <div style="font-size: 0.85rem; color: var(--primary-color); font-weight: 700; margin-top: 0.25rem;">ETA: 09:15 AM (in 12 mins)</div>
+                </div>
+
+                <!-- Stop 3 (Next Stop) -->
+                <div class="tl-item" style="position: relative; margin-bottom: 2rem;">
+                  <div style="position: absolute; left: -1.5rem; width: 16px; height: 16px; background: white; border: 3px solid #CBD5E1; border-radius: 50%; top: 2px;"></div>
+                  <div style="font-weight: 600; color: var(--text-primary);">Kohala Bridge</div>
+                  <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">ETA: 10:05 AM</div>
+                </div>
+
+                <!-- Stop 4 (Your Drop-off) -->
+                <div class="tl-item" style="position: relative;">
+                  <div style="position: absolute; left: -1.5rem; width: 16px; height: 16px; background: white; border: 3px solid #CBD5E1; border-radius: 50%; top: 2px;"></div>
+                  <div style="font-weight: 800; color: var(--text-primary); font-size: 1.05rem;">{{ selectedTrip.endPoint }} (Your Drop-off)</div>
+                  <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">ETA: 11:45 AM</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Cancel Booking Tab -->
+      <div *ngIf="activeTab === 'cancel-booking' && cancellingBooking" class="cancel-booking-container" style="max-width: 1100px; margin: 0 auto; animation: fadeIn 0.4s ease-out;">
+        
+        <div class="content-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">Cancel Booking</h2>
+            <p style="color: #64748B;">Review refund details before confirming.</p>
+          </div>
+          <button class="bc-btn outline" (click)="setActiveTab('bookings')">Back to bookings</button>
+        </div>
+
+        <!-- STEP 1: Confirm Cancellation -->
+        <div class="cancel-layout" style="display: grid; grid-template-columns: 1fr 380px; gap: 2rem; align-items: start;" *ngIf="cancelStep === 1">
+          
+          <!-- Left Side: Warning & Details -->
+          <div class="cancel-card" style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; overflow: hidden;">
+            <div class="cancel-header" style="background: #FEE2E2; padding: 2rem; text-align: center; border-bottom: 1px solid #FCA5A5;">
+              <div class="cancel-icon" style="width: 64px; height: 64px; background: #DC2626; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem auto; box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);">⚠️</div>
+              <h3 style="color: #991B1B; font-size: 1.5rem; margin: 0 0 0.5rem 0; font-weight: 800;">Are you sure?</h3>
+              <p style="color: #B91C1C; margin: 0; font-weight: 500;">This action cannot be undone. Your seat will be released immediately.</p>
+            </div>
+
+            <div class="cancel-details" style="padding: 2.5rem;">
+              <h4 style="color: #1E293B; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.1rem; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem;">Booking Details</h4>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: #F8FAFC; padding: 2rem; border-radius: 12px; border: 1px dashed #CBD5E1;">
+                <div>
+                  <span style="display:block; font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Booking ID</span>
+                  <strong style="color: #1E293B; font-size: 1.15rem;">{{ cancellingBooking.id }}</strong>
+                </div>
+                <div>
+                  <span style="display:block; font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Route</span>
+                  <strong style="color: #1E293B; font-size: 1.15rem;">{{ cancellingBooking.route }}</strong>
+                </div>
+                <div>
+                  <span style="display:block; font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Date & Time</span>
+                  <strong style="color: #1E293B; font-size: 1.15rem;">{{ cancellingBooking.date | date:'mediumDate' }} &bull; {{ cancellingBooking.time }}</strong>
+                </div>
+                <div>
+                  <span style="display:block; font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Amount Paid</span>
+                  <strong style="color: #1E293B; font-size: 1.15rem;">Rs. {{ cancellingBooking.amountPaid }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Side: Refund Estimate & Actions -->
+          <div class="cancel-summary-card" style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; overflow: hidden; padding: 2.5rem;">
+            <h4 style="color: #1E293B; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.1rem; text-align: center;">Refund Estimate</h4>
+            
+            <div style="background: linear-gradient(to bottom, #F0FDF4, #DCFCE7); padding: 2rem 1.5rem; border-radius: 16px; border: 1px solid #86EFAC; text-align: center; margin-bottom: 2rem;">
+              <span style="display:block; color: #166534; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.85rem; margin-bottom: 0.5rem;">Estimated Refund</span>
+              <div style="font-size: 2.5rem; font-weight: 800; color: #166534; margin-bottom: 1rem; line-height: 1;">
+                Rs. {{ cancellingBooking.refundAmount }}
+              </div>
+              <span style="display:inline-block; background: #BBF7D0; color: #15803D; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">{{ cancellingBooking.refundPolicy }}</span>
+            </div>
+
+            <p style="font-size: 0.85rem; color: #64748B; text-align: center; margin-bottom: 2.5rem; line-height: 1.5;">Refunds will be processed to the original payment method within 3-5 business days.</p>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <button class="bc-btn danger" style="width: 100%; padding: 1rem; font-size: 1.05rem;" (click)="cancelStep = 2">Confirm Cancellation</button>
+              <button class="bc-btn outline" style="width: 100%; padding: 1rem; font-size: 1.05rem;" (click)="setActiveTab('bookings')">Keep Booking</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Cancellation Success -->
+        <div class="cancel-success-card" style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; overflow: hidden; padding: 3rem 2rem; text-align: center;" *ngIf="cancelStep === 2">
+          <div style="width: 80px; height: 80px; background: #10B981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem auto; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);">✓</div>
+          <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B; margin-bottom: 0.5rem;">Booking Cancelled</h2>
+          <p style="color: #64748B; font-size: 1.1rem; max-width: 400px; margin: 0 auto 2rem auto;">Your seat has been released successfully. We've sent a confirmation SMS to your registered number.</p>
+          
+          <div style="background: #F8FAFC; border: 1px dashed #CBD5E1; padding: 1.5rem; border-radius: 12px; max-width: 400px; margin: 0 auto 2.5rem auto;">
+            <p style="margin: 0 0 0.5rem 0; font-weight: 700; color: #334155;">Refund Initiated</p>
+            <p style="margin: 0; color: #10B981; font-size: 1.5rem; font-weight: 800;">Rs. {{ cancellingBooking.refundAmount }}</p>
+            <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: #64748B;">Expect funds in 3-5 business days</p>
+          </div>
+
+          <button class="bc-btn primary" style="padding: 1rem 2rem; font-size: 1.05rem;" (click)="setActiveTab('bookings')">Back to My Bookings</button>
+        </div>
+
+      </div>
+
+                  <!-- Register Tab -->
+      <div *ngIf="activeTab === 'register'" class="register-tab" style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 600; color: #1e293b;">Create Passenger Account</h2>
+        
+        <div *ngIf="regStep === 'details'">
+          <form (ngSubmit)="requestOtp()">
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Full Name</label>
+              <input type="text" [(ngModel)]="regName" name="regName" class="form-control" placeholder="Enter your full name" required style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Phone Number (Used for SMS Tickets)</label>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; background: #f8fafc; color: #475569;">+92</span>
+                <input type="tel" [(ngModel)]="regPhone" name="regPhone" class="form-control" placeholder="3XX XXXXXXX" required style="flex: 1; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Email (Optional - for PDF delivery)</label>
+              <input type="email" [(ngModel)]="regEmail" name="regEmail" class="form-control" placeholder="Enter email address" style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Password (Min 8 chars)</label>
+              <input type="password" [(ngModel)]="regPassword" name="regPassword" class="form-control" minlength="8" required style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 2rem;">
+              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Language Preference</label>
+              <select [(ngModel)]="regLanguage" name="regLanguage" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; background: white;">
+                <option value="English">English</option>
+                <option value="Urdu">Urdu (اردو)</option>
+                <option value="Hindi">Hindi (हिंदी)</option>
+              </select>
+            </div>
+
+            <button type="submit" class="primary-btn" [disabled]="regLoading" style="width: 100%; padding: 0.875rem; background: #4f46e5; color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">
+              <span *ngIf="!regLoading">Send OTP Verification</span>
+              <span *ngIf="regLoading">Sending...</span>
+            </button>
+            <p *ngIf="regMessage" style="margin-top: 1rem; color: #ef4444; text-align: center;">{{ regMessage }}</p>
+          </form>
+        </div>
+
+        <div *ngIf="regStep === 'otp'">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <h3 style="margin-bottom: 0.5rem; font-size: 1.25rem;">Verify Phone Number</h3>
+            <p style="color: #64748b;">Enter the 6-digit code sent to +92 {{ regPhone }}</p>
+          </div>
+
+          <form (ngSubmit)="verifyOtp()">
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+              <input type="text" [(ngModel)]="regOtp" name="regOtp" maxlength="6" placeholder="------" style="width: 100%; padding: 1rem; text-align: center; letter-spacing: 0.5rem; font-size: 1.5rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;" required>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 1.5rem; font-weight: 500;" [style.color]="regTimer < 60 ? '#ef4444' : '#10b981'">
+              {{ regTimer > 0 ? getFormattedTimer() : 'Code expired' }}
+            </div>
+
+            <button type="submit" class="primary-btn" [disabled]="regLoading || regTimer <= 0" style="width: 100%; padding: 0.875rem; background: #4f46e5; color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">
+              <span *ngIf="!regLoading">Verify & Create Account</span>
+              <span *ngIf="regLoading">Verifying...</span>
+            </button>
+            
+            <button type="button" (click)="regStep = 'details'" style="width: 100%; padding: 0.875rem; background: transparent; color: #4f46e5; border: 1px solid #4f46e5; border-radius: 0.5rem; font-weight: 600; cursor: pointer; margin-top: 1rem;">
+              Edit Details
+            </button>
+            
+            <p *ngIf="regMessage" style="margin-top: 1rem; color: #ef4444; text-align: center;">{{ regMessage }}</p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Profile Tab -->
+      <div *ngIf="activeTab === 'profile'" class="profile-container" style="max-width: 1100px; margin: 0 auto; animation: fadeIn 0.4s ease-out;">
+        <div class="content-header" style="margin-bottom: 2rem;">
+          <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">Account Settings</h2>
+          <p style="color: #64748B;">Manage your profile, preferences, and data privacy.</p>
+        </div>
+
+        <div class="profile-layout" style="display: grid; grid-template-columns: 2.5fr 1fr; gap: 2rem; align-items: start;">
+          
+          <!-- Left Column: Settings -->
+          <div class="profile-main" style="display: flex; flex-direction: column; gap: 2rem;">
+            
+            <!-- Personal Info -->
+            <div class="content-card" style="background: white; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden;">
+              <div class="card-header" style="padding: 1.5rem 2rem; border-bottom: 1px solid #E2E8F0; background: #F8FAFC;">
+                <h3 style="margin: 0; color: #1E293B; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">?? Personal Details</h3>
+              </div>
+              <div class="card-body" style="padding: 2rem;">
+                <form>
+                  <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div class="form-group">
+                      <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Full Name</label>
+                      <input type="text" [(ngModel)]="userName" name="userName" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 1rem; color: #1E293B; background: #F8FAFC;">
+                    </div>
+                    <div class="form-group">
+                      <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Email Address</label>
+                      <input type="email" value="passenger@example.com" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 1rem; color: #1E293B; background: #F8FAFC;">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                      <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Phone Number <span style="color: #EF4444;">*</span></label>
+                      <div style="display: flex; gap: 1rem;">
+                        <input type="text" value="+92 300 1234567" class="form-control" disabled style="flex: 1; padding: 0.75rem; border: 1px solid #E2E8F0; border-radius: 8px; font-size: 1rem; color: #94A3B8; background: #F1F5F9; cursor: not-allowed;">
+                        <button type="button" class="bc-btn outline" style="white-space: nowrap;">Change via OTP</button>
+                      </div>
+                      <p style="font-size: 0.8rem; color: #64748B; margin-top: 0.5rem; margin-bottom: 0;">Changing your phone number requires OTP verification sent to your current number.</p>
+                    </div>
+                  </div>
+                  
+                  <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end;">
+                    <button type="button" class="bc-btn primary">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Preferences & Settings -->
+            <div class="content-card" style="background: white; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden;">
+              <div class="card-header" style="padding: 1.5rem 2rem; border-bottom: 1px solid #E2E8F0; background: #F8FAFC;">
+                <h3 style="margin: 0; color: #1E293B; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">?? App Preferences</h3>
+              </div>
+              <div class="card-body" style="padding: 2rem;">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+                  <div class="form-group">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Language</label>
+                    <select class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 1rem; color: #1E293B; background: white; cursor: pointer;">
+                      <option value="en">English</option>
+                      <option value="ur">Urdu</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Preferred Seat Type</label>
+                    <select class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 1rem; color: #1E293B; background: white; cursor: pointer;">
+                      <option value="window">Window</option>
+                      <option value="aisle">Aisle</option>
+                      <option value="any">Any (Default)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style="border-top: 1px dashed #E2E8F0; padding-top: 1.5rem; margin-bottom: 1.5rem;">
+                  <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: #334155;">Notifications</h4>
+                  <label style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; cursor: pointer;">
+                    <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #0D766E;">
+                    <span style="color: #475569; font-weight: 500;">SMS Alerts (Booking, OTP, Delays)</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                    <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #0D766E;">
+                    <span style="color: #475569; font-weight: 500;">Push Notifications (App Updates)</span>
+                  </label>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Security & Actions -->
+          <div class="profile-sidebar" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            
+            <!-- Quick Rebook Data -->
+            <div class="content-card" style="background: white; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden;">
+              <div class="card-header" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #E2E8F0; background: #F8FAFC;">
+                <h3 style="margin: 0; color: #1E293B; font-size: 1rem;">? Fast Rebooking</h3>
+              </div>
+              <div class="card-body" style="padding: 1.5rem;">
+                <p style="font-size: 0.85rem; color: #64748B; margin-top: 0; margin-bottom: 1rem;">Recent routes saved locally:</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                  <div style="background: #F1F5F9; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: #334155; display: flex; justify-content: space-between; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#E2E8F0'" onmouseout="this.style.background='#F1F5F9'">
+                    <span>Muzaffarabad ? Pindi</span>
+                    <span style="color: #0D766E;">?</span>
+                  </div>
+                  <div style="background: #F1F5F9; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: #334155; display: flex; justify-content: space-between; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#E2E8F0'" onmouseout="this.style.background='#F1F5F9'">
+                    <span>Srinagar ? Jammu</span>
+                    <span style="color: #0D766E;">?</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Security & Data -->
+            <div class="content-card" style="background: white; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden;">
+              <div class="card-header" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #E2E8F0; background: #F8FAFC;">
+                <h3 style="margin: 0; color: #1E293B; font-size: 1rem;">?? Security & Data</h3>
+              </div>
+              <div class="card-body" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                
+                <button class="bc-btn outline" style="width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1rem;">
+                  <span>Change Password</span>
+                  <span>?</span>
+                </button>
+                
+                <button class="bc-btn outline" style="width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1rem;" (click)="downloadData()">
+                  <span>Download My Data</span>
+                  <span>?</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="content-card danger-zone" style="background: #FEF2F2; border-radius: 16px; border: 1px solid #FCA5A5; overflow: hidden;">
+              <div class="card-header" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #FCA5A5;">
+                <h3 style="margin: 0; color: #DC2626; font-size: 1rem;">?? Danger Zone</h3>
+              </div>
+              <div class="card-body" style="padding: 1.5rem;">
+                <p style="font-size: 0.85rem; color: #991B1B; margin-top: 0; margin-bottom: 1rem;">Permanently delete your account. Active bookings will be cancelled and refunded.</p>
+                <button class="bc-btn danger" style="width: 100%;" (click)="deleteAccount()">Delete Account</button>
+              </div>
+            </div>
+
+            <button class="bc-btn outline" style="width: 100%; color: #475569; border: 1px solid #CBD5E1; margin-top: 0.5rem;" (click)="logout()">?? Log Out</button>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback Tab -->
+      <div *ngIf="activeTab === 'feedback'">
+      </div>
+      <!-- Notifications Tab -->
+      <div *ngIf="activeTab === 'notifications'" class="notifications-container" style="max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease-out;">
+        <div class="content-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+          <div>
+            <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B; margin-bottom: 0.25rem;">Notifications</h2>
+            <p style="color: #64748B; margin: 0;">You have <span style="font-weight: 700; color: #0D766E;">3 unread</span> alerts.</p>
+          </div>
+          <button class="bc-btn outline" style="font-size: 0.85rem; padding: 0.5rem 1rem;">? Mark all as read</button>
+        </div>
+
+        <div class="notifications-list" style="display: flex; flex-direction: column; gap: 1rem;">
+          
+          <!-- Critical Unread (Cancellation) -->
+          <div class="notif-card unread" style="background: white; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; border-left: 4px solid #DC2626; box-shadow: 0 4px 15px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+            <div style="width: 40px; height: 40px; background: #FEE2E2; color: #DC2626; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">??</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <h4 style="margin: 0; color: #1E293B; font-size: 1rem;">Trip Cancelled</h4>
+                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">2 mins ago</span>
+              </div>
+              <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.9rem; line-height: 1.4;">Your trip BKG-784321 from Muzaffarabad has been cancelled due to a vehicle breakdown. A full refund of Rs. 3050 has been initiated.</p>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="background: #F1F5F9; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">SMS Delivered</span>
+                <span style="background: #FEF2F2; color: #DC2626; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 700;">Critical</span>
+              </div>
+            </div>
+            <div style="width: 10px; height: 10px; background: #0D766E; border-radius: 50%; margin-top: 0.5rem;"></div>
+          </div>
+
+          <!-- Important Unread (Delay) -->
+          <div class="notif-card unread" style="background: white; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; border-left: 4px solid #F59E0B; box-shadow: 0 4px 15px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+            <div style="width: 40px; height: 40px; background: #FEF3C7; color: #D97706; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">??</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <h4 style="margin: 0; color: #1E293B; font-size: 1rem;">Trip Delayed</h4>
+                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">1 hr ago</span>
+              </div>
+              <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.9rem; line-height: 1.4;">Your bus for BKG-784320 is running 15 minutes late due to traffic congestion.</p>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="background: #F1F5F9; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">SMS Delivered</span>
+              </div>
+            </div>
+            <div style="width: 10px; height: 10px; background: #0D766E; border-radius: 50%; margin-top: 0.5rem;"></div>
+          </div>
+
+          <!-- Normal Unread (Reminder) -->
+          <div class="notif-card unread" style="background: white; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; border-left: 4px solid #3B82F6; box-shadow: 0 4px 15px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+            <div style="width: 40px; height: 40px; background: #DBEAFE; color: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">??</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <h4 style="margin: 0; color: #1E293B; font-size: 1rem;">Departure Reminder</h4>
+                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">2 hrs ago</span>
+              </div>
+              <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.9rem; line-height: 1.4;">Your trip to Srinagar departs in 1 hour. Please reach the terminal 15 mins early.</p>
+            </div>
+            <div style="width: 10px; height: 10px; background: #0D766E; border-radius: 50%; margin-top: 0.5rem;"></div>
+          </div>
+
+          <!-- Read (Booking Confirmed) -->
+          <div class="notif-card" style="background: #F8FAFC; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; border: 1px solid #E2E8F0; opacity: 0.8; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
+            <div style="width: 40px; height: 40px; background: #D1FAE5; color: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">?</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                <h4 style="margin: 0; color: #334155; font-size: 1rem;">Booking Confirmed</h4>
+                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">Yesterday</span>
+              </div>
+              <p style="margin: 0 0 0.75rem 0; color: #64748B; font-size: 0.9rem; line-height: 1.4;">Your booking BKG-784321 has been confirmed. Your ticket is available offline.</p>
+              <div style="display: flex; gap: 0.5rem;">
+                <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">Email Sent</span>
+                <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">SMS Delivered</span>
+              </div>
+            </div>
+          </div></div></div></div>
+
+

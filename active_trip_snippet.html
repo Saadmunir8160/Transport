@@ -1,0 +1,493 @@
+ss="nav-item" [class.active]="activeTab === 'active_trip'" (click)="setActiveTab('active_trip')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11" />
+          </svg>
+          <span class="item-label">Active trip</span>
+          <span class="nav-badge badge-live">live</span>
+        </button>
+      </div>
+
+      <!-- My assignments Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('My assignments')"
+        (click)="toggleGroup('My assignments')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+          <path d="M9 22v-4h6v4" />
+          <path d="M8 6h.01" />
+          <path d="M16 6h.01" />
+          <path d="M12 6h.01" />
+          <path d="M12 10h.01" />
+          <path d="M12 14h.01" />
+        </svg>
+        <span class="group-title">My assignments</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('My assignments')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('My assignments')">
+                <button class="nav-item" [class.active]="activeTab === 'home'" (click)="setActiveTab('home')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span class="item-label">Home</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'trips'" (click)="setActiveTab('trips')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+          <span class="item-label">Upcoming trips</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'my_vehicle'" (click)="setActiveTab('my_vehicle')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+            <line x1="4" y1="22" x2="4" y2="15" />
+          </svg>
+          <span class="item-label">My vehicle</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'route_stops'" (click)="setActiveTab('route_stops')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18" />
+            <path d="m19 9-5 5-4-4-3 3" />
+          </svg>
+          <span class="item-label">Route and stops</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'start_trip'" (click)="setActiveTab('start_trip')"><i class="fas fa-play-circle" style="margin-right:0.5rem; width:20px; text-align:center;"></i><span class="item-label">Start Trip</span></button>
+        <button class="nav-item" [class.active]="activeTab === 'passengers'" (click)="setActiveTab('passengers')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span class="item-label">Passenger list</span>
+        </button>
+      </div>
+
+      <!-- Trip actions Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Trip actions')"
+        (click)="toggleGroup('Trip actions')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2" />
+          <polyline points="2 17 12 22 22 17" />
+          <polyline points="2 12 12 17 22 12" />
+        </svg>
+        <span class="group-title">Trip actions</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Trip actions')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Trip actions')">
+        <button class="nav-item" (click)="setActiveTab('start_trip')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+          <span class="item-label">Start trip</span>
+        </button>
+        <button class="nav-item" (click)="setActiveTab('mark_stop')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span class="item-label">Mark stop reached</span>
+        </button>
+        <button class="nav-item" (click)="setActiveTab('end_trip')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          </svg>
+          <span class="item-label">End trip</span>
+        </button>
+      </div>
+
+      <!-- Records Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Records')"
+        (click)="toggleGroup('Records')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+        <span class="group-title">Records</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Records')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Records')">
+        <button class="nav-item" [class.active]="activeTab === 'trip_history'" (click)="setActiveTab('trip_history')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span class="item-label">Trip history</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'report_issue'" (click)="setActiveTab('report_issue')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          <span class="item-label">Report issue</span>
+          <span class="nav-badge badge-warning">2</span>
+        </button>
+      </div>
+
+      <!-- Connectivity Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Connectivity')"
+        (click)="toggleGroup('Connectivity')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        <span class="group-title">Connectivity</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Connectivity')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Connectivity')">
+        <button class="nav-item">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="1" y1="1" x2="23" y2="23" />
+            <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
+            <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" />
+            <path d="M10.71 5.05A16 16 0 0 1 22.58 9" />
+            <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" />
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+            <line x1="12" y1="20" x2="12.01" y2="20" />
+          </svg>
+          <span class="item-label">Offline status</span>
+          <span class="nav-badge badge-amber">!</span>
+        </button>
+        <button class="nav-item">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+            <path d="M3 3v5h5" />
+            <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+            <path d="M16 21v-5h5" />
+          </svg>
+          <span class="item-label">Sync queue</span>
+        </button>
+      </div>
+
+
+      <!-- Account Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Account')"
+        (click)="toggleGroup('Account')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span class="group-title">Account</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Account')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Account')">
+        <button class="nav-item" [class.active]="activeTab === 'profile'" (click)="setActiveTab('profile')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="item-label">My profile</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'notifications'" (click)="setActiveTab('notifications')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+          <span class="item-label">Notifications</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="profile-card" (click)="logout()">
+        <div class="avatar-sa">DR</div>
+        <div class="profile-info">
+          <div class="profile-name">Driver</div>
+          <div class="profile-email">Srinagar Transport</div>
+        </div>
+        <div class="logout-icon-btn" title="Log out">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <h1>{{ getPageTitle() }}</h1>
+      <div class="user-section">
+        <div class="user-avatar">{{ userName.charAt(0).toUpperCase() }}</div>
+        <span style="color: #2c3e50; font-weight: 600;">{{ userName }}</span>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <div *ngIf="message" class="alert-message">
+        {{ message }}
+      </div>
+
+      
+      
+      
+      <!-- HOME TAB -->
+      <div *ngIf="activeTab === 'home'" class="dashboard-content enterprise-tab">
+        
+        <!-- Welcome Header -->
+        <div class="enterprise-header">
+          <div>
+            <h2 class="welcome-title">Welcome back, {{ (homeData?.driverName || 'Driver').split(' ')[0] }}</h2>
+            <p class="date-subtitle">{{ homeData?.todayDate || 'Loading...' }}</p>
+          </div>
+        </div>
+
+        <div class="enterprise-grid">
+          
+          <!-- Alert Banners -->
+          <div class="alerts-section" *ngIf="homeData?.alerts">
+            <div class="alert-box alert-warning" *ngIf="homeData.alerts.roadAdvisory">
+              <div class="alert-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div class="alert-content">
+                <strong>Advisory:</strong> Heavy snow expected on Route Alpha this afternoon.
+              </div>
+            </div>
+            
+            <div class="alert-box alert-danger" *ngIf="homeData.alerts.licenseExpiring">
+              <div class="alert-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div class="alert-content">
+                <strong>Action Required:</strong> Licence expires in {{ homeData.alerts.licenseExpiryDays }} days. Please renew.
+              </div>
+            </div>
+          </div>
+
+          <!-- Today Card -->
+          <div class="enterprise-card today-card">
+            <div class="card-header">
+              <h3 class="card-title">Next Trip</h3>
+              <span class="status-badge" [ngClass]="{'badge-active': homeData?.nextTrip?.status === 'InProgress', 'badge-default': homeData?.nextTrip?.status !== 'InProgress'}">
+                {{ homeData?.nextTrip ? (homeData?.nextTrip?.isTomorrow ? 'Tomorrow\'s Trip' : (homeData?.nextTrip?.status === 'InProgress' ? 'In Progress' : 'Upcoming')) : 'None' }}
+              </span>
+            </div>
+            <div class="card-body trip-details">
+              <div class="trip-main-info">
+                <h4 class="route-name">{{ homeData?.nextTrip?.routeName || 'No Trips Assigned' }}</h4>
+                <div class="vehicle-pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/></svg>
+                  <span>{{ homeData?.nextTrip?.vehicleRegistration || 'N/A' }}</span>
+                </div>
+              </div>
+              <div class="trip-time-info" *ngIf="homeData?.nextTrip">
+                <div class="time-display">{{ homeData?.nextTrip?.departureTime }}</div>
+                <div class="time-label">Departure</div>
+              </div>
+            </div>
+            <div class="card-footer" *ngIf="homeData?.nextTrip">
+              <button class="btn btn-primary" (click)="setActiveTab(homeData.nextTrip.status === 'InProgress' ? 'active_trip' : 'start_trip')">
+                {{ homeData.nextTrip.status === 'InProgress' ? 'Go to Active Trip' : 'Start Trip' }}
+              </button>
+              <button class="btn btn-secondary" (click)="setActiveTab('passengers')">
+                Passenger List
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Stats Grid -->
+          <div class="enterprise-stats">
+            <div class="stat-card">
+              <div class="stat-label">Trips Today</div>
+              <div class="stat-value">{{ homeData?.stats?.totalTripsToday || 0 }}</div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-label">Completed</div>
+              <div class="stat-value text-success">{{ homeData?.stats?.completedTrips || 0 }}</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Remaining</div>
+              <div class="stat-value text-warning">{{ homeData?.stats?.remainingTrips || 0 }}</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Expected Pax</div>
+              <div class="stat-value">{{ homeData?.stats?.totalExpectedPassengers || 0 }}</div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Panel -->
+          <div class="enterprise-card qa-card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Quick Actions</h3>
+            </div>
+            <div class="qa-actions-row">
+              <button class="qa-item" (click)="setActiveTab('my_vehicle')">
+                <div class="qa-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                </div>
+                <span>My Vehicle</span>
+              </button>
+              <button class="qa-item" (click)="setActiveTab('report_issue')">
+                <div class="qa-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <span>Report Issue</span>
+              </button>
+              <button class="qa-item" (click)="setActiveTab('route_stops')">
+                <div class="qa-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                </div>
+                <span>Route Map</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      
+      <!-- ACTIVE TRIP TAB -->
+      <div *ngIf="activeTab === 'active_trip'" class="dashboard-content enterprise-tab">
+        <div *ngIf="!activeTripData" style="padding: 2rem; text-align: center;">Loading Active Trip...</div>
+        
+        <div *ngIf="activeTripData" class="enterprise-grid">
+          
+          <!-- Trip Header -->
+          <div class="enterprise-card">
+            <div class="card-header border-bottom">
+              <div>
+                <span style="font-size: 0.8rem; color: #64748b; text-transform: uppercase;">TRIP #{{ activeTripData.tripId }}</span>
+                <h3 class="card-title">{{ activeTripData.routeName }}</h3>
+              </div>
+              <span class="status-badge badge-active">Active</span>
+            </div>
+            <div class="card-body" style="padding-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                <div>
+                  <div style="font-weight: 600; color: #0f172a;">{{ activeTripData.origin }} âž” {{ activeTripData.destination }}</div>
+                  <div style="color: #64748b; font-size: 0.9rem;">Vehicle: {{ activeTripData.vehicleRegistration }}</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-weight: 600; color: #0f172a;">Plan: {{ activeTripData.plannedDepartureTime }}</div>
+                  <div style="color: #64748b; font-size: 0.9rem;">Actual: {{ activeTripData.actualDepartureTime }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advisory -->
+          <div class="alert-box alert-warning" *ngIf="activeTripData.advisory">
+            <div class="alert-icon-wrapper">âš ï¸</div>
+            <div class="alert-content">
+              <strong>Advisory:</strong> {{ activeTripData.advisory }}
+            </div>
+          </div>
+
+          <!-- Stop Progress Tracker -->
+          <div class="enterprise-card">
+            <div class="card-header border-bottom" style="display: flex; justify-content: space-between;">
+              <h3 class="card-title">Route Stops</h3>
+              <div style="font-size: 0.85rem; color: #64748b; font-weight: 600;">
+                {{ getCompletedCount() }} / {{ activeTripData.stops.length }} completed
+              </div>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+              
+              <div *ngFor="let stop of activeTripData.stops; let i = index" 
+                   style="display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
+                
+                <div style="width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0;"
+                     [ngStyle]="{'background': isStopCompleted(stop.stopId) ? '#10b981' : (getNextStop()?.stopId === stop.stopId ? '#0ea5e9' : '#e2e8f0'), 'color': isStopCompleted(stop.stopId) || getNextStop()?.stopId === stop.stopId ? '#fff' : '#64748b'}">
+                  {{ isStopCompleted(stop.stopId) ? 'âœ“' : i + 1 }}
+                </div>
+                
+                <div style="flex: 1;">
+                  <div style="font-weight: 600; font-size: 1.1rem; color: #0f172a;" [style.color]="isStopCompleted(stop.stopId) ? '#94a3b8' : '#0f172a'">
+                    {{ stop.name }}
+                  </div>
+                  <div style="color: #64748b; font-size: 0.85rem;">
+                    ETA: {{ stop.expectedTime }}
+                  </div>
+                </div>
+
+                <div style="text-align: right;">
+                  <div style="font-size: 0.85rem; font-weight: 600; color: #059669;">+{{ stop.boardingCount }} Boarding</div>
+                  <div style="font-size: 0.85rem; font-weight: 600; color: #ef4444;">-{{ stop.droppingCount }} Drop-off</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="display: flex; gap: 1rem;">
+            <button *ngIf="getNextStop()" class="btn btn-primary" style="flex: 2; padding: 1.25rem; font-size: 1.2rem; font-weight: bold;" (click)="markNextStop()">
+              Mark "{{ getNextStop().name }}" as Reached
+            </button>
+            <button *ngIf="!getNextStop()" class="btn btn-primary" style="flex: 2; padding: 1.25rem; font-size: 1.2rem; font-weight: bold; background-color: #10b981;" (click)="endTrip()">
+              End Trip
+            </button>
+            <button class="btn btn-secondary" style="flex: 1;" (click)="setActiveTab('passengers')">
+              Passengers
+            </button>
+          </div>
+          
+          <div class="enterprise-stats" *ngIf="activeTripData.showEta">
+             <div class="stat-card">
+              <div class="stat-label">Predicted ETA (Destination)</div>
+              <div class="stat-value">{{ activeTripData.predictedEta || 'Calculating...' }}</div>
+             </div>
+             <div class="stat-card">
+              <div class="stat-label">Delay</div>
+              <div class="stat-value" [ngClass]="{'text-warning': activeTripData.delayInMinutes > 0, 'text-success': activeTripData.delayInMinutes <= 0}">
+                {{ activeTripData.delayInMinutes }} mins
+              </div>
+             </div>
+          </div>
+
+        </div>
+      </div>
+
+      
+      

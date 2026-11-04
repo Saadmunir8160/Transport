@@ -1,0 +1,50 @@
+<div class="card">
+  <h2>Routes Management</h2>
+  
+  <form (ngSubmit)="addRoute()" class="mt-4">
+    <div class="form-group" style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 200px;">
+        <label class="form-label">Route Name</label>
+        <input [(ngModel)]="routeName" name="routeName" class="input-field" placeholder="Route Name" required>
+      </div>
+      <div style="flex: 1; min-width: 200px;">
+        <label class="form-label">Start Point</label>
+        <input [(ngModel)]="startPoint" name="startPoint" class="input-field" placeholder="Start Point" required>
+      </div>
+      <div style="flex: 1; min-width: 200px;">
+        <label class="form-label">End Point</label>
+        <input [(ngModel)]="endPoint" name="endPoint" class="input-field" placeholder="End Point" required>
+      </div>
+      <div style="flex: 1; min-width: 150px;">
+        <label class="form-label">Distance (km)</label>
+        <input [(ngModel)]="distance" name="distance" type="number" class="input-field" placeholder="Distance" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="height: 48px;">Add Route</button>
+    </div>
+  </form>
+
+  <div class="table-container mt-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Distance</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let route of routes">
+          <td class="font-semibold">{{ route.routeName }}</td>
+          <td>{{ route.startPoint }}</td>
+          <td>{{ route.endPoint }}</td>
+          <td>{{ route.distance }} km</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deleteRoute(route.routeId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

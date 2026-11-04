@@ -1,0 +1,128 @@
+<div class="booking-container">
+  <!-- Top Navigation & Context -->
+  <div class="booking-nav-bar">
+    <div class="booking-nav-content">
+      <a routerLink="/passenger" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        Back to Trips
+      </a>
+      <div class="nav-brand-title">
+        <span class="portal-badge">Trip Booking</span>
+        <span class="trip-id-tag">Trip #{{ tripId }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="booking-card">
+    <div class="route-header">
+      <div class="route-header-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+      </div>
+      <div class="route-header-text">
+        <h2>Reserve Seats & Complete Booking</h2>
+        <p>AJK Transport Network &bull; Mountain Highway Verified</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="bookTicket()">
+      <!-- Step 1: Passenger Details -->
+      <div class="form-section">
+        <div class="section-title-wrap">
+          <span class="step-num">1</span>
+          <h3>Passenger Information</h3>
+        </div>
+        
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="passengerName">Full Name *</label>
+            <input id="passengerName" [(ngModel)]="passengerName" name="name" placeholder="e.g. Tariq Mehmood" required>
+          </div>
+          <div class="form-group">
+            <label for="passengerPhone">Contact Number *</label>
+            <input id="passengerPhone" [(ngModel)]="passengerPhone" name="phone" placeholder="0300-1234567" required>
+          </div>
+          <div class="form-group">
+            <label for="passengerCNIC">CNIC / ID Card *</label>
+            <input id="passengerCNIC" [(ngModel)]="passengerCNIC" name="cnic" placeholder="82101-1234567-1" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Interactive Seat Map -->
+      <div class="form-section">
+        <div class="section-title-wrap">
+          <span class="step-num">2</span>
+          <h3>Select Preferred Seat(s)</h3>
+        </div>
+
+        <div class="seat-map-wrapper" *ngIf="totalCapacity > 0">
+          <div class="bus-cockpit">
+            <div class="steering-wheel">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <span>Driver Cabin</span>
+            </div>
+          </div>
+
+          <div class="seat-grid">
+            <button 
+              type="button"
+              *ngFor="let seat of getSeatArray()" 
+              class="seat-btn" 
+              [ngClass]="{
+                'booked': isSeatBooked(seat),
+                'selected': isSeatSelected(seat)
+              }"
+              [disabled]="isSeatBooked(seat)"
+              [attr.aria-label]="'Seat ' + seat + (isSeatBooked(seat) ? ' booked' : isSeatSelected(seat) ? ' selected' : ' available')"
+              (click)="toggleSeat(seat)"
+            >
+              {{ seat }}
+            </button>
+          </div>
+
+          <div class="seat-legend">
+            <span class="legend-pill"><span class="legend-dot dot-available"></span> Available</span>
+            <span class="legend-pill"><span class="legend-dot dot-selected"></span> Selected</span>
+            <span class="legend-pill"><span class="legend-dot dot-booked"></span> Occupied</span>
+          </div>
+        </div>
+
+        <div *ngIf="totalCapacity === 0" class="loading-state">
+          <div class="spinner-sm"></div>
+          <span>Loading vehicle seating arrangement...</span>
+        </div>
+      </div>
+
+      <!-- Step 3: Fare & Payment Summary -->
+      <div class="fare-summary-panel">
+        <div class="summary-header">
+          <h4>Fare Breakdown</h4>
+          <span class="ticket-type-badge">Standard Route</span>
+        </div>
+        
+        <div class="fare-row">
+          <span>Fare Per Seat:</span>
+          <strong>Rs. {{ farePerSeat }}</strong>
+        </div>
+        <div class="fare-row">
+          <span>Selected Seat(s):</span>
+          <strong>{{ selectedSeatsList.join(', ') || 'None selected' }} ({{ selectedSeatsList.length }})</strong>
+        </div>
+        <div class="fare-row total-row">
+          <span>Total Amount Payable:</span>
+          <strong class="total-price">Rs. {{ getTotalFare() }}</strong>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-action-row">
+        <a routerLink="/passenger" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary" [disabled]="selectedSeatsList.length === 0">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Confirm Reservation
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

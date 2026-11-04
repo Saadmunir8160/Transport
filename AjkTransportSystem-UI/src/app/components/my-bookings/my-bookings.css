@@ -1,0 +1,351 @@
+.bookings-container {
+  min-height: 100vh;
+  background: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Context */
+.bookings-header {
+  background: var(--navy-dark);
+  color: #FFFFFF;
+  padding: 1.25rem 2rem;
+  box-shadow: var(--shadow-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.portal-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  color: #94A3B8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.portal-back-btn:hover {
+  color: #2DD4BF;
+  text-decoration: none;
+}
+
+.bookings-header h1 {
+  font-size: 1.35rem;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.user-info {
+  display: flex;
+  gap: 0.875rem;
+  align-items: center;
+}
+
+.passenger-avatar-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.avatar-circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.logout-btn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #FCA5A5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 0.45rem 0.875rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition-fast);
+}
+
+.logout-btn:hover {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+/* Main Content Area */
+.bookings-content {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: 1;
+}
+
+.content-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-badge {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.btn-sm {
+  padding: 0.45rem 0.875rem;
+  font-size: 0.8125rem;
+}
+
+/* Bookings Grid & Ticket Card */
+.bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1.5rem;
+}
+
+.booking-ticket-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-xs);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.booking-ticket-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.booking-ticket-card.is-cancelled {
+  opacity: 0.7;
+  border-left: 4px solid var(--danger);
+}
+
+.ticket-header {
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-ref {
+  display: flex;
+  flex-direction: column;
+}
+
+.ref-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.ref-id {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.ticket-body {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.passenger-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 1rem;
+  column-gap: 1rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.meta-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.meta-value {
+  font-size: 0.875rem;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.seat-highlight {
+  color: var(--secondary);
+}
+
+.fare-highlight {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.date-subtle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.ticket-footer {
+  padding: 1rem 1.5rem;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.action-btn-ticket {
+  font-size: 0.8125rem;
+  padding: 0.45rem 0.875rem;
+}
+
+/* Feedback Banner */
+.feedback-banner {
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+}
+
+.banner-icon.success {
+  color: var(--success);
+  margin-top: 0.15rem;
+}
+
+.banner-body h4 {
+  color: var(--success-text);
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.banner-body p {
+  font-size: 0.85rem;
+  color: #064E3B;
+  margin: 0;
+}
+
+.empty-icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem auto;
+}
+
+.cancel-btn {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 500;
+  flex: 1;
+  transition: var(--transition);
+}
+
+.cancel-btn:hover {
+  background: var(--danger-bg);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-muted);
+}
+
+.new-booking-message {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: rgba(16, 185, 129, 0.05);
+  border-radius: var(--radius-lg);
+  border: 2px dashed #10B981;
+}
+
+.new-booking-message p {
+  font-size: 1.25rem;
+  color: #10B981;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.book-now-link {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 0.75rem 2.5rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.book-now-link:hover {
+  transform: translateY(-2px);
+  background: var(--primary-hover);
+}

@@ -1,0 +1,1642 @@
+<div class="admin-wrapper" [class.sidebar-collapsed]="!sidebarActive">
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-menu-toggle" (click)="toggleSidebar()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+
+  <!-- Sidebar -->
+  <div class="sidebar" [class.mobile-open]="sidebarActive">
+    <div class="sidebar-header">
+      <div class="brand-block">
+        <div class="logo-mark">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="16" height="16" x="4" y="4" rx="2" />
+            <path d="M8 4v16" />
+            <path d="M16 4v16" />
+            <path d="M4 8h16" />
+            <path d="M4 16h16" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-name">Driver panel</div>
+          <div class="brand-role">Srinagar Transport &middot; ORG-001</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="Main navigation" class="sidebar-nav">
+      
+      <!-- Today Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Today')"
+        (click)="toggleGroup('Today')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span class="group-title">Today</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Today')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Today')">
+        <button class="nav-item" [class.active]="activeTab === 'home'" (click)="setActiveTab('home')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span class="item-label">Home</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'active_trip'" (click)="setActiveTab('active_trip')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11" />
+          </svg>
+          <span class="item-label">Active trip</span>
+          <span class="nav-badge badge-live">live</span>
+        </button>
+      </div>
+
+      <!-- My assignments Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('My assignments')"
+        (click)="toggleGroup('My assignments')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2" />
+          <path d="M9 22v-4h6v4" />
+          <path d="M8 6h.01" />
+          <path d="M16 6h.01" />
+          <path d="M12 6h.01" />
+          <path d="M12 10h.01" />
+          <path d="M12 14h.01" />
+        </svg>
+        <span class="group-title">My assignments</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('My assignments')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('My assignments')">
+        <button class="nav-item" [class.active]="activeTab === 'trips'" (click)="setActiveTab('trips')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+          <span class="item-label">Upcoming trips</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'my_vehicle'" (click)="setActiveTab('my_vehicle')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+            <line x1="4" y1="22" x2="4" y2="15" />
+          </svg>
+          <span class="item-label">My vehicle</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'route_stops'" (click)="setActiveTab('route_stops')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18" />
+            <path d="m19 9-5 5-4-4-3 3" />
+          </svg>
+          <span class="item-label">Route and stops</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'passengers'" (click)="setActiveTab('passengers')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+          <span class="item-label">Passenger list</span>
+        </button>
+      </div>
+
+      <!-- Trip actions Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Trip actions')"
+        (click)="toggleGroup('Trip actions')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2" />
+          <polyline points="2 17 12 22 22 17" />
+          <polyline points="2 12 12 17 22 12" />
+        </svg>
+        <span class="group-title">Trip actions</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Trip actions')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Trip actions')">
+        <button class="nav-item" [class.active]="activeTab === 'start_trip'" (click)="setActiveTab('start_trip')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+          <span class="item-label">Start trip</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'mark_stop'" (click)="setActiveTab('mark_stop')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span class="item-label">Mark stop reached</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'end_trip'" (click)="setActiveTab('end_trip')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          </svg>
+          <span class="item-label">End trip</span>
+        </button>
+      </div>
+
+      <!-- Records & System Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Records')"
+        (click)="toggleGroup('Records')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </svg>
+        <span class="group-title">Records & System</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Records')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Records')">
+        <button class="nav-item" [class.active]="activeTab === 'trip_history'" (click)="setActiveTab('trip_history')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          <span class="item-label">Trip history</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'report_issue'" (click)="setActiveTab('report_issue')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          <span class="item-label">Report issue</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'offline_status'" (click)="setActiveTab('offline_status')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          <span class="item-label">Connectivity Status</span>
+          <span *ngIf="!isOnline()" class="nav-badge badge-amber">!</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'sync_queue'" (click)="setActiveTab('sync_queue')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" /><path d="M16 21v-5h5" /></svg>
+          <span class="item-label">Sync Queue</span>
+        </button>
+      </div>
+
+      <!-- Account Group -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Account')"
+        (click)="toggleGroup('Account')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span class="group-title">Account</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Account')"
+          xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Account')">
+        <button class="nav-item" [class.active]="activeTab === 'my_profile'" (click)="setActiveTab('my_profile')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <span class="item-label">My profile</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'notifications'" (click)="setActiveTab('notifications')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+          <span class="item-label">Notifications</span>
+          <span *ngIf="getUnreadCount() > 0" style="background: #e11d48; color: white; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; margin-left: auto;">{{ getUnreadCount() }}</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="profile-card" (click)="logout()">
+        <div class="avatar-sa">DR</div>
+        <div class="profile-info">
+          <div class="profile-name">Driver</div>
+          <div class="profile-email">Srinagar Transport</div>
+        </div>
+        <div class="logout-icon-btn" title="Log out">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button class="topbar-toggle-btn" (click)="toggleSidebar()" title="Toggle Navigation" aria-label="Toggle Navigation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="page-title-wrap">
+          <h1>{{ getPageTitle() }}</h1>
+          <span class="portal-badge">Driver Portal</span>
+          <span class="connectivity-pill" [ngClass]="isOnline() ? 'online' : 'offline'">
+            <span class="pill-dot"></span>
+            {{ isOnline() ? 'Online' : 'Offline' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="user-section">
+        <div class="user-details-top">
+          <span class="user-name-label">{{ userName }}</span>
+          <span class="user-role-label">Assigned Driver</span>
+        </div>
+        <div class="user-avatar" [title]="userName">{{ userName.charAt(0).toUpperCase() || 'D' }}</div>
+        <button class="logout-btn" (click)="logout()" title="Sign out of Driver panel">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <div *ngIf="message" class="alert-message">
+        {{ message }}
+      </div>
+
+      
+      
+      
+      <!-- HOME TAB -->
+      <div *ngIf="activeTab === 'home'" class="dashboard-content enterprise-tab">
+        
+        <!-- Welcome Header -->
+        <div class="enterprise-header">
+          <div>
+            <h2 class="welcome-title">Welcome back, {{ (homeData?.driverName || 'Driver').split(' ')[0] }}</h2>
+            <p class="date-subtitle">{{ homeData?.todayDate || 'Loading...' }}</p>
+          </div>
+        </div>
+
+        <div class="enterprise-grid">
+          
+          <!-- Alert Banners -->
+          <div class="alerts-section" *ngIf="homeData?.alerts">
+            <div class="alert-box alert-warning" *ngIf="homeData.alerts.roadAdvisory">
+              <div class="alert-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div class="alert-content">
+                <strong>Advisory:</strong> Heavy snow expected on Route Alpha this afternoon.
+              </div>
+            </div>
+            
+            <div class="alert-box alert-danger" *ngIf="homeData.alerts.licenseExpiring">
+              <div class="alert-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div class="alert-content">
+                <strong>Action Required:</strong> Licence expires in {{ homeData.alerts.licenseExpiryDays }} days. Please renew.
+              </div>
+            </div>
+          </div>
+
+          <!-- Today Card -->
+          <div class="enterprise-card today-card">
+            <div class="card-header">
+              <h3 class="card-title">Next Trip</h3>
+              <span class="status-badge" [ngClass]="{'badge-active': homeData?.nextTrip?.status === 'InProgress', 'badge-default': homeData?.nextTrip?.status !== 'InProgress'}">
+                {{ homeData?.nextTrip ? (homeData?.nextTrip?.isTomorrow ? 'Tomorrow\'s Trip' : (homeData?.nextTrip?.status === 'InProgress' ? 'In Progress' : 'Upcoming')) : 'None' }}
+              </span>
+            </div>
+            <div class="card-body trip-details">
+              <div class="trip-main-info">
+                <h4 class="route-name">{{ homeData?.nextTrip?.routeName || 'No Trips Assigned' }}</h4>
+                <div class="vehicle-pill">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/></svg>
+                  <span>{{ homeData?.nextTrip?.vehicleRegistration || 'N/A' }}</span>
+                </div>
+              </div>
+              <div class="trip-time-info" *ngIf="homeData?.nextTrip">
+                <div class="time-display">{{ homeData?.nextTrip?.departureTime }}</div>
+                <div class="time-label">Departure</div>
+              </div>
+            </div>
+            <div class="card-footer" *ngIf="homeData?.nextTrip">
+              <button class="btn btn-primary" (click)="setActiveTab(homeData.nextTrip.status === 'InProgress' ? 'active_trip' : 'start_trip')">
+                {{ homeData.nextTrip.status === 'InProgress' ? 'Go to Active Trip' : 'Start Trip' }}
+              </button>
+              <button class="btn btn-secondary" (click)="setActiveTab('passengers')">
+                Passenger List
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Stats Grid -->
+          <div class="enterprise-stats">
+            <div class="stat-card">
+              <div class="stat-label">Trips Today</div>
+              <div class="stat-value">{{ homeData?.stats?.totalTripsToday || 0 }}</div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-label">Completed</div>
+              <div class="stat-value text-success">{{ homeData?.stats?.completedTrips || 0 }}</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Remaining</div>
+              <div class="stat-value text-warning">{{ homeData?.stats?.remainingTrips || 0 }}</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Expected Pax</div>
+              <div class="stat-value">{{ homeData?.stats?.totalExpectedPassengers || 0 }}</div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Panel -->
+          <div class="enterprise-card qa-card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Quick Actions</h3>
+            </div>
+            <div class="qa-actions-row">
+              <button class="qa-item" (click)="setActiveTab('my_vehicle')">
+                <div class="qa-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                </div>
+                <span>My Vehicle</span>
+              </button>
+              <button class="qa-item" (click)="setActiveTab('report_issue')">
+                <div class="qa-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <span>Report Issue</span>
+              </button>
+              <button class="qa-item" (click)="setActiveTab('route_stops')">
+                <div class="qa-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+                </div>
+                <span>Route Map</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      
+      <!-- ACTIVE TRIP TAB -->
+      <div *ngIf="activeTab === 'active_trip'" class="dashboard-content enterprise-tab">
+        <div *ngIf="isActiveTripLoading" class="loading-state-card">
+          <div class="loading-spinner"></div>
+          <p>Loading Active Trip...</p>
+        </div>
+
+        <div *ngIf="!isActiveTripLoading && !activeTripData" class="empty-state-card">
+          <div class="empty-state-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <circle cx="12" cy="11" r="3"></circle>
+            </svg>
+          </div>
+          <h2 class="empty-state-title">No Active Trip</h2>
+          <p class="empty-state-desc">You don't have a trip currently in progress. Start a trip from your schedule.</p>
+          <button class="btn btn-primary empty-state-btn" (click)="setActiveTab('home')">Go to Home</button>
+        </div>
+        
+        <div *ngIf="!isActiveTripLoading && activeTripData" class="enterprise-grid">
+          
+          <!-- Trip Header -->
+          <div class="enterprise-card">
+            <div class="card-header border-bottom">
+              <div>
+                <span style="font-size: 0.8rem; color: #64748b; text-transform: uppercase;">TRIP #{{ activeTripData.tripId }}</span>
+                <h3 class="card-title">{{ activeTripData.routeName }}</h3>
+              </div>
+              <span class="status-badge badge-active">Active</span>
+            </div>
+            <div class="card-body" style="padding-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                <div>
+                  <div style="font-weight: 600; color: #0f172a;">{{ activeTripData.origin }} âž” {{ activeTripData.destination }}</div>
+                  <div style="color: #64748b; font-size: 0.9rem;">Vehicle: {{ activeTripData.vehicleRegistration }}</div>
+                </div>
+                <div style="text-align: right;">
+                  <div style="font-weight: 600; color: #0f172a;">Plan: {{ activeTripData.plannedDepartureTime }}</div>
+                  <div style="color: #64748b; font-size: 0.9rem;">Actual: {{ activeTripData.actualDepartureTime }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Advisory -->
+          <div class="alert-box alert-warning" *ngIf="activeTripData.advisory">
+            <div class="alert-icon-wrapper">âš ï¸</div>
+            <div class="alert-content">
+              <strong>Advisory:</strong> {{ activeTripData.advisory }}
+            </div>
+          </div>
+
+          <!-- Stop Progress Tracker -->
+          <div class="enterprise-card">
+            <div class="card-header border-bottom" style="display: flex; justify-content: space-between;">
+              <h3 class="card-title">Route Stops</h3>
+              <div style="font-size: 0.85rem; color: #64748b; font-weight: 600;">
+                {{ getCompletedCount() }} / {{ activeTripData.stops.length }} completed
+              </div>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+              
+              <div *ngFor="let stop of activeTripData.stops; let i = index" 
+                   style="display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center;">
+                
+                <div style="width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold; flex-shrink: 0;"
+                     [ngStyle]="{'background': isStopCompleted(stop.stopId) ? '#10b981' : (getNextStop()?.stopId === stop.stopId ? '#0ea5e9' : '#e2e8f0'), 'color': isStopCompleted(stop.stopId) || getNextStop()?.stopId === stop.stopId ? '#fff' : '#64748b'}">
+                  {{ isStopCompleted(stop.stopId) ? 'âœ“' : i + 1 }}
+                </div>
+                
+                <div style="flex: 1;">
+                  <div style="font-weight: 600; font-size: 1.1rem; color: #0f172a;" [style.color]="isStopCompleted(stop.stopId) ? '#94a3b8' : '#0f172a'">
+                    {{ stop.name }}
+                  </div>
+                  <div style="color: #64748b; font-size: 0.85rem;">
+                    ETA: {{ stop.expectedTime }}
+                  </div>
+                </div>
+
+                <div style="text-align: right;">
+                  <div style="font-size: 0.85rem; font-weight: 600; color: #059669;">+{{ stop.boardingCount }} Boarding</div>
+                  <div style="font-size: 0.85rem; font-weight: 600; color: #ef4444;">-{{ stop.droppingCount }} Drop-off</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div style="display: flex; gap: 1rem;">
+            <button *ngIf="getNextStop()" class="btn btn-primary" style="flex: 2; padding: 1.25rem; font-size: 1.2rem; font-weight: bold;" (click)="markNextStop()">
+              Mark "{{ getNextStop().name }}" as Reached
+            </button>
+            <button *ngIf="!getNextStop()" class="btn btn-primary" style="flex: 2; padding: 1.25rem; font-size: 1.2rem; font-weight: bold; background-color: #10b981;" (click)="endTrip()">
+              End Trip
+            </button>
+            <button class="btn btn-secondary" style="flex: 1;" (click)="setActiveTab('passengers')">
+              Passengers
+            </button>
+          </div>
+          
+          <div class="enterprise-stats" *ngIf="activeTripData.showEta">
+             <div class="stat-card">
+              <div class="stat-label">Predicted ETA (Destination)</div>
+              <div class="stat-value">{{ activeTripData.predictedEta || 'Calculating...' }}</div>
+             </div>
+             <div class="stat-card">
+              <div class="stat-label">Delay</div>
+              <div class="stat-value" [ngClass]="{'text-warning': activeTripData.delayInMinutes > 0, 'text-success': activeTripData.delayInMinutes <= 0}">
+                {{ activeTripData.delayInMinutes }} mins
+              </div>
+             </div>
+          </div>
+
+        </div>
+      </div>
+
+      
+      <!-- TRIPS TAB -->
+      <div *ngIf="activeTab === 'trips'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">My Upcoming Trips</h2>
+          <p class="date-subtitle">All your assigned trips, starting from today.</p>
+        </div>
+
+        <div class="enterprise-card" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <input type="date" [(ngModel)]="tripFilterDate" (change)="filterTrips()" class="form-control" style="flex: 1; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px;" placeholder="Filter by Date">
+            <select [(ngModel)]="tripFilterStatus" (change)="filterTrips()" class="form-control" style="flex: 1; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+              <option value="">All Statuses</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="InProgress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <input type="text" [(ngModel)]="tripFilterRoute" (input)="filterTrips()" class="form-control" style="flex: 2; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px;" placeholder="Filter by Route Name">
+          </div>
+        </div>
+
+        <div class="enterprise-card">
+          <table class="enterprise-table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left;">
+                <th style="padding: 1rem;">Date & Time</th>
+                <th style="padding: 1rem;">Route</th>
+                <th style="padding: 1rem;">Vehicle</th>
+                <th style="padding: 1rem;">Status</th>
+                <th style="padding: 1rem;">Pax</th>
+                <th style="padding: 1rem;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let trip of filteredTrips">
+                <tr style="border-bottom: 1px solid #e2e8f0;">
+                  <td style="padding: 1rem;">
+                    <div style="font-weight: 600;">{{ trip.travelDate }}</div>
+                    <div style="font-size: 0.85rem; color: #64748b;">{{ trip.departureTime }}</div>
+                  </td>
+                  <td style="padding: 1rem; font-weight: 500;">{{ trip.routeName }}</td>
+                  <td style="padding: 1rem;">{{ trip.vehicleNumber }}</td>
+                  <td style="padding: 1rem;">
+                    <span class="status-badge" [ngClass]="{'badge-active': trip.status === 'InProgress', 'badge-default': trip.status === 'Scheduled', 'badge-danger': trip.status === 'Cancelled'}">
+                      {{ trip.status }}
+                    </span>
+                  </td>
+                  <td style="padding: 1rem; font-weight: 600;">{{ trip.passengersCount }}</td>
+                  <td style="padding: 1rem;">
+                    <button class="btn btn-secondary" (click)="toggleTripExpand(trip)">
+                      {{ trip.expanded ? 'Hide Details' : 'View Details' }}
+                    </button>
+                  </td>
+                </tr>
+                
+                <!-- Expanded Details -->
+                <tr *ngIf="trip.expanded" style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                  <td colspan="6" style="padding: 1.5rem;">
+                    
+                    <div *ngIf="trip.status === 'Cancelled' && trip.adminNotes" class="alert-box alert-danger" style="margin-bottom: 1rem;">
+                      <div class="alert-icon-wrapper">âš ï¸</div>
+                      <div class="alert-content">
+                        <strong>Cancelled by Admin:</strong> {{ trip.adminNotes }}
+                      </div>
+                    </div>
+                    
+                    <div *ngIf="trip.status !== 'Cancelled' && trip.adminNotes" class="alert-box alert-warning" style="margin-bottom: 1rem;">
+                      <div class="alert-icon-wrapper">â„¹ï¸</div>
+                      <div class="alert-content">
+                        <strong>Admin Note:</strong> {{ trip.adminNotes }}
+                      </div>
+                    </div>
+
+                    <div style="display: flex; gap: 2rem;">
+                      <div style="flex: 1;">
+                        <h4 style="margin-bottom: 0.75rem; font-size: 0.95rem;">Vehicle Information</h4>
+                        <div style="font-size: 0.85rem; color: #475569; padding: 1rem; background: white; border-radius: 6px; border: 1px solid #e2e8f0;">
+                          <p style="margin-bottom: 0.5rem;"><strong>Registration:</strong> {{ trip.vehicleNumber }}</p>
+                          <p style="margin-bottom: 0.5rem;"><strong>Type:</strong> {{ trip.vehicleType || 'Standard' }}</p>
+                          <p style="margin-bottom: 0;"><strong>Capacity:</strong> {{ trip.vehicleCapacity || 'Unknown' }} seats</p>
+                        </div>
+                      </div>
+                      
+                      <div style="flex: 2;">
+                        <h4 style="margin-bottom: 0.75rem; font-size: 0.95rem;">Route Stops & Passengers</h4>
+                        <div style="border: 1px solid #e2e8f0; border-radius: 6px; background: white; overflow: hidden;">
+                          <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                            <thead>
+                              <tr style="background: #f1f5f9; border-bottom: 1px solid #e2e8f0;">
+                                <th style="padding: 0.5rem 1rem; text-align: left;">Stop Name</th>
+                                <th style="padding: 0.5rem 1rem; text-align: left;">Planned Time</th>
+                                <th style="padding: 0.5rem 1rem; text-align: center;">Boarding</th>
+                                <th style="padding: 0.5rem 1rem; text-align: center;">Dropping</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let stop of trip.stops" style="border-bottom: 1px solid #e2e8f0;">
+                                <td style="padding: 0.5rem 1rem; font-weight: 500;">{{ stop.name }}</td>
+                                <td style="padding: 0.5rem 1rem;">{{ stop.plannedTime }}</td>
+                                <td style="padding: 0.5rem 1rem; text-align: center; color: #059669; font-weight: 600;">+{{ stop.boardingCount }}</td>
+                                <td style="padding: 0.5rem 1rem; text-align: center; color: #ef4444; font-weight: 600;">-{{ stop.droppingCount }}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+              <tr *ngIf="filteredTrips.length === 0">
+                <td colspan="6" style="padding: 2rem; text-align: center; color: #64748b;">No trips match your filters.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MY VEHICLE TAB -->
+      <div *ngIf="activeTab === 'my_vehicle'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">My Assigned Vehicle</h2>
+          <p class="date-subtitle">Details of the vehicle assigned for your current trips.</p>
+        </div>
+
+        <div *ngIf="isMyVehicleLoading" style="padding: 4rem 2rem; text-align: center; color: #64748b; font-size: 1.25rem;">
+          Loading vehicle details...
+        </div>
+
+        <div *ngIf="!isMyVehicleLoading && !myVehicleData" style="padding: 4rem 2rem; text-align: center; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 2rem;">
+          <h2 style="color: #0f172a; font-size: 2rem; margin-bottom: 1rem;">No Vehicle Assigned</h2>
+          <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 2rem;">You do not have any vehicle assigned to your profile at the moment. Contact your administrator if this is a mistake.</p>
+        </div>
+
+        <div *ngIf="!isMyVehicleLoading && myVehicleData" class="enterprise-grid">
+          
+          <div class="enterprise-card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Vehicle Specifications</h3>
+              <span class="status-badge badge-active">{{ myVehicleData.type }}</span>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Registration Number</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ myVehicleData.registrationNumber }}</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Make & Model</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ myVehicleData.make || 'Unknown' }} {{ myVehicleData.model || '' }} ({{ myVehicleData.year || 'N/A' }})</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Seat Capacity</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ myVehicleData.capacity }} Seats</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Seat Layout</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ myVehicleData.seatLayout }}</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Fuel Type</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ myVehicleData.fuelType }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="enterprise-card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Document Status</h3>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+              <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem;">
+                
+                <li style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;"
+                    [ngStyle]="{'background-color': myVehicleData.documents.insurance.isExpired ? '#fef2f2' : '#f8fafc', 'border-color': myVehicleData.documents.insurance.isExpired ? '#f87171' : '#e2e8f0'}">
+                  <div>
+                    <strong style="color: #0f172a;">Insurance</strong>
+                    <div style="font-size: 0.85rem;" [ngStyle]="{'color': myVehicleData.documents.insurance.isExpired ? '#ef4444' : '#64748b'}">
+                      {{ myVehicleData.documents.insurance.expiry ? 'Expires: ' + myVehicleData.documents.insurance.expiry : 'Not Uploaded' }}
+                    </div>
+                  </div>
+                  <span *ngIf="myVehicleData.documents.insurance.isExpired" style="color: #ef4444; font-weight: bold;">EXPIRED</span>
+                  <span *ngIf="!myVehicleData.documents.insurance.isExpired && myVehicleData.documents.insurance.expiry" style="color: #10b981; font-weight: bold;">VALID ({{ myVehicleData.documents.insurance.daysRemaining }} days)</span>
+                </li>
+
+                <li style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;"
+                    [ngStyle]="{'background-color': myVehicleData.documents.fitness.isExpired ? '#fef2f2' : '#f8fafc', 'border-color': myVehicleData.documents.fitness.isExpired ? '#f87171' : '#e2e8f0'}">
+                  <div>
+                    <strong style="color: #0f172a;">Fitness Certificate</strong>
+                    <div style="font-size: 0.85rem;" [ngStyle]="{'color': myVehicleData.documents.fitness.isExpired ? '#ef4444' : '#64748b'}">
+                      {{ myVehicleData.documents.fitness.expiry ? 'Expires: ' + myVehicleData.documents.fitness.expiry : 'Not Uploaded' }}
+                    </div>
+                  </div>
+                  <span *ngIf="myVehicleData.documents.fitness.isExpired" style="color: #ef4444; font-weight: bold;">EXPIRED</span>
+                </li>
+
+                <li style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;"
+                    [ngStyle]="{'background-color': myVehicleData.documents.permit.isExpired ? '#fef2f2' : '#f8fafc', 'border-color': myVehicleData.documents.permit.isExpired ? '#f87171' : '#e2e8f0'}">
+                  <div>
+                    <strong style="color: #0f172a;">Permit</strong>
+                    <div style="font-size: 0.85rem;" [ngStyle]="{'color': myVehicleData.documents.permit.isExpired ? '#ef4444' : '#64748b'}">
+                      {{ myVehicleData.documents.permit.expiry ? 'Expires: ' + myVehicleData.documents.permit.expiry : 'Not Uploaded' }}
+                    </div>
+                  </div>
+                  <span *ngIf="myVehicleData.documents.permit.isExpired" style="color: #ef4444; font-weight: bold;">EXPIRED</span>
+                </li>
+
+                <li style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;"
+                    [ngStyle]="{'background-color': myVehicleData.documents.puc.isExpired ? '#fef2f2' : '#f8fafc', 'border-color': myVehicleData.documents.puc.isExpired ? '#f87171' : '#e2e8f0'}">
+                  <div>
+                    <strong style="color: #0f172a;">PUC (Pollution)</strong>
+                    <div style="font-size: 0.85rem;" [ngStyle]="{'color': myVehicleData.documents.puc.isExpired ? '#ef4444' : '#64748b'}">
+                      {{ myVehicleData.documents.puc.expiry ? 'Expires: ' + myVehicleData.documents.puc.expiry : 'Not Uploaded' }}
+                    </div>
+                  </div>
+                  <span *ngIf="myVehicleData.documents.puc.isExpired" style="color: #ef4444; font-weight: bold;">EXPIRED</span>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+
+          <div class="enterprise-stats" style="grid-column: 1 / -1;">
+             <div class="stat-card">
+              <div class="stat-label">Assigned Since</div>
+              <div class="stat-value">{{ myVehicleData.assignedSince }}</div>
+             </div>
+             <div class="stat-card">
+              <div class="stat-label">Trips Completed (with this vehicle)</div>
+              <div class="stat-value">{{ myVehicleData.tripsCompleted }}</div>
+             </div>
+             <div class="stat-card" [ngStyle]="{'border-left': myVehicleData.openIssues.length > 0 ? '4px solid #ef4444' : '4px solid #10b981'}">
+              <div class="stat-label">Open Issues</div>
+              <div class="stat-value" [ngClass]="{'text-danger': myVehicleData.openIssues.length > 0, 'text-success': myVehicleData.openIssues.length === 0}">
+                {{ myVehicleData.openIssues.length }}
+              </div>
+             </div>
+          </div>
+
+          <!-- Open Issues List -->
+          <div class="enterprise-card" *ngIf="myVehicleData.openIssues.length > 0" style="grid-column: 1 / -1; margin-top: 1rem;">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Open Issues</h3>
+            </div>
+            <div class="card-body">
+              <div *ngFor="let issue of myVehicleData.openIssues" style="padding: 1rem; border-bottom: 1px solid #e2e8f0;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                  <strong style="color: #0f172a;">{{ issue.category }}</strong>
+                  <span class="status-badge" [ngClass]="{'badge-danger': issue.severity === 'High', 'badge-warning': issue.severity === 'Medium'}">{{ issue.severity }}</span>
+                </div>
+                <p style="color: #475569; font-size: 0.9rem; margin: 0 0 0.5rem 0;">{{ issue.description }}</p>
+                <div style="font-size: 0.8rem; color: #94a3b8;">Reported: {{ issue.reportedAt }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="grid-column: 1 / -1; display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button class="btn btn-primary" style="flex: 1; background-color: #ef4444;" (click)="setActiveTab('report_issue')">Report a Problem</button>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- ROUTE AND STOPS TAB -->
+      <div *ngIf="activeTab === 'route_stops'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">Route & Stops</h2>
+          <p class="date-subtitle">Full route map for today's assigned trip.</p>
+        </div>
+
+        <div *ngIf="isRouteStopsLoading" style="padding: 4rem 2rem; text-align: center; color: #64748b; font-size: 1.25rem;">
+          Loading route details...
+        </div>
+
+        <div *ngIf="!isRouteStopsLoading && !routeStopsData" style="padding: 4rem 2rem; text-align: center; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 2rem;">
+          <h2 style="color: #0f172a; font-size: 2rem; margin-bottom: 1rem;">No Route Found</h2>
+          <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 2rem;">There is no route assigned for you to view at the moment.</p>
+        </div>
+
+        <div *ngIf="!isRouteStopsLoading && routeStopsData" class="enterprise-grid">
+          
+          <!-- Road Advisory Panel -->
+          <div *ngIf="routeStopsData.advisories && routeStopsData.advisories.length > 0" class="enterprise-card" style="grid-column: 1 / -1; background-color: #fffbeb; border: 1px solid #fcd34d;">
+            <div class="card-header border-bottom" style="border-bottom-color: #fde68a;">
+              <h3 class="card-title" style="color: #b45309;"><i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i> Active Road Advisories</h3>
+            </div>
+            <div class="card-body">
+              <div *ngFor="let adv of routeStopsData.advisories" style="padding: 1rem; border-bottom: 1px solid #fde68a;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                  <strong style="color: #92400e;">Affected: {{ adv.segment }}</strong>
+                  <span class="status-badge badge-warning">Reason: {{ adv.reason }}</span>
+                </div>
+                <p style="color: #b45309; font-size: 0.9rem; margin: 0 0 0.5rem 0;"><strong>Action Required:</strong> {{ adv.alternativeAction }}</p>
+                <div style="font-size: 0.8rem; color: #d97706;" *ngIf="adv.expectedReopening">Expected Reopening: {{ adv.expectedReopening | date:'medium' }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Route Overview -->
+          <div class="enterprise-card" style="grid-column: 1 / -1;">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">{{ routeStopsData.routeName }}</h3>
+              <span class="status-badge badge-active">{{ routeStopsData.direction }}</span>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Origin</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ routeStopsData.origin }}</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Destination</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ routeStopsData.destination }}</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Total Distance</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ routeStopsData.totalDistance }} km</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Baseline Time</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">{{ routeStopsData.baselineTime }} mins</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.85rem; color: #64748b;">Base Fare</div>
+                  <div style="font-size: 1.1rem; font-weight: 600; color: #0f172a;">Rs. {{ routeStopsData.baseFare }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stop List -->
+          <div class="enterprise-card" style="grid-column: 1 / -1;">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Ordered Stop List</h3>
+              <button class="btn btn-primary" (click)="setActiveTab('active_trip')">Set as Departure Ready</button>
+            </div>
+            <div class="card-body">
+              <div style="overflow-x: auto;">
+                <table class="enterprise-table" style="width: 100%; border-collapse: collapse; min-width: 600px;">
+                  <thead>
+                    <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left;">
+                      <th style="padding: 1rem;">Stop #</th>
+                      <th style="padding: 1rem;">Stop Name</th>
+                      <th style="padding: 1rem;">Time (from start)</th>
+                      <th style="padding: 1rem;">Distance</th>
+                      <th style="padding: 1rem;">Fare Ref</th>
+                      <th style="padding: 1rem;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let stop of routeStopsData.stops" style="border-bottom: 1px solid #e2e8f0;">
+                      <td style="padding: 1rem; font-weight: 600; color: #64748b;">{{ stop.stopNumber }}</td>
+                      <td style="padding: 1rem; font-weight: 600;">{{ stop.name }}</td>
+                      <td style="padding: 1rem; color: #0f172a;">+{{ stop.timeOffset || 0 }} mins</td>
+                      <td style="padding: 1rem; color: #0f172a;">{{ stop.distance || 0 }} km</td>
+                      <td style="padding: 1rem; color: #0f172a;">Rs. {{ stop.fare || 0 }}</td>
+                      <td style="padding: 1rem;">
+                        <a *ngIf="stop.lat && stop.lng" [href]="'https://www.google.com/maps/search/?api=1&query=' + stop.lat + ',' + stop.lng" target="_blank" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem; text-decoration: none; display: inline-block;">
+                          View on Map
+                        </a>
+                        <span *ngIf="!stop.lat || !stop.lng" style="color: #94a3b8; font-size: 0.85rem; font-style: italic;">No pins</span>
+                      </td>
+                    </tr>
+                    <tr *ngIf="!routeStopsData.stops || routeStopsData.stops.length === 0">
+                      <td colspan="6" style="padding: 2rem; text-align: center; color: #64748b;">No stops configured for this route.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- PASSENGER LIST TAB -->
+      <div *ngIf="activeTab === 'passengers'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">Passenger List</h2>
+          <p class="date-subtitle">Verify boarding & drop-off for your current trip.</p>
+        </div>
+
+        <div *ngIf="isPassengersLoading" style="padding: 4rem 2rem; text-align: center; color: #64748b; font-size: 1.25rem;">
+          Loading passenger data...
+        </div>
+
+        <div *ngIf="!isPassengersLoading && !passengersData" style="padding: 4rem 2rem; text-align: center; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 2rem;">
+          <h2 style="color: #0f172a; font-size: 2rem; margin-bottom: 1rem;">No Passengers</h2>
+          <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 2rem;">There is no passenger list available right now.</p>
+        </div>
+
+        <div *ngIf="!isPassengersLoading && passengersData" class="enterprise-grid">
+          
+          <!-- Filters -->
+          <div class="enterprise-card" style="grid-column: 1 / -1; margin-bottom: 1rem; padding: 1.5rem;">
+            <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+              <select [(ngModel)]="passFilterStop" (change)="filterPassengers()" class="form-control" style="flex: 1; min-width: 150px; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                <option value="">All Stops</option>
+                <option *ngFor="let s of passengersData.summaries" [value]="s.stopName">{{ s.stopName }}</option>
+              </select>
+              <input type="text" [(ngModel)]="passFilterSeat" (input)="filterPassengers()" class="form-control" style="flex: 1; min-width: 120px; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px;" placeholder="Filter by Seat #">
+              <input type="text" [(ngModel)]="passFilterName" (input)="filterPassengers()" class="form-control" style="flex: 2; min-width: 200px; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px;" placeholder="Search Passenger Name">
+            </div>
+          </div>
+
+          <!-- Stops Summary (Scrollable row of cards) -->
+          <div style="grid-column: 1 / -1; display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem;">
+            <div *ngFor="let s of passengersData.summaries" class="enterprise-card" style="min-width: 250px; padding: 1.5rem; flex-shrink: 0; display: flex; flex-direction: column; justify-content: space-between;">
+              <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" [title]="s.stopName">{{ s.stopName }}</h4>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <div style="font-size: 0.85rem; color: #64748b;">Boarding Here</div>
+                <div style="font-weight: bold; color: #10b981; font-size: 1.2rem;">+{{ s.boardingCount }}</div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <div style="font-size: 0.85rem; color: #64748b;">Dropping Here</div>
+                <div style="font-weight: bold; color: #ef4444; font-size: 1.2rem;">-{{ s.droppingCount }}</div>
+              </div>
+              <div style="padding-top: 1rem; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 0.85rem; color: #64748b;">On-Board After</div>
+                <div style="font-weight: bold; color: #0f172a;">{{ s.onBoard }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Passenger List -->
+          <div class="enterprise-card" style="grid-column: 1 / -1;">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Manifest ({{ filteredPassengers.length }} Passengers)</h3>
+            </div>
+            <div class="card-body">
+              <div style="overflow-x: auto;">
+                <table class="enterprise-table" style="width: 100%; border-collapse: collapse; min-width: 800px;">
+                  <thead>
+                    <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0; text-align: left;">
+                      <th style="padding: 1rem;">Passenger Name</th>
+                      <th style="padding: 1rem;">Seat #</th>
+                      <th style="padding: 1rem;">Boarding</th>
+                      <th style="padding: 1rem;">Dropping</th>
+                      <th style="padding: 1rem;">Status</th>
+                      <th style="padding: 1rem;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let p of filteredPassengers" style="border-bottom: 1px solid #e2e8f0;" [ngStyle]="{'opacity': p.isNoShow ? '0.6' : '1'}">
+                      <td style="padding: 1rem;">
+                        <div style="font-weight: 600; color: #0f172a;">{{ p.name }}</div>
+                        <div style="font-size: 0.8rem; color: #64748b; font-family: monospace;">TKT-{{ p.ticket }}</div>
+                      </td>
+                      <td style="padding: 1rem; font-weight: 600;">
+                        <span style="display: inline-block; padding: 0.25rem 0.5rem; background: #e2e8f0; border-radius: 4px;">{{ p.seat }}</span>
+                      </td>
+                      <td style="padding: 1rem;">{{ p.boarding }}</td>
+                      <td style="padding: 1rem;">{{ p.dropping }}</td>
+                      <td style="padding: 1rem;">
+                        <span *ngIf="!p.isNoShow" class="status-badge badge-active" style="background-color: #dcfce7; color: #166534;">Confirmed</span>
+                        <span *ngIf="p.isNoShow" class="status-badge badge-danger">No-Show</span>
+                      </td>
+                      <td style="padding: 1rem;">
+                        <button *ngIf="!p.isNoShow" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem; margin-right: 0.5rem;" title="View Ticket">Detail</button>
+                        <button *ngIf="!p.isNoShow" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem; color: #ef4444; border-color: #fca5a5;" (click)="markNoShow(p.id)" title="Report No-Show">No-Show</button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="filteredPassengers.length === 0">
+                      <td colspan="6" style="padding: 2rem; text-align: center; color: #64748b;">No passengers match the current filters.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- START TRIP TAB -->
+      <div *ngIf="activeTab === 'start_trip'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">Start Trip Checklist</h2>
+          <p class="date-subtitle">Review before departing. Tap to start.</p>
+        </div>
+
+        <div *ngIf="isStartTripLoading" style="padding: 4rem 2rem; text-align: center; color: #64748b; font-size: 1.25rem;">
+          Loading checklist...
+        </div>
+
+        <div *ngIf="!isStartTripLoading && !startTripData" style="padding: 4rem 2rem; text-align: center; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 2rem;">
+          <h2 style="color: #0f172a; font-size: 2rem; margin-bottom: 1rem;">No Pending Checklist</h2>
+          <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 2rem;">There are no pre-departure checks required at this time.</p>
+        </div>
+
+        <div *ngIf="!isStartTripLoading && startTripData" class="enterprise-grid" style="max-width: 700px; margin: 0 auto;">
+          
+          <div class="enterprise-card" style="grid-column: 1 / -1;">
+            <div class="card-header border-bottom">
+              <h3 class="card-title"><i class="fas fa-clipboard-check" style="color: #10b981; margin-right: 0.5rem;"></i> Pre-Departure Checks</h3>
+            </div>
+            <div class="card-body">
+              
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #f1f5f9;">
+                <div>
+                  <div style="font-weight: 600; color: #0f172a; font-size: 1rem;">Assigned Vehicle</div>
+                  <div style="font-size: 0.85rem; color: #64748b; margin-top: 0.2rem;">Ensure you are driving this vehicle</div>
+                </div>
+                <div style="font-weight: 700; font-size: 1.1rem; color: #0D766E;">{{ startTripData.vehicleReg }}</div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #f1f5f9;">
+                <div>
+                  <div style="font-weight: 600; color: #0f172a; font-size: 1rem;">Departure Time</div>
+                  <div style="font-size: 0.85rem; color: #64748b; margin-top: 0.2rem;">Planned start time</div>
+                </div>
+                <div style="font-weight: 700; font-size: 1.1rem; color: #0f172a;">{{ startTripData.plannedDeparture }}</div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #f1f5f9;">
+                <div>
+                  <div style="font-weight: 600; color: #0f172a; font-size: 1rem;">Passengers Loaded</div>
+                  <div style="font-size: 0.85rem; color: #64748b; margin-top: 0.2rem;">Total confirmed for this trip</div>
+                </div>
+                <div style="font-weight: 700; font-size: 1.1rem; color: #10b981;">{{ startTripData.passengerCount }} PAX</div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #f1f5f9;">
+                <div>
+                  <div style="font-weight: 600; color: #0f172a; font-size: 1rem;">Vehicle Issues</div>
+                  <div style="font-size: 0.85rem; color: #64748b; margin-top: 0.2rem;">Unresolved maintenance tickets</div>
+                </div>
+                <div [ngStyle]="{'color': startTripData.unresolvedIssues > 0 ? '#ef4444' : '#10b981'}" style="font-weight: 700; font-size: 1.1rem;">
+                  <i *ngIf="startTripData.unresolvedIssues > 0" class="fas fa-exclamation-circle" style="margin-right: 0.25rem;"></i>
+                  {{ startTripData.unresolvedIssues }}
+                </div>
+              </div>
+
+              <div *ngIf="startTripData.advisory" style="padding: 1rem; margin-top: 1rem; background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;">
+                <div style="font-weight: bold; color: #b45309; margin-bottom: 0.25rem;"><i class="fas fa-exclamation-triangle" style="margin-right: 0.5rem;"></i> Active Road Advisory</div>
+                <div style="color: #92400e; font-size: 0.9rem;">{{ startTripData.advisory }}</div>
+              </div>
+
+            </div>
+            <div class="card-footer" style="flex-direction: column; align-items: stretch; gap: 0.5rem;">
+              <button class="btn btn-primary" 
+                      style="width: 100%; padding: 1rem; font-size: 1.1rem;" 
+                      [disabled]="startTripData.unresolvedIssues > 0" 
+                      (click)="confirmStartTrip()"
+                      [title]="startTripData.unresolvedIssues > 0 ? 'Cannot start trip with unresolved vehicle issues' : ''">
+                <i class="fas fa-play-circle"></i> START TRIP
+              </button>
+              <div *ngIf="startTripData.unresolvedIssues > 0" style="text-align: center; color: #ef4444; font-size: 0.85rem; font-weight: 600;">
+                Critical: You cannot start this trip until the vehicle issues are resolved by Admin.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- END TRIP SUMMARY TAB -->
+      <div *ngIf="activeTab === 'end_trip_summary'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">End Trip Summary</h2>
+          <p class="date-subtitle">Review details before completing trip</p>
+        </div>
+
+        <div class="enterprise-grid" *ngIf="activeTripData">
+          <div class="enterprise-card" style="grid-column: span 12;">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">{{ activeTripData.routeName }}</h3>
+              <span class="status-badge badge-active">Finishing</span>
+            </div>
+            <div class="card-body">
+              <table class="enterprise-table" style="width: 100%; text-align: left;">
+                <tbody>
+                  <tr style="border-bottom: 1px solid #e2e8f0;"><th style="padding: 1rem;">Trip ID</th><td style="padding: 1rem;">#{{ activeTripData.tripId }}</td></tr>
+                  <tr style="border-bottom: 1px solid #e2e8f0;"><th style="padding: 1rem;">Departure</th><td style="padding: 1rem;">Plan: {{ activeTripData.plannedDepartureTime }} | Actual: {{ activeTripData.actualDepartureTime }}</td></tr>
+                  <tr style="border-bottom: 1px solid #e2e8f0;"><th style="padding: 1rem;">Arrival</th><td style="padding: 1rem;">Plan: {{ activeTripData.stops[activeTripData.stops.length-1].expectedTime }} | Actual: Now</td></tr>
+                  <tr style="border-bottom: 1px solid #e2e8f0;"><th style="padding: 1rem;">Stops Completed</th><td style="padding: 1rem;">{{ getCompletedCount() }} / {{ activeTripData.stops.length }}</td></tr>
+                  <tr><th style="padding: 1rem;">Passengers Carried</th><td style="padding: 1rem;">{{ getTotalPassengersCarried() }}</td></tr>
+                </tbody>
+              </table>
+              <div style="margin-top: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">End Notes (Optional)</label>
+                <textarea [(ngModel)]="endTripNotes" rows="3" class="form-control" placeholder="Delay reason, road conditions, remarks..." style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.375rem; resize: vertical;"></textarea>
+              </div>
+            </div>
+            <div class="card-footer" style="display: flex; justify-content: flex-end; gap: 1rem;">
+              <button class="btn btn-secondary" (click)="setActiveTab('active_trip')">Go Back</button>
+              <button class="btn btn-primary" style="background-color: #10b981;" (click)="confirmEndTrip()">Confirm End Trip</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRIP HISTORY TAB -->
+      <div *ngIf="activeTab === 'trip_history'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 class="welcome-title">Trip History</h2>
+            <p class="date-subtitle">Last 30 days of completed trips</p>
+          </div>
+          <button class="btn btn-secondary" (click)="exportTripHistoryToPdf()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.5rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export PDF
+          </button>
+        </div>
+
+        <div class="enterprise-grid">
+          <div class="enterprise-card" style="grid-column: span 12;">
+            <div class="card-header border-bottom">
+              <div style="display: flex; gap: 1rem; width: 100%;">
+                <input type="date" class="form-control" [(ngModel)]="historyFilter.date" (change)="applyHistoryFilter()">
+                <input type="text" class="form-control" placeholder="Search route..." [(ngModel)]="historyFilter.route" (input)="applyHistoryFilter()">
+                <select class="form-control" [(ngModel)]="historyFilter.status" (change)="applyHistoryFilter()">
+                  <option value="">All Statuses</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <table class="enterprise-table" style="width: 100%; text-align: left;">
+                <thead>
+                  <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                    <th style="padding: 1rem;">Date</th>
+                    <th style="padding: 1rem;">Route</th>
+                    <th style="padding: 1rem;">Vehicle</th>
+                    <th style="padding: 1rem;">Plan / Actual</th>
+                    <th style="padding: 1rem;">Pax</th>
+                    <th style="padding: 1rem;">Status</th>
+                    <th style="padding: 1rem;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let trip of filteredHistory">
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                      <td style="padding: 1rem;">{{ trip.date }}</td>
+                      <td style="padding: 1rem; font-weight: 600;">{{ trip.routeName }}</td>
+                      <td style="padding: 1rem; color: #64748b;">{{ trip.vehicleRegistration }}</td>
+                      <td style="padding: 1rem;">{{ trip.plannedDeparture }} / {{ trip.actualStart }}</td>
+                      <td style="padding: 1rem;">{{ trip.totalPassengers }}</td>
+                      <td style="padding: 1rem;">
+                        <span class="status-badge" [ngClass]="{'badge-active': trip.status === 'Completed', 'badge-danger': trip.status === 'Cancelled'}">{{ trip.status }}</span>
+                      </td>
+                      <td style="padding: 1rem;">
+                        <button class="btn btn-secondary" style="padding: 0.5rem;" (click)="toggleHistoryDetails(trip.tripId)">
+                          {{ historyExpandedTripId === trip.tripId ? 'Hide' : 'View' }}
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="historyExpandedTripId === trip.tripId" style="background-color: #f8fafc;">
+                      <td colspan="7" style="padding: 1.5rem;">
+                        <h4 style="margin-top: 0; margin-bottom: 1rem; font-size: 1rem; color: #0f172a;">Stop-by-Stop Timeline</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                          <div *ngFor="let stop of trip.stops" style="display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px dashed #cbd5e1;">
+                            <span style="font-weight: 600;">{{ stop.name }}</span>
+                            <span style="color: #64748b;">Plan: {{ stop.plannedTime }}</span>
+                            <span style="color: #059669;">+{{ stop.boardingCount }} / -{{ stop.droppingCount }}</span>
+                          </div>
+                        </div>
+                        <div *ngIf="trip.issuesReported > 0" style="margin-top: 1rem; padding: 1rem; background-color: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;">
+                          <strong>Issues Logged:</strong> {{ trip.issuesReported }} issue(s) reported during this trip.
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngIf="filteredHistory.length === 0">
+                    <td colspan="7" style="padding: 2rem; text-align: center; color: #64748b;">No trip history found.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OFFLINE STATUS TAB -->
+      <div *ngIf="activeTab === 'offline_status'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">Connectivity Dashboard</h2>
+          <p class="date-subtitle">Network & Offline Sync Status</p>
+        </div>
+
+        <div class="enterprise-grid">
+          <!-- Current Connection Status -->
+          <div class="enterprise-card" style="grid-column: span 12; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <div class="status-indicator" [ngClass]="isOnline() ? 'status-active' : 'status-danger'" style="width: 24px; height: 24px; border-radius: 50%;"></div>
+              <div>
+                <h3 style="margin: 0; font-size: 1.25rem;">{{ isOnline() ? 'Online' : 'Offline' }}</h3>
+                <p style="margin: 0; color: #64748b;">Connection: {{ getConnectionType() }}</p>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Last Successful Sync</p>
+              <h4 style="margin: 0;">{{ getLastSyncTime() | date:'medium' }}</h4>
+            </div>
+            <button class="btn btn-primary" (click)="forceSync()" [disabled]="!isOnline()">Force Sync Now</button>
+          </div>
+
+          <!-- Pending Sync Queues -->
+          <div class="enterprise-card" style="grid-column: span 12;">
+            <div class="card-header border-bottom">
+              <h3 style="margin: 0; font-size: 1.1rem; color: #0f172a;">Pending Upload Queues</h3>
+            </div>
+            <div class="card-body">
+              <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; padding: 1rem; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+                  <h4 style="margin: 0; color: #64748b; font-size: 0.875rem;">Offline Stops</h4>
+                  <p style="font-size: 2rem; font-weight: 700; margin: 0.5rem 0;">{{ getQueueLength('offline_stops') }}</p>
+                </div>
+                <div style="flex: 1; padding: 1rem; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+                  <h4 style="margin: 0; color: #64748b; font-size: 0.875rem;">Trip Starts</h4>
+                  <p style="font-size: 2rem; font-weight: 700; margin: 0.5rem 0;">{{ getQueueLength('offline_starts') }}</p>
+                </div>
+                <div style="flex: 1; padding: 1rem; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+                  <h4 style="margin: 0; color: #64748b; font-size: 0.875rem;">Trip Ends</h4>
+                  <p style="font-size: 2rem; font-weight: 700; margin: 0.5rem 0;">{{ getQueueLength('offline_ends') }}</p>
+                </div>
+                <div style="flex: 1; padding: 1rem; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
+                  <h4 style="margin: 0; color: #64748b; font-size: 0.875rem;">Issues/Photos</h4>
+                  <p style="font-size: 2rem; font-weight: 700; margin: 0.5rem 0;">{{ getQueueLength('offline_issues') }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Availability -->
+          <div class="enterprise-card" style="grid-column: span 6;">
+            <div class="card-header border-bottom">
+              <h3 style="margin: 0; font-size: 1.1rem; color: #059669; display: flex; align-items: center; gap: 0.5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                Available Offline
+              </h3>
+            </div>
+            <div class="card-body">
+              <ul style="padding-left: 1.5rem; color: #475569; line-height: 1.8;">
+                <li>Home screen (last cached schedule)</li>
+                <li>Active trip screen & stop marking</li>
+                <li>Start trip & End trip</li>
+                <li>Report issue (photos queued locally)</li>
+                <li>Passenger list for today's routes</li>
+                <li>Route and stop list</li>
+                <li>My vehicle details</li>
+                <li>Trip history (last 30 days)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="enterprise-card" style="grid-column: span 6;">
+            <div class="card-header border-bottom">
+              <h3 style="margin: 0; font-size: 1.1rem; color: #e11d48; display: flex; align-items: center; gap: 0.5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.58 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                Requires Internet
+              </h3>
+            </div>
+            <div class="card-body">
+              <ul style="padding-left: 1.5rem; color: #475569; line-height: 1.8;">
+                <li>Booking a passenger seat (prevents conflict)</li>
+                <li>Real-time ETA calculation</li>
+                <li>Viewing newly added admin notes</li>
+                <li>Receiving live cancellation notifications</li>
+                <li>Syncing queued offline actions to server</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SYNC QUEUE TAB -->
+      <div *ngIf="activeTab === 'sync_queue'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">Sync Queue</h2>
+          <p class="date-subtitle">Pending and failed offline records</p>
+        </div>
+
+        <div class="enterprise-grid">
+          <div class="enterprise-card" style="grid-column: span 12; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; gap: 2rem;">
+              <div>
+                <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Total Pending Upload</p>
+                <h3 style="margin: 0; font-size: 1.5rem; color: #0f172a;">{{ getDetailedQueue().length }}</h3>
+              </div>
+              <div>
+                <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Failed Records</p>
+                <h3 style="margin: 0; font-size: 1.5rem; color: #e11d48;">{{ getFailedRecords().length }}</h3>
+              </div>
+              <div>
+                <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Synced Today</p>
+                <h3 style="margin: 0; font-size: 1.5rem; color: #059669;">{{ getSyncedTodayCount() }}</h3>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+              <button class="btn btn-secondary" (click)="retryFailed()" [disabled]="!isOnline() || getFailedRecords().length === 0">Retry Failed</button>
+              <button class="btn btn-primary" (click)="forceSync()" [disabled]="!isOnline()">Force Sync All</button>
+            </div>
+          </div>
+
+          <div class="enterprise-card" style="grid-column: span 12;">
+            <div class="card-header border-bottom">
+              <h3 style="margin: 0; font-size: 1.1rem; color: #0f172a;">Pending & Failed Records List</h3>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <table class="enterprise-table" style="width: 100%; text-align: left;">
+                <thead>
+                  <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
+                    <th style="padding: 1rem;">Record Type</th>
+                    <th style="padding: 1rem;">Trip ID</th>
+                    <th style="padding: 1rem;">Created At (Device Time)</th>
+                    <th style="padding: 1rem;">Status</th>
+                    <th style="padding: 1rem;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let record of getDetailedQueue().concat(getFailedRecords())">
+                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                      <td style="padding: 1rem; font-weight: 600; text-transform: capitalize;">{{ record.type.replace('_', ' ') }}</td>
+                      <td style="padding: 1rem;">{{ record.tripId || 'N/A' }}</td>
+                      <td style="padding: 1rem;">{{ record.createdAt | date:'short' }}</td>
+                      <td style="padding: 1rem;">
+                        <span class="status-badge" [ngClass]="{'badge-danger': record.status === 'failed', 'badge-warning': record.status === 'pending'}">
+                          {{ record.status }}
+                        </span>
+                      </td>
+                      <td style="padding: 1rem;">
+                        <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem;" *ngIf="record.status === 'failed'" (click)="viewErrorDetail(record)">View Error</button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <tr *ngIf="getDetailedQueue().length === 0 && getFailedRecords().length === 0">
+                    <td colspan="5" style="padding: 2rem; text-align: center; color: #64748b;">All offline records are synced. Queue is empty.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS TAB -->
+      <div *ngIf="activeTab === 'notifications'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 class="welcome-title">Notifications</h2>
+            <p class="date-subtitle">Push alerts & Admin messages</p>
+          </div>
+          <div *ngIf="!isOnline()" style="background-color: #fffbeb; color: #b45309; padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.875rem; border: 1px solid #fde68a;">
+            Offline Mode: Showing cached notifications.
+          </div>
+        </div>
+
+        <div class="enterprise-grid">
+          <div class="enterprise-card" style="grid-column: span 12;">
+            <div class="card-header border-bottom">
+              <h3 style="margin: 0; font-size: 1.1rem; color: #0f172a;">Recent Alerts</h3>
+            </div>
+            <div class="card-body" style="padding: 0;">
+              <div *ngIf="isNotificationsLoading" style="padding: 4rem 2rem; text-align: center; color: #64748b; font-size: 1.25rem;">
+                Loading notifications...
+              </div>
+
+              <div *ngIf="!isNotificationsLoading && notifications.length === 0" style="padding: 3rem; text-align: center; color: #64748b;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="margin-bottom: 1rem;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <p>You have no notifications.</p>
+              </div>
+
+              <div *ngFor="let note of notifications" style="padding: 1.25rem; border-bottom: 1px solid #e2e8f0; display: flex; align-items: flex-start; gap: 1rem;" [ngStyle]="{'background-color': note.isRead ? '#ffffff' : '#f0f9ff'}">
+                <div style="margin-top: 0.25rem;">
+                  <!-- Icon based on type -->
+                  <svg *ngIf="note.type === 'TripAssigned'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <svg *ngIf="note.type === 'RoadAdvisory'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <svg *ngIf="note.type === 'AdminMessage'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <svg *ngIf="!['TripAssigned','RoadAdvisory','AdminMessage'].includes(note.type)" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div style="flex-grow: 1;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                    <h4 style="margin: 0; font-size: 1rem; color: #0f172a;">{{ formatNoteType(note.type) }}</h4>
+                    <span style="font-size: 0.75rem; color: #64748b;">{{ note.createdAt }}</span>
+                  </div>
+                  <p style="margin: 0 0 0.5rem 0; color: #475569; line-height: 1.5;">{{ note.message }}</p>
+                  
+                  <button *ngIf="!note.isRead" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.25rem 0.75rem;" (click)="markNotificationRead(note.id)">Mark as Read</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPORT ISSUE TAB -->
+      <div *ngIf="activeTab === 'report_issue'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">Report an Issue</h2>
+          <p class="date-subtitle">Log vehicle problems, road hazards, or trip delays. Works offline.</p>
+        </div>
+
+        <div class="enterprise-grid">
+          <div class="enterprise-card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Submit New Issue</h3>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                <div>
+                  <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Category</label>
+                  <select [(ngModel)]="newIssue.category" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                    <option value="">Select Category</option>
+                    <option value="Breakdown">Vehicle Breakdown</option>
+                    <option value="RoadBlocked">Road Blocked / Hazard</option>
+                    <option value="Accident">Accident</option>
+                    <option value="Delay">Trip Delay</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Severity</label>
+                  <select [(ngModel)]="newIssue.severity" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div style="margin-bottom: 1rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Description</label>
+                <textarea [(ngModel)]="newIssue.description" class="form-control" rows="4" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px; resize: vertical;" placeholder="Describe the issue in detail..."></textarea>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Photo Evidence (Optional)</label>
+                <input type="file" accept="image/*" (change)="onIssuePhotoSelected($event)" class="form-control" style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px; width: 100%;" />
+                <div *ngIf="newIssue.photoUrl" style="margin-top: 1rem;">
+                  <img [src]="newIssue.photoUrl" style="max-height: 200px; border-radius: 6px;" />
+                </div>
+              </div>
+
+              <button class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;" (click)="submitIssue()">Submit Report</button>
+            </div>
+          </div>
+
+          <div class="enterprise-card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">My Open Issues</h3>
+            </div>
+            <div class="card-body">
+              <div *ngIf="openIssues.length === 0" style="padding: 2rem; text-align: center; color: #64748b;">
+                You have no open issues.
+              </div>
+              <ul style="list-style: none; padding: 0; margin: 0;" *ngIf="openIssues.length > 0">
+                <li *ngFor="let issue of openIssues" style="border-bottom: 1px solid #f1f5f9; padding: 1rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                    <strong style="color: #0f172a;">{{ issue.category }}</strong>
+                    <span class="status-badge" [ngClass]="{'badge-danger': issue.severity === 'Critical' || issue.severity === 'High', 'badge-warning': issue.severity === 'Medium'}">
+                      {{ issue.severity }}
+                    </span>
+                  </div>
+                  <p style="font-size: 0.9rem; color: #475569; margin: 0 0 0.5rem 0;">{{ issue.description }}</p>
+                  <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                    <span style="color: #64748b;">{{ issue.submittedAt | date:'medium' }}</span>
+                    <span style="color: #059669; font-weight: 600;">{{ issue.status }}</span>
+                  </div>
+                  <div *ngIf="issue.adminResponse" style="margin-top: 0.75rem; padding: 0.75rem; background-color: #f8fafc; border-left: 3px solid #0ea5e9; border-radius: 0 4px 4px 0;">
+                    <strong style="font-size: 0.8rem; color: #0284c7;">Admin Response:</strong>
+                    <p style="margin: 0; font-size: 0.85rem; color: #334155;">{{ issue.adminResponse }}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MY PROFILE TAB -->
+      <div *ngIf="activeTab === 'my_profile'" class="dashboard-content enterprise-tab">
+        <div class="enterprise-header">
+          <h2 class="welcome-title">My Profile</h2>
+          <p class="date-subtitle">Manage your account settings and view your credentials.</p>
+        </div>
+
+        <div *ngIf="isProfileLoading" style="padding: 4rem 2rem; text-align: center; color: #64748b; font-size: 1.25rem;">
+          Loading profile...
+        </div>
+
+        <div *ngIf="!isProfileLoading && !profileData" style="padding: 4rem 2rem; text-align: center; background: #ffffff; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 2rem;">
+          <h2 style="color: #0f172a; font-size: 2rem; margin-bottom: 1rem;">Profile Unavailable</h2>
+          <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 2rem;">Could not load your profile details.</p>
+        </div>
+
+        <div *ngIf="!isProfileLoading && profileData" class="enterprise-grid">
+          
+          <div class="alert-box alert-danger" *ngIf="isLicenceExpiringSoon()" style="grid-column: 1 / -1;">
+            <div class="alert-icon-wrapper">⚠️</div>
+            <div class="alert-content">
+              <strong>Action Required:</strong> Your driving licence will expire on {{ profileData.licenseExpiry | date }}. Please contact admin immediately to renew.
+            </div>
+          </div>
+
+          <div class="enterprise-card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Driver Information</h3>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+              <div style="display: flex; gap: 2rem; align-items: flex-start;">
+                <div style="width: 100px; height: 100px; border-radius: 50%; background-color: #e2e8f0; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; color: #64748b; flex-shrink: 0; overflow: hidden; border: 2px solid #cbd5e1;">
+                  <img *ngIf="profileData.photoUrl" [src]="profileData.photoUrl" alt="Driver Photo" style="width: 100%; height: 100%; object-fit: cover;" />
+                  <span *ngIf="!profileData.photoUrl">{{ profileData.name ? profileData.name.charAt(0).toUpperCase() : 'D' }}</span>
+                </div>
+                <div style="flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Full Name</div>
+                    <div style="font-weight: 600; color: #0f172a;">{{ profileData.name }}</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Employee ID</div>
+                    <div style="font-weight: 600; color: #0f172a;">{{ profileData.userId || 'N/A' }}</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Phone</div>
+                    <div style="font-weight: 600; color: #0f172a;">{{ profileData.phone }}</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Email</div>
+                    <div style="font-weight: 600; color: #0f172a;">{{ profileData.email }}</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Organization</div>
+                    <div style="font-weight: 600; color: #0f172a;">{{ profileData.organization || 'Independent' }}</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Joining Date</div>
+                    <div style="font-weight: 600; color: #0f172a;">{{ profileData.joiningDate ? (profileData.joiningDate | date) : 'N/A' }}</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Licence Number</div>
+                    <div style="font-weight: 600; color: #0f172a;">{{ profileData.licenseNumber || 'N/A' }}</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Licence Type</div>
+                    <div style="font-weight: 600; color: #0f172a;">{{ profileData.licenseType || 'N/A' }}</div>
+                  </div>
+                  <div>
+                    <div style="font-size: 0.85rem; color: #64748b;">Licence Expiry</div>
+                    <div style="font-weight: 600;" [ngStyle]="{'color': isLicenceExpiringSoon() ? '#ef4444' : '#0f172a'}">{{ profileData.licenseExpiry ? (profileData.licenseExpiry | date) : 'N/A' }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="enterprise-card">
+            <div class="card-header border-bottom">
+              <h3 class="card-title">Account Settings</h3>
+            </div>
+            <div class="card-body" style="padding: 1.5rem;">
+              <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">App Language</label>
+                <select [(ngModel)]="profileSettings.languagePreference" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                  <option value="English">English</option>
+                  <option value="Urdu">Urdu</option>
+                  <option value="Hindi">Hindi</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Notifications</label>
+                <select [(ngModel)]="profileSettings.notifications" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                  <option value="enabled">Enabled</option>
+                  <option value="disabled">Disabled</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Change Password</label>
+                <input type="password" [(ngModel)]="profileSettings.currentPassword" placeholder="Current Password" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 0.5rem;" />
+                <input type="password" [(ngModel)]="profileSettings.newPassword" placeholder="New Password" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px;" />
+              </div>
+
+              <button class="btn btn-primary" style="width: 100%; padding: 1rem;" (click)="updateProfileSettings()">Save Changes</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
