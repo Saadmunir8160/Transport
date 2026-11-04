@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "installCommand": "npm install --legacy-peer-deps",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist/AjkTransportSystem-UI",
+  "installCommand": "npm ci",
+  "outputDirectory": "dist/AjkTransportSystem-UI/browser",
   "rewrites": [
     {
       "source": "/(.*)",
