@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import * as L from 'leaflet';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +18,31 @@ import { PassengerService } from '../../services/passenger.service';
   templateUrl: './passenger-dashboard.html',
   styleUrls: ['./passenger-dashboard.css']
 })
-export class PassengerDashboardComponent implements OnInit {
+export class PassengerDashboardComponent implements OnInit, OnDestroy {
+  // Leaflet Live Map State
+  private liveMap: any = null;
+  private busMarker: any = null;
+  private routePolyline: any = null;
+  private mapSimInterval: any = null;
+  public mapSimulating: boolean = false;
+  public busSpeedKmH: number = 42;
+  public busCurrentStop: string = 'Approaching Kohala Bridge';
+  public lastGpsUpdate: string = 'Live';
+
+  // Major AJK Route Coordinates
+  public ajkGeoCoords: { [key: string]: [number, number] } = {
+    'Muzaffarabad': [34.3597, 73.4711],
+    'Rawalakot': [33.8584, 73.7604],
+    'Mirpur': [33.1484, 73.7519],
+    'Kotli': [33.5156, 73.9019],
+    'Bagh': [33.9816, 73.7760],
+    'Bhimber': [32.9741, 74.0785],
+    'Hattian Bala': [34.1691, 73.7432],
+    'Rawalpindi': [33.5651, 73.0169],
+    'Islamabad': [33.6844, 73.0479],
+    'Kohala': [34.0950, 73.4975],
+    'Murree': [33.9070, 73.3943]
+  };
   // Register state
   regStep = 'details';
   regName = '';
@@ -681,8 +706,119 @@ export class PassengerDashboardComponent implements OnInit {
     this.sidebarActive = !this.sidebarActive;
   }
 
+  initLiveMap() {
+    setTimeout(() => {
+      const mapContainer = document.getElementById("ajk-live-map");
+      if (!mapContainer) return;
+
+      if (this.liveMap) {
+        this.liveMap.remove();
+        this.liveMap = null;
+      }
+
+      const startCoord = this.ajkGeoCoords[this.selectedTrip?.startPoint] || [34.3597, 73.4711];
+      const endCoord = this.ajkGeoCoords[this.selectedTrip?.endPoint] || [33.5651, 73.0169];
+      const midpoint: L.LatLngTuple = [
+        (startCoord[0] + endCoord[0]) / 2,
+        (startCoord[1] + endCoord[1]) / 2
+      ];
+
+      this.liveMap = L.map("ajk-live-map", {
+        center: midpoint,
+        zoom: 9,
+        zoomControl: true
+      });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors"
+      }).addTo(this.liveMap);
+
+      const startIcon = L.divIcon({
+        className: "custom-map-pin start-pin",
+        html: '<div style="background:#0D766E;color:white;padding:5px 10px;border-radius:12px;font-weight:700;font-size:11px;border:2px solid white;box-shadow:0 3px 8px rgba(0,0,0,0.3);">🟢 Start: ' + (this.selectedTrip?.startPoint || "Origin") + '</div>',
+        iconSize: [120, 30],
+        iconAnchor: [60, 15]
+      });
+
+      const endIcon = L.divIcon({
+        className: "custom-map-pin end-pin",
+        html: '<div style="background:#DC2626;color:white;padding:5px 10px;border-radius:12px;font-weight:700;font-size:11px;border:2px solid white;box-shadow:0 3px 8px rgba(0,0,0,0.3);">🔴 End: ' + (this.selectedTrip?.endPoint || "Destination") + '</div>',
+        iconSize: [120, 30],
+        iconAnchor: [60, 15]
+      });
+
+      const busDivIcon = L.divIcon({
+        className: "custom-bus-marker",
+        html: '<div style="background:#0F172A;color:#10B981;padding:6px 12px;border-radius:20px;font-weight:800;font-size:12px;border:2px solid #10B981;box-shadow:0 4px 12px rgba(16,185,129,0.4);display:flex;align-items:center;gap:6px;">🚐 ' + (this.selectedTrip?.registration || "AJK-4402") + ' (' + this.busSpeedKmH + ' km/h)</div>',
+        iconSize: [150, 32],
+        iconAnchor: [75, 16]
+      });
+
+      L.marker(startCoord, { icon: startIcon }).addTo(this.liveMap);
+      L.marker(endCoord, { icon: endIcon }).addTo(this.liveMap);
+
+      const kohalaCoord: L.LatLngTuple = [34.0950, 73.4975];
+      const routePoints: L.LatLngTuple[] = [startCoord, kohalaCoord, endCoord];
+
+      this.routePolyline = L.polyline(routePoints, {
+        color: "#0D766E",
+        weight: 5,
+        opacity: 0.85,
+        dashArray: "8, 8"
+      }).addTo(this.liveMap);
+
+      this.liveMap.fitBounds(this.routePolyline.getBounds(), { padding: [50, 50] });
+
+      const busPos: L.LatLngTuple = [
+        startCoord[0] * 0.45 + endCoord[0] * 0.55,
+        startCoord[1] * 0.45 + endCoord[1] * 0.55
+      ];
+      this.busMarker = L.marker(busPos, { icon: busDivIcon }).addTo(this.liveMap);
+
+      this.startBusSimulation(startCoord, endCoord);
+    }, 250);
+  }
+
+  startBusSimulation(start: L.LatLngTuple, end: L.LatLngTuple) {
+    if (this.mapSimInterval) clearInterval(this.mapSimInterval);
+    let progress = 0.45;
+    let forward = true;
+
+    this.mapSimInterval = setInterval(() => {
+      if (forward) {
+        progress += 0.02;
+        if (progress >= 0.88) forward = false;
+      } else {
+        progress -= 0.02;
+        if (progress <= 0.2) forward = true;
+      }
+
+      const curLat = start[0] + (end[0] - start[0]) * progress;
+      const curLng = start[1] + (end[1] - start[1]) * progress;
+      this.busSpeedKmH = Math.floor(40 + Math.random() * 15);
+
+      if (this.busMarker) {
+        this.busMarker.setLatLng([curLat, curLng]);
+        const updatedIcon = L.divIcon({
+          className: "custom-bus-marker",
+          html: '<div style="background:#0F172A;color:#10B981;padding:6px 12px;border-radius:20px;font-weight:800;font-size:12px;border:2px solid #10B981;box-shadow:0 4px 12px rgba(16,185,129,0.4);display:flex;align-items:center;gap:6px;">🚐 ' + (this.selectedTrip?.registration || "AJK-4402") + ' (' + this.busSpeedKmH + ' km/h)</div>',
+          iconSize: [150, 32],
+          iconAnchor: [75, 16]
+        });
+        this.busMarker.setIcon(updatedIcon);
+      }
+      this.lastGpsUpdate = "Just now (GPS Synced)";
+    }, 2500);
+  }
+
+  ngOnDestroy() {
+    if (this.mapSimInterval) clearInterval(this.mapSimInterval);
+    if (this.liveMap) this.liveMap.remove();
+  }
+
   setActiveTab(tab: string) {
     this.activeTab = tab;
+    if (tab === 'track-bus') { this.initLiveMap(); }
     if (window.innerWidth <= 768) {
       this.sidebarActive = false;
     }
