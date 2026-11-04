@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AiService {
-  private apiUrl = 'http://localhost:5242/api/ai';
+  private apiUrl = 'https://transport-osasaem1.back4.app/api/ai';
 
   constructor(private http: HttpClient) { }
 

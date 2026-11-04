@@ -101,7 +101,7 @@ export class LoginComponent {
 
     this.loading = true;
     
-    this.http.post('http://localhost:5242/api/Auth/send-otp', { phone: this.phone }).subscribe({
+    this.http.post('https://transport-osasaem1.back4.app/api/Auth/send-otp', { phone: this.phone }).subscribe({
       next: (res: any) => {
         this.loading = false;
         this.step = 'otp';
@@ -148,7 +148,7 @@ export class LoginComponent {
       role: 'Passenger'
     };
 
-    this.http.post('http://localhost:5242/api/Auth/register', payload).subscribe({
+    this.http.post('https://transport-osasaem1.back4.app/api/Auth/register', payload).subscribe({
       next: (res: any) => {
         this.loading = false;
         alert('Registration successful! You can now login.');

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ComplianceService {
-  private apiUrl = 'http://localhost:5242/api/Compliance';
+  private apiUrl = 'https://transport-osasaem1.back4.app/api/Compliance';
 
   constructor(private http: HttpClient) { }
 

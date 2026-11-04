@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ETAInsightsService {
-  private apiUrl = 'http://localhost:5242/api/ETAInsights';
+  private apiUrl = 'https://transport-osasaem1.back4.app/api/ETAInsights';
 
   constructor(private http: HttpClient) { }
 

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ComplaintService {
-  private apiUrl = 'http://localhost:5242/api/Complaints';
+  private apiUrl = 'https://transport-osasaem1.back4.app/api/Complaints';
 
   constructor(private http: HttpClient) { }
 

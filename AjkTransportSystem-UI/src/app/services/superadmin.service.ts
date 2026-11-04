@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SuperAdminService {
-  private apiUrl = 'http://localhost:5242/api/admin';
+  private apiUrl = 'https://transport-osasaem1.back4.app/api/admin';
 
   constructor(private http: HttpClient) { }
 

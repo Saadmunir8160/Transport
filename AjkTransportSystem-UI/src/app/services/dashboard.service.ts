@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DashboardService {
-  private apiUrl = 'http://localhost:5242/api/Dashboard';
+  private apiUrl = 'https://transport-osasaem1.back4.app/api/Dashboard';
 
   constructor(private http: HttpClient) { }
 
