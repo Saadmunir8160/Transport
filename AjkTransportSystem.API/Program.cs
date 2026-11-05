@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Port binding for Render / Railway / Cloud hosts (respect PORT environment variable)
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5242";
-builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+// Port binding: default to port 80 if PORT environment variable is not provided, or respect PORT (e.g. Back4app, Railway, Render)
+var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}", "http://0.0.0.0:80", "http://0.0.0.0:5242");
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
@@ -82,31 +82,35 @@ var app = builder.Build();
 
 app.UseForwardedHeaders();
 
-// Automatically apply database migrations and seed default demo users on startup
-using (var scope = app.Services.CreateScope())
+// Asynchronously ensure database connectivity and seed demo users without blocking web server startup
+_ = Task.Run(async () =>
 {
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    
-    // Automatically apply any pending EF Core migrations
     try
     {
-        context.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
+        await Task.Delay(1500); // Give Kestrel a moment to bind ports and pass initial cloud health checks
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while applying database migrations.");
-    }
 
-    var demoPassword = builder.Configuration["Seed:DemoPassword"];
-    if (string.IsNullOrWhiteSpace(demoPassword) || demoPassword.Length < 10)
-    {
-        demoPassword = "Transport@Pass2026";
-    }
-    
-    var passwordHash = AuthService.HashPassword(demoPassword);
+        try
+        {
+            logger.LogInformation("Applying pending database migrations...");
+            await context.Database.MigrateAsync();
+            logger.LogInformation("Database migrations applied successfully.");
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "Database migration check skipped or encountered error: {Message}", ex.Message);
+        }
 
-        // Ensure demo users exist or have their passwords synced
+        var demoPassword = builder.Configuration["Seed:DemoPassword"];
+        if (string.IsNullOrWhiteSpace(demoPassword) || demoPassword.Length < 10)
+        {
+            demoPassword = "Transport@Pass2026";
+        }
+        
+        var passwordHash = AuthService.HashPassword(demoPassword);
+
         void UpsertUser(string email, string name, string role)
         {
             var existing = context.Users.FirstOrDefault(u => u.Email == email);
@@ -117,12 +121,14 @@ using (var scope = app.Services.CreateScope())
                     Name = name,
                     Email = email,
                     PasswordHash = passwordHash,
-                    Role = role
+                    Role = role,
+                    Status = "Active"
                 });
             }
             else
             {
                 existing.PasswordHash = passwordHash;
+                existing.Status = "Active";
             }
         }
 
@@ -132,16 +138,14 @@ using (var scope = app.Services.CreateScope())
         UpsertUser("driver@ajk.com", "Demo Driver", "Driver");
         UpsertUser("passenger@ajk.com", "Test Passenger", "Passenger");
 
-        try
-        {
-            context.SaveChanges();
-        }
-        catch (Exception ex)
-        {
-            var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-            logger.LogError(ex, "An error occurred while seeding demo users.");
-        }
+        await context.SaveChangesAsync();
+        logger.LogInformation("Demo users verified and seeded successfully.");
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[Seed Notice] User seeding background check: {ex.Message}");
+    }
+});
 
 // Swagger enabled in production too for live demo/testing
 app.UseSwagger();
@@ -150,6 +154,9 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "AJK Transport System API v1");
     c.RoutePrefix = "swagger";
 });
+
+// Root health check & API status endpoint for Cloud load balancers / Back4app
+app.MapGet("/", () => Results.Ok(new { status = "Online", service = "AJK Transport System API", timestamp = DateTime.UtcNow }));
 
 // Health check endpoint
 app.MapGet("/health", () => Results.Ok(new { status = "Healthy", timestamp = DateTime.UtcNow }));
