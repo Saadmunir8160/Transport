@@ -10,6 +10,7 @@ import { WeatherService } from '../../services/weather';
 import { FeedbackService } from '../../services/feedback';
 import { AuthGuardService } from '../../services/auth-guard';
 import { PassengerService } from '../../services/passenger.service';
+import { RealtimeTrackingService } from '../../services/realtime-tracking.service';
 
 @Component({
   selector: 'app-passenger-dashboard',
@@ -209,7 +210,7 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     private weatherService: WeatherService,
     private feedbackService: FeedbackService,
     private passengerService: PassengerService,
-    private authGuard: AuthGuardService
+    private authGuard: AuthGuardService, private realtimeService: RealtimeTrackingService
   ) {}
 
   
@@ -873,7 +874,7 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
-    if (tab === 'track-bus') { this.initLiveMap(); }
+    if (tab === 'track-bus') { this.initLiveMap(); this.realtimeService.startConnection(this.selectedTrip?.id || '1'); }
     if (window.innerWidth <= 768) {
       this.sidebarActive = false;
     }

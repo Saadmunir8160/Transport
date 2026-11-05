@@ -14,6 +14,7 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "5242";
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 
 // Configure CORS
 var defaultOrigins = new[] { "https://transport-bleo.vercel.app", "http://localhost:4200" };
@@ -202,5 +203,6 @@ app.UseAuthorization();
 app.UseMiddleware<AjkTransportSystem.API.Middleware.SessionValidationMiddleware>();
 app.UseMiddleware<AjkTransportSystem.API.Middleware.AuditLoggingMiddleware>();
 app.MapControllers();
+app.MapHub<LiveTrackingHub>("/hubs/tracking");
 
 app.Run();

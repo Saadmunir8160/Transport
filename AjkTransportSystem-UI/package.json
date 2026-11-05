@@ -29,6 +29,7 @@
     "@angular/forms": "^20.3.0",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@microsoft/signalr": "^10.0.11",
     "@types/leaflet": "^1.9.22",
     "chart.js": "^4.6.1",
     "leaflet": "^1.9.4",
