@@ -9,13 +9,16 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Port binding - Listen on 0.0.0.0:80 (or ASPNETCORE_HTTP_PORTS / ASPNETCORE_URLS / PORT)
-var configuredUrls = Environment.GetEnvironmentVariable("ASPNETCORE_URLS")
-    ?? (Environment.GetEnvironmentVariable("ASPNETCORE_HTTP_PORTS") != null 
-        ? $"http://0.0.0.0:{Environment.GetEnvironmentVariable("ASPNETCORE_HTTP_PORTS")}"
+// Ensure environment variables provider is registered and active
+builder.Configuration.AddEnvironmentVariables();
+
+// Port binding - Read via Configuration for case-insensitive lookup, fallback to port 80
+var configuredUrls = builder.Configuration["ASPNETCORE_URLS"]
+    ?? (builder.Configuration["ASPNETCORE_HTTP_PORTS"] != null 
+        ? $"http://0.0.0.0:{builder.Configuration["ASPNETCORE_HTTP_PORTS"]}"
         : null)
-    ?? (Environment.GetEnvironmentVariable("PORT") != null 
-        ? $"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT")}"
+    ?? (builder.Configuration["PORT"] != null 
+        ? $"http://0.0.0.0:{builder.Configuration["PORT"]}"
         : "http://0.0.0.0:80");
 
 builder.WebHost.UseUrls(configuredUrls);
@@ -23,12 +26,12 @@ builder.WebHost.UseUrls(configuredUrls);
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 
-// Configure CORS
-var corsOriginsEnv = Environment.GetEnvironmentVariable("Cors__AllowedOrigins");
-var allowVercelPreviews = (Environment.GetEnvironmentVariable("Cors__AllowVercelPreviews") ?? "false")
+// Configure CORS - Read case-insensitively from configuration
+var corsOrigins = builder.Configuration["Cors:AllowedOrigins"];
+var allowVercelPreviews = (builder.Configuration["Cors:AllowVercelPreviews"] ?? "false")
     .Equals("true", StringComparison.OrdinalIgnoreCase);
 
-var allowedOrigins = (corsOriginsEnv ?? "https://transport-bleo.vercel.app,http://localhost:4200")
+var allowedOrigins = (corsOrigins ?? "https://transport-bleo.vercel.app,http://localhost:4200")
     .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
     .Select(origin => origin.TrimEnd('/'))
     .ToArray();
@@ -61,22 +64,17 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Read and validate JWT settings from environment variables
-var jwtKey = Environment.GetEnvironmentVariable("Jwt__Key") ?? builder.Configuration["Jwt:Key"];
+// Read and validate JWT settings case-insensitively from Configuration
+var jwtKey = builder.Configuration["Jwt:Key"];
 if (string.IsNullOrWhiteSpace(jwtKey) || jwtKey.Length < 32 || jwtKey.Contains("YOUR_"))
 {
-    var err = "FATAL: Jwt__Key environment variable is required and must be at least 32 characters long.";
+    var err = "FATAL: Jwt:Key configuration is required and must be at least 32 characters long.";
     Console.WriteLine(err);
     throw new InvalidOperationException(err);
 }
 
-var jwtIssuer = Environment.GetEnvironmentVariable("Jwt__Issuer") 
-    ?? builder.Configuration["Jwt:Issuer"] 
-    ?? "AjkTransportSystem";
-
-var jwtAudience = Environment.GetEnvironmentVariable("Jwt__Audience") 
-    ?? builder.Configuration["Jwt:Audience"] 
-    ?? "AjkTransportSystemUsers";
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "AjkTransportSystem";
+var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "AjkTransportSystemUsers";
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -96,15 +94,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AjkTransportSystem.API.Services.ITenantProvider, AjkTransportSystem.API.Services.TenantProvider>();
 
-// Read and validate database connection string
-var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
-    ?? Environment.GetEnvironmentVariable("DATABASE_URL")
-    ?? Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING")
-    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+// Read and validate database connection string case-insensitively from Configuration
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? builder.Configuration["DATABASE_URL"]
+    ?? builder.Configuration["SQL_CONNECTION_STRING"];
 
 if (string.IsNullOrWhiteSpace(connectionString) || connectionString.Contains("YOUR_"))
 {
-    var err = "FATAL: ConnectionStrings__DefaultConnection environment variable is required.";
+    var err = "FATAL: ConnectionStrings:DefaultConnection configuration is required.";
     Console.WriteLine(err);
     throw new InvalidOperationException(err);
 }
@@ -163,10 +160,10 @@ using (var scope = app.Services.CreateScope())
         // Seed only if Users table is completely empty
         if (!context.Users.Any())
         {
-            logger.LogInformation("Users table is empty. Checking environment seed passwords...");
-            var adminPass = Environment.GetEnvironmentVariable("Seed__AdminPassword");
-            var driverPass = Environment.GetEnvironmentVariable("Seed__DriverPassword");
-            var passengerPass = Environment.GetEnvironmentVariable("Seed__PassengerPassword");
+            logger.LogInformation("Users table is empty. Checking configured seed passwords...");
+            var adminPass = builder.Configuration["Seed:AdminPassword"];
+            var driverPass = builder.Configuration["Seed:DriverPassword"];
+            var passengerPass = builder.Configuration["Seed:PassengerPassword"];
 
             var usersToSeed = new List<User>();
 
@@ -184,7 +181,7 @@ using (var scope = app.Services.CreateScope())
             }
             else
             {
-                logger.LogWarning("Seed__AdminPassword is not set. Skipping seed for admin user.");
+                logger.LogWarning("Seed:AdminPassword is not set. Skipping seed for admin user.");
             }
 
             if (!string.IsNullOrWhiteSpace(driverPass))
@@ -201,7 +198,7 @@ using (var scope = app.Services.CreateScope())
             }
             else
             {
-                logger.LogWarning("Seed__DriverPassword is not set. Skipping seed for driver@ajk.com.");
+                logger.LogWarning("Seed:DriverPassword is not set. Skipping seed for driver@ajk.com.");
             }
 
             if (!string.IsNullOrWhiteSpace(passengerPass))
@@ -218,7 +215,7 @@ using (var scope = app.Services.CreateScope())
             }
             else
             {
-                logger.LogWarning("Seed__PassengerPassword is not set. Skipping seed for passenger user.");
+                logger.LogWarning("Seed:PassengerPassword is not set. Skipping seed for passenger user.");
             }
 
             if (usersToSeed.Count > 0)
