@@ -20,11 +20,13 @@ namespace AjkTransportSystem.API.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(AppDbContext context, IConfiguration config)
+        public AuthController(AppDbContext context, IConfiguration config, ILogger<AuthController> logger)
         {
             _context = context;
             _config = config;
+            _logger = logger;
         }
 
 
@@ -203,99 +205,108 @@ namespace AjkTransportSystem.API.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginDto dto)
         {
-            Console.WriteLine($"Login attempt - Email: {dto.Email}");
-            
-            var user = _context.Users.FirstOrDefault(u => u.Email == dto.Email);
-            
-            if (user == null)
+            try
             {
-                Console.WriteLine($"User not found: {dto.Email}");
-                _context.AuditLogs.Add(new AuditLog
+                if (dto == null || string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Password))
                 {
-                    Action = "Login Failed",
-                    EntityName = "User",
-                    EntityId = dto.Email,
-                    Description = $"Failed login attempt for unknown email {dto.Email} from {HttpContext.Connection.RemoteIpAddress?.ToString()}",
-                    Timestamp = DateTime.UtcNow
-                });
-                _context.SaveChanges();
-                return Unauthorized("Invalid credentials");
-            }
-            
-            Console.WriteLine($"User found - Name: {user.Name}, Role: {user.Role}");
-            Console.WriteLine($"Stored hash: {user.PasswordHash}");
-            
-            var inputHash = AuthService.HashPassword(dto.Password);
-            Console.WriteLine($"Input hash: {inputHash}");
-            
-            if (!AuthService.VerifyPassword(dto.Password, user.PasswordHash))
-            {
-                Console.WriteLine("Password verification failed");
-                _context.AuditLogs.Add(new AuditLog
-                {
-                    Action = "Login Failed",
-                    EntityName = "User",
-                    EntityId = user.UserId.ToString(),
-                    Description = $"Failed login attempt for {user.Email} from {HttpContext.Connection.RemoteIpAddress?.ToString()}",
-                    Timestamp = DateTime.UtcNow
-                });
-                _context.SaveChanges();
-                return Unauthorized("Invalid credentials");
-            }
-            
-            Console.WriteLine("Login successful!");
+                    return BadRequest(new { message = "Email and password are required." });
+                }
 
-            // Check if user belongs to an inactive organization
-            if (user.OrganizationId != null)
-            {
-                var org = _context.Organizations.FirstOrDefault(o => o.OrganizationId == user.OrganizationId);
-                if (org != null && org.Status != "Active")
+                var trimmedEmail = dto.Email.Trim().ToLower();
+                _logger.LogInformation("Processing login request for user: {Email}", trimmedEmail);
+
+                var user = _context.Users.FirstOrDefault(u => u.Email != null && u.Email.ToLower() == trimmedEmail);
+
+                if (user == null)
                 {
-                    Console.WriteLine("Organization is inactive. Login blocked.");
+                    _logger.LogWarning("Login failed: User not found for {Email}", trimmedEmail);
+                    try
+                    {
+                        _context.AuditLogs.Add(new AuditLog
+                        {
+                            Action = "Login Failed",
+                            EntityName = "User",
+                            EntityId = trimmedEmail,
+                            Description = $"Failed login attempt for unknown email {trimmedEmail}",
+                            Timestamp = DateTime.UtcNow
+                        });
+                        _context.SaveChanges();
+                    }
+                    catch { }
+                    return Unauthorized(new { message = "Invalid credentials" });
+                }
+
+                if (string.IsNullOrEmpty(user.PasswordHash) || !AuthService.VerifyPassword(dto.Password, user.PasswordHash))
+                {
+                    _logger.LogWarning("Login failed: Password mismatch for {Email}", trimmedEmail);
+                    try
+                    {
+                        _context.AuditLogs.Add(new AuditLog
+                        {
+                            Action = "Login Failed",
+                            EntityName = "User",
+                            EntityId = user.UserId.ToString(),
+                            Description = $"Failed login attempt for {user.Email}",
+                            Timestamp = DateTime.UtcNow
+                        });
+                        _context.SaveChanges();
+                    }
+                    catch { }
+                    return Unauthorized(new { message = "Invalid credentials" });
+                }
+
+                // Check inactive organization
+                if (user.OrganizationId != null)
+                {
+                    var org = _context.Organizations.FirstOrDefault(o => o.OrganizationId == user.OrganizationId);
+                    if (org != null && org.Status != "Active")
+                    {
+                        return Unauthorized(new { message = "Your organization is currently inactive. Please contact support." });
+                    }
+                }
+
+                var sessionGuid = Guid.NewGuid().ToString();
+                var session = new UserSession
+                {
+                    UserId = user.UserId,
+                    TokenHash = sessionGuid,
+                    IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                    Device = Request.Headers["User-Agent"].ToString(),
+                    LoginTime = DateTime.UtcNow,
+                    LastActivity = DateTime.UtcNow,
+                    ExpiresAt = DateTime.UtcNow.AddDays(1),
+                    IsRevoked = false
+                };
+
+                try
+                {
+                    _context.UserSessions.Add(session);
+                    _context.SaveChanges();
+
                     _context.AuditLogs.Add(new AuditLog
                     {
-                        Action = "Login Blocked",
+                        Action = "Login",
                         EntityName = "User",
                         EntityId = user.UserId.ToString(),
-                        Description = $"Login blocked for {user.Email} due to inactive organization ({org.OrganizationName})",
+                        Description = $"User {user.Email} logged in successfully",
                         Timestamp = DateTime.UtcNow
                     });
                     _context.SaveChanges();
-                    return Unauthorized("Your organization is currently inactive. Please contact support.");
                 }
+                catch (Exception logEx)
+                {
+                    _logger.LogWarning(logEx, "Non-fatal error creating session or audit log for user: {Email}", trimmedEmail);
+                }
+
+                var tokenString = GenerateJwtToken(user, session.SessionId.ToString());
+                _logger.LogInformation("Login successful for user {Email} with role {Role}", user.Email, user.Role);
+                return Ok(new { token = tokenString, user = new { user.UserId, user.Name, user.Email, user.Role, user.OrganizationId, sessionId = session.SessionId } });
             }
-            
-            // Generate a secure token hash (for demonstration, using the JWT itself as the token hash isn't ideal but we can use a session GUID)
-            var sessionGuid = Guid.NewGuid().ToString();
-
-            var session = new UserSession
+            catch (Exception ex)
             {
-                UserId = user.UserId,
-                TokenHash = sessionGuid, // Store this unique identifier
-                IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
-                Device = Request.Headers["User-Agent"].ToString(),
-                LoginTime = DateTime.UtcNow,
-                LastActivity = DateTime.UtcNow,
-                ExpiresAt = DateTime.UtcNow.AddDays(1),
-                IsRevoked = false
-            };
-
-            _context.UserSessions.Add(session);
-            _context.SaveChanges();
-
-            // Also log to AuditLog
-            _context.AuditLogs.Add(new AuditLog
-            {
-                Action = "Login",
-                EntityName = "User",
-                EntityId = user.UserId.ToString(),
-                Description = $"User {user.Email} logged in from {session.IpAddress}",
-                Timestamp = DateTime.UtcNow
-            });
-            _context.SaveChanges();
-
-            var tokenString = GenerateJwtToken(user, session.SessionId.ToString());
-            return Ok(new { token = tokenString, user = new { user.UserId, user.Name, user.Email, user.Role, user.OrganizationId, sessionId = session.SessionId } });
+                _logger.LogError(ex, "Exception during login action: Type={ExceptionType}, Message={ExceptionMessage}, StackTrace={StackTrace}", ex.GetType().FullName, ex.Message, ex.StackTrace);
+                return StatusCode(500, new { error = "Server error" });
+            }
         }
 
         private string GenerateJwtToken(User user, string sessionId)

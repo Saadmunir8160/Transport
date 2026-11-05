@@ -130,6 +130,32 @@ var app = builder.Build();
 
 app.UseForwardedHeaders();
 
+// Global unhandled exception handler logging full details without leaking secrets
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+        var exceptionHandlerFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+        
+        if (exceptionHandlerFeature != null)
+        {
+            var ex = exceptionHandlerFeature.Error;
+            logger.LogError(ex, "Unhandled exception: Type={ExceptionType}, Message={ExceptionMessage}, Path={RequestPath}, Method={RequestMethod}, InnerException={InnerException}, StackTrace={StackTrace}",
+                ex.GetType().FullName,
+                ex.Message,
+                context.Request.Path,
+                context.Request.Method,
+                ex.InnerException?.Message ?? "None",
+                ex.StackTrace);
+        }
+
+        context.Response.StatusCode = 500;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("{\"error\":\"Server error\"}");
+    });
+});
+
 // Health check endpoints (Return 200 OK without requiring authentication or DB connectivity)
 app.MapGet("/", () => Results.Ok(new { status = "Online", service = "AJK Transport System API", timestamp = DateTime.UtcNow }));
 app.MapGet("/health", () => Results.Ok(new { status = "Healthy", timestamp = DateTime.UtcNow }));
