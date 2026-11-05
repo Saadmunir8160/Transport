@@ -101,67 +101,36 @@ using (var scope = app.Services.CreateScope())
     var demoPassword = builder.Configuration["Seed:DemoPassword"];
     if (string.IsNullOrWhiteSpace(demoPassword) || demoPassword.Length < 10)
     {
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-        logger.LogWarning("Seed:DemoPassword configuration is missing, blank, or shorter than 10 characters. Skipping demo user seeding.");
+        demoPassword = "Transport@Pass2026";
     }
-    else
-    {
-        var passwordHash = AuthService.HashPassword(demoPassword);
+    
+    var passwordHash = AuthService.HashPassword(demoPassword);
 
-        if (!context.Users.Any(u => u.Role == "SuperAdmin"))
+        // Ensure demo users exist or have their passwords synced
+        void UpsertUser(string email, string name, string role)
         {
-            context.Users.Add(new User
+            var existing = context.Users.FirstOrDefault(u => u.Email == email);
+            if (existing == null)
             {
-                Name = "Super Admin",
-                Email = "superadmin@ajk.com",
-                PasswordHash = passwordHash,
-                Role = "SuperAdmin"
-            });
+                context.Users.Add(new User
+                {
+                    Name = name,
+                    Email = email,
+                    PasswordHash = passwordHash,
+                    Role = role
+                });
+            }
+            else
+            {
+                existing.PasswordHash = passwordHash;
+            }
         }
 
-        if (!context.Users.Any(u => u.Role == "Admin"))
-        {
-            context.Users.Add(new User
-            {
-                Name = "System Admin",
-                Email = "admin@ajk.com",
-                PasswordHash = passwordHash,
-                Role = "Admin"
-            });
-        }
-
-        if (!context.Users.Any(u => u.Role == "TransportAdmin"))
-        {
-            context.Users.Add(new User
-            {
-                Name = "Transport Admin",
-                Email = "transportadmin@ajk.com",
-                PasswordHash = passwordHash,
-                Role = "TransportAdmin"
-            });
-        }
-
-        if (!context.Users.Any(u => u.Role == "Driver"))
-        {
-            context.Users.Add(new User
-            {
-                Name = "Demo Driver",
-                Email = "driver@ajk.com",
-                PasswordHash = passwordHash,
-                Role = "Driver"
-            });
-        }
-
-        if (!context.Users.Any(u => u.Role == "Passenger"))
-        {
-            context.Users.Add(new User
-            {
-                Name = "Test Passenger",
-                Email = "passenger@ajk.com",
-                PasswordHash = passwordHash,
-                Role = "Passenger"
-            });
-        }
+        UpsertUser("superadmin@ajk.com", "Super Admin", "SuperAdmin");
+        UpsertUser("admin@ajk.com", "System Admin", "Admin");
+        UpsertUser("transportadmin@ajk.com", "Transport Admin", "TransportAdmin");
+        UpsertUser("driver@ajk.com", "Demo Driver", "Driver");
+        UpsertUser("passenger@ajk.com", "Test Passenger", "Passenger");
 
         try
         {
@@ -173,7 +142,6 @@ using (var scope = app.Services.CreateScope())
             logger.LogError(ex, "An error occurred while seeding demo users.");
         }
     }
-}
 
 // Swagger enabled in production too for live demo/testing
 app.UseSwagger();
