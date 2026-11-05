@@ -28,7 +28,14 @@ Thumbs.db
 
 # Backups & Temp dumps
 FYP_Final_Backup/
+publish_backend/
 *.log
 
-
+# Sensitive environment & configuration files
+*.env
+*.env.*
+appsettings*.Development.json
+appsettings*.Production.json
+appsettings*.local.json
+secrets.json
 AjkTransportSystem.API/appsettings.Development.json

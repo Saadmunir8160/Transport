@@ -50,8 +50,12 @@ builder.Services.AddCors(options =>
 
 // Read JWT settings from environment variables with config fallback
 var jwtKey = Environment.GetEnvironmentVariable("Jwt__Key") 
-    ?? builder.Configuration["Jwt:Key"] 
-    ?? "SuperSecureTransportSystemKey2026!#JWT_AJK_PRODUCTION";
+    ?? builder.Configuration["Jwt:Key"];
+
+if (string.IsNullOrWhiteSpace(jwtKey) || jwtKey.Length < 32 || jwtKey.Contains("YOUR_SECURE_JWT_KEY"))
+{
+    throw new InvalidOperationException("Fatal error: Jwt__Key environment variable is required and must be at least 32 characters long.");
+}
 
 var jwtIssuer = Environment.GetEnvironmentVariable("Jwt__Issuer") 
     ?? builder.Configuration["Jwt:Issuer"] 
@@ -83,8 +87,12 @@ builder.Services.AddScoped<AjkTransportSystem.API.Services.ITenantProvider, AjkT
 var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")
     ?? Environment.GetEnvironmentVariable("DATABASE_URL")
     ?? Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING")
-    ?? builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? "Server=sql5106.site4now.net;Database=db_ad0c00_ajkdb;User Id=db_ad0c00_ajkdb_admin;Password=Fs9R8EL$RP65fFN;TrustServerCertificate=True;Encrypt=False;";
+    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(connectionString) || connectionString.Contains("YOUR_PASSWORD"))
+{
+    throw new InvalidOperationException("Fatal error: ConnectionStrings__DefaultConnection environment variable is required.");
+}
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
