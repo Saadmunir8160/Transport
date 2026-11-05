@@ -7,6 +7,7 @@ on:
     paths:
       - 'AjkTransportSystem.API/**'
       - '.github/workflows/deploy-backend.yml'
+
   workflow_dispatch:
 
 jobs:
@@ -14,42 +15,108 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Check out repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up .NET 8 SDK
+      - name: Setup .NET 8
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
+        shell: pwsh
         run: dotnet restore AjkTransportSystem.API/AjkTransportSystem.API.csproj
 
-      - name: Build and Publish Release
+      - name: Build and Publish
+        shell: pwsh
         run: |
-          dotnet publish AjkTransportSystem.API/AjkTransportSystem.API.csproj -c Release -o ./publish /p:UseAppHost=false
+          dotnet publish AjkTransportSystem.API/AjkTransportSystem.API.csproj -c Release -o "$PWD/publish" /p:UseAppHost=false
 
-      - name: Deploy to SmarterASP.NET via Web Deploy
-        run: |
-          $publishProfileXml = @"
-          ${{ secrets.SMARTERASP_PUBLISH_PROFILE }}
-          "@
-          $msdeployExe = "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe"
-          if (-not (Test-Path $msdeployExe)) {
-            $msdeployExe = "C:\Program Files (x86)\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+          if ($LASTEXITCODE -ne 0) {
+            throw "Build or publish failed."
           }
 
-          [xml]$profile = $publishProfileXml
-          $webDeploy = $profile.publishData.publishProfile | Where-Object { $_.publishMethod -eq "MSDeploy" }
+      - name: Deploy to SmarterASP.NET
+        shell: pwsh
+        env:
+          PUBLISH_PROFILE: ${{ secrets.SMARTERASP_PUBLISH_PROFILE }}
+          DEPLOY_PASSWORD: ${{ secrets.SMARTERASP_PASSWORD }}
 
-          $publishUrl = $webDeploy.publishUrl
-          $siteName = $webDeploy.msdeploySite
-          $userName = $webDeploy.userName
-          $password = "${{ secrets.SMARTERASP_PASSWORD }}"
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          # Validate secrets
+          if ([string]::IsNullOrWhiteSpace($env:PUBLISH_PROFILE)) {
+            throw "SMARTERASP_PUBLISH_PROFILE is missing."
+          }
+
+          # Read publish profile
+          [xml]$profile = $env:PUBLISH_PROFILE
+
+          $webDeploy = $profile.publishData.publishProfile |
+            Where-Object { $_.publishMethod -eq "MSDeploy" } |
+            Select-Object -First 1
+
+          if (-not $webDeploy) {
+            throw "MSDeploy profile not found in XML."
+          }
+
+          # Read deployment information
+          $publishUrl = [string]$webDeploy.publishUrl
+          $siteName = [string]$webDeploy.msdeploySite
+          $userName = [string]$webDeploy.userName
+          $password = $env:DEPLOY_PASSWORD
+
           if ([string]::IsNullOrWhiteSpace($password)) {
-            $password = $webDeploy.userPWD
+            $password = [string]$webDeploy.userPWD
           }
 
-          Write-Host "Deploying to site: $siteName on $publishUrl..."
-          & $msdeployExe -verb:sync -source:contentPath="$(Get-Location)\publish" -dest:contentPath="$siteName",computerName="$publishUrl",userName="$userName",password="$password",authtype="Basic" -allowUntrusted
+          if ([string]::IsNullOrWhiteSpace($publishUrl) -or
+              [string]::IsNullOrWhiteSpace($siteName) -or
+              [string]::IsNullOrWhiteSpace($userName) -or
+              [string]::IsNullOrWhiteSpace($password)) {
+            throw "Deployment configuration is incomplete."
+          }
 
+          # Find Microsoft Web Deploy
+          $msdeployExe = "${env:ProgramFiles}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+
+          if (-not (Test-Path $msdeployExe)) {
+            $msdeployExe = "${env:ProgramFiles(x86)}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+          }
+
+          if (-not (Test-Path $msdeployExe)) {
+            throw "Microsoft Web Deploy is not installed."
+          }
+
+          # Check published files
+          $publishPath = Join-Path $PWD "publish"
+
+          if (-not (Test-Path $publishPath)) {
+            throw "Publish folder does not exist."
+          }
+
+          Write-Host "Starting SmarterASP.NET deployment..."
+          Write-Host "Site: $siteName"
+          Write-Host "Publish URL: $publishUrl"
+
+          # Build individual Web Deploy arguments
+          $sourceArg = "-source:contentPath=$publishPath"
+
+          $destinationArg = "-dest:contentPath=$siteName,computerName=$publishUrl,userName=$userName,password=$password,authType=Basic"
+
+          # Execute Web Deploy
+          $deployArgs = @(
+            "-verb:sync"
+            $sourceArg
+            $destinationArg
+            "-allowUntrusted"
+          )
+
+          & $msdeployExe @deployArgs
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "Web Deploy failed. Exit code: $LASTEXITCODE"
+          }
+
+          Write-Host "SUCCESS: API deployment completed!"
