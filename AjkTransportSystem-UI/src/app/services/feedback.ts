@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FeedbackService {
-  private apiUrl = 'https://transport-osasaem1.back4.app/api/Feedback';
+  private apiUrl = 'https://transport-bmt7jsdg.back4.app/api/Feedback';
 
   constructor(private http: HttpClient) { }
 

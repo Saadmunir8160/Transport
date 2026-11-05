@@ -18,7 +18,7 @@ export interface MountainDelayPrediction {
   providedIn: 'root'
 })
 export class AiService {
-  private apiUrl = 'https://transport-osasaem1.back4.app/api/AI';
+  private apiUrl = 'https://transport-bmt7jsdg.back4.app/api/AI';
 
   constructor(private http: HttpClient) { }
 

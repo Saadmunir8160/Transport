@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdvisoryService {
-  private apiUrl = 'https://transport-osasaem1.back4.app/api/Advisories';
+  private apiUrl = 'https://transport-bmt7jsdg.back4.app/api/Advisories';
 
   constructor(private http: HttpClient) { }
 

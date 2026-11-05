@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class WeatherService {
-  private apiUrl = 'https://transport-osasaem1.back4.app/api/weather';
+  private apiUrl = 'https://transport-bmt7jsdg.back4.app/api/weather';
 
   constructor(private http: HttpClient) { }
 

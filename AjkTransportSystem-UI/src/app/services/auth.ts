@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://transport-osasaem1.back4.app/api/Auth';
+  private apiUrl = 'https://transport-bmt7jsdg.back4.app/api/Auth';
 
   constructor(private http: HttpClient) { }
 

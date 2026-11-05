@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RouteService {
-  private apiUrl = 'https://transport-osasaem1.back4.app/api/routes';
+  private apiUrl = 'https://transport-bmt7jsdg.back4.app/api/routes';
 
   constructor(private http: HttpClient) { }
 
@@ -22,11 +22,11 @@ export class RouteService {
   update(id: number, payload: any): Observable<any> { return this.http.put(`${this.apiUrl}/${id}`, payload, { headers: this.getHeaders() }); }
   delete(p1?: any): Observable<any> { return this.http.delete(this.apiUrl + '/' + p1, { headers: this.getHeaders() }); }
   
-  duplicateReturn(id: number): Observable<any> { return this.http.post(`https://transport-osasaem1.back4.app/api/RoutesStopsExtensions/duplicate-return/${id}`, {}, { headers: this.getHeaders() }); }
-  updateStatus(id: number, status: string): Observable<any> { return this.http.put(`https://transport-osasaem1.back4.app/api/RoutesStopsExtensions/${id}/status`, JSON.stringify(status), { headers: this.getHeaders().set('Content-Type', 'application/json') }); }
+  duplicateReturn(id: number): Observable<any> { return this.http.post(`https://transport-bmt7jsdg.back4.app/api/RoutesStopsExtensions/duplicate-return/${id}`, {}, { headers: this.getHeaders() }); }
+  updateStatus(id: number, status: string): Observable<any> { return this.http.put(`https://transport-bmt7jsdg.back4.app/api/RoutesStopsExtensions/${id}/status`, JSON.stringify(status), { headers: this.getHeaders().set('Content-Type', 'application/json') }); }
   
-  getRouteStops(routeId: number): Observable<any> { return this.http.get(`https://transport-osasaem1.back4.app/api/RouteStops/route/${routeId}`, { headers: this.getHeaders() }); }
-  addStop(routeId: number, stop: any): Observable<any> { return this.http.post(`https://transport-osasaem1.back4.app/api/RoutesStopsExtensions/${routeId}/stops`, stop, { headers: this.getHeaders() }); }
-  updateStop(stopId: number, stop: any): Observable<any> { return this.http.put(`https://transport-osasaem1.back4.app/api/RoutesStopsExtensions/stops/${stopId}`, stop, { headers: this.getHeaders() }); }
-  reorderStops(routeId: number, stopIds: number[]): Observable<any> { return this.http.post(`https://transport-osasaem1.back4.app/api/RoutesStopsExtensions/${routeId}/stops/reorder`, stopIds, { headers: this.getHeaders() }); }
+  getRouteStops(routeId: number): Observable<any> { return this.http.get(`https://transport-bmt7jsdg.back4.app/api/RouteStops/route/${routeId}`, { headers: this.getHeaders() }); }
+  addStop(routeId: number, stop: any): Observable<any> { return this.http.post(`https://transport-bmt7jsdg.back4.app/api/RoutesStopsExtensions/${routeId}/stops`, stop, { headers: this.getHeaders() }); }
+  updateStop(stopId: number, stop: any): Observable<any> { return this.http.put(`https://transport-bmt7jsdg.back4.app/api/RoutesStopsExtensions/stops/${stopId}`, stop, { headers: this.getHeaders() }); }
+  reorderStops(routeId: number, stopIds: number[]): Observable<any> { return this.http.post(`https://transport-bmt7jsdg.back4.app/api/RoutesStopsExtensions/${routeId}/stops/reorder`, stopIds, { headers: this.getHeaders() }); }
 }

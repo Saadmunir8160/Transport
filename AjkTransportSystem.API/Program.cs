@@ -61,7 +61,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 if (string.IsNullOrEmpty(connectionString))
 {
     connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
-        ?? Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING");
+        ?? Environment.GetEnvironmentVariable("SQL_CONNECTION_STRING")
+        ?? "Server=sql5106.site4now.net;Database=db_ad0c00_ajkdb;User Id=db_ad0c00_ajkdb_admin;Password=Fs9R8EL$RP65fFN;TrustServerCertificate=True;Encrypt=False;";
 }
 
 builder.Services.AddDbContext<AppDbContext>(options =>

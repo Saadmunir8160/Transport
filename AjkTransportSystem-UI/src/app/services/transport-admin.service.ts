@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TransportAdminService {
-  private baseUrl = 'https://transport-osasaem1.back4.app/api';
+  private baseUrl = 'https://transport-bmt7jsdg.back4.app/api';
 
   constructor(private http: HttpClient) { }
 
