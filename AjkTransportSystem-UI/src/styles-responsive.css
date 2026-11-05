@@ -1,0 +1,250 @@
+/* ==========================================================================
+   GLOBAL COMPREHENSIVE RESPONSIVENESS & MOBILE-FIRST TOKENS
+   Ensures 100% responsiveness on Mobile (320px - 768px), Tablet, & Desktop
+   ========================================================================== */
+
+/* Fix viewport overflow across entire application */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
+}
+
+/* Fluid Media & Tables */
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-responsive,
+.enterprise-table-container,
+.manifest-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Unified Mobile Backdrop Overlay */
+.mobile-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+}
+
+.mobile-backdrop.active {
+  display: block;
+}
+
+/* Global Mobile Form Controls */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px !important; /* Prevents iOS auto-zoom on input focus */
+    max-width: 100% !important;
+  }
+
+  button, .btn, .btn-primary, .btn-secondary {
+    min-height: 44px; /* Touch target accessibility standard */
+  }
+}
+
+/* ==========================================================================
+   PAGE-SPECIFIC MOBILE RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+/* 1. Landing Page (Home) */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 4% !important;
+  }
+  .nav-logo {
+    font-size: 1.15rem !important;
+  }
+  .nav-links {
+    display: none !important;
+  }
+  .nav-auth {
+    gap: 0.5rem !important;
+  }
+  .nav-auth button {
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.85rem !important;
+  }
+  .hero {
+    padding: 3rem 4% 6rem 4% !important;
+  }
+  .hero h1 {
+    font-size: 1.85rem !important;
+    line-height: 1.25 !important;
+  }
+  .hero p {
+    font-size: 0.95rem !important;
+  }
+  .search-widget {
+    margin: -3.5rem 4% 2rem 4% !important;
+    padding: 1.25rem !important;
+    width: auto !important;
+  }
+  .search-row {
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+  }
+  .search-field {
+    width: 100% !important;
+  }
+  .highlights {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+  .stats-section {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1rem !important;
+    padding: 2rem 4% !important;
+  }
+  .stat-box {
+    width: 100% !important;
+  }
+}
+
+/* 2. Passenger Dashboard Mobile Drawer & Layout */
+@media (max-width: 992px) {
+  .passenger-wrapper {
+    flex-direction: column !important;
+  }
+
+  .passenger-wrapper .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 280px !important;
+    height: 100vh !important;
+    z-index: 10000 !important;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 10px 0 25px rgba(0,0,0,0.3) !important;
+  }
+
+  .passenger-wrapper .sidebar.active {
+    transform: translateX(0) !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .top-bar {
+    padding: 0.85rem 1rem !important;
+  }
+
+  .topbar-toggle-btn {
+    display: inline-flex !important;
+  }
+
+  .content-area {
+    padding: 1rem !important;
+  }
+
+  /* Map Container Mobile */
+  .tracking-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .bc-card.map-card {
+    height: 400px !important;
+  }
+
+  /* Detail and Fare Grid */
+  .detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .checkout-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .cancel-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Booking cards mobile */
+  .booking-card {
+    padding: 1rem !important;
+  }
+  .bc-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+  }
+  .bc-stops {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  .bc-details {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .bc-footer {
+    flex-direction: column !important;
+  }
+  .bc-btn {
+    width: 100% !important;
+  }
+}
+
+/* 3. Driver Dashboard Mobile View */
+@media (max-width: 992px) {
+  .driver-wrapper {
+    flex-direction: column !important;
+  }
+  
+  .driver-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 270px !important;
+    height: 100vh !important;
+    z-index: 10000 !important;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease !important;
+  }
+  
+  .driver-sidebar.active {
+    transform: translateX(0) !important;
+  }
+
+  .driver-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .enterprise-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 4. Payment Gateway & Scanner Modals on Small Screens */
+@media (max-width: 520px) {
+  .payment-modal-card,
+  .scanner-card {
+    max-width: 95vw !important;
+    border-radius: 18px !important;
+  }
+
+  .payment-modal-card .payment-modal-header {
+    padding: 1.25rem 1rem !important;
+  }
+}

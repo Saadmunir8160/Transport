@@ -1,4 +1,7 @@
 <div class="passenger-wrapper">
+  <!-- Mobile Backdrop Overlay -->
+  <div class="mobile-backdrop" [class.active]="sidebarActive" (click)="sidebarActive = false"></div>
+
   <!-- Mobile Menu Toggle -->
   <button class="mobile-menu-toggle" (click)="toggleSidebar()">☰</button>
 
