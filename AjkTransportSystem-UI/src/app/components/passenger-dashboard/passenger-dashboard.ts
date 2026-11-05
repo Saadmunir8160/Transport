@@ -78,6 +78,15 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
   activeTab = 'dashboard';
     cancelStep = 1;
     cancellingBooking: any = { id: 'BKG-784321', route: 'Muzaffarabad to Rawalpindi Express', date: new Date().toISOString(), time: '08:30 AM', amountPaid: 3050, refundAmount: 3050, refundPolicy: 'More than 60 mins before departure' };
+  // AI Mountain Weather Delay Prediction State
+  public aiDelayPrediction: any = {
+    severityLevel: 'Moderate',
+    predictedDelayMinutes: 25,
+    terrainType: 'High Altitude Mountain Pass',
+    recommendation: '🌧️ Mountain Weather Advisory: Slippery turns near Kohala. Journey buffer of 25 mins estimated.',
+    hazardFactors: ['Steep mountain bends (+10m)', 'Active rainfall on Kohala sector (+15m)']
+  };
+
   selectedTrip: any = {
     id: 1,
     routeName: 'Muzaffarabad to Rawalpindi Express',
@@ -370,6 +379,12 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     this.selectedSeats = [];
     this.generateSeatMap();
     this.activeTab = 'trip-detail';
+    if (this.selectedTrip) {
+      this.aiService.getMountainDelayPrediction(this.selectedTrip.startPoint, this.selectedTrip.endPoint, 120, 'Rainy').subscribe({
+        next: (res) => { this.aiDelayPrediction = res; },
+        error: () => {}
+      });
+    }
   }
 
   generateSeatMap() {

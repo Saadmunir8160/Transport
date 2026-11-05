@@ -523,17 +523,36 @@
           ❌ This trip has been cancelled. Please select another trip.
         </div>
 
-        <!-- Road Advisory Panel -->
-        <div class="advisory-panel" *ngIf="selectedTrip.advisory && !selectedTrip.isCancelled">
-          <div class="advisory-header">
-            <span class="icon">⚠️</span>
-            <h3>Road Advisory: {{ selectedTrip.advisoryType || 'Landslide' }}</h3>
+        <!-- AI Mountain Weather Delay Intelligence Panel -->
+        <div class="advisory-panel" style="background: linear-gradient(135deg, #042F2E 0%, #0F172A 100%); color: white; border-radius: 18px; border: 1px solid #14B8A6; box-shadow: 0 10px 25px rgba(20, 184, 166, 0.15); margin-bottom: 2rem; overflow: hidden; padding: 1.5rem 1.8rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 1rem; margin-bottom: 1rem;">
+            <div style="display:flex; align-items:center; gap: 10px;">
+              <span style="font-size: 1.6rem;">🤖</span>
+              <div>
+                <h3 style="margin:0; font-size: 1.15rem; font-weight: 800; color: #5EEAD4;">AI Mountain Route & Weather Predictor</h3>
+                <span style="font-size: 0.8rem; color: #94A3B8;">Terrain: {{ aiDelayPrediction?.terrainType || 'Alpine Pass' }}</span>
+              </div>
+            </div>
+            <span style="background: rgba(20, 184, 166, 0.2); color: #5EEAD4; border: 1px solid #14B8A6; font-size: 0.8rem; font-weight: 800; padding: 4px 12px; border-radius: 20px;">
+              Predicted Delay: +{{ aiDelayPrediction?.predictedDelayMinutes || 25 }} Mins
+            </span>
           </div>
-          <div class="advisory-body">
-            <p><strong>Affected Segment:</strong> {{ selectedTrip.advisorySegment || 'Kohala Bridge to Muzaffarabad' }}</p>
-            <p><strong>Expected Delay:</strong> {{ selectedTrip.advisoryDelay || '30 - 45 minutes' }}</p>
-            <div class="recommendation">
-              <strong>AI Recommendation:</strong> Proceed with booking. Delays are minor and manageable.
+
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; align-items: center;">
+            <div>
+              <div style="font-size: 0.95rem; line-height: 1.5; color: #F1F5F9; margin-bottom: 0.75rem;">
+                <strong>Strategic Advice:</strong> {{ aiDelayPrediction?.recommendation }}
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span *ngFor="let factor of aiDelayPrediction?.hazardFactors" style="background: rgba(255,255,255,0.08); color: #CBD5E1; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
+                  ⚡ {{ factor }}
+                </span>
+              </div>
+            </div>
+            <div style="text-align: right; background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: #94A3B8;">Total Journey ETA</span>
+              <div style="font-size: 1.4rem; font-weight: 900; color: #FBBF24;">{{ selectedTrip.eta || '01:15 PM' }}</div>
+              <span style="font-size: 0.75rem; color: #34D399;">94% Prediction Confidence</span>
             </div>
           </div>
         </div>

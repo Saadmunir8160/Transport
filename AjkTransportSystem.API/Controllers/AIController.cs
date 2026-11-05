@@ -79,5 +79,17 @@ namespace AjkTransportSystem.API.Controllers
 
             return Ok(recommendations);
         }
+
+        [HttpGet("mountain-delay-prediction")]
+        public IActionResult PredictMountainDelay(string startPoint, string endPoint, decimal? distance, string? weather)
+        {
+            decimal dist = distance ?? 110m;
+            string cond = weather ?? "Rainy";
+            var now = DateTime.UtcNow;
+            bool isWinterOrMonsoon = now.Month == 12 || now.Month == 1 || now.Month == 2 || now.Month == 7 || now.Month == 8;
+
+            var prediction = AIWeatherPredictor.PredictRouteDelay(startPoint, endPoint, dist, cond, isWinterOrMonsoon);
+            return Ok(prediction);
+        }
     }
 }
