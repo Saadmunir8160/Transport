@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = 'https://transport-bmt7jsdg.back4.app/api/Profile';
+  private apiUrl = `${environment.apiUrl}/Profile`;
 
   constructor(private http: HttpClient) { }
 

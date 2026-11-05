@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -76,8 +77,16 @@ export class LoginComponent {
         },
         error: (err) => {
           console.error('Login error:', err);
-          this.message = 'Invalid credentials!';
           this.loading = false;
+          if (err.status === 400 || err.status === 401) {
+            this.message = 'Invalid credentials!';
+          } else if (err.status === 0) {
+            this.message = 'Cannot reach server';
+          } else if (err.status >= 500) {
+            this.message = 'Server error, try again';
+          } else {
+            this.message = err.error?.message || 'Invalid credentials!';
+          }
         }
       });
   }
@@ -101,7 +110,7 @@ export class LoginComponent {
 
     this.loading = true;
     
-    this.http.post('https://transport-bmt7jsdg.back4.app/api/Auth/send-otp', { phone: this.phone }).subscribe({
+    this.http.post(`${environment.apiUrl}/Auth/send-otp`, { phone: this.phone }).subscribe({
       next: (res: any) => {
         this.loading = false;
         this.step = 'otp';
@@ -148,7 +157,7 @@ export class LoginComponent {
       role: 'Passenger'
     };
 
-    this.http.post('https://transport-bmt7jsdg.back4.app/api/Auth/register', payload).subscribe({
+    this.http.post(`${environment.apiUrl}/Auth/register`, payload).subscribe({
       next: (res: any) => {
         this.loading = false;
         alert('Registration successful! You can now login.');

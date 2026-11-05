@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -18,7 +19,7 @@ export interface MountainDelayPrediction {
   providedIn: 'root'
 })
 export class AiService {
-  private apiUrl = 'https://transport-bmt7jsdg.back4.app/api/AI';
+  private apiUrl = `${environment.apiUrl}/AI`;
 
   constructor(private http: HttpClient) { }
 

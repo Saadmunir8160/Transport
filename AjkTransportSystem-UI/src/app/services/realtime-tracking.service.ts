@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
 import { Observable, Subject } from 'rxjs';
@@ -25,7 +26,7 @@ export class RealtimeTrackingService {
   private hubConnection: signalR.HubConnection | null = null;
   private locationSubject = new Subject<LocationTelemetry>();
   private stopAlertSubject = new Subject<StopAlert>();
-  private hubUrl = 'https://transport-bmt7jsdg.back4.app/hubs/tracking';
+  private hubUrl = `${environment.apiUrl.replace('/api', '')}/hubs/tracking`;
 
   public location$ = this.locationSubject.asObservable();
   public stopAlert$ = this.stopAlertSubject.asObservable();
