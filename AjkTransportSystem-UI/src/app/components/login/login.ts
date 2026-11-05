@@ -76,7 +76,7 @@ export class LoginComponent {
           }
         },
         error: (err) => {
-          console.error('Login error:', err);
+          console.error(`Login error [HTTP ${err.status}] [URL: ${err.url || `${environment.apiUrl}/Auth/login`}]:`, err.statusText || err.message);
           this.loading = false;
           if (err.status === 400 || err.status === 401) {
             this.message = 'Invalid credentials!';

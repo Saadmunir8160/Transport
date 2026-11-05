@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://transport-bmt7jsdg.back4.app/api'
+  apiUrl: 'https://transport-1hv1eps4.back4.app/api'
 };
-
