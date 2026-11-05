@@ -9,9 +9,9 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Port binding: default to port 80 if PORT environment variable is not provided, or respect PORT (e.g. Back4app, Railway, Render)
+// Listen on port 80 (or PORT env if supplied by host)
 var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
-builder.WebHost.UseUrls($"http://0.0.0.0:{port}", "http://0.0.0.0:80", "http://0.0.0.0:5242");
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 builder.Services.AddControllers();
 builder.Services.AddSignalR();

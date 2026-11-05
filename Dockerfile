@@ -18,9 +18,9 @@ COPY --from=build /app/publish .
 
 # Expose default HTTP port
 EXPOSE 80
-EXPOSE 5242
 
 ENV ASPNETCORE_ENVIRONMENT=Production
+ENV ASPNETCORE_HTTP_PORTS=80
 
 ENTRYPOINT ["dotnet", "AjkTransportSystem.API.dll"]
 
