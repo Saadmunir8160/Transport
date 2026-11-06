@@ -45,12 +45,10 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Validate secrets
           if ([string]::IsNullOrWhiteSpace($env:PUBLISH_PROFILE)) {
             throw "SMARTERASP_PUBLISH_PROFILE is missing."
           }
 
-          # Read publish profile
           [xml]$profile = $env:PUBLISH_PROFILE
 
           $webDeploy = $profile.publishData.publishProfile |
@@ -61,7 +59,6 @@ jobs:
             throw "MSDeploy profile not found in XML."
           }
 
-          # Read deployment information
           $publishUrl = [string]$webDeploy.publishUrl
           $siteName = [string]$webDeploy.msdeploySite
           $userName = [string]$webDeploy.userName
@@ -78,7 +75,6 @@ jobs:
             throw "Deployment configuration is incomplete."
           }
 
-          # Find Microsoft Web Deploy
           $msdeployExe = "${env:ProgramFiles}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
 
           if (-not (Test-Path $msdeployExe)) {
@@ -89,7 +85,6 @@ jobs:
             throw "Microsoft Web Deploy is not installed."
           }
 
-          # Check published files
           $publishPath = Join-Path $PWD "publish"
 
           if (-not (Test-Path $publishPath)) {
@@ -100,12 +95,10 @@ jobs:
           Write-Host "Site: $siteName"
           Write-Host "Publish URL: $publishUrl"
 
-          # Build individual Web Deploy arguments
           $sourceArg = "-source:contentPath=$publishPath"
 
           $destinationArg = "-dest:contentPath=$siteName,computerName=$publishUrl,userName=$userName,password=$password,authType=Basic"
 
-          # Execute Web Deploy
           $deployArgs = @(
             "-verb:sync"
             $sourceArg
