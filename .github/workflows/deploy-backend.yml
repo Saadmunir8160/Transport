@@ -1,0 +1,55 @@
+name: Deploy .NET API to SmarterASP.NET
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'AjkTransportSystem.API/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore AjkTransportSystem.API/AjkTransportSystem.API.csproj
+
+      - name: Build and Publish Release
+        run: |
+          dotnet publish AjkTransportSystem.API/AjkTransportSystem.API.csproj -c Release -o ./publish /p:UseAppHost=false
+
+      - name: Deploy to SmarterASP.NET via Web Deploy
+        run: |
+          $publishProfileXml = @"
+          ${{ secrets.SMARTERASP_PUBLISH_PROFILE }}
+          "@
+          $msdeployExe = "C:\Program Files\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+          if (-not (Test-Path $msdeployExe)) {
+            $msdeployExe = "C:\Program Files (x86)\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+          }
+
+          [xml]$profile = $publishProfileXml
+          $webDeploy = $profile.publishData.publishProfile | Where-Object { $_.publishMethod -eq "MSDeploy" }
+
+          $publishUrl = $webDeploy.publishUrl
+          $siteName = $webDeploy.msdeploySite
+          $userName = $webDeploy.userName
+          $password = "${{ secrets.SMARTERASP_PASSWORD }}"
+          if ([string]::IsNullOrWhiteSpace($password)) {
+            $password = $webDeploy.userPWD
+          }
+
+          Write-Host "Deploying to site: $siteName on $publishUrl..."
+          & $msdeployExe -verb:sync -source:contentPath="$(Get-Location)\publish" -dest:contentPath="$siteName",computerName="$publishUrl",userName="$userName",password="$password",authtype="Basic" -allowUntrusted
+
