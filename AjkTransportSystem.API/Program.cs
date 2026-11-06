@@ -184,7 +184,7 @@ app.UseExceptionHandler(errorApp =>
 
         context.Response.StatusCode = 500;
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync("{\"error\":\"Server error\"}");
+        var msg = exceptionHandlerFeature?.Error?.Message ?? "Server error"; await context.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(new { error = "Server error", message = msg }));
     });
 });
 

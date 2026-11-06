@@ -305,7 +305,7 @@ namespace AjkTransportSystem.API.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Exception during login action: Type={ExceptionType}, Message={ExceptionMessage}, StackTrace={StackTrace}", ex.GetType().FullName, ex.Message, ex.StackTrace);
-                return StatusCode(500, new { error = "Server error" });
+                return StatusCode(500, new { error = "Server error", message = ex.Message });
             }
         }
 
