@@ -1,5 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5242/api'
+  production: true,
+  apiUrl: 'https://ajktransportdb-001-site1.ctempurl.com/api'
 };
-
