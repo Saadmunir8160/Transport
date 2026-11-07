@@ -320,3 +320,5 @@ app.MapControllers();
 app.MapHub<LiveTrackingHub>("/hubs/tracking");
 
 app.Run();
+
+// Deployment trigger
