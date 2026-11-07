@@ -104,6 +104,7 @@ jobs:
             $sourceArg
             $destinationArg
             "-allowUntrusted"
+            "-skip:objectName=filePath,absolutePath=.*appsettings.*\\.json"
           )
 
           & $msdeployExe @deployArgs
