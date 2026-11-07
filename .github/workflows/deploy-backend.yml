@@ -62,10 +62,10 @@ jobs:
           $publishUrl = [string]$webDeploy.publishUrl
           $siteName = [string]$webDeploy.msdeploySite
           $userName = [string]$webDeploy.userName
-          $password = $env:DEPLOY_PASSWORD
+          $password = [string]$webDeploy.userPWD
 
           if ([string]::IsNullOrWhiteSpace($password)) {
-            $password = [string]$webDeploy.userPWD
+            $password = $env:DEPLOY_PASSWORD
           }
 
           if ([string]::IsNullOrWhiteSpace($publishUrl) -or
