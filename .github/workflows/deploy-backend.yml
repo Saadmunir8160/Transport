@@ -151,11 +151,12 @@ jobs:
           Write-Host "Publish URL: $publishUrl"
           Write-Host "Publish Path: $publishPath"
 
-          $destArg = "-dest:contentPath=`"$siteName`",computerName=`"$publishUrl`",userName=`"$userName`",password=`"$password`",authType=`"Basic`""
+          $sourceArg = "-source:contentPath='$publishPath'"
+          $destArg = "-dest:contentPath='$siteName',computerName='$publishUrl',userName='$userName',password='$password',authType='Basic'"
 
           $deployArgs = @(
             "-verb:sync"
-            "-source:contentPath=`"$publishPath`""
+            $sourceArg
             $destArg
             "-allowUntrusted"
           )
@@ -165,7 +166,7 @@ jobs:
             $deployArgs += "-skip:objectName=filePath,absolutePath=.*appsettings.*\.json"
           }
 
-          & $msdeployExe @deployArgs
+          & $msdeployExe $deployArgs
           $deployExitCode = $LASTEXITCODE
 
           if ($deployExitCode -ne 0) {
