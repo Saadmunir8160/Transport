@@ -166,3 +166,4 @@ namespace AjkTransportSystem.API.Controllers
         public string? RouteName { get; set; }
     }
 }
+

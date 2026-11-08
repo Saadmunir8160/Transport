@@ -132,6 +132,34 @@
         </button>
       </div>
 
+      <!-- Cargo & Express Services -->
+      <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Cargo & Services')"
+        (click)="toggleGroup('Cargo & Services')">
+        <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+        </svg>
+        <span class="group-title">CARGO & SAFETY</span>
+        <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Cargo & Services')" xmlns="http://www.w3.org/2000/svg"
+          width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Cargo & Services')">
+        <button class="nav-item" [class.active]="activeTab === 'cargo-tracking'" (click)="setActiveTab('cargo-tracking')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="item-label">Cargo / Luggage</span>
+          <span class="nav-badge" style="background:#0D9488;">Express</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'weather-advisories'" (click)="setActiveTab('weather-advisories')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+          <span class="item-label">Mountain Weather</span>
+          <span class="nav-badge" style="background:#0284C7;">Live</span>
+        </button>
+      </div>
+
       <!-- Account -->
       <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Account')"
         (click)="toggleGroup('Account')">
@@ -1069,14 +1097,18 @@
 
         <div class="ticket-actions">
           <div class="primary-actions">
+            <button class="btn-primary" (click)="shareTicketViaWhatsApp()" style="background: #25D366; border-color: #25D366;">
+              <span class="icon">💬</span> Share on WhatsApp
+            </button>
+            <button class="btn-secondary" (click)="shareETAAlert()">
+              <span class="icon">⏱️</span> Send ETA Alert
+            </button>
             <button class="btn-primary" (click)="setActiveTab('bookings')"><span class="icon">🎟️</span> View All Bookings</button>
-            <button class="btn-secondary"><span class="icon">📍</span> Track My Bus</button>
           </div>
           <div class="secondary-actions">
-            <button class="action-chip">💾 Download PDF</button>
-            <button class="action-chip">🖼️ Save to Gallery</button>
-            <button class="action-chip">📤 Share Ticket</button>
-            <button class="action-chip">📅 Add to Calendar</button>
+            <button class="action-chip" (click)="printTicketReceipt()">💾 Download PDF / Print</button>
+            <button class="action-chip" (click)="setActiveTab('track-bus')">📍 Live Map Tracking</button>
+            <button class="action-chip" (click)="shareTicketViaWhatsApp()">📱 WhatsApp PNR</button>
           </div>
         </div>
       </div>
@@ -1869,6 +1901,227 @@
             <span>🛡️ SBP Compliant</span>
             <span>🔒 PCI-DSS Certified</span>
             <span>⚡ Instant Settlement</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cargo / Luggage Tracking Tab -->
+      <div *ngIf="activeTab === 'cargo-tracking'" class="cargo-container" style="padding: 1.5rem 0;">
+        <div class="content-header" style="margin-bottom: 2rem;">
+          <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B; display: flex; align-items: center; gap: 10px;">
+            📦 Kashmir Cargo & Luggage Tracking
+          </h2>
+          <p style="color: #64748B;">Track parcels, luggage bags, and regional Kashmiri goods transported across AJK bus routes.</p>
+        </div>
+
+        <div style="background: white; border-radius: 18px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #E2E8F0; margin-bottom: 2rem;">
+          <label style="display: block; font-weight: 700; color: #1E293B; margin-bottom: 0.5rem; font-size: 0.95rem;">
+            Enter Luggage Waybill / Consignment Tracking Number
+          </label>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <input type="text" [(ngModel)]="cargoTrackingQuery" placeholder="e.g. AJK-CRG-7019 or AJK-CRG-9024"
+              style="flex: 1; min-width: 260px; padding: 0.9rem 1.2rem; border: 2px solid #CBD5E1; border-radius: 12px; font-size: 1.05rem; font-weight: 600; outline: none;">
+            <button class="btn-primary" (click)="trackCargoShipment()" [disabled]="cargoLoading"
+              style="padding: 0.9rem 2rem; background: #0D766E; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; color: white; border: none;">
+              {{ cargoLoading ? 'Searching Transit Network...' : '🔍 Track Parcel' }}
+            </button>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 0.8rem; font-size: 0.8rem; color: #64748B; align-items: center;">
+            <span>Try demo tracking numbers:</span>
+            <span style="color: #0D766E; font-weight: 700; cursor: pointer; text-decoration: underline;" (click)="cargoTrackingQuery = 'AJK-CRG-7019'; trackCargoShipment()">AJK-CRG-7019</span>
+            <span>•</span>
+            <span style="color: #0D766E; font-weight: 700; cursor: pointer; text-decoration: underline;" (click)="cargoTrackingQuery = 'AJK-CRG-9024'; trackCargoShipment()">AJK-CRG-9024</span>
+          </div>
+          <div *ngIf="cargoError" style="color: #EF4444; font-weight: 600; font-size: 0.9rem; margin-top: 1rem;">
+            ⚠️ {{ cargoError }}
+          </div>
+        </div>
+
+        <!-- Cargo Shipment Card Result -->
+        <div *ngIf="activeCargoShipment" style="background: white; border-radius: 18px; border: 1px solid #14B8A6; box-shadow: 0 10px 30px rgba(20, 184, 166, 0.12); overflow: hidden; margin-bottom: 2rem;">
+          <div style="background: linear-gradient(135deg, #0F766E, #115E59); color: white; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <span style="font-size: 0.8rem; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px;">Official AJK Consignment</span>
+              <h3 style="margin: 0; font-size: 1.5rem; font-weight: 800; color: #5EEAD4;">Waybill # {{ activeCargoShipment.trackingNumber }}</h3>
+            </div>
+            <div style="background: rgba(255,255,255,0.18); padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: #34D399; display: inline-block;"></span>
+              {{ activeCargoShipment.status }}
+            </div>
+          </div>
+
+          <div style="padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.8rem;">
+            <div style="background: #F8FAFC; padding: 1.2rem; border-radius: 14px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight: 700;">Transit Route</span>
+              <div style="font-size: 1.2rem; font-weight: 800; color: #1E293B; margin-top: 4px;">
+                {{ activeCargoShipment.originCity }} ➔ {{ activeCargoShipment.destinationCity }}
+              </div>
+              <div style="font-size: 0.85rem; color: #0D766E; font-weight: 600; margin-top: 6px;">
+                📍 Current: {{ activeCargoShipment.currentLocation }}
+              </div>
+            </div>
+
+            <div style="background: #F8FAFC; padding: 1.2rem; border-radius: 14px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight: 700;">Package & Cargo</span>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #1E293B; margin-top: 4px;">
+                {{ activeCargoShipment.packageType }} ({{ activeCargoShipment.weightKg }} kg)
+              </div>
+              <div style="font-size: 0.85rem; color: #64748B; margin-top: 4px;">{{ activeCargoShipment.itemDescription }}</div>
+            </div>
+
+            <div style="background: #F8FAFC; padding: 1.2rem; border-radius: 14px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight: 700;">Bus & Driver Details</span>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #1E293B; margin-top: 4px;">
+                Bus: {{ activeCargoShipment.assignedVehicleNo }}
+              </div>
+              <div style="font-size: 0.85rem; color: #334155; margin-top: 4px;">
+                Captain: <strong>{{ activeCargoShipment.driverName }}</strong> ({{ activeCargoShipment.driverPhone }})
+              </div>
+            </div>
+
+            <div style="background: #F8FAFC; padding: 1.2rem; border-radius: 14px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight: 700;">Parties (Sender / Receiver)</span>
+              <div style="font-size: 0.85rem; color: #1E293B; margin-top: 4px;">
+                From: <strong>{{ activeCargoShipment.senderName }}</strong> ({{ activeCargoShipment.senderPhone }})
+              </div>
+              <div style="font-size: 0.85rem; color: #1E293B; margin-top: 4px;">
+                To: <strong>{{ activeCargoShipment.receiverName }}</strong> ({{ activeCargoShipment.receiverPhone }})
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mountain Weather & Landslide Advisories Tab -->
+      <div *ngIf="activeTab === 'weather-advisories'" class="weather-tab-container" style="padding: 1.5rem 0;">
+        <div class="content-header" style="margin-bottom: 2rem;">
+          <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B; display: flex; align-items: center; gap: 10px;">
+            🏔️ Live AJK Mountain Weather & Landslide Watch
+          </h2>
+          <p style="color: #64748B;">Real-time mountain meteorology and terrain safety warnings powered by live atmospheric APIs.</p>
+        </div>
+
+        <!-- District Selector Pills -->
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.8rem;">
+          <button *ngFor="let dist of ajkDistrictsList"
+            (click)="loadDistrictWeather(dist)"
+            [style.background]="selectedDistrictForWeather === dist ? '#0D766E' : '#FFFFFF'"
+            [style.color]="selectedDistrictForWeather === dist ? '#FFFFFF' : '#334155'"
+            style="border: 1px solid #CBD5E1; padding: 0.6rem 1.2rem; border-radius: 20px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+            {{ dist }}
+          </button>
+        </div>
+
+        <!-- Weather Status Card -->
+        <div *ngIf="activeDistrictWeather" style="background: linear-gradient(135deg, #0F172A, #1E293B); border-radius: 20px; color: white; padding: 2.2rem; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 1.5rem;">
+            <div>
+              <span style="font-size: 0.85rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px;">Azad Jammu & Kashmir &bull; Alpine Sector</span>
+              <h2 style="font-size: 2.4rem; font-weight: 900; color: #F8FAFC; margin: 4px 0;">{{ activeDistrictWeather.location }}</h2>
+              <div style="display: flex; align-items: center; gap: 12px; margin-top: 6px;">
+                <span style="font-size: 1.8rem; font-weight: 800; color: #38BDF8;">{{ activeDistrictWeather.temperature }}°C</span>
+                <span style="background: rgba(56, 189, 248, 0.15); color: #38BDF8; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(56,189,248,0.3);">
+                  {{ activeDistrictWeather.condition }}
+                </span>
+              </div>
+            </div>
+
+            <div [style.background]="activeDistrictWeather.severity === 'Severe Hazard' ? '#DC2626' : (activeDistrictWeather.severity === 'Advisory' ? '#D97706' : '#16A34A')"
+              style="color: white; padding: 8px 18px; border-radius: 14px; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+              <span>⚠️</span>
+              Status: {{ activeDistrictWeather.severity }}
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+            <div style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+              <span style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase;">Precipitation Rate</span>
+              <div style="font-size: 1.4rem; font-weight: 800; color: #67E8F9; margin-top: 4px;">{{ activeDistrictWeather.precipitation }} mm/h</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+              <span style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase;">Ridge Wind Speed</span>
+              <div style="font-size: 1.4rem; font-weight: 800; color: #FCD34D; margin-top: 4px;">{{ activeDistrictWeather.windSpeed }} km/h</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+              <span style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase;">Terrain Hazard Flag</span>
+              <div style="font-size: 1.2rem; font-weight: 800; color: #F87171; margin-top: 4px;">{{ activeDistrictWeather.hazardType }}</div>
+            </div>
+          </div>
+
+          <div style="background: rgba(255,255,255,0.07); border-radius: 14px; padding: 1.2rem 1.5rem; margin-top: 1.8rem; border-left: 4px solid #14B8A6;">
+            <strong style="color: #5EEAD4;">Highway Advisory:</strong> {{ activeDistrictWeather.alertMessage }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Emergency SOS Button (Bottom Right) -->
+      <div class="emergency-sos-floating-container" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999;">
+        <button (click)="openSosModal()" class="emergency-sos-btn"
+          style="background: linear-gradient(135deg, #DC2626, #991B1B); color: white; border: none; border-radius: 50px; padding: 14px 24px; font-weight: 900; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 25px rgba(220, 38, 38, 0.45); cursor: pointer; animation: sosPulse 2s infinite;">
+          <span style="font-size: 1.3rem;">🚨</span>
+          <span>SOS EMERGENCY</span>
+        </button>
+      </div>
+
+      <!-- Emergency SOS Modal Dialog -->
+      <div *ngIf="showSosModal" class="modal-backdrop" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 1rem;">
+        <div style="background: white; border-radius: 20px; max-width: 520px; width: 100%; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+          <!-- SOS Modal Header -->
+          <div style="background: #DC2626; color: white; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 1.8rem;">🚨</span>
+              <div>
+                <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800;">Emergency SOS Dispatch</h3>
+                <span style="font-size: 0.8rem; opacity: 0.9;">Rescue 1122 & AJK Police Link</span>
+              </div>
+            </div>
+            <button (click)="closeSosModal()" style="background: none; border: none; color: white; font-size: 1.6rem; cursor: pointer; line-height: 1;">&times;</button>
+          </div>
+
+          <!-- SOS Modal Content -->
+          <div style="padding: 2rem;">
+            <div *ngIf="!sosSentSuccess">
+              <p style="color: #475569; font-size: 0.95rem; margin-top: 0; line-height: 1.5;">
+                In case of accident, landslide blockage, medical emergency, or vehicle breakdown in the Kashmir mountains, trigger this alarm to dispatch coordinates to Rescue 1122.
+              </p>
+
+              <div style="margin-bottom: 1.2rem;">
+                <label style="display: block; font-weight: 700; color: #1E293B; font-size: 0.85rem; margin-bottom: 0.4rem;">Type of Emergency</label>
+                <select [(ngModel)]="sosEmergencyType" style="width: 100%; padding: 0.85rem; border: 2px solid #CBD5E1; border-radius: 12px; font-weight: 600; font-size: 0.95rem; outline: none;">
+                  <option value="Breakdown / Landslide Trap">Breakdown / Landslide Trap</option>
+                  <option value="Accident / Collision">Accident / Collision</option>
+                  <option value="Medical Emergency / First Aid">Medical Emergency / First Aid</option>
+                  <option value="Security / Route Threat">Security / Route Threat</option>
+                </select>
+              </div>
+
+              <div style="background: #FEF2F2; border: 1px solid #FECACA; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem;">
+                <div style="font-size: 0.85rem; color: #991B1B; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                  <span>📍</span> Auto-Acquired GPS Location:
+                </div>
+                <div style="font-size: 0.95rem; font-weight: 800; color: #7F1D1D; margin-top: 4px;">
+                  Lat: {{ sosLatitude }} &bull; Lon: {{ sosLongitude }}
+                </div>
+                <div style="font-size: 0.8rem; color: #B91C1C; margin-top: 2px;">{{ sosLocationDescription }}</div>
+              </div>
+
+              <button (click)="dispatchEmergencySOS()" [disabled]="sosSending"
+                style="width: 100%; background: #DC2626; color: white; padding: 1.1rem; border: none; border-radius: 14px; font-weight: 900; font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(220,38,38,0.4); transition: all 0.2s;">
+                {{ sosSending ? 'DISPATCHING COORDINATES...' : '🚨 CONFIRM & DISPATCH RESCUE 1122' }}
+              </button>
+            </div>
+
+            <!-- SOS Success State -->
+            <div *ngIf="sosSentSuccess" style="text-align: center; padding: 1rem 0;">
+              <div style="width: 72px; height: 72px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.2rem auto;">✓</div>
+              <h3 style="margin: 0 0 0.5rem 0; font-size: 1.4rem; color: #0F172A; font-weight: 800;">Emergency Broadcast Dispatched!</h3>
+              <p style="color: #475569; font-size: 0.95rem; line-height: 1.5;">
+                Your live coordinates ({{ sosLatitude }}, {{ sosLongitude }}) have been logged into the AJK Central Emergency Console. Rescue 1122 and nearest Highway Patrol are notified.
+              </p>
+              <button (click)="closeSosModal()" style="margin-top: 1rem; background: #0F172A; color: white; padding: 0.8rem 1.8rem; border: none; border-radius: 12px; font-weight: 700; cursor: pointer;">
+                Close Window
+              </button>
+            </div>
           </div>
         </div>
       </div>
