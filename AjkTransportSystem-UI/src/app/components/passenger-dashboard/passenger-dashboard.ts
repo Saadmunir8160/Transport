@@ -167,12 +167,12 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     },
     {
       id: 'AJK-839910',
-      route: 'Srinagar to Anantnag Fast',
+      route: 'Muzaffarabad to Rawalakot Express',
       date: new Date(), // Today
       time: '12:00 PM',
       seats: '3C',
-      startPoint: 'Srinagar HQ',
-      endPoint: 'Anantnag Bus Stand',
+      startPoint: 'Muzaffarabad Terminal',
+      endPoint: 'Rawalakot General Bus Stand',
       status: 'active',
       amount: 1550,
       canCancel: false
