@@ -50,29 +50,26 @@ body {
 /* Sidebar Styles (SuperAdmin matching) */
 /* Sidebar Redesign - Light Theme */
 :host {
-  --sa-sidebar-bg: #FFFFFF;
-  --sa-sidebar-raised: #FFFFFF;
-  --sa-sidebar-line: #E2E8F0;
-  --sa-sidebar-text: #334155;
-  --sa-sidebar-muted: #64748B;
+  --sa-sidebar-bg: #0B132B;
+  --sa-sidebar-raised: #151F3E;
+  --sa-sidebar-line: #1E293B;
+  --sa-sidebar-text: #F8FAFC;
+  --sa-sidebar-muted: #94A3B8;
   --sa-sidebar-accent: #0D766E;
-  --sa-sidebar-accent-bg: #E6F4F1;
+  --sa-sidebar-accent-bg: #0F2D37;
   --sa-sidebar-warning: #FEF08A;
   --sa-sidebar-warning-text: #854D0E;
 }
 
 .passenger-wrapper .sidebar {
-  width: 270px;
-  background: linear-gradient(180deg, #0B132B 0%, #0F172A 100%);
-  box-shadow: 4px 0 24px rgba(0,0,0,0.18);
-  border-right: 1px solid rgba(255,255,255,0.08);
   width: 264px;
-  background: var(--sa-sidebar-bg);
+  background: linear-gradient(180deg, #0B132B 0%, #0F172A 100%);
   color: var(--sa-sidebar-text);
   position: fixed;
   height: 100vh;
   overflow-y: hidden;
   border-right: 1px solid var(--sa-sidebar-line);
+  box-shadow: 4px 0 24px rgba(0,0,0,0.25);
   z-index: 1000;
   transition: width 0.2s ease;
   display: flex;
@@ -217,7 +214,8 @@ body {
 }
 
 .nav-group-header:hover {
-  background: #F1F5F9;
+  background: rgba(255, 255, 255, 0.08);
+  color: #F8FAFC;
 }
 
 .group-icon {
@@ -290,12 +288,12 @@ body {
 }
 
 .nav-item:hover, .nav-item:focus-visible {
-  background: #F1F5F9;
-  color: #0F172A;
+  background: rgba(255, 255, 255, 0.08);
+  color: #F8FAFC;
   outline: none;
 }
 .nav-item:hover .nav-icon, .nav-item:focus-visible .nav-icon {
-  color: #475569;
+  color: #2DD4BF;
 }
 .item-label {
   flex: 1;
