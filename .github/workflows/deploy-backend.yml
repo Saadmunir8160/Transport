@@ -9,6 +9,12 @@ on:
       - '.github/workflows/deploy-backend.yml'
 
   workflow_dispatch:
+    inputs:
+      skip_appsettings:
+        description: 'Skip appsettings*.json during deployment'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build-and-deploy:
@@ -36,81 +42,134 @@ jobs:
             throw "Build or publish failed."
           }
 
-      - name: Deploy to SmarterASP.NET
+      - name: Verify Web Deploy Credentials
         shell: pwsh
         env:
-          PUBLISH_PROFILE: ${{ secrets.SMARTERASP_PUBLISH_PROFILE }}
-          DEPLOY_PASSWORD: ${{ secrets.SMARTERASP_PASSWORD }}
-
+          WD_SITE: ${{ secrets.SMARTERASP_SITE_NAME }}
+          WD_URL: ${{ secrets.SMARTERASP_PUBLISH_URL }}
+          WD_USER: ${{ secrets.SMARTERASP_USERNAME }}
+          WD_PASS: ${{ secrets.SMARTERASP_PASSWORD }}
         run: |
           $ErrorActionPreference = "Stop"
 
-          if ([string]::IsNullOrWhiteSpace($env:PUBLISH_PROFILE)) {
-            throw "SMARTERASP_PUBLISH_PROFILE is missing."
+          $site = if ($env:WD_SITE) { $env:WD_SITE.Trim() } else { "" }
+          $url = if ($env:WD_URL) { $env:WD_URL.Trim() } else { "" }
+          $user = if ($env:WD_USER) { $env:WD_USER.Trim() } else { "" }
+          $pass = if ($env:WD_PASS) { $env:WD_PASS.Trim() } else { "" }
+
+          Write-Host "Checking secrets configuration..."
+          Write-Host "Site Name Length: $($site.Length)"
+          Write-Host "Publish URL Length: $($url.Length)"
+          Write-Host "Username Length: $($user.Length)"
+          Write-Host "Password Length: $($pass.Length)"
+
+          if ($site.Length -eq 0) {
+            throw "Secret SMARTERASP_SITE_NAME is empty or missing. Please add it in GitHub Repository Secrets."
+          }
+          if ($url.Length -eq 0) {
+            throw "Secret SMARTERASP_PUBLISH_URL is empty or missing. Please add it in GitHub Repository Secrets."
+          }
+          if ($user.Length -eq 0) {
+            throw "Secret SMARTERASP_USERNAME is empty or missing. Please add it in GitHub Repository Secrets."
+          }
+          if ($pass.Length -eq 0) {
+            throw "Secret SMARTERASP_PASSWORD is empty or missing. Please add it in GitHub Repository Secrets."
           }
 
-          [xml]$profile = $env:PUBLISH_PROFILE
-
-          $webDeploy = $profile.publishData.publishProfile |
-            Where-Object { $_.publishMethod -eq "MSDeploy" } |
-            Select-Object -First 1
-
-          if (-not $webDeploy) {
-            throw "MSDeploy profile not found in XML."
+          if ($pass.Contains(',') -or $pass.Contains('"')) {
+            throw "Password contains a character that breaks msdeploy arguments. Use letters and numbers only."
           }
 
-          $publishUrl = [string]$webDeploy.publishUrl
-          $siteName = [string]$webDeploy.msdeploySite
-          $userName = [string]$webDeploy.userName
-          $password = [string]$webDeploy.userPWD
+          Write-Host "SUCCESS: All required Web Deploy secrets are verified."
 
-          if ([string]::IsNullOrWhiteSpace($password)) {
-            $password = $env:DEPLOY_PASSWORD
+      - name: Check Port 8172 Connectivity
+        shell: pwsh
+        env:
+          WD_URL: ${{ secrets.SMARTERASP_PUBLISH_URL }}
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          try {
+            $uri = [System.Uri]$env:WD_URL.Trim()
+            $hostName = $uri.DnsSafeHost
+            $port = if ($uri.Port -gt 0) { $uri.Port } else { 8172 }
+          }
+          catch {
+            throw "Failed to parse host from SMARTERASP_PUBLISH_URL: $_"
           }
 
-          if ([string]::IsNullOrWhiteSpace($publishUrl) -or
-              [string]::IsNullOrWhiteSpace($siteName) -or
-              [string]::IsNullOrWhiteSpace($userName) -or
-              [string]::IsNullOrWhiteSpace($password)) {
-            throw "Deployment configuration is incomplete."
+          Write-Host "Testing connectivity to host on port $port..."
+          $test = Test-NetConnection -ComputerName $hostName -Port $port -WarningAction SilentlyContinue
+
+          if ($test.TcpTestSucceeded) {
+            Write-Host "SUCCESS: Connection to port $port succeeded."
+          } else {
+            throw "FAILURE: Unable to reach port $port on remote host."
           }
+
+      - name: Deploy to SmarterASP.NET
+        shell: pwsh
+        env:
+          WD_SITE: ${{ secrets.SMARTERASP_SITE_NAME }}
+          WD_URL: ${{ secrets.SMARTERASP_PUBLISH_URL }}
+          WD_USER: ${{ secrets.SMARTERASP_USERNAME }}
+          WD_PASS: ${{ secrets.SMARTERASP_PASSWORD }}
+          SKIP_APPSETTINGS: ${{ github.event.inputs.skip_appsettings }}
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $siteName = $env:WD_SITE.Trim()
+          $publishUrl = $env:WD_URL.Trim()
+          $userName = $env:WD_USER.Trim()
+          $password = $env:WD_PASS.Trim()
 
           $msdeployExe = "${env:ProgramFiles}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
-
           if (-not (Test-Path $msdeployExe)) {
             $msdeployExe = "${env:ProgramFiles(x86)}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
           }
 
           if (-not (Test-Path $msdeployExe)) {
-            throw "Microsoft Web Deploy is not installed."
+            Write-Host "msdeploy.exe not found. Installing Web Deploy via Chocolatey..."
+            choco install webdeploy -y --no-progress
+            $msdeployExe = "${env:ProgramFiles}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+            if (-not (Test-Path $msdeployExe)) {
+              $msdeployExe = "${env:ProgramFiles(x86)}\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+            }
+          }
+
+          if (-not (Test-Path $msdeployExe)) {
+            throw "Microsoft Web Deploy (msdeploy.exe) is still missing after installation attempt."
           }
 
           $publishPath = Join-Path $PWD "publish"
-
           if (-not (Test-Path $publishPath)) {
-            throw "Publish folder does not exist."
+            throw "Publish folder does not exist at: $publishPath"
           }
 
           Write-Host "Starting SmarterASP.NET deployment..."
-          Write-Host "Site: $siteName"
+          Write-Host "Target Site: $siteName"
           Write-Host "Publish URL: $publishUrl"
+          Write-Host "Publish Path: $publishPath"
 
-          $sourceArg = "-source:contentPath=$publishPath"
-
-          $destinationArg = "-dest:contentPath=$siteName,computerName=$publishUrl,userName=$userName,password=$password,authType=Basic"
+          $destArg = "-dest:contentPath=`"$siteName`",computerName=`"$publishUrl`",userName=`"$userName`",password=`"$password`",authType=`"Basic`""
 
           $deployArgs = @(
             "-verb:sync"
-            $sourceArg
-            $destinationArg
+            "-source:contentPath=`"$publishPath`""
+            $destArg
             "-allowUntrusted"
-            "-skip:objectName=filePath,absolutePath=.*appsettings.*\\.json"
           )
 
-          & $msdeployExe @deployArgs
+          if ($env:SKIP_APPSETTINGS -eq "true") {
+            Write-Host "Skipping appsettings*.json files per workflow input..."
+            $deployArgs += "-skip:objectName=filePath,absolutePath=.*appsettings.*\.json"
+          }
 
-          if ($LASTEXITCODE -ne 0) {
-            throw "Web Deploy failed. Exit code: $LASTEXITCODE"
+          & $msdeployExe @deployArgs
+          $deployExitCode = $LASTEXITCODE
+
+          if ($deployExitCode -ne 0) {
+            throw "Web Deploy failed with exit code: $deployExitCode"
           }
 
           Write-Host "SUCCESS: API deployment completed!"
