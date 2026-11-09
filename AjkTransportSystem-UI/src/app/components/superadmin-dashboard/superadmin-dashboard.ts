@@ -1005,26 +1005,51 @@ export class SuperAdminDashboardComponent implements OnInit {
     alert('Opening notification delivery history panel (Mock)');
   }
 
-  loadMyProfile() {
-    this.superAdminService.getMyProfile().subscribe(data => {
-      this.myProfile = data;
-    });
-  }
-
+  
   updateProfile() {
     alert('Profile information updated successfully.');
   }
 
   setup2FA() {
     alert('Opening TOTP setup modal (QR Code generation mock).');
-    this.myProfile.twoFactorEnabled = true;
+    if (this.myProfile) this.myProfile.twoFactorEnabled = true;
   }
 
   revokeMySession(sessionId: number) {
     if (confirm('Are you sure you want to revoke this session? You will be logged out on that device.')) {
-      this.myProfile.security.activeSessions = this.myProfile.security.activeSessions.filter((s: any) => s.id !== sessionId);
+      if (this.myProfile?.security?.activeSessions) {
+        this.myProfile.security.activeSessions = this.myProfile.security.activeSessions.filter((s: any) => s.id !== sessionId);
+      }
       alert('Session revoked.');
     }
+  }
+
+  loadMyProfile() {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const fallbackProfile = {
+      name: user.name || 'Super Admin',
+      email: user.email || 'superadmin@ajk.gov',
+      phone: '+92 5822 920000',
+      role: 'Super Admin',
+      language: 'en',
+      twoFactorEnabled: false,
+      security: {
+        lastLoginTime: new Date().toLocaleTimeString(),
+        lastLoginIp: '127.0.0.1 (Local Session)',
+        activeSessions: [
+          { id: 1, device: 'Chrome on Windows', ipAddress: '127.0.0.1', isCurrent: true, lastActive: 'Just now' }
+        ]
+      }
+    };
+
+    this.superAdminService.getMyProfile().subscribe({
+      next: (data) => {
+        this.myProfile = data || fallbackProfile;
+      },
+      error: () => {
+        this.myProfile = fallbackProfile;
+      }
+    });
   }
 
   downloadMyAuditLog() {
