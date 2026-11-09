@@ -18,7 +18,7 @@ export class UserService {
     });
   }
   
-  getAll(p1?: any, p2?: any): Observable<any> { return this.http.get(this.apiUrl, { headers: this.getHeaders() }); }
-  getAllUsers(p1?: any, p2?: any): Observable<any> { return this.http.get(this.apiUrl, { headers: this.getHeaders() }); }
+  getAll(p1?: any, p2?: any): Observable<any> { return this.http.get(`${this.apiUrl}/users`, { headers: this.getHeaders() }); }
+  getAllUsers(p1?: any, p2?: any): Observable<any> { return this.http.get(`${this.apiUrl}/users`, { headers: this.getHeaders() }); }
   deleteUser(p1?: any): Observable<any> { return this.http.delete(this.apiUrl + '/' + p1, { headers: this.getHeaders() }); }
 }

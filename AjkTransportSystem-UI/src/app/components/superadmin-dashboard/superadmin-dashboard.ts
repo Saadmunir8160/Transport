@@ -1673,7 +1673,8 @@ export class SuperAdminDashboardComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading users:', err);
-        alert('Failed to load users!');
+        // Silently log error without annoying blocking popup alert
+        console.warn('Failed to load users from backend:', err);
       }
     });
   }
