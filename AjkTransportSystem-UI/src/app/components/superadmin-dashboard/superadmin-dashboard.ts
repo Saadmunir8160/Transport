@@ -1089,6 +1089,21 @@ export class SuperAdminDashboardComponent implements OnInit {
     }
   }
 
+  
+  viewSessionUser(session: any) {
+    if (session.userEmail || session.userName) {
+      alert(`User Profile:\nName: ${session.userName || 'N/A'}\nEmail: ${session.userEmail || 'N/A'}\nRole: ${session.role || 'N/A'}\nIP: ${session.ipAddress || 'N/A'}`);
+    } else {
+      this.setActiveTab('profile');
+    }
+  }
+
+  viewSessionAuditLogs(session: any) {
+    this.auditActorFilter = session.userName || session.userEmail || '';
+    this.filterAuditLogs();
+    this.setActiveTab('auditLogs');
+  }
+
   banSessionIp(session: any) {
     if (confirm(`Are you sure you want to ban the IP ${session.ipAddress} associated with this session?`)) {
       this.superAdminService.banSessionIp(session.sessionId).subscribe({

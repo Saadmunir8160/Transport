@@ -1459,3 +1459,66 @@
     display: none; /* Hide breadcrumb on very small screens to save space */
   }
 }
+
+
+/* ==========================================================================
+   Clean Rounded Action Buttons (View, Log, Suspend, Block) Matching User Image
+   ========================================================================== */
+.session-action-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-btn-clean {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #f1f5f9;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+}
+
+.action-btn-clean svg {
+  stroke: #cbd5e1;
+  transition: stroke 0.2s ease, transform 0.2s ease;
+}
+
+.action-btn-clean:hover {
+  background: rgba(51, 65, 85, 0.9);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.action-btn-clean:hover svg {
+  stroke: #ffffff;
+  transform: scale(1.08);
+}
+
+.action-btn-clean:active {
+  transform: translateY(0);
+}
+
+/* Hover accent colors */
+.action-btn-clean.suspend-btn:hover {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.15);
+}
+.action-btn-clean.suspend-btn:hover svg {
+  stroke: #f59e0b;
+}
+
+.action-btn-clean.block-btn:hover {
+  border-color: rgba(239, 68, 68, 0.5);
+  background: rgba(239, 68, 68, 0.15);
+}
+.action-btn-clean.block-btn:hover svg {
+  stroke: #ef4444;
+}
