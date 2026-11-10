@@ -1486,7 +1486,7 @@ export class SuperAdminDashboardComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading routes:', err);
-        alert('Failed to load routes!');
+        console.warn('Could not load routes:', err);
       }
     });
   }
@@ -1516,7 +1516,7 @@ export class SuperAdminDashboardComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading vehicles:', err);
-        alert('Failed to load vehicles!');
+        console.warn('Could not load vehicles:', err);
       }
     });
   }

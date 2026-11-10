@@ -62,10 +62,6 @@ body {
 }
 
 .passenger-wrapper .sidebar {
-  width: 270px;
-  background: linear-gradient(180deg, #0B132B 0%, #0F172A 100%);
-  box-shadow: 4px 0 24px rgba(0,0,0,0.18);
-  border-right: 1px solid rgba(255,255,255,0.08);
   width: 264px;
   background: var(--sa-sidebar-bg);
   color: var(--sa-sidebar-text);
