@@ -76,7 +76,7 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
   filterVehicleType = 'all';
   filterAvailableOnly = false;
   sortOption = 'earliest';
-  activeTab = 'dashboard';
+  activeTab = 'home';
     cancelStep = 1;
     cancellingBooking: any = { id: 'BKG-784321', route: 'Muzaffarabad to Rawalpindi Express', date: new Date().toISOString(), time: '08:30 AM', amountPaid: 3050, refundAmount: 3050, refundPolicy: 'More than 60 mins before departure' };
   // AI Mountain Weather Delay Prediction State
@@ -291,13 +291,13 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
       next: (res: any) => {
         this.regLoading = false;
         alert('Registration successful! You are now logged in.');
-        this.activeTab = 'dashboard';
+        this.activeTab = 'home';
       },
       error: (err: any) => {
         this.regLoading = false;
         // Mock success for UI demo
         alert('Registration successful! You are now logged in.');
-        this.activeTab = 'dashboard';
+        this.activeTab = 'home';
       }
     });
   }
@@ -339,7 +339,7 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error('Error loading trips:', err);
-        alert('Failed to load trips.');
+        console.warn('Could not load trips from backend:', err);
       }
     });
   }
