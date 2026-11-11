@@ -114,8 +114,8 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
   // New variables
   trackingBooking: any = null;
   trackingData: any = null;
-  bookingId = '';
-  ticketCode = '';
+  bookingId = 'AJK-882104';
+  ticketCode = 'TKT-7492';
   paymentMethod = 'Easypaisa';
   showPaymentModal = false;
   paymentAccountNo = '03451234567';
