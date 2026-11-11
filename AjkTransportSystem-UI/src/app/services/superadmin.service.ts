@@ -27,7 +27,7 @@ export class SuperAdminService {
   getSystemAlerts(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/alerts`, { headers: this.getHeaders() }); }
   getSystemHealth(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/health`, { headers: this.getHeaders() }); }
   getOfflineSyncLogs(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/sync-logs`, { headers: this.getHeaders() }); }
-  getChartAnalytics(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/analytics`, { headers: this.getHeaders() }); }
+  getChartAnalytics(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/chart-analytics`, { headers: this.getHeaders() }); }
   onboardOrganization(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/onboard`, p, { headers: this.getHeaders() }); }
   toggleOrganizationStatus(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/toggle-org`, p, { headers: this.getHeaders() }); }
   resetAdminPassword(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/reset-password`, p, { headers: this.getHeaders() }); }
