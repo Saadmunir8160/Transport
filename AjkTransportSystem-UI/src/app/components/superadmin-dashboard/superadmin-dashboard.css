@@ -2740,3 +2740,257 @@
   color: #718096;
   margin-top: 2px;
 }
+/* ==========================================
+   SYSTEM SETTINGS PAGE (EXACT SCREENSHOT MATCH)
+   ========================================== */
+
+.settings-page-wrapper {
+  padding: 0.5rem 0 2rem 0;
+}
+
+.settings-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.settings-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-gear-icon {
+  font-size: 1.25rem;
+}
+
+.settings-main-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0;
+}
+
+.settings-sub-text {
+  font-size: 0.8125rem;
+  color: #718096;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+.settings-save-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0F9F6E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(15, 159, 110, 0.2);
+  transition: all 0.2s ease;
+}
+
+.settings-save-all-btn:hover {
+  background: #0b8058;
+}
+
+/* 5 Column Grid Top Row */
+.settings-five-col-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1400px) {
+  .settings-five-col-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .settings-five-col-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .settings-five-col-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Setting Card */
+.setting-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.setting-card-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #182230;
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.setting-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.setting-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.setting-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #4A5568;
+}
+
+.setting-input,
+.setting-select {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  background: #FFFFFF;
+  font-size: 0.75rem;
+  color: #182230;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.setting-input:focus,
+.setting-select:focus {
+  border-color: #2457D6;
+}
+
+.setting-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.setting-row-3col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.setting-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.setting-checkbox {
+  width: 14px;
+  height: 14px;
+  accent-color: #2457D6;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-size: 0.6875rem;
+  color: #4A5568;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Pink / Red Security Highlight Card */
+.security-pink-card {
+  background: #FFF1F2 !important;
+  border: 1px solid #FECACA !important;
+}
+
+.text-red {
+  color: #BE123C !important;
+}
+
+.border-red {
+  border-color: #FECACA !important;
+  background: #FFFFFF !important;
+}
+
+/* ETA Model Green Highlight Card */
+.settings-row-eta {
+  display: grid;
+  grid-template-columns: 320px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .settings-row-eta {
+    grid-template-columns: 1fr;
+  }
+}
+
+.eta-green-card {
+  background: #F0FDF4 !important;
+  border: 1px solid #BBF7D0 !important;
+}
+
+.text-green {
+  color: #15803D !important;
+}
+
+.text-green-bold {
+  color: #15803D !important;
+  font-weight: 600;
+}
+
+.border-green {
+  border-color: #BBF7D0 !important;
+  background: #FFFFFF !important;
+}
+
+/* Rules Card */
+.settings-rules-card {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.rules-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 8px 0;
+}
+
+.rules-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rules-list li {
+  font-size: 0.75rem;
+  color: #64748B;
+  line-height: 1.4;
+}
+
+.rules-list li strong {
+  color: #334155;
+}

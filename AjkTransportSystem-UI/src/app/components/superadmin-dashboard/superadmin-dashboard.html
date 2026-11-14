@@ -2713,276 +2713,222 @@
         </div>
       </div>
 
-      <!-- SYSTEM SETTINGS TAB -->
-      <div *ngIf="activeTab === 'systemSettings' && systemSettings">
-        <div class="card-header"
-          style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <!-- SYSTEM SETTINGS TAB -->
+      <div *ngIf="activeTab === 'systemSettings' && systemSettings" class="settings-page-wrapper">
+        
+        <!-- Top Header matching screenshot -->
+        <div class="settings-top-header">
           <div>
-            <h2>⚙️ System Settings</h2>
-            <p style="color: #7f8c8d; font-size: 0.95rem; margin-top: 0.5rem;">Platform-wide configuration. Changes here
-              affect all organizations.</p>
+            <div class="settings-title-row">
+              <span class="settings-gear-icon">⚙️</span>
+              <h1 class="settings-main-title">System Settings</h1>
+            </div>
+            <p class="settings-sub-text">Platform-wide configuration. Changes here affect all organizations.</p>
           </div>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="add-btn" (click)="saveSystemSettings()"
-              style="margin: 0; padding: 0.75rem 1.5rem; background: #10b981;">💾 Save All Changes</button>
+          <div>
+            <button class="settings-save-all-btn" (click)="saveSystemSettings()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save All Changes
+            </button>
           </div>
         </div>
 
-        <div
-          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        <!-- 5 Columns Top Row Grid -->
+        <div class="settings-five-col-grid">
 
-          <!-- General Settings -->
-          <div class="content-card" style="margin-bottom: 0;">
-            <h3
-              style="margin-top: 0; color: #1e293b; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-              General</h3>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Platform
-                Name</label>
-              <input type="text" [(ngModel)]="systemSettings.general.platformName"
-                style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
+          <!-- 1. General -->
+          <div class="setting-card">
+            <h3 class="setting-card-title">General</h3>
+            
+            <div class="setting-form-stack">
+              <div class="setting-field">
+                <label class="setting-label">Platform Name</label>
+                <input type="text" [(ngModel)]="systemSettings.general.platformName" class="setting-input">
+              </div>
+
+              <div class="setting-row-2col">
+                <div class="setting-field">
+                  <label class="setting-label">Default Language</label>
+                  <select [(ngModel)]="systemSettings.general.language" class="setting-select">
+                    <option value="English">English</option>
+                    <option value="Urdu">Urdu</option>
+                  </select>
+                </div>
+                <div class="setting-field">
+                  <label class="setting-label">Timezone</label>
+                  <input type="text" [(ngModel)]="systemSettings.general.timezone" class="setting-input">
+                </div>
+              </div>
+
+              <div class="setting-field">
+                <label class="setting-label">Date Format</label>
+                <input type="text" [(ngModel)]="systemSettings.general.dateFormat" class="setting-input">
+              </div>
             </div>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Default
-                  Language</label>
-                <select [(ngModel)]="systemSettings.general.language"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-                  <option value="English">English</option>
-                  <option value="Urdu">Urdu</option>
+          </div>
+
+          <!-- 2. Booking and Seat Rules -->
+          <div class="setting-card">
+            <h3 class="setting-card-title">Booking and Seat Rules</h3>
+
+            <div class="setting-form-stack">
+              <div class="setting-row-2col">
+                <div class="setting-field">
+                  <label class="setting-label">Max Seats / Booking</label>
+                  <input type="number" [(ngModel)]="systemSettings.booking.maxSeatsPerBooking" class="setting-input">
+                </div>
+                <div class="setting-field">
+                  <label class="setting-label">Seat Hold Timeout (min)</label>
+                  <input type="number" [(ngModel)]="systemSettings.booking.seatHoldTimeoutMinutes" class="setting-input">
+                </div>
+              </div>
+
+              <div class="setting-field">
+                <label class="setting-label">Cancel Window (min before departure)</label>
+                <input type="number" [(ngModel)]="systemSettings.booking.cancellationWindowMinutes" class="setting-input">
+              </div>
+
+              <div class="setting-checkbox-row center-checkbox">
+                <input type="checkbox" id="autoCancelNoShow" [(ngModel)]="systemSettings.booking.autoCancelNoShow" class="setting-checkbox">
+                <label for="autoCancelNoShow" class="checkbox-label">Auto-cancel no-show passengers</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Offline & Sync -->
+          <div class="setting-card">
+            <h3 class="setting-card-title">Offline & Sync</h3>
+
+            <div class="setting-form-stack">
+              <div class="setting-row-2col">
+                <div class="setting-field">
+                  <label class="setting-label">Online Sync Interval (min)</label>
+                  <input type="number" [(ngModel)]="systemSettings.offline.syncIntervalMinutes" class="setting-input">
+                </div>
+                <div class="setting-field">
+                  <label class="setting-label">Max Offline Age (hours)</label>
+                  <input type="number" [(ngModel)]="systemSettings.offline.maxOfflineDataAgeHours" class="setting-input">
+                </div>
+              </div>
+
+              <div class="setting-field">
+                <label class="setting-label">Data Allowed Offline</label>
+                <div class="offline-tags-wrap">
+                  <label class="offline-tag-label"><input type="checkbox" checked disabled class="setting-checkbox-sm"> Trip Info</label>
+                  <label class="offline-tag-label"><input type="checkbox" checked disabled class="setting-checkbox-sm"> Tickets</label>
+                  <label class="offline-tag-label"><input type="checkbox" checked disabled class="setting-checkbox-sm"> Routes & Schedules</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Security (Highlighted Red/Pink) -->
+          <div class="setting-card security-pink-card">
+            <h3 class="setting-card-title text-red">Security</h3>
+
+            <div class="setting-form-stack">
+              <div class="setting-row-3col">
+                <div class="setting-field">
+                  <label class="setting-label text-red">Session Timeout (min)</label>
+                  <input type="number" [(ngModel)]="systemSettings.security.sessionTimeoutMinutes" class="setting-input border-pink">
+                </div>
+                <div class="setting-field">
+                  <label class="setting-label text-red">Max Failed Logins</label>
+                  <input type="number" [(ngModel)]="systemSettings.security.maxFailedLogins" class="setting-input border-pink">
+                </div>
+                <div class="setting-field">
+                  <label class="setting-label text-red">Lockout (min)</label>
+                  <input type="number" [(ngModel)]="systemSettings.security.lockoutDurationMinutes" class="setting-input border-pink">
+                </div>
+              </div>
+
+              <div class="setting-field">
+                <label class="setting-label text-red">Password Requirements</label>
+                <input type="text" [(ngModel)]="systemSettings.security.passwordRequirements" class="setting-input border-pink">
+              </div>
+
+              <div class="setting-field">
+                <label class="setting-label text-red">2FA Enforcement</label>
+                <select [(ngModel)]="systemSettings.security.enforce2FA" class="setting-select border-pink">
+                  <option value="off">Off</option>
+                  <option value="optional">Optional for everyone</option>
+                  <option value="required for admins">Required for Admins (Org & Super)</option>
                 </select>
               </div>
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Timezone</label>
-                <input type="text" [(ngModel)]="systemSettings.general.timezone"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Date
-                Format</label>
-              <input type="text" [(ngModel)]="systemSettings.general.dateFormat"
-                style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
             </div>
           </div>
 
-          <!-- Booking and Seat Rules -->
-          <div class="content-card" style="margin-bottom: 0;">
-            <h3
-              style="margin-top: 0; color: #1e293b; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-              Booking and Seat Rules</h3>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Max
-                  Seats / Booking</label>
-                <input type="number" [(ngModel)]="systemSettings.booking.maxSeatsPerBooking"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Seat
-                  Hold Timeout (min)</label>
-                <input type="number" [(ngModel)]="systemSettings.booking.seatHoldTimeoutMinutes"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Cancel
-                Window (min before departure)</label>
-              <input type="number" [(ngModel)]="systemSettings.booking.cancellationWindowMinutes"
-                style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-            </div>
-            <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
-              <input type="checkbox" id="autoCancel" [(ngModel)]="systemSettings.booking.autoCancelNoShow"
-                style="width: 16px; height: 16px;">
-              <label for="autoCancel"
-                style="font-size: 0.85rem; font-weight: 600; color: #334155; cursor: pointer;">Auto-cancel no-show
-                passengers</label>
-            </div>
-          </div>
+          <!-- 5. Notifications & Alerts -->
+          <div class="setting-card">
+            <h3 class="setting-card-title">Notifications & Alerts</h3>
 
-          <!-- Offline and Sync -->
-          <div class="content-card" style="margin-bottom: 0;">
-            <h3
-              style="margin-top: 0; color: #1e293b; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-              Offline & Sync</h3>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Online
-                  Sync Interval (min)</label>
-                <input type="number" [(ngModel)]="systemSettings.offline.syncIntervalMinutes"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
+            <div class="setting-form-stack">
+              <div class="setting-row-2col">
+                <div class="setting-field">
+                  <label class="setting-label">Email Provider (SMTP)</label>
+                  <input type="text" [(ngModel)]="systemSettings.notifications.smtpServer" class="setting-input">
+                </div>
+                <div class="setting-field">
+                  <label class="setting-label">SMS Gateway</label>
+                  <input type="text" [(ngModel)]="systemSettings.notifications.smsGateway" class="setting-input">
+                </div>
               </div>
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Max
-                  Offline Age (hours)</label>
-                <input type="number" [(ngModel)]="systemSettings.offline.maxOfflineDataAgeHours"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
+
+              <div class="setting-field">
+                <label class="setting-label">Super Admin Alert Email</label>
+                <input type="email" [(ngModel)]="systemSettings.notifications.alertEmail" class="setting-input">
               </div>
-            </div>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Data
-                Allowed Offline</label>
-              <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
-                <label
-                  style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #475569;"><input
-                    type="checkbox" checked disabled> Trip Info</label>
-                <label
-                  style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #475569;"><input
-                    type="checkbox" checked disabled> Tickets</label>
-                <label
-                  style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #475569;"><input
-                    type="checkbox" checked disabled> Routes & Schedules</label>
+
+              <div class="setting-field">
+                <label class="setting-label">Notification Retry Policy</label>
+                <input type="text" [(ngModel)]="systemSettings.notifications.retryPolicy" class="setting-input">
               </div>
             </div>
           </div>
 
-          <!-- Security -->
-          <div class="content-card" style="margin-bottom: 0; background: #fff1f2; border: 1px solid #fecaca;">
-            <h3
-              style="margin-top: 0; color: #9f1239; margin-bottom: 1.5rem; border-bottom: 1px solid #fecaca; padding-bottom: 0.5rem;">
-              Security</h3>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #9f1239; margin-bottom: 0.25rem; font-size: 0.85rem;">Session
-                  Timeout (min)</label>
-                <input type="number" [(ngModel)]="systemSettings.security.sessionTimeoutMinutes"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #fca5a5; border-radius: 4px; background: #fff;">
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #9f1239; margin-bottom: 0.25rem; font-size: 0.85rem;">Max
-                  Failed Logins</label>
-                <input type="number" [(ngModel)]="systemSettings.security.maxFailedLogins"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #fca5a5; border-radius: 4px; background: #fff;">
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #9f1239; margin-bottom: 0.25rem; font-size: 0.85rem;">Lockout
-                  (min)</label>
-                <input type="number" [(ngModel)]="systemSettings.security.lockoutDurationMinutes"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #fca5a5; border-radius: 4px; background: #fff;">
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #9f1239; margin-bottom: 0.25rem; font-size: 0.85rem;">Password
-                Requirements</label>
-              <input type="text" [(ngModel)]="systemSettings.security.passwordRequirements"
-                style="width: 100%; padding: 0.5rem; border: 1px solid #fca5a5; border-radius: 4px; background: #fff;">
-            </div>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #9f1239; margin-bottom: 0.25rem; font-size: 0.85rem;">2FA
-                Enforcement</label>
-              <select [(ngModel)]="systemSettings.security.enforce2FA"
-                style="width: 100%; padding: 0.5rem; border: 1px solid #fca5a5; border-radius: 4px; background: #fff;">
-                <option value="off">Off</option>
-                <option value="optional">Optional for everyone</option>
-                <option value="required for admins">Required for Admins (Org & Super)</option>
-              </select>
-            </div>
-          </div>
+        </div>
 
-          <!-- Notifications -->
-          <div class="content-card" style="margin-bottom: 0;">
-            <h3
-              style="margin-top: 0; color: #1e293b; margin-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem;">
-              Notifications & Alerts</h3>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Email
-                  Provider (SMTP)</label>
-                <input type="text" [(ngModel)]="systemSettings.notifications.smtpServer"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">SMS
-                  Gateway</label>
-                <input type="text" [(ngModel)]="systemSettings.notifications.smsGateway"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Super
-                Admin Alert Email</label>
-              <input type="email" [(ngModel)]="systemSettings.notifications.alertEmail"
-                style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-            </div>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.25rem; font-size: 0.85rem;">Notification
-                Retry Policy</label>
-              <input type="text" [(ngModel)]="systemSettings.notifications.retryPolicy"
-                style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-            </div>
-          </div>
+        <!-- Row 2: ETA Model Config (Highlighted Mint/Green) -->
+        <div class="settings-row-eta">
+          <div class="setting-card eta-green-card">
+            <h3 class="setting-card-title text-green">ETA Model Config</h3>
 
-          <!-- ETA Model config -->
-          <div class="content-card" style="margin-bottom: 0; background: #f0fdf4; border: 1px solid #bbf7d0;">
-            <h3
-              style="margin-top: 0; color: #166534; margin-bottom: 1.5rem; border-bottom: 1px solid #bbf7d0; padding-bottom: 0.5rem;">
-              ETA Model Config</h3>
-            <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
-              <input type="checkbox" id="etaEnabledSettings" [(ngModel)]="systemSettings.etaModel.etaEnabled"
-                style="width: 16px; height: 16px;">
-              <label for="etaEnabledSettings"
-                style="font-size: 0.85rem; font-weight: 600; color: #166534; cursor: pointer;">Enable ETA Feature
-                Platform-wide</label>
+            <div class="setting-checkbox-row" style="margin-bottom: 12px;">
+              <input type="checkbox" id="etaEnabledSettings" [(ngModel)]="systemSettings.etaModel.etaEnabled" class="setting-checkbox">
+              <label for="etaEnabledSettings" class="checkbox-label text-green-bold">Enable ETA Feature Platform-wide</label>
             </div>
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #166534; margin-bottom: 0.25rem; font-size: 0.85rem;">Retrain
-                  Schedule</label>
-                <select [(ngModel)]="systemSettings.etaModel.retrainSchedule"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #86efac; border-radius: 4px; background: #fff;">
+
+            <div class="setting-row-2col" style="margin-bottom: 12px;">
+              <div class="setting-field">
+                <label class="setting-label text-green">Retrain Schedule</label>
+                <select [(ngModel)]="systemSettings.etaModel.retrainSchedule" class="setting-select border-green">
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                   <option value="manual">Manual Only</option>
                 </select>
               </div>
-              <div class="form-group" style="flex: 1;">
-                <label
-                  style="display: block; font-weight: 600; color: #166534; margin-bottom: 0.25rem; font-size: 0.85rem;">Min.
-                  Trips for ETA</label>
-                <input type="number" [(ngModel)]="systemSettings.etaModel.minimumTripsRequired"
-                  style="width: 100%; padding: 0.5rem; border: 1px solid #86efac; border-radius: 4px; background: #fff;">
+              <div class="setting-field">
+                <label class="setting-label text-green">Min. Trips for ETA</label>
+                <input type="number" [(ngModel)]="systemSettings.etaModel.minimumTripsRequired" class="setting-input border-green">
               </div>
             </div>
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label
-                style="display: block; font-weight: 600; color: #166534; margin-bottom: 0.25rem; font-size: 0.85rem;">Seasonal
-                Flags (Snow Season Months)</label>
-              <input type="text" [(ngModel)]="systemSettings.etaModel.seasonalFlags"
-                style="width: 100%; padding: 0.5rem; border: 1px solid #86efac; border-radius: 4px; background: #fff;">
+
+            <div class="setting-field">
+              <label class="setting-label text-green">Seasonal Flags (Snow Season Months)</label>
+              <input type="text" [(ngModel)]="systemSettings.etaModel.seasonalFlags" class="setting-input border-green">
             </div>
           </div>
         </div>
 
-        <div
-          style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
-          <h3 style="margin-top: 0; color: #1e293b; font-size: 1rem;">🔒 System Settings Rules</h3>
-          <ul
-            style="color: #475569; font-size: 0.9rem; margin: 0.5rem 0 0 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem;">
+        <!-- Bottom Rules Footer -->
+        <div class="settings-rules-card">
+          <h4 class="rules-card-title">
+            <span>🔒</span> System Settings Rules
+          </h4>
+          <ul class="rules-list">
             <li>Organization admins cannot access or change these platform-level system settings.</li>
-            <li>All changes are securely logged to the immutable <strong>Audit Log</strong>, capturing both the old and
-              new values.</li>
-            <li>Modifying destructive security settings (e.g. Session Timeout, Lockout rules) will trigger a
-              confirmation prompt before applying.</li>
+            <li>All changes are securely logged to the immutable <strong>Audit Log</strong>, capturing both the old and new values.</li>
+            <li>Modifying destructive security settings (e.g. Session Timeout, Lockout rules) will trigger a confirmation prompt before applying.</li>
           </ul>
         </div>
 
