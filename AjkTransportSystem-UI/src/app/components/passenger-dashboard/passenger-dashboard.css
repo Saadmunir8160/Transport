@@ -50,13 +50,13 @@ body {
 /* Sidebar Styles (SuperAdmin matching) */
 /* Sidebar Redesign - Light Theme */
 :host {
-  --sa-sidebar-bg: #FFFFFF;
-  --sa-sidebar-raised: #FFFFFF;
-  --sa-sidebar-line: #E2E8F0;
-  --sa-sidebar-text: #334155;
-  --sa-sidebar-muted: #64748B;
-  --sa-sidebar-accent: #0D766E;
-  --sa-sidebar-accent-bg: #E6F4F1;
+  --sa-sidebar-bg: #101B31;
+  --sa-sidebar-raised: #192744;
+  --sa-sidebar-line: #233557;
+  --sa-sidebar-text: #E2E8F0;
+  --sa-sidebar-muted: #8FA2BF;
+  --sa-sidebar-accent: #2457D6;
+  --sa-sidebar-accent-bg: rgba(36, 87, 214, 0.16);
   --sa-sidebar-warning: #FEF08A;
   --sa-sidebar-warning-text: #854D0E;
 }

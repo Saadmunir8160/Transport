@@ -9,45 +9,55 @@
 @import './styles-responsive.css';
 
 :root {
-  /* Brand Identity - Kashmir Slate & Alpine Emerald/Teal */
-  --primary: #0D766E;           /* Deep Alpine Teal */
-  --primary-hover: #0F514C;     /* Darker Teal Hover */
-  --primary-active: #115E59;    /* Active State */
-  --primary-light: #E6F4F2;     /* Subtle Teal Background */
+  /* Modern Enterprise SaaS Design Tokens */
+  --primary-blue: #2457D6;
+  --primary: #2457D6;           /* Primary Blue */
+  --primary-hover: #1D46B0;     /* Darker Blue Hover */
+  --primary-active: #17388E;    /* Active State */
+  --primary-light: #EEF3FD;     /* Subtle Blue Background */
   --primary-contrast: #FFFFFF;
 
-  --navy-dark: #0F172A;         /* Slate 900 for Shell & High Hierarchy */
-  --navy-surface: #1E293B;      /* Slate 800 */
-  --navy-border: #334155;       /* Slate 700 */
+  --sidebar-navy: #101B31;      /* Sidebar Navy */
+  --navy-dark: #101B31;         /* Deep Navy Shell */
+  --navy-surface: #192744;      /* Elevated Navy */
+  --navy-border: #233557;       /* Border in Navy Shell */
 
-  --secondary: #0284C7;         /* Azure Blue */
-  --secondary-hover: #0369A1;
-  --secondary-light: #E0F2FE;
+  --secondary: #2457D6;
+  --secondary-hover: #1D46B0;
+  --secondary-light: #EEF3FD;
 
-  --accent: #D97706;            /* Mountain Amber Accent */
+  --accent: #C27A12;            /* Warning Amber */
   --accent-light: #FEF3C7;
 
   /* Neutrals & Surfaces */
-  --bg-main: #F8FAFC;           /* Off-white Canvas */
-  --bg-surface: #FFFFFF;        /* Card & Panel Surfaces */
-  --bg-subtle: #F1F5F9;         /* Form Backdrops & Table Headers */
-  --bg-muted: #E2E8F0;
+  --bg-main: #F5F7FB;           /* Main Background */
+  --bg-surface: #FFFFFF;        /* Card Background */
+  --bg-subtle: #F0F3F9;         /* Form Backdrops & Table Headers */
+  --bg-muted: #E7EBF1;
 
   /* Typography Scale */
-  --text-main: #0F172A;         /* Slate 900 */
-  --text-body: #334155;         /* Slate 700 */
-  --text-muted: #64748B;        /* Slate 500 */
-  --text-subtle: #94A3B8;       /* Slate 400 */
-  --border-color: #E2E8F0;      /* Standard Borders */
-  --border-strong: #CBD5E1;     /* Interactive Element Borders */
+  --text-main: #182230;         /* Main Text */
+  --text-body: #182230;         /* Main Text Body */
+  --text-muted: #718096;        /* Secondary Text */
+  --text-subtle: #718096;       /* Secondary Text */
+  --border-color: #E7EBF1;      /* Border */
+  --border-strong: #D3DBE6;     /* Interactive Element Borders */
 
   /* Semantic Feedback Tokens */
-  --success: #10B981;
-  --success-bg: #ECFDF5;
-  --success-border: #A7F3D0;
-  --success-text: #065F46;
+  --success: #0F9F6E;           /* Success Green */
+  --success-bg: #EDFBF5;
+  --success-border: #BCF0DA;
+  --success-text: #0B734F;
 
-  --warning: #F59E0B;
+  --warning: #C27A12;           /* Warning Amber */
+  --warning-bg: #FEF8E7;
+  --warning-border: #FCE6B5;
+  --warning-text: #8C550A;
+
+  --danger: #D14343;            /* Danger Red */
+  --danger-bg: #FDF2F2;
+  --danger-border: #F8B4B4;
+  --danger-text: #9B1C1C;
   --warning-bg: #FFFBEB;
   --warning-border: #FDE68A;
   --warning-text: #92400E;
