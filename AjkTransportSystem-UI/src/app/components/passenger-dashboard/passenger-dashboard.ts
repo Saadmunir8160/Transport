@@ -511,6 +511,111 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     }, 1800);
   }
 
+    saveTicketToGallery() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      alert('Unable to initialize canvas. Please use Print / Download Ticket.');
+      return;
+    }
+
+    canvas.width = 600;
+    canvas.height = 780;
+
+    // Background
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Top Header Background
+    ctx.fillStyle = '#2457D6';
+    ctx.fillRect(0, 0, canvas.width, 180);
+
+    // Header Monospace Info
+    ctx.fillStyle = '#E0E7FF';
+    ctx.font = '16px monospace';
+    ctx.fillText('ID: ' + (this.bookingId || 'AJK-882104'), 30, 45);
+    ctx.fillText('Code: ' + (this.ticketCode || 'TKT-7492'), 420, 45);
+
+    // Route Title
+    const start = this.selectedTrip?.startPoint || 'Muzaffarabad';
+    const end = this.selectedTrip?.endPoint || 'Rawalpindi';
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillText(start + ' to ' + end, 30, 95);
+
+    // Date & Time
+    const travelDate = this.selectedTrip?.travelDate ? new Date(this.selectedTrip.travelDate).toLocaleDateString() : 'Saturday, Nov 14, 2026';
+    const travelTime = this.selectedTrip?.departureTime || '08:30 AM';
+    ctx.font = '18px sans-serif';
+    ctx.fillText('📅 ' + travelDate + '    🕒 ' + travelTime, 30, 140);
+
+    // Body Info Grid
+    ctx.fillStyle = '#94A3B8';
+    ctx.font = 'bold 12px sans-serif';
+    ctx.fillText('PASSENGER', 30, 220);
+    ctx.fillText('BOARDING STOP', 30, 280);
+    ctx.fillText('DROP-OFF STOP', 30, 340);
+    ctx.fillText('SEAT(S)', 30, 400);
+    ctx.fillText('VEHICLE & DRIVER', 30, 460);
+    ctx.fillText('TOTAL PAID', 30, 520);
+
+    ctx.fillStyle = '#1E293B';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.fillText(this.userName || 'Ahmed', 30, 245);
+    ctx.fillText(start + ' Terminal', 30, 305);
+    ctx.fillText(end + ' Stop', 30, 365);
+
+    const seatsText = this.selectedSeats && this.selectedSeats.length > 0 ? this.selectedSeats.map(s => s.id).join(', ') : '1A';
+    ctx.fillStyle = '#0D766E';
+    ctx.fillText(seatsText, 30, 425);
+
+    ctx.fillStyle = '#1E293B';
+    ctx.fillText((this.selectedTrip?.registration || 'AJK-4402') + ' • Ahmed', 30, 485);
+
+    ctx.fillStyle = '#10B981';
+    ctx.font = 'bold 22px sans-serif';
+    const totalFare = ((this.selectedTrip?.fare || 1500) * (this.selectedSeats?.length || 1)) + 50;
+    ctx.fillText('Rs. ' + totalFare + ' (Paid)', 30, 550);
+
+    // Draw QR Code Image onto canvas
+    const qrImg = new Image();
+    qrImg.crossOrigin = 'anonymous';
+    qrImg.onload = () => {
+      ctx.drawImage(qrImg, 380, 220, 180, 180);
+      ctx.fillStyle = '#64748B';
+      ctx.font = '14px sans-serif';
+      ctx.fillText('Scan to board', 425, 425);
+
+      // Footer line
+      ctx.strokeStyle = '#E2E8F0';
+      ctx.beginPath();
+      ctx.moveTo(30, 600);
+      ctx.lineTo(570, 600);
+      ctx.stroke();
+
+      ctx.fillStyle = '#64748B';
+      ctx.font = '13px sans-serif';
+      ctx.fillText('AJK Smart Transport System • Digital Travel Pass', 140, 640);
+
+      // Download triggered
+      const link = document.createElement('a');
+      link.download = 'AJK-Ticket-' + (this.bookingId || 'BoardingPass') + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+
+    qrImg.onerror = () => {
+      // Fallback download even if QR fails cross-origin
+      const link = document.createElement('a');
+      link.download = 'AJK-Ticket-' + (this.bookingId || 'BoardingPass') + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    };
+
+    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + (this.bookingId || 'AJK') + '-' + (this.ticketCode || 'TKT');
+    qrImg.src = qrUrl;
+  }
+
   printTicketReceipt() {
     window.print();
   }

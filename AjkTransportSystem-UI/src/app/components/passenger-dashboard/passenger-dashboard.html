@@ -1272,35 +1272,32 @@
             <!-- Digital Ticket Tab -->
       <div *ngIf="activeTab === 'ticket' && selectedTrip" class="booking-confirmed-container">
         
-        <div class="content-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">My Ticket</h2>
-            <p style="color: #64748B;">Digital Boarding Pass &mdash; <span style="color: #10B981; font-weight:600;">Available Offline</span></p>
-          </div>
-          <!-- Back button removed -->
+        <div class="content-header" style="margin-bottom: 1.5rem; text-align: center;">
+          <h2 style="font-size: 1.75rem; font-weight: 800; color: #1E293B; margin: 0 0 0.25rem 0;">My Ticket</h2>
+          <p style="color: #64748B; margin: 0; font-size: 0.9rem;">Digital Boarding Pass &mdash; <span style="color: #10B981; font-weight:600;">Available Offline</span></p>
         </div>
 
         <div class="ticket-wrapper">
           <div class="ticket-card">
             <!-- Offline / Org Header -->
-            <div style="background: #F8FAFC; padding: 1.5rem 2.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0;">
-              <div style="font-weight: 800; color: #0D766E; font-size: 1.25rem; display: flex; align-items: center; gap: 0.75rem;">
-                <div style="width: 32px; height: 32px; background: #0D766E; border-radius: 50%; display: flex; align-items:center; justify-content:center; color:white; font-size: 1rem;">?</div>
+            <div style="background: #F8FAFC; padding: 1rem 1.75rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0;">
+              <div style="font-weight: 800; color: #0D766E; font-size: 1.1rem; display: flex; align-items: center; gap: 0.6rem;">
+                <div style="width: 28px; height: 28px; background: #0D766E; border-radius: 50%; display: flex; align-items:center; justify-content:center; color:white; font-size: 0.85rem;">&#128652;</div>
                 AJK Transport
               </div>
-              <span class="bc-status active" style="font-size: 0.85rem;">{{ selectedTrip.status | uppercase }}</span>
+              <span class="bc-status active" style="font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 12px; background: #DCFCE7; color: #15803D;">{{ (selectedTrip.status || 'SCHEDULED') | uppercase }}</span>
             </div>
 
             <!-- Top Section -->
-            <div class="ticket-top" style="background: #0F172A;">
+            <div class="ticket-top">
               <div class="ticket-ids">
                 <span class="booking-id">ID: {{ bookingId }}</span>
                 <span class="ticket-code">Code: {{ ticketCode }}</span>
               </div>
               <h3 class="ticket-route">{{ selectedTrip.startPoint }} to {{ selectedTrip.endPoint }}</h3>
               <div class="ticket-date-time">
-                <span>?? {{ selectedTrip.travelDate | date:'fullDate' }}</span>
-                <span>?? {{ selectedTrip.departureTime }}</span>
+                <span>&#128197; {{ selectedTrip.travelDate | date:'fullDate' }}</span>
+                <span>&#128338; {{ selectedTrip.departureTime }}</span>
               </div>
             </div>
 
@@ -1327,22 +1324,25 @@
                 <div class="t-item">
                   <span class="label">Seat(s)</span>
                   <span class="value" style="color: #0D766E;">
-                    <span *ngFor="let s of selectedSeats; let last = last">{{ s.id }}{{ !last ? ', ' : '' }}</span>
+                    <ng-container *ngIf="selectedSeats && selectedSeats.length > 0; else defaultTicketSeat">
+                      <span *ngFor="let s of selectedSeats; let last = last">{{ s.id }}{{ !last ? ', ' : '' }}</span>
+                    </ng-container>
+                    <ng-template #defaultTicketSeat>1A</ng-template>
                   </span>
                 </div>
                 <div class="t-item">
                   <span class="label">Vehicle & Driver</span>
                   <span class="value">{{ selectedTrip.registration || 'AJK-4402' }} &bull; Ahmed</span>
                 </div>
-                <div class="t-item" style="grid-column: span 2; border-top: 1px dashed #E2E8F0; padding-top: 1rem;">
+                <div class="t-item" style="grid-column: span 2; border-top: 1px dashed #E2E8F0; padding-top: 0.75rem;">
                   <span class="label">Amount Paid</span>
-                  <span class="value" style="color: #10B981; font-size: 1.25rem;">Rs. {{ selectedTrip.fare * selectedSeats.length + 50 }}</span>
+                  <span class="value" style="color: #10B981; font-size: 1.15rem; font-weight: 800;">Rs. {{ (selectedTrip.fare * (selectedSeats.length || 1)) + 50 }}</span>
                 </div>
               </div>
 
               <!-- QR Code -->
               <div class="qr-section" style="background: white;">
-                <img [src]="selectedTrip.status === 'cancelled' ? 'assets/invalid-qr.png' : 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + bookingId + '-' + ticketCode + '-HASH'" alt="Ticket QR Code" class="qr-code" [style.opacity]="selectedTrip.status === 'cancelled' ? '0.3' : '1'" style="width: 180px; height: 180px;">
+                <img [src]="selectedTrip.status === 'cancelled' ? 'assets/invalid-qr.png' : 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + bookingId + '-' + ticketCode + '-HASH'" alt="Ticket QR Code" class="qr-code" [style.opacity]="selectedTrip.status === 'cancelled' ? '0.3' : '1'" style="width: 88px; height: 88px;">
                 <p *ngIf="selectedTrip.status !== 'cancelled'">Scan at boarding</p>
                 <p *ngIf="selectedTrip.status === 'cancelled'" class="danger-text" style="color: #EF4444;">INVALID TICKET</p>
               </div>
@@ -1352,9 +1352,9 @@
 
         <div class="ticket-actions">
           <div class="secondary-actions">
-            <button class="action-chip" (click)="printTicketReceipt()">🖨️ Print / Download Ticket</button>
-            <button class="action-chip">??? Save to Gallery</button>
-            <button class="action-chip">?? Share Ticket</button>
+            <button class="action-chip" (click)="printTicketReceipt()">&#128424;&#65039; Print / Download Ticket</button>
+            <button class="action-chip" (click)="saveTicketToGallery()">&#128247; Save to Gallery</button>
+            <button class="action-chip" (click)="shareTicketViaWhatsApp()">&#128172; Share Ticket</button>
           </div>
         </div>
       </div>
