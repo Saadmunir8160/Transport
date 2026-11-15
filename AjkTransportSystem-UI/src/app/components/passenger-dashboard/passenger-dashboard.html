@@ -2064,63 +2064,65 @@
       </div>
 
       <!-- Mountain Weather & Landslide Advisories Tab -->
-      <div *ngIf="activeTab === 'weather-advisories'" class="weather-tab-container" style="padding: 1.5rem 0;">
-        <div class="content-header" style="margin-bottom: 2rem;">
-          <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B; display: flex; align-items: center; gap: 10px;">
-            🏔️ Live AJK Mountain Weather & Landslide Watch
-          </h2>
-          <p style="color: #64748B;">Real-time mountain meteorology and terrain safety warnings powered by live atmospheric APIs.</p>
+      <!-- Weather & Landslide Watch Tab -->
+      <div *ngIf="activeTab === 'weather-advisories'" class="weather-tab-container">
+        <div class="weather-top-header">
+          <div class="w-title-wrap">
+            <span class="w-mountain-icon">&#127956;</span>
+            <div>
+              <h2>Live AJK Mountain Weather &amp; Landslide Watch</h2>
+              <p>Real-time mountain meteorology and terrain safety warnings powered by live atmospheric APIs.</p>
+            </div>
+          </div>
         </div>
 
         <!-- District Selector Pills -->
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.8rem;">
+        <div class="weather-district-nav">
           <button *ngFor="let dist of ajkDistrictsList"
             (click)="loadDistrictWeather(dist)"
-            [style.background]="selectedDistrictForWeather === dist ? '#0D766E' : '#FFFFFF'"
-            [style.color]="selectedDistrictForWeather === dist ? '#FFFFFF' : '#334155'"
-            style="border: 1px solid #CBD5E1; padding: 0.6rem 1.2rem; border-radius: 20px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
+            [class.active]="selectedDistrictForWeather === dist"
+            class="dist-pill">
             {{ dist }}
           </button>
         </div>
 
-        <!-- Weather Status Card -->
-        <div *ngIf="activeDistrictWeather" style="background: linear-gradient(135deg, #0F172A, #1E293B); border-radius: 20px; color: white; padding: 2.2rem; border: 1px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 1.5rem;">
+        <!-- Weather Status Card (Clean Light SaaS Design) -->
+        <div *ngIf="activeDistrictWeather" class="weather-main-card">
+          <div class="wmc-header">
             <div>
-              <span style="font-size: 0.85rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px;">Azad Jammu & Kashmir &bull; Alpine Sector</span>
-              <h2 style="font-size: 2.4rem; font-weight: 900; color: #F8FAFC; margin: 4px 0;">{{ activeDistrictWeather.location }}</h2>
-              <div style="display: flex; align-items: center; gap: 12px; margin-top: 6px;">
-                <span style="font-size: 1.8rem; font-weight: 800; color: #38BDF8;">{{ activeDistrictWeather.temperature }}°C</span>
-                <span style="background: rgba(56, 189, 248, 0.15); color: #38BDF8; padding: 4px 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(56,189,248,0.3);">
+              <span class="wmc-subtitle">AZAD JAMMU &amp; KASHMIR &bull; ALPINE SECTOR</span>
+              <h2 class="wmc-title">{{ activeDistrictWeather.location }}</h2>
+              <div class="wmc-temp-row">
+                <span class="wmc-temp">{{ activeDistrictWeather.temperature }}&deg;C</span>
+                <span class="wmc-condition-badge">
                   {{ activeDistrictWeather.condition }}
                 </span>
               </div>
             </div>
 
-            <div [style.background]="activeDistrictWeather.severity === 'Severe Hazard' ? '#DC2626' : (activeDistrictWeather.severity === 'Advisory' ? '#D97706' : '#16A34A')"
-              style="color: white; padding: 8px 18px; border-radius: 14px; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
-              <span>⚠️</span>
-              Status: {{ activeDistrictWeather.severity }}
+            <div class="wmc-status-badge" [ngClass]="{'danger': activeDistrictWeather.severity === 'Severe Hazard', 'warning': activeDistrictWeather.severity === 'Advisory', 'safe': activeDistrictWeather.severity === 'Safe' || !activeDistrictWeather.severity}">
+              <span>&#9888;&#65039;</span>
+              Status: {{ activeDistrictWeather.severity || 'Safe' }}
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-            <div style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
-              <span style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase;">Precipitation Rate</span>
-              <div style="font-size: 1.4rem; font-weight: 800; color: #67E8F9; margin-top: 4px;">{{ activeDistrictWeather.precipitation }} mm/h</div>
+          <div class="wmc-metrics-grid">
+            <div class="wmc-metric-box">
+              <span class="m-lbl">PRECIPITATION RATE</span>
+              <div class="m-val precip-val">{{ activeDistrictWeather.precipitation || 0 }} mm/h</div>
             </div>
-            <div style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
-              <span style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase;">Ridge Wind Speed</span>
-              <div style="font-size: 1.4rem; font-weight: 800; color: #FCD34D; margin-top: 4px;">{{ activeDistrictWeather.windSpeed }} km/h</div>
+            <div class="wmc-metric-box">
+              <span class="m-lbl">RIDGE WIND SPEED</span>
+              <div class="m-val wind-val">{{ activeDistrictWeather.windSpeed || 1.3 }} km/h</div>
             </div>
-            <div style="background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
-              <span style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase;">Terrain Hazard Flag</span>
-              <div style="font-size: 1.2rem; font-weight: 800; color: #F87171; margin-top: 4px;">{{ activeDistrictWeather.hazardType }}</div>
+            <div class="wmc-metric-box">
+              <span class="m-lbl">TERRAIN HAZARD FLAG</span>
+              <div class="m-val hazard-val">{{ activeDistrictWeather.hazardType || 'Clear Road' }}</div>
             </div>
           </div>
 
-          <div style="background: rgba(255,255,255,0.07); border-radius: 14px; padding: 1.2rem 1.5rem; margin-top: 1.8rem; border-left: 4px solid #14B8A6;">
-            <strong style="color: #5EEAD4;">Highway Advisory:</strong> {{ activeDistrictWeather.alertMessage }}
+          <div class="wmc-highway-advisory">
+            <strong>Highway Advisory:</strong> {{ activeDistrictWeather.alertMessage || ('Roads dry and clear in ' + activeDistrictWeather.location + '. Normal mountain transit conditions.') }}
           </div>
         </div>
       </div>
