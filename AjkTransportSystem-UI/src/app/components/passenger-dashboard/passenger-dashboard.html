@@ -552,184 +552,175 @@
         </div>
       </div>
 
-      <!-- Trip Detail Tab -->
-      <div *ngIf="activeTab === 'trip-detail' && selectedTrip" class="trip-detail-container">
+            <!-- Trip Detail Tab (Exact Screenshot Redesign) -->
+      <div *ngIf="activeTab === 'trip-detail' && selectedTrip" class="td-page-wrapper">
         
         <!-- Back Button -->
-        <div class="back-link" (click)="setActiveTab('results')">
-          <span>← Back to results</span>
+        <div class="td-back-link" (click)="setActiveTab('results')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          <span>Back to results</span>
         </div>
 
         <!-- Cancelled Banner -->
-        <div class="advisory-banner error" *ngIf="selectedTrip.isCancelled">
-          ❌ This trip has been cancelled. Please select another trip.
+        <div class="td-cancelled-banner" *ngIf="selectedTrip.isCancelled">
+          <span>❌</span> This trip has been cancelled. Please select another trip.
         </div>
 
-        <!-- AI Mountain Weather Delay Intelligence Panel -->
-        <div class="advisory-panel" style="background: linear-gradient(135deg, #042F2E 0%, #0F172A 100%); color: white; border-radius: 18px; border: 1px solid #14B8A6; box-shadow: 0 10px 25px rgba(20, 184, 166, 0.15); margin-bottom: 2rem; overflow: hidden; padding: 1.5rem 1.8rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 1rem; margin-bottom: 1rem;">
-            <div style="display:flex; align-items:center; gap: 10px;">
-              <span style="font-size: 1.6rem;">🤖</span>
+        <!-- 1. AI Mountain Route & Weather Predictor Hero Banner (Exact Dark Teal Match) -->
+        <div class="td-ai-banner">
+          <div class="td-ai-top-row">
+            <div class="td-ai-title-wrap">
+              <span class="td-ai-bot-icon">🤖</span>
               <div>
-                <h3 style="margin:0; font-size: 1.15rem; font-weight: 800; color: #5EEAD4;">AI Mountain Route & Weather Predictor</h3>
-                <span style="font-size: 0.8rem; color: #94A3B8;">Terrain: {{ aiDelayPrediction?.terrainType || 'Alpine Pass' }}</span>
+                <h3 class="td-ai-heading">AI Mountain Route & Weather Predictor</h3>
+                <span class="td-ai-sub">Terrain: {{ aiDelayPrediction?.terrainType || 'High Altitude Mountain Pass' }}</span>
               </div>
             </div>
-            <span style="background: rgba(20, 184, 166, 0.2); color: #5EEAD4; border: 1px solid #14B8A6; font-size: 0.8rem; font-weight: 800; padding: 4px 12px; border-radius: 20px;">
+            <div class="td-ai-delay-pill">
               Predicted Delay: +{{ aiDelayPrediction?.predictedDelayMinutes || 25 }} Mins
-            </span>
+            </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; align-items: center;">
-            <div>
-              <div style="font-size: 0.95rem; line-height: 1.5; color: #F1F5F9; margin-bottom: 0.75rem;">
-                <strong>Strategic Advice:</strong> {{ aiDelayPrediction?.recommendation }}
+          <div class="td-ai-content-row">
+            <div class="td-ai-advice-col">
+              <div class="td-ai-advice-text">
+                <strong>Strategic Advice:</strong> ☁ Mountain Weather Advisory: Slippery turns near Kohala. Journey buffer of {{ aiDelayPrediction?.predictedDelayMinutes || 25 }} mins estimated.
               </div>
-              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <span *ngFor="let factor of aiDelayPrediction?.hazardFactors" style="background: rgba(255,255,255,0.08); color: #CBD5E1; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);">
-                  ⚡ {{ factor }}
-                </span>
+              <div class="td-ai-tags-row">
+                <span class="td-ai-tag">⚡ Steep mountain bends (+10m)</span>
+                <span class="td-ai-tag">⚡ Active rainfall on Kohala sector (+15m)</span>
               </div>
             </div>
-            <div style="text-align: right; background: rgba(0,0,0,0.25); padding: 1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
-              <span style="font-size: 0.75rem; text-transform: uppercase; color: #94A3B8;">Total Journey ETA</span>
-              <div style="font-size: 1.4rem; font-weight: 900; color: #FBBF24;">{{ selectedTrip.eta || '01:15 PM' }}</div>
-              <span style="font-size: 0.75rem; color: #34D399;">94% Prediction Confidence</span>
+
+            <div class="td-ai-eta-box">
+              <span class="td-eta-label">TOTAL JOURNEY ETA</span>
+              <div class="td-eta-time">{{ selectedTrip.eta || '01:00 PM' }}</div>
+              <span class="td-eta-conf">94% Prediction Confidence</span>
             </div>
           </div>
         </div>
 
-        <div class="detail-grid">
-          <!-- Left Column: Trip Info -->
-          <div class="trip-info-column">
-            
-            <div class="detail-card">
-              <h2>{{ selectedTrip.routeName }}</h2>
-              <div class="eta-confidence">
-                <span class="badge ai-eta">AI ETA Available</span>
-                <span class="confidence-text">Predicted from 120+ historical trips</span>
+        <!-- 2. Main 2-Column Section (Trip Route & Timeline vs Fare Breakdown) -->
+        <div class="td-main-grid">
+          
+          <!-- Left Column: Route Card -->
+          <div class="td-card td-route-card">
+            <h2 class="td-route-title">{{ selectedTrip.routeName }}</h2>
+            <div class="td-badge-row">
+              <span class="td-ai-badge">AI ETA AVAILABLE</span>
+              <span class="td-ai-pred-text">Predicted from 120+ historical trips</span>
+            </div>
+
+            <!-- Sleek Timeline -->
+            <div class="td-timeline-wrap">
+              <!-- Stop 1 (Departure) -->
+              <div class="td-timeline-item">
+                <div class="td-indicator-col">
+                  <span class="td-blue-circle"></span>
+                  <span class="td-timeline-vertical-line"></span>
+                </div>
+                <div class="td-stop-details">
+                  <div class="td-stop-time">{{ selectedTrip.departureTime || '08:30 AM' }}</div>
+                  <div class="td-stop-city">{{ selectedTrip.startPoint || 'Muzaffarabad' }}</div>
+                  <div class="td-stop-sub">Boarding Stop</div>
+                </div>
               </div>
 
-              <div class="route-timeline-expanded">
-                <!-- Departure -->
-                <div class="timeline-stop main-stop">
-                  <div class="timeline-indicator">
-                    <div class="dot"></div>
-                    <div class="line"></div>
-                  </div>
-                  <div class="stop-content">
-                    <div class="stop-time">{{ selectedTrip.departureTime }}</div>
-                    <div class="stop-name">{{ selectedTrip.startPoint }}</div>
-                    <div class="stop-type">Boarding Stop</div>
-                  </div>
-                </div>
-
-                <!-- Intermediate Stops Toggle -->
-                <div class="intermediate-stops-toggle">
-                  <details>
-                    <summary>Show 2 intermediate stops</summary>
-                    <div class="intermediate-list">
-                      <div class="timeline-stop sub-stop">
-                        <div class="timeline-indicator">
-                          <div class="dot small"></div>
-                          <div class="line"></div>
-                        </div>
-                        <div class="stop-content">
-                          <div class="stop-time">09:15 AM</div>
-                          <div class="stop-name">Kohala Checkpost</div>
-                        </div>
-                      </div>
-                      <div class="timeline-stop sub-stop">
-                        <div class="timeline-indicator">
-                          <div class="dot small"></div>
-                          <div class="line"></div>
-                        </div>
-                        <div class="stop-content">
-                          <div class="stop-time">10:30 AM</div>
-                          <div class="stop-name">Murree Expressway Toll</div>
-                        </div>
+              <!-- Intermediate Stops Details Toggle -->
+              <div class="td-intermediate-box">
+                <details>
+                  <summary class="td-summary-link">
+                    <span class="td-arrow">▶</span> Show 2 intermediate stops
+                  </summary>
+                  <div class="td-intermediate-dropdown">
+                    <div class="td-sub-stop">
+                      <span class="td-sub-dot"></span>
+                      <div>
+                        <strong>09:15 AM</strong> — Kohala Checkpost
                       </div>
                     </div>
-                  </details>
-                </div>
+                    <div class="td-sub-stop">
+                      <span class="td-sub-dot"></span>
+                      <div>
+                        <strong>10:30 AM</strong> — Murree Expressway Toll
+                      </div>
+                    </div>
+                  </div>
+                </details>
+              </div>
 
-                <!-- Arrival -->
-                <div class="timeline-stop main-stop">
-                  <div class="timeline-indicator">
-                    <div class="dot end"></div>
-                  </div>
-                  <div class="stop-content">
-                    <div class="stop-time">{{ selectedTrip.eta || '12:30 PM' }}</div>
-                    <div class="stop-name">{{ selectedTrip.endPoint }}</div>
-                    <div class="stop-type">Drop-off Stop</div>
-                  </div>
+              <!-- Stop 2 (Arrival) -->
+              <div class="td-timeline-item">
+                <div class="td-indicator-col">
+                  <span class="td-blue-circle"></span>
+                </div>
+                <div class="td-stop-details">
+                  <div class="td-stop-time">{{ selectedTrip.eta || '01:00 PM' }}</div>
+                  <div class="td-stop-city">{{ selectedTrip.endPoint || 'Rawalpindi' }}</div>
+                  <div class="td-stop-sub">Drop-off Stop</div>
                 </div>
               </div>
             </div>
-
-            <div class="detail-card">
-              <h3>Vehicle & Driver</h3>
-              <div class="vehicle-driver-grid">
-                <div class="info-item">
-                  <span class="label">Vehicle</span>
-                  <span class="value">{{ selectedTrip.vehicleType }} (Toyota Coaster)</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Registration</span>
-                  <span class="value reg-plate">{{ selectedTrip.registration || 'AJK-4402' }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Driver</span>
-                  <span class="value">Ahmed</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Total Distance</span>
-                  <span class="value">135 km</span>
-                </div>
-              </div>
-            </div>
-
           </div>
 
-          <!-- Right Column: Fare Breakdown & Action -->
-          <div class="fare-column">
-            <div class="detail-card sticky-card">
-              <h3>Fare Breakdown</h3>
+          <!-- Right Column: Fare Breakdown Card -->
+          <div class="td-card td-fare-card">
+            <h3 class="td-fare-title">Fare Breakdown</h3>
+            <span class="td-base-sub">Base fare (1 Seat)</span>
+
+            <div class="td-fare-list">
+              <div class="td-fare-row">
+                <span class="td-fare-label">Base fare (1 Seat)</span>
+                <span class="td-fare-val">Rs. {{ selectedTrip.fare }}</span>
+              </div>
+              <div class="td-fare-row">
+                <span class="td-fare-label">Booking fee</span>
+                <span class="td-fare-val">Rs. 50</span>
+              </div>
               
-              <div class="fare-rows">
-                <div class="fare-row">
-                  <span>Base fare (1 Seat)</span>
-                  <span>Rs. {{ selectedTrip.fare }}</span>
-                </div>
-                <div class="fare-row">
-                  <span>Booking fee</span>
-                  <span>Rs. 50</span>
-                </div>
-                <div class="fare-divider"></div>
-                <div class="fare-row total-per-seat">
-                  <span>Total per seat</span>
-                  <span>Rs. {{ selectedTrip.fare + 50 }}</span>
-                </div>
-                <div class="fare-row passengers">
-                  <span>Passengers</span>
-                  <span>x {{ passengerCount }}</span>
-                </div>
-                <div class="fare-divider"></div>
-                <div class="fare-row grand-total">
-                  <span>Total Amount</span>
-                  <span>Rs. {{ (selectedTrip.fare + 50) * passengerCount }}</span>
-                </div>
+              <div class="td-fare-divider"></div>
+
+              <div class="td-fare-row">
+                <span class="td-fare-label">Total per seat</span>
+                <span class="td-fare-val">Rs. {{ selectedTrip.fare + 50 }}</span>
+              </div>
+              <div class="td-fare-row">
+                <span class="td-fare-label">Passengers</span>
+                <span class="td-fare-val">x {{ passengerCount }}</span>
               </div>
 
-              <button class="btn-primary search-btn-huge" style="margin-top: 1.5rem;" [disabled]="selectedTrip.isCancelled" (click)="setActiveTab('seat-selection')">
-                Select Seats
-              </button>
+              <div class="td-fare-divider"></div>
+
+              <div class="td-fare-row td-grand-total">
+                <span class="td-total-label">Total Amount</span>
+                <span class="td-total-amount">Rs. {{ (selectedTrip.fare + 50) * passengerCount }}</span>
+              </div>
+            </div>
+
+            <!-- Gradient Teal/Blue Button matching screenshot -->
+            <button class="td-btn-select-seats" [disabled]="selectedTrip.isCancelled" (click)="setActiveTab('seat-selection')">
+              Select Seats
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Bottom Row: Vehicle & Driver Card (Left-Aligned Clean Box) -->
+        <div class="td-bottom-row">
+          <div class="td-card td-vehicle-card">
+            <h3 class="td-veh-title">Vehicle & Driver</h3>
+            <div class="td-veh-details">
+              <div><span class="td-veh-muted">Vehicle </span>({{ selectedTrip.vehicleType || 'Toyota Coaster' }})</div>
+              <div><span class="td-veh-muted">Registration</span>{{ selectedTrip.registration || 'AJK-4402' }}</div>
+              <div><span class="td-veh-muted">Driver</span>Ahmed</div>
+              <div><span class="td-veh-muted">Total Distance</span>135 km</div>
             </div>
           </div>
         </div>
 
       </div>
-
       <!-- Seat Selection Tab -->
       <div *ngIf="activeTab === 'seat-selection' && selectedTrip" class="seat-selection-container">
         

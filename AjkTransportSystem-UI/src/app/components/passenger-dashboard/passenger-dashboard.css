@@ -3684,3 +3684,449 @@ body {
   right: 10px;
   pointer-events: none;
 }
+
+/* ==========================================================================
+   TRIP DETAIL PAGE (EXACT SCREENSHOT REDESIGN)
+   ========================================================================== */
+
+.td-page-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0.5rem 0 3rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.td-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #2457D6;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.td-back-link:hover {
+  text-decoration: underline;
+}
+
+.td-cancelled-banner {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #B91C1C;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* 1. Dark Teal AI Predictor Hero Banner */
+.td-ai-banner {
+  background: #062325; /* Exact dark teal from screenshot */
+  color: #FFFFFF;
+  border-radius: 12px;
+  padding: 20px 24px;
+  border: 1px solid #0D4E52;
+  box-shadow: 0 4px 20px rgba(6, 35, 37, 0.4);
+}
+
+.td-ai-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.td-ai-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.td-ai-bot-icon {
+  font-size: 1.4rem;
+}
+
+.td-ai-heading {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #5EEAD4; /* Mint green */
+  margin: 0;
+}
+
+.td-ai-sub {
+  font-size: 0.6875rem;
+  color: #94A3B8;
+  display: block;
+  margin-top: 1px;
+}
+
+.td-ai-delay-pill {
+  background: rgba(20, 184, 166, 0.15);
+  border: 1px solid #14B8A6;
+  color: #5EEAD4;
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.td-ai-content-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .td-ai-content-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.td-ai-advice-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.td-ai-advice-text {
+  font-size: 0.75rem;
+  color: #E2E8F0;
+  line-height: 1.45;
+}
+
+.td-ai-tags-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.td-ai-tag {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #CBD5E1;
+  font-size: 0.6875rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.td-ai-eta-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 12px 20px;
+  text-align: right;
+  min-width: 170px;
+}
+
+.td-eta-label {
+  font-size: 0.625rem;
+  color: #94A3B8;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.td-eta-time {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #FBBF24; /* Warm yellow ETA */
+  line-height: 1.2;
+  margin: 2px 0;
+}
+
+.td-eta-conf {
+  font-size: 0.6875rem;
+  color: #34D399; /* Green confidence */
+  display: block;
+}
+
+/* 2. Main 2-Column Section */
+.td-main-grid {
+  display: grid;
+  grid-template-columns: 1.7fr 1.1fr;
+  gap: 16px;
+}
+
+@media (max-width: 800px) {
+  .td-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.td-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.td-route-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0 0 6px 0;
+}
+
+.td-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.td-ai-badge {
+  background: #EEF3FD;
+  color: #2457D6;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+.td-ai-pred-text {
+  font-size: 0.6875rem;
+  color: #718096;
+}
+
+/* Timeline */
+.td-timeline-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.td-timeline-item {
+  display: flex;
+  gap: 14px;
+}
+
+.td-indicator-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 14px;
+}
+
+.td-blue-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2457D6;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.td-timeline-vertical-line {
+  width: 2px;
+  flex: 1;
+  background: #E2E8F0;
+  margin: 4px 0;
+  min-height: 48px;
+}
+
+.td-stop-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+}
+
+.td-stop-time {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #182230;
+}
+
+.td-stop-city {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #4A5568;
+}
+
+.td-stop-sub {
+  font-size: 0.6875rem;
+  color: #718096;
+}
+
+.td-intermediate-box {
+  padding-left: 24px;
+  margin: 4px 0 16px 0;
+}
+
+.td-summary-link {
+  font-size: 0.75rem;
+  color: #4A5568;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.td-summary-link::-webkit-details-marker {
+  display: none;
+}
+
+.td-summary-link .td-arrow {
+  font-size: 0.625rem;
+  margin-right: 4px;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+details[open] .td-summary-link .td-arrow {
+  transform: rotate(90deg);
+}
+
+.td-intermediate-dropdown {
+  margin-top: 8px;
+  padding-left: 10px;
+  border-left: 2px dashed #CBD5E1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.td-sub-stop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #4A5568;
+}
+
+.td-sub-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #94A3B8;
+}
+
+/* Right Fare Card */
+.td-fare-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.td-fare-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0;
+}
+
+.td-base-sub {
+  font-size: 0.75rem;
+  color: #718096;
+  margin-top: 2px;
+  margin-bottom: 16px;
+}
+
+.td-fare-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.td-fare-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+}
+
+.td-fare-label {
+  color: #64748B;
+}
+
+.td-fare-val {
+  color: #182230;
+  font-weight: 600;
+}
+
+.td-fare-divider {
+  height: 1px;
+  background: #F1F5F9;
+  margin: 4px 0;
+}
+
+.td-grand-total {
+  margin-top: 4px;
+}
+
+.td-total-label {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #182230;
+}
+
+.td-total-amount {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #182230;
+}
+
+/* Teal/Blue Action Button */
+.td-btn-select-seats {
+  width: 100%;
+  padding: 10px 16px;
+  margin-top: 24px;
+  background: linear-gradient(90deg, #1D63D8 0%, #0D8B96 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(29, 99, 216, 0.25);
+  transition: all 0.2s ease;
+}
+
+.td-btn-select-seats:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+/* Bottom Vehicle Card */
+.td-bottom-row {
+  display: grid;
+  grid-template-columns: 1.7fr 1.1fr;
+  gap: 16px;
+}
+
+@media (max-width: 800px) {
+  .td-bottom-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.td-vehicle-card {
+  padding: 16px 20px;
+}
+
+.td-veh-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0 0 12px 0;
+}
+
+.td-veh-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #182230;
+  font-weight: 600;
+}
+
+.td-veh-muted {
+  color: #718096;
+  font-weight: 400;
+  margin-right: 4px;
+}
