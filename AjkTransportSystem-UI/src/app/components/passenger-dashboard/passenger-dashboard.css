@@ -5113,3 +5113,309 @@ details[open] .td-summary-link .td-arrow {
 .btn-inv-close:hover {
   background: #F1F5F9;
 }
+
+/* Cancel Booking Redesign - Professional Palette & Proportions */
+.cancel-booking-container {
+  max-width: 960px;
+  margin: 1rem auto 3rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.cancel-top-header {
+  margin-bottom: 1.5rem;
+}
+
+.cancel-top-header h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 0.25rem 0;
+  letter-spacing: -0.3px;
+}
+
+.cancel-top-header p {
+  color: #64748B;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.cancel-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.cancel-card-main {
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+}
+
+.cancel-card-banner {
+  background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
+  border-bottom: 1px solid #FECDD3;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.cancel-card-badge {
+  width: 44px;
+  height: 44px;
+  background: #E11D48;
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 4px 10px rgba(225, 29, 72, 0.25);
+}
+
+.cancel-card-banner h3 {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #9F1239;
+  font-family: 'Outfit', sans-serif;
+}
+
+.cancel-card-banner p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #BE123C;
+  font-weight: 500;
+}
+
+.cancel-card-body {
+  padding: 1.5rem;
+}
+
+.cancel-card-body h4 {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0F172A;
+  font-family: 'Outfit', sans-serif;
+}
+
+.cancel-details-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+  background: #F8FAFC;
+  padding: 1.25rem;
+  border-radius: 10px;
+  border: 1px solid #E2E8F0;
+}
+
+.cancel-details-box .c-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cancel-details-box .c-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94A3B8;
+  letter-spacing: 0.5px;
+}
+
+.cancel-details-box .c-val {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.cancel-sidebar-card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  padding: 1.5rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+}
+
+.cancel-sidebar-card h4 {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0F172A;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+}
+
+.refund-highlight-box {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: 12px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.refund-highlight-box .rh-title {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #166534;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.35rem;
+}
+
+.refund-highlight-box .rh-amount {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #15803D;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+.refund-highlight-box .rh-badge {
+  display: inline-block;
+  background: #DCFCE7;
+  color: #15803D;
+  padding: 0.2rem 0.65rem;
+  border-radius: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.refund-terms-text {
+  font-size: 0.75rem;
+  color: #64748B;
+  text-align: center;
+  line-height: 1.45;
+  margin: 0 0 1.25rem 0;
+}
+
+.cancel-actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.btn-confirm-cancel {
+  width: 100%;
+  background: #E11D48;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-confirm-cancel:hover {
+  background: #BE123C;
+}
+
+.btn-keep-booking {
+  width: 100%;
+  background: #FFFFFF;
+  color: #334155;
+  border: 1px solid #CBD5E1;
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-keep-booking:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+}
+
+.cancel-success-box {
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+
+.cancel-success-icon {
+  width: 54px;
+  height: 54px;
+  background: #10B981;
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.cancel-success-box h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 0.5rem 0;
+}
+
+.cancel-success-box p {
+  color: #64748B;
+  font-size: 0.85rem;
+  max-width: 420px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.refund-summary-box {
+  background: #F8FAFC;
+  border: 1px dashed #CBD5E1;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  max-width: 360px;
+  margin: 0 auto 1.75rem auto;
+}
+
+.refund-summary-box .rs-title {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 0.25rem;
+}
+
+.refund-summary-box .rs-amount {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #10B981;
+}
+
+.refund-summary-box .rs-subtitle {
+  display: block;
+  font-size: 0.72rem;
+  color: #64748B;
+  margin-top: 0.25rem;
+}
+
+.btn-return-bookings {
+  background: #2457D6;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-return-bookings:hover {
+  opacity: 0.92;
+}

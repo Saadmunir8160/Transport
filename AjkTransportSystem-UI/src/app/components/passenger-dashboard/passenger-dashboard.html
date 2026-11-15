@@ -1462,88 +1462,88 @@
       </div>
 
       <!-- Cancel Booking Tab -->
-      <div *ngIf="activeTab === 'cancel-booking' && cancellingBooking" class="cancel-booking-container" style="max-width: 1100px; margin: 0 auto; animation: fadeIn 0.4s ease-out;">
+      <div *ngIf="activeTab === 'cancel-booking' && cancellingBooking" class="cancel-booking-container">
         
-        <div class="content-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">Cancel Booking</h2>
-            <p style="color: #64748B;">Review refund details before confirming.</p>
-          </div>
-          <!-- Back button removed -->
+        <div class="cancel-top-header">
+          <h2>Cancel Booking</h2>
+          <p>Review refund details and confirm cancellation.</p>
         </div>
 
         <!-- STEP 1: Confirm Cancellation -->
-        <div class="cancel-layout" style="display: grid; grid-template-columns: 1fr 380px; gap: 2rem; align-items: start;" *ngIf="cancelStep === 1">
+        <div class="cancel-layout-grid" *ngIf="cancelStep === 1">
           
           <!-- Left Side: Warning & Details -->
-          <div class="cancel-card" style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; overflow: hidden;">
-            <div class="cancel-header" style="background: #FEE2E2; padding: 2rem; text-align: center; border-bottom: 1px solid #FCA5A5;">
-              <div class="cancel-icon" style="width: 64px; height: 64px; background: #DC2626; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1rem auto; box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);">⚠️</div>
-              <h3 style="color: #991B1B; font-size: 1.5rem; margin: 0 0 0.5rem 0; font-weight: 800;">Are you sure?</h3>
-              <p style="color: #B91C1C; margin: 0; font-weight: 500;">This action cannot be undone. Your seat will be released immediately.</p>
+          <div class="cancel-card-main">
+            <div class="cancel-card-banner">
+              <div class="cancel-card-badge">
+                <span>&#9888;&#65039;</span>
+              </div>
+              <h3>Are you sure?</h3>
+              <p>This action cannot be undone. Your seat will be released immediately.</p>
             </div>
 
-            <div class="cancel-details" style="padding: 2.5rem;">
-              <h4 style="color: #1E293B; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.1rem; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem;">Booking Details</h4>
+            <div class="cancel-card-body">
+              <h4>Booking Details</h4>
               
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: #F8FAFC; padding: 2rem; border-radius: 12px; border: 1px dashed #CBD5E1;">
-                <div>
-                  <span style="display:block; font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Booking ID</span>
-                  <strong style="color: #1E293B; font-size: 1.15rem;">{{ cancellingBooking.id }}</strong>
+              <div class="cancel-details-box">
+                <div class="c-field">
+                  <span class="c-label">BOOKING ID</span>
+                  <strong class="c-val">{{ cancellingBooking.id }}</strong>
                 </div>
-                <div>
-                  <span style="display:block; font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Route</span>
-                  <strong style="color: #1E293B; font-size: 1.15rem;">{{ cancellingBooking.route }}</strong>
+                <div class="c-field">
+                  <span class="c-label">ROUTE</span>
+                  <strong class="c-val">{{ cancellingBooking.route }}</strong>
                 </div>
-                <div>
-                  <span style="display:block; font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Date & Time</span>
-                  <strong style="color: #1E293B; font-size: 1.15rem;">{{ cancellingBooking.date | date:'mediumDate' }} &bull; {{ cancellingBooking.time }}</strong>
+                <div class="c-field">
+                  <span class="c-label">DATE &amp; TIME</span>
+                  <strong class="c-val">{{ cancellingBooking.date | date:'mediumDate' }} &bull; {{ cancellingBooking.time }}</strong>
                 </div>
-                <div>
-                  <span style="display:block; font-size: 0.8rem; color: #64748B; font-weight: 700; text-transform: uppercase;">Amount Paid</span>
-                  <strong style="color: #1E293B; font-size: 1.15rem;">Rs. {{ cancellingBooking.amountPaid }}</strong>
+                <div class="c-field">
+                  <span class="c-label">AMOUNT PAID</span>
+                  <strong class="c-val">Rs. {{ cancellingBooking.amountPaid || cancellingBooking.amount }}</strong>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Right Side: Refund Estimate & Actions -->
-          <div class="cancel-summary-card" style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; overflow: hidden; padding: 2.5rem;">
-            <h4 style="color: #1E293B; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.1rem; text-align: center;">Refund Estimate</h4>
+          <div class="cancel-sidebar-card">
+            <h4>Refund Estimate</h4>
             
-            <div style="background: linear-gradient(to bottom, #F0FDF4, #DCFCE7); padding: 2rem 1.5rem; border-radius: 16px; border: 1px solid #86EFAC; text-align: center; margin-bottom: 2rem;">
-              <span style="display:block; color: #166534; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.85rem; margin-bottom: 0.5rem;">Estimated Refund</span>
-              <div style="font-size: 2.5rem; font-weight: 800; color: #166534; margin-bottom: 1rem; line-height: 1;">
-                Rs. {{ cancellingBooking.refundAmount }}
+            <div class="refund-highlight-box">
+              <span class="rh-title">ESTIMATED REFUND</span>
+              <div class="rh-amount">
+                Rs. {{ cancellingBooking.refundAmount || cancellingBooking.amountPaid || cancellingBooking.amount }}
               </div>
-              <span style="display:inline-block; background: #BBF7D0; color: #15803D; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">{{ cancellingBooking.refundPolicy }}</span>
+              <span class="rh-badge">{{ cancellingBooking.refundPolicy || 'More than 60 mins before departure' }}</span>
             </div>
 
-            <p style="font-size: 0.85rem; color: #64748B; text-align: center; margin-bottom: 2.5rem; line-height: 1.5;">Refunds will be processed to the original payment method within 3-5 business days.</p>
+            <p class="refund-terms-text">Refunds will be processed to the original payment method within 3-5 business days.</p>
 
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-              <button class="bc-btn danger" style="width: 100%; padding: 1rem; font-size: 1.05rem;" (click)="cancelStep = 2">Confirm Cancellation</button>
-              <button class="bc-btn outline" style="width: 100%; padding: 1rem; font-size: 1.05rem;" (click)="setActiveTab('bookings')">Keep Booking</button>
+            <div class="cancel-actions-group">
+              <button class="btn-confirm-cancel" (click)="cancelStep = 2">Confirm Cancellation</button>
+              <button class="btn-keep-booking" (click)="setActiveTab('bookings')">Keep Booking</button>
             </div>
           </div>
         </div>
 
         <!-- STEP 2: Cancellation Success -->
-        <div class="cancel-success-card" style="background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid #E2E8F0; overflow: hidden; padding: 3rem 2rem; text-align: center;" *ngIf="cancelStep === 2">
-          <div style="width: 80px; height: 80px; background: #10B981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.5rem auto; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);">✓</div>
-          <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B; margin-bottom: 0.5rem;">Booking Cancelled</h2>
-          <p style="color: #64748B; font-size: 1.1rem; max-width: 400px; margin: 0 auto 2rem auto;">Your seat has been released successfully. We've sent a confirmation SMS to your registered number.</p>
+        <div class="cancel-success-box" *ngIf="cancelStep === 2">
+          <div class="cancel-success-icon">&#10003;</div>
+          <h2>Booking Cancelled</h2>
+          <p>Your seat has been released successfully. We've sent a confirmation SMS to your registered number.</p>
           
-          <div style="background: #F8FAFC; border: 1px dashed #CBD5E1; padding: 1.5rem; border-radius: 12px; max-width: 400px; margin: 0 auto 2.5rem auto;">
-            <p style="margin: 0 0 0.5rem 0; font-weight: 700; color: #334155;">Refund Initiated</p>
-            <p style="margin: 0; color: #10B981; font-size: 1.5rem; font-weight: 800;">Rs. {{ cancellingBooking.refundAmount }}</p>
-            <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: #64748B;">Expect funds in 3-5 business days</p>
+          <div class="refund-summary-box">
+            <span class="rs-title">Refund Initiated</span>
+            <div class="rs-amount">Rs. {{ cancellingBooking.refundAmount || cancellingBooking.amountPaid || cancellingBooking.amount }}</div>
+            <span class="rs-subtitle">Expect funds in 3-5 business days</span>
           </div>
 
-          <!-- Back button removed -->
+          <button class="btn-return-bookings" (click)="confirmCancellation()">View My Bookings</button>
         </div>
 
       </div>
+
 
                   <!-- Register Tab -->
       <div *ngIf="activeTab === 'register'" class="register-tab" style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
