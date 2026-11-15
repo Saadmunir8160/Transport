@@ -1359,100 +1359,114 @@
         </div>
       </div>
 
-                  <!-- Track My Bus Tab -->
-      <div *ngIf="activeTab === 'track-bus' && selectedTrip" class="track-bus-view animation-fade-in" style="width: 100%;">
+      <!-- Track My Bus Tab -->
+      <div *ngIf="activeTab === 'track-bus' && selectedTrip" class="track-bus-view animation-fade-in">
         
-        <div class="content-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px;">Track My Bus</h2>
-            <p style="color: var(--text-secondary); margin-top: 0.25rem;">Live GPS tracking for {{ selectedTrip.route }}</p>
+        <div class="track-top-header">
+          <div class="track-title-wrap">
+            <h2>Track My Bus</h2>
+            <p>Live GPS tracking for <strong>{{ selectedTrip.routeName || selectedTrip.route || (selectedTrip.startPoint + ' to ' + selectedTrip.endPoint) }}</strong></p>
           </div>
-          <!-- Back button removed -->
+          <div class="gps-status-pill">
+            <span class="pulse-dot"></span>
+            <span>GPS Signal: Strong (4G Live)</span>
+          </div>
         </div>
 
-        <!-- Advisory Banner -->
-        <div class="advisory-banner" style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid #F59E0B; padding: 1.25rem 1.5rem; border-radius: 12px; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 2rem;">
-          <div style="color: #D97706; font-size: 1.5rem;">⚠️</div>
-          <div>
-            <h4 style="margin: 0 0 0.25rem 0; color: #92400E; font-size: 1.05rem; font-weight: 600;">Road Advisory: Heavy Rain</h4>
-            <p style="margin: 0; color: #B45309; font-size: 0.95rem;">Expect delays of 10-15 minutes near Kohala Bridge due to heavy rain and slippery roads.</p>
+        <!-- Modern Compact Road Advisory Banner -->
+        <div class="track-advisory-banner">
+          <div class="advisory-icon-box">
+            <span>&#9888;&#65039;</span>
+          </div>
+          <div class="advisory-text">
+            <h4>Road Advisory: Mountain Weather &amp; Traffic</h4>
+            <p>Rain reported near Kohala sector. Driver is operating with high caution. Journey buffer +10 mins estimated.</p>
           </div>
         </div>
 
         <!-- Tracking Layout -->
-        <div class="tracking-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; align-items: start;">
+        <div class="track-layout-grid">
           
           <!-- Left: Real Interactive Leaflet Live Map -->
-          <div class="bc-card map-card" style="padding: 0; overflow: hidden; height: 600px; position: relative; border-radius: 24px; border: 1px solid #CBD5E1; box-shadow: 0 10px 25px rgba(0,0,0,0.06);">
-            
+          <div class="track-map-card">
             <!-- Real Leaflet Map Container -->
-            <div id="ajk-live-map" style="width: 100%; height: 100%; z-index: 1;"></div>
+            <div id="ajk-live-map"></div>
 
             <!-- Live Telemetry Status Bar -->
-            <div style="position: absolute; top: 16px; left: 16px; z-index: 1000; background: rgba(15, 23, 42, 0.88); backdrop-filter: blur(8px); color: white; padding: 0.6rem 1.2rem; border-radius: 30px; font-size: 0.85rem; display: flex; align-items: center; gap: 1rem; border: 1px solid rgba(255,255,255,0.15);">
-              <div style="display:flex; align-items:center; gap: 6px;">
-                <span style="width: 10px; height: 10px; background: #10B981; border-radius: 50%; display:inline-block; animation: pulse 1.5s infinite;"></span>
-                <strong style="color: #34D399;">LIVE GPS ACTIVE</strong>
+            <div class="map-telemetry-pill">
+              <div class="tele-live-badge">
+                <span class="tele-pulse"></span>
+                <strong>LIVE GPS</strong>
               </div>
-              <span style="color: #94A3B8;">|</span>
-              <span>Speed: <strong style="color: #FBBF24;">{{ busSpeedKmH }} km/h</strong></span>
-              <span style="color: #94A3B8;">|</span>
-              <span>Route: <strong>{{ selectedTrip?.startPoint }} ➔ {{ selectedTrip?.endPoint }}</strong></span>
+              <span class="tele-sep">|</span>
+              <span>Speed: <strong>{{ busSpeedKmH || 48 }} km/h</strong></span>
+              <span class="tele-sep">|</span>
+              <span>Route: <strong>{{ selectedTrip?.startPoint }} &#10140; {{ selectedTrip?.endPoint }}</strong></span>
             </div>
 
-            <!-- Offline / Sync Status Overlay -->
-            <div class="offline-notice" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(30, 41, 59, 0.92); backdrop-filter: blur(10px); color: white; padding: 0.6rem 1.4rem; border-radius: 30px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 1000; white-space: nowrap;">
-              <div style="width: 8px; height: 8px; background: #10B981; border-radius: 50%; box-shadow: 0 0 10px #10B981;"></div>
-              GPS Updated: <strong>{{ lastGpsUpdate }}</strong>
+            <!-- GPS Timestamp Overlay -->
+            <div class="map-timestamp-overlay">
+              <div class="ts-dot"></div>
+              <span>Last Ping: <strong>{{ lastGpsUpdate || 'Just now' }}</strong></span>
             </div>
           </div>
 
           <!-- Right: Journey Info -->
-          <div class="journey-sidebar" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div class="track-sidebar">
             
-            <div class="bc-card status-card" style="border-left: 4px solid var(--primary-color);">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                <h4 style="margin: 0; color: var(--text-primary); font-size: 1.1rem; font-weight: 700;">Status</h4>
-                <span style="background: #FEF2F2; color: #DC2626; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 700;">10 MIN LATE</span>
+            <div class="track-card status-summary-card">
+              <div class="status-card-header">
+                <span class="sc-title">CURRENT STATUS</span>
+                <span class="sc-delay-badge">ON SCHEDULE</span>
               </div>
-              <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Current Location</div>
-              <div style="font-size: 1.25rem; font-weight: 800; color: var(--primary-color);">Approaching {{ selectedTrip.startPoint }}</div>
+              <div class="sc-loc-lbl">Current Location</div>
+              <div class="sc-loc-name">En route to {{ selectedTrip?.startPoint }} Terminal</div>
+              <div class="sc-driver-info">
+                <span>Vehicle: <strong>{{ selectedTrip?.registration || 'AJK-4402' }}</strong></span>
+                <span>Driver: <strong>Ahmed</strong></span>
+              </div>
             </div>
 
-            <div class="bc-card journey-timeline-card">
-              <h4 style="margin: 0 0 1.5rem 0; color: var(--text-primary); font-size: 1.1rem; font-weight: 700;">Your Journey</h4>
+            <div class="track-card timeline-card">
+              <h4>Journey Timeline</h4>
               
-              <div class="timeline" style="position: relative; padding-left: 1.5rem;">
-                <!-- Timeline line -->
-                <div style="position: absolute; left: 7px; top: 5px; bottom: 5px; width: 2px; background: #E2E8F0;"></div>
-                <div style="position: absolute; left: 7px; top: 5px; height: 30%; width: 2px; background: var(--primary-color);"></div>
+              <div class="track-timeline">
+                <div class="ttl-line"></div>
 
-                <!-- Stop 1 (Passed) -->
-                <div class="tl-item" style="position: relative; margin-bottom: 2rem;">
-                  <div style="position: absolute; left: -1.5rem; width: 16px; height: 16px; background: var(--primary-color); border-radius: 50%; top: 2px;"></div>
-                  <div style="font-weight: 700; color: var(--text-secondary); text-decoration: line-through;">Muzaffarabad Terminal (Origin)</div>
-                  <div style="font-size: 0.85rem; color: #94A3B8; margin-top: 0.25rem;">Departed at 08:35 AM</div>
+                <!-- Stop 1 (Origin) -->
+                <div class="ttl-item passed">
+                  <div class="ttl-dot"></div>
+                  <div class="ttl-content">
+                    <div class="ttl-stop">{{ selectedTrip?.startPoint }} Terminal</div>
+                    <div class="ttl-time">Departed at {{ selectedTrip?.departureTime || '08:30 AM' }}</div>
+                  </div>
                 </div>
 
-                <!-- Stop 2 (Your Boarding) -->
-                <div class="tl-item" style="position: relative; margin-bottom: 2rem;">
-                  <div style="position: absolute; left: -1.5rem; width: 16px; height: 16px; background: white; border: 3px solid var(--primary-color); border-radius: 50%; top: 2px; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);"></div>
-                  <div style="font-weight: 800; color: var(--text-primary); font-size: 1.05rem;">{{ selectedTrip.startPoint }} (Your Boarding)</div>
-                  <div style="font-size: 0.85rem; color: var(--primary-color); font-weight: 700; margin-top: 0.25rem;">ETA: 09:15 AM (in 12 mins)</div>
+                <!-- Stop 2 (Way Point) -->
+                <div class="ttl-item active">
+                  <div class="ttl-dot"></div>
+                  <div class="ttl-content">
+                    <div class="ttl-stop">Kohala Bridge Transit</div>
+                    <div class="ttl-time active-time">Passing now &bull; Speed 48 km/h</div>
+                  </div>
                 </div>
 
-                <!-- Stop 3 (Next Stop) -->
-                <div class="tl-item" style="position: relative; margin-bottom: 2rem;">
-                  <div style="position: absolute; left: -1.5rem; width: 16px; height: 16px; background: white; border: 3px solid #CBD5E1; border-radius: 50%; top: 2px;"></div>
-                  <div style="font-weight: 600; color: var(--text-primary);">Kohala Bridge</div>
-                  <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">ETA: 10:05 AM</div>
+                <!-- Stop 3 (Next) -->
+                <div class="ttl-item upcoming">
+                  <div class="ttl-dot"></div>
+                  <div class="ttl-content">
+                    <div class="ttl-stop">Murree Expressway Interchange</div>
+                    <div class="ttl-time">ETA: 10:15 AM (in 35 mins)</div>
+                  </div>
                 </div>
 
-                <!-- Stop 4 (Your Drop-off) -->
-                <div class="tl-item" style="position: relative;">
-                  <div style="position: absolute; left: -1.5rem; width: 16px; height: 16px; background: white; border: 3px solid #CBD5E1; border-radius: 50%; top: 2px;"></div>
-                  <div style="font-weight: 800; color: var(--text-primary); font-size: 1.05rem;">{{ selectedTrip.endPoint }} (Your Drop-off)</div>
-                  <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem;">ETA: 11:45 AM</div>
+                <!-- Stop 4 (Destination) -->
+                <div class="ttl-item upcoming">
+                  <div class="ttl-dot"></div>
+                  <div class="ttl-content">
+                    <div class="ttl-stop">{{ selectedTrip?.endPoint }} Central</div>
+                    <div class="ttl-time">Estimated Arrival: 11:30 AM</div>
+                  </div>
                 </div>
               </div>
             </div>
