@@ -4130,3 +4130,360 @@ details[open] .td-summary-link .td-arrow {
   font-weight: 400;
   margin-right: 4px;
 }
+
+/* ==========================================================================
+   SEAT SELECTION TAB (FULL MODERN & PROFESSIONAL SAAS REDESIGN)
+   ========================================================================== */
+
+.ss-page-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.5rem 0 3rem 0;
+}
+
+.ss-main-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .ss-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ss-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+}
+
+.ss-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0 0 4px 0;
+  text-align: center;
+}
+
+.ss-subtitle {
+  font-size: 0.75rem;
+  color: #718096;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+/* Bus Body / Chassis */
+.ss-bus-chassis {
+  background: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  border-radius: 28px 28px 16px 16px;
+  padding: 18px 24px 22px 24px;
+  max-width: 260px;
+  margin: 0 auto 20px auto;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.ss-driver-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.ss-driver-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #E2E8F0;
+  color: #475569;
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.ss-dash-divider {
+  height: 2px;
+  border-bottom: 2px dashed #CBD5E1;
+  margin-bottom: 16px;
+}
+
+/* Seats Matrix */
+.ss-seats-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ss-seat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ss-seat-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px 6px 4px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.ss-aisle-gap {
+  width: 20px;
+}
+
+/* Seat States */
+.seat-available {
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  color: #475569;
+}
+
+.seat-available:hover {
+  border-color: #2457D6;
+  color: #2457D6;
+  transform: translateY(-1px);
+}
+
+.seat-held {
+  background: #F1F5F9;
+  border: 1.5px solid #94A3B8;
+  color: #94A3B8;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.seat-booked {
+  background: #E2E8F0;
+  border: 1.5px solid #CBD5E1;
+  color: #94A3B8;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.seat-selected {
+  background: #2457D6 !important;
+  border: 1.5px solid #1D46B0 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 6px rgba(36, 87, 214, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Legend */
+.ss-legend-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #EEF2F6;
+  flex-wrap: wrap;
+}
+
+.ss-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.6875rem;
+  color: #4A5568;
+  font-weight: 500;
+}
+
+.legend-indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5625rem;
+  font-weight: 800;
+}
+
+.ind-available {
+  background: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+}
+
+.ind-held {
+  background: #F1F5F9;
+  border: 1.5px solid #94A3B8;
+}
+
+.ind-booked {
+  background: #E2E8F0;
+  border: 1.5px solid #CBD5E1;
+  color: #64748B;
+}
+
+.ind-yours {
+  background: #2457D6;
+  border: 1.5px solid #1D46B0;
+}
+
+/* Selection Summary Card */
+.ss-summary-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.ss-summary-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0 0 14px 0;
+}
+
+.ss-summary-info-box {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.info-row {
+  display: flex;
+  font-size: 0.75rem;
+  gap: 6px;
+}
+
+.info-label {
+  color: #64748B;
+  font-weight: 600;
+  min-width: 48px;
+}
+
+.info-val {
+  color: #182230;
+  font-weight: 600;
+}
+
+/* Selected Seats Section */
+.ss-seats-selected-section {
+  margin-bottom: 16px;
+}
+
+.ss-selected-heading {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4A5568;
+  margin: 0 0 8px 0;
+}
+
+.ss-empty-seats p {
+  font-size: 0.75rem;
+  color: #94A3B8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.ss-seats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ss-selected-seat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+}
+
+.seat-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #182230;
+}
+
+.seat-type-sub {
+  font-size: 0.6875rem;
+  color: #718096;
+}
+
+.seat-fare-val {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #182230;
+}
+
+/* Total Row */
+.ss-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid #EEF2F6;
+  border-bottom: 1px solid #EEF2F6;
+  margin-bottom: 16px;
+}
+
+.total-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #182230;
+}
+
+.total-val {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #182230;
+}
+
+/* Action Checkout Button */
+.ss-action-btn {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+}
+
+.btn-ready {
+  background: linear-gradient(90deg, #1D63D8 0%, #0D8B96 100%);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(29, 99, 216, 0.25);
+}
+
+.btn-ready:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.btn-pending {
+  background: #93C5FD;
+  color: #FFFFFF;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.ss-hold-notice {
+  font-size: 0.6875rem;
+  color: #94A3B8;
+  text-align: center;
+  margin: 0;
+}

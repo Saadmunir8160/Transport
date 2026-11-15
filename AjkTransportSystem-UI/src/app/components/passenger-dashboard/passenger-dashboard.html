@@ -721,189 +721,142 @@
         </div>
 
       </div>
-      <!-- Seat Selection Tab -->
-      <div *ngIf="activeTab === 'seat-selection' && selectedTrip" class="seat-selection-container">
+            <!-- Seat Selection Tab (Professional Redesign) -->
+      <div *ngIf="activeTab === 'seat-selection' && selectedTrip" class="ss-page-wrapper">
         
-        <div class="back-link" (click)="setActiveTab('trip-detail')">
-          <span>← Back to trip details</span>
-        </div>
+        <!-- Back to Trip Details REMOVED as requested -->
 
-        <div class="seat-grid-container">
-          <!-- Left: The Seat Map -->
-          <div class="seat-map-card">
-            <h3>Select your seats</h3>
-            <p class="subtitle">Please select up to {{ passengerCount }} seat(s).</p>
+        <div class="ss-main-grid">
+          
+          <!-- Left Card: Clean Bus Seat Map -->
+          <div class="ss-card ss-map-card">
+            <h2 class="ss-title">Select your seats</h2>
+            <p class="ss-subtitle">Please select up to {{ passengerCount }} seat(s).</p>
             
-            <div class="bus-layout">
-              <div class="driver-section">
-                <div class="steering-wheel">Driver</div>
+            <!-- Bus Chassis Container -->
+            <div class="ss-bus-chassis">
+              
+              <!-- Driver Cabin Front -->
+              <div class="ss-driver-row">
+                <div class="ss-driver-badge">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="m4.93 4.93 4.24 4.24"/>
+                    <path d="m14.83 9.17 4.24-4.24"/>
+                    <path d="M12 12v9"/>
+                  </svg>
+                  <span>DRIVER</span>
+                </div>
               </div>
               
-              <div class="seats-area">
-                <div class="seat-row" *ngFor="let row of seatMap">
-                  <div class="seat-cell" *ngFor="let seat of row">
+              <div class="ss-dash-divider"></div>
+
+              <!-- Seats Rows Grid -->
+              <div class="ss-seats-matrix">
+                <div class="ss-seat-row" *ngFor="let row of seatMap">
+                  <ng-container *ngFor="let seat of row">
+                    <!-- Seat Cell -->
                     <div 
-                      class="seat" 
+                      class="ss-seat-box" 
                       *ngIf="seat"
                       [ngClass]="{
-                        'available': seat.status === 'available',
-                        'held': seat.status === 'held',
-                        'booked': seat.status === 'booked',
-                        'selected': isSelected(seat)
+                        'seat-available': seat.status === 'available',
+                        'seat-held': seat.status === 'held',
+                        'seat-booked': seat.status === 'booked',
+                        'seat-selected': isSelected(seat)
                       }"
                       (click)="toggleSeat(seat)"
+                      [title]="'Seat ' + seat.id + ' (' + seat.status + ')'"
                     >
-                      {{ seat.id }}
+                      <span class="ss-seat-num">{{ seat.id }}</span>
                     </div>
-                    <!-- Aisle space -->
-                    <div class="aisle" *ngIf="!seat"></div>
-                  </div>
+
+                    <!-- Aisle Center Gap -->
+                    <div class="ss-aisle-gap" *ngIf="!seat"></div>
+                  </ng-container>
                 </div>
               </div>
             </div>
             
-            <div class="seat-legend">
-              <div class="legend-item"><div class="seat available sm"></div> Available</div>
-              <div class="legend-item"><div class="seat held sm"></div> Held (10m)</div>
-              <div class="legend-item"><div class="seat booked sm"></div> Booked</div>
-              <div class="legend-item"><div class="seat selected sm"></div> Yours</div>
+            <!-- Seat Status Legend -->
+            <div class="ss-legend-row">
+              <div class="ss-legend-item">
+                <span class="legend-indicator ind-available"></span>
+                <span>Available</span>
+              </div>
+              <div class="ss-legend-item">
+                <span class="legend-indicator ind-held"></span>
+                <span>Held (10m)</span>
+              </div>
+              <div class="ss-legend-item">
+                <span class="legend-indicator ind-booked">✕</span>
+                <span>Booked</span>
+              </div>
+              <div class="ss-legend-item">
+                <span class="legend-indicator ind-yours"></span>
+                <span>Yours</span>
+              </div>
             </div>
           </div>
 
-          <!-- Right: Summary & Checkout Action -->
-          <div class="seat-summary-card">
-            <h3>Selection Summary</h3>
-            <div class="summary-details">
-              <p><strong>Route:</strong> {{ selectedTrip.routeName }}</p>
-              <p><strong>Date:</strong> {{ selectedTrip.travelDate | date }}</p>
+          <!-- Right Card: Selection Summary & Checkout -->
+          <div class="ss-card ss-summary-card">
+            <h3 class="ss-summary-title">Selection Summary</h3>
+            
+            <div class="ss-summary-info-box">
+              <div class="info-row">
+                <span class="info-label">Route:</span>
+                <span class="info-val">{{ selectedTrip.routeName }}</span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Date:</span>
+                <span class="info-val">{{ selectedTrip.travelDate | date:'MMM d, yyyy' }}</span>
+              </div>
             </div>
             
-            <div class="selected-seats-list">
-              <h4>Selected Seats ({{ selectedSeats.length }} / {{ passengerCount }})</h4>
-              <div class="empty-seats-msg" *ngIf="selectedSeats.length === 0">
-                No seats selected yet.
+            <!-- Selected Seats List -->
+            <div class="ss-seats-selected-section">
+              <h4 class="ss-selected-heading">Selected Seats ({{ selectedSeats.length }} / {{ passengerCount }})</h4>
+              
+              <div class="ss-empty-seats" *ngIf="selectedSeats.length === 0">
+                <p>No seats selected yet. Click on available seats in the map.</p>
               </div>
-              <div class="seat-item" *ngFor="let seat of selectedSeats">
-                <div class="seat-info">
-                  <span class="seat-id">Seat {{ seat.id }}</span>
-                  <span class="seat-type">{{ seat.type }}</span>
+
+              <div class="ss-seats-list" *ngIf="selectedSeats.length > 0">
+                <div class="ss-selected-seat-row" *ngFor="let seat of selectedSeats">
+                  <div>
+                    <div class="seat-title">Seat {{ seat.id }}</div>
+                    <div class="seat-type-sub">{{ seat.type || 'Standard' }}</div>
+                  </div>
+                  <div class="seat-fare-val">Rs. {{ selectedTrip.fare }}</div>
                 </div>
-                <div class="seat-price">Rs. {{ selectedTrip.fare }}</div>
               </div>
             </div>
 
-            <div class="fare-divider"></div>
-            
-            <div class="fare-row grand-total">
-              <span>Total Fare</span>
-              <span>Rs. {{ selectedSeats.length * selectedTrip.fare }}</span>
+            <!-- Total Fare -->
+            <div class="ss-total-row">
+              <span class="total-title">Total Fare</span>
+              <span class="total-val">Rs. {{ selectedSeats.length * selectedTrip.fare }}</span>
             </div>
 
-            <button class="btn-primary search-btn-huge" style="margin-top: 1.5rem;" [disabled]="selectedSeats.length !== passengerCount" (click)="goToCheckout()">
-              {{ selectedSeats.length === passengerCount ? 'Proceed to Checkout' : 'Select ' + (passengerCount - selectedSeats.length) + ' more seat(s)' }}
+            <!-- Dynamic Action Button (Validating seats count) -->
+            <button 
+              class="ss-action-btn"
+              [disabled]="selectedSeats.length !== passengerCount"
+              [ngClass]="{'btn-ready': selectedSeats.length === passengerCount, 'btn-pending': selectedSeats.length !== passengerCount}"
+              (click)="goToCheckout()"
+            >
+              <span *ngIf="selectedSeats.length === 0">Select {{ passengerCount }} seat(s)</span>
+              <span *ngIf="selectedSeats.length > 0 && selectedSeats.length < passengerCount">Select {{ passengerCount - selectedSeats.length }} more seat(s)</span>
+              <span *ngIf="selectedSeats.length === passengerCount">Proceed to Checkout →</span>
+              <span *ngIf="selectedSeats.length > passengerCount">Remove {{ selectedSeats.length - passengerCount }} seat(s)</span>
             </button>
-            <p class="hold-warning">Seats are held for 10 minutes upon selection.</p>
+
+            <p class="ss-hold-notice">Seats are held for 10 minutes upon selection.</p>
           </div>
         </div>
+
       </div>
-
-      <!-- Complaints Tab -->
-            <div *ngIf="activeTab === 'complaints'" class="complaints-container">
-        <div class="content-header">
-          <h2>Complaints & Grievances</h2>
-          <p>Submit and track your feedback or issues</p>
-        </div>
-
-        <div class="complaints-layout">
-          
-          <!-- Submit New Complaint -->
-          <div class="submit-card">
-            <h3>Submit a New Complaint</h3>
-            
-            <div class="form-group">
-              <label>Category</label>
-              <select [(ngModel)]="newComplaint.category">
-                <option value="">-- Select Category --</option>
-                <option value="driver behaviour">Driver Behaviour</option>
-                <option value="vehicle condition">Vehicle Condition</option>
-                <option value="booking issue">Booking Issue</option>
-                <option value="route problem">Route Problem</option>
-                <option value="payment issue">Payment Issue</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Booking or Trip Reference (Optional)</label>
-              <input type="text" [(ngModel)]="newComplaint.bookingRef" placeholder="e.g., AJK-839212">
-            </div>
-
-            <div class="form-group">
-              <label>Description (Min 20 chars)</label>
-              <textarea [(ngModel)]="newComplaint.description" rows="4" placeholder="Please provide details..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Photo Upload (Optional)</label>
-              <input type="file" class="file-input">
-            </div>
-
-            <div class="form-group">
-              <label>Preferred Resolution</label>
-              <select [(ngModel)]="newComplaint.resolution">
-                <option value="">-- Select --</option>
-                <option value="refund">Refund</option>
-                <option value="apology">Apology</option>
-                <option value="other">Other Action</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Preferred Contact Method</label>
-              <div class="radio-group">
-                <label class="radio-label"><input type="radio" [(ngModel)]="newComplaint.contact" name="contact" value="sms"> SMS</label>
-                <label class="radio-label"><input type="radio" [(ngModel)]="newComplaint.contact" name="contact" value="email"> Email</label>
-                <label class="radio-label"><input type="radio" [(ngModel)]="newComplaint.contact" name="contact" value="in-app"> In-App</label>
-              </div>
-            </div>
-
-            <div *ngIf="complaintError" class="error-message">{{ complaintError }}</div>
-
-            <button class="bc-btn primary submit-btn" (click)="submitComplaint()">Submit Complaint</button>
-          </div>
-
-          <!-- My Complaints List -->
-          <div class="my-complaints">
-            <h3>My Complaints</h3>
-            
-            <div *ngIf="myComplaints.length === 0" class="empty-state">
-              <div class="empty-icon">??</div>
-              <h4>No complaints submitted yet</h4>
-            </div>
-
-            <div class="complaints-list">
-              <div *ngFor="let c of myComplaints" class="complaint-card">
-                <div class="complaint-header">
-                  <div class="complaint-id-cat">
-                    <div class="c-id">{{ c.id }}</div>
-                    <div class="c-category">{{ c.category }}</div>
-                  </div>
-                  <div class="c-status" [ngClass]="c.status === 'resolved' ? 'resolved' : c.status === 'in progress' ? 'in-progress' : 'open'">{{ c.status }}</div>
-                </div>
-                
-                <div class="c-date">Submitted: {{ c.date | date:'mediumDate' }}</div>
-                
-                <div *ngIf="c.adminResponse" class="admin-response">
-                  <div class="ar-title">Admin Response</div>
-                  <div class="ar-text">{{ c.adminResponse }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
       <!-- Checkout Tab -->
       <div *ngIf="activeTab === 'checkout' && selectedTrip" class="checkout-container">
         <div class="back-link" (click)="setActiveTab('seat-selection')">

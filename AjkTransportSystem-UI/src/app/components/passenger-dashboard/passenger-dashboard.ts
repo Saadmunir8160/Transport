@@ -107,7 +107,7 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     advisoryDelay: '30 - 45 minutes',
     status: 'scheduled'
   };
-  selectedSeats: any[] = [{ id: '1A', status: 'selected', type: 'Window' }, { id: '1B', status: 'selected', type: 'Aisle' }];
+  selectedSeats: any[] = [];
   seatMap: any[][] = [];
 
 
@@ -315,6 +315,7 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     this.loadRoutes();
     this.loadRecommendations();
     this.loadDistrictWeather('Muzaffarabad');
+    if (!this.seatMap || this.seatMap.length === 0) { this.generateSeatMap(); }
   }
 
   getPageTitle(): string {
