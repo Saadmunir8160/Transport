@@ -4132,23 +4132,24 @@ details[open] .td-summary-link .td-arrow {
 }
 
 /* ==========================================================================
-   SEAT SELECTION TAB (FULL MODERN & PROFESSIONAL SAAS REDESIGN)
+   SEAT SELECTION TAB (EQUAL CARD SIZES + MODERN BUS ILLUSTRATION BACKGROUND)
    ========================================================================== */
 
 .ss-page-wrapper {
-  max-width: 960px;
+  max-width: 980px;
   margin: 0 auto;
   padding: 0.5rem 0 3rem 0;
 }
 
+/* 1:1 Equal Sized 2-Column Grid with stretch alignment */
 .ss-main-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: 1fr 1fr; /* Exactly equal sizes */
   gap: 20px;
-  align-items: start;
+  align-items: stretch; /* Both cards match in full height */
 }
 
-@media (max-width: 800px) {
+@media (max-width: 860px) {
   .ss-main-grid {
     grid-template-columns: 1fr;
   }
@@ -4157,13 +4158,29 @@ details[open] .td-summary-link .td-arrow {
 .ss-card {
   background: #FFFFFF;
   border: 1px solid #E2E8F0;
-  border-radius: 12px;
+  border-radius: 14px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left Card: Select Your Seats (with Elegant Subtle Bus Background) */
+.ss-map-card {
+  background-color: #FFFFFF;
+  /* Premium modern SVG bus blueprint background */
+  background-image: 
+    radial-gradient(circle at 100% 100%, rgba(36, 87, 214, 0.03) 0, rgba(36, 87, 214, 0.03) 140px, transparent 140px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' width='180' height='180' opacity='0.05'%3E%3Cpath fill='%232457D6' d='M40 20C25 20 15 32 15 48v104c0 14 10 26 25 26h120c15 0 25-12 25-26V48c0-16-10-28-25-28H40zm10 20h100c6 0 10 4 10 10v30H40V50c0-6 4-10 10-10zm-10 60h120v40H40v-40zm15 60c7 0 12 5 12 12s-5 12-12 12-12-5-12-12 5-12 12-12zm90 0c7 0 12 5 12 12s-5 12-12 12-12-5-12-12 5-12 12-12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: auto, 160px;
 }
 
 .ss-title {
-  font-size: 1.125rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #182230;
   margin: 0 0 4px 0;
@@ -4173,25 +4190,27 @@ details[open] .td-summary-link .td-arrow {
 .ss-subtitle {
   font-size: 0.75rem;
   color: #718096;
-  margin: 0 0 20px 0;
+  margin: 0 0 18px 0;
   text-align: center;
 }
 
 /* Bus Body / Chassis */
 .ss-bus-chassis {
-  background: #F8FAFC;
+  background: rgba(248, 250, 252, 0.85);
+  backdrop-filter: blur(2px);
   border: 2px solid #E2E8F0;
   border-radius: 28px 28px 16px 16px;
-  padding: 18px 24px 22px 24px;
-  max-width: 260px;
-  margin: 0 auto 20px auto;
+  padding: 16px 20px 20px 20px;
+  width: 100%;
+  max-width: 250px;
+  margin: 0 auto 16px auto;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
 }
 
 .ss-driver-row {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .ss-driver-badge {
@@ -4210,14 +4229,14 @@ details[open] .td-summary-link .td-arrow {
 .ss-dash-divider {
   height: 2px;
   border-bottom: 2px dashed #CBD5E1;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 /* Seats Matrix */
 .ss-seats-matrix {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
 }
 
 .ss-seat-row {
@@ -4227,8 +4246,8 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .ss-seat-box {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 6px 6px 4px 4px;
   display: flex;
   align-items: center;
@@ -4242,7 +4261,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .ss-aisle-gap {
-  width: 20px;
+  width: 18px;
 }
 
 /* Seat States */
@@ -4287,10 +4306,11 @@ details[open] .td-summary-link .td-arrow {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   padding-top: 14px;
   border-top: 1px solid #EEF2F6;
   flex-wrap: wrap;
+  margin-top: auto; /* Pushes legend neatly to bottom to maintain equal height */
 }
 
 .ss-legend-item {
@@ -4334,14 +4354,14 @@ details[open] .td-summary-link .td-arrow {
   border: 1.5px solid #1D46B0;
 }
 
-/* Selection Summary Card */
+/* Right Card: Selection Summary (Matching Equal Sizing) */
 .ss-summary-card {
   display: flex;
   flex-direction: column;
 }
 
 .ss-summary-title {
-  font-size: 0.9375rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #182230;
   margin: 0 0 14px 0;
@@ -4351,17 +4371,17 @@ details[open] .td-summary-link .td-arrow {
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 8px;
-  padding: 10px 14px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   margin-bottom: 16px;
 }
 
 .info-row {
   display: flex;
   font-size: 0.75rem;
-  gap: 6px;
+  gap: 8px;
 }
 
 .info-label {
@@ -4377,6 +4397,7 @@ details[open] .td-summary-link .td-arrow {
 
 /* Selected Seats Section */
 .ss-seats-selected-section {
+  flex: 1; /* Fills height to match left card */
   margin-bottom: 16px;
 }
 
@@ -4404,7 +4425,7 @@ details[open] .td-summary-link .td-arrow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 10px;
+  padding: 8px 12px;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
   border-radius: 6px;
@@ -4453,7 +4474,7 @@ details[open] .td-summary-link .td-arrow {
 /* Action Checkout Button */
 .ss-action-btn {
   width: 100%;
-  padding: 10px 16px;
+  padding: 12px 16px;
   border-radius: 8px;
   font-size: 0.8125rem;
   font-weight: 700;
