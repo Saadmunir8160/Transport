@@ -1635,147 +1635,212 @@
       </div>
 
       <!-- Profile Tab -->
-      <div *ngIf="activeTab === 'profile'" class="profile-container" style="max-width: 1100px; margin: 0 auto; animation: fadeIn 0.4s ease-out;">
-        <div class="content-header" style="margin-bottom: 2rem;">
-          <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">Account Settings</h2>
-          <p style="color: #64748B;">Manage your profile, preferences, and data privacy.</p>
+      <div *ngIf="activeTab === 'profile'" class="profile-container">
+        
+        <!-- Top Header & User Overview Banner -->
+        <div class="profile-top-banner">
+          <div class="ptb-user-info">
+            <div class="ptb-avatar">
+              <span>{{ (userName ? userName.charAt(0) : 'P') | uppercase }}</span>
+            </div>
+            <div class="ptb-details">
+              <h2>{{ userName || 'Passenger User' }}</h2>
+              <p>passenger@example.com &bull; +92 300 1234567</p>
+              <div class="ptb-badges">
+                <span class="ptb-badge role">PASSENGER PORTAL</span>
+                <span class="ptb-badge verified">&#10003; Phone Verified</span>
+              </div>
+            </div>
+          </div>
+          <div class="ptb-stats">
+            <div class="ptb-stat-item">
+              <span class="psi-val">12</span>
+              <span class="psi-lbl">Total Trips</span>
+            </div>
+            <div class="ptb-stat-item">
+              <span class="psi-val">Rs. 8.4k</span>
+              <span class="psi-lbl">Saved with AI</span>
+            </div>
+          </div>
         </div>
 
-        <div class="profile-layout" style="display: grid; grid-template-columns: 2.5fr 1fr; gap: 2rem; align-items: start;">
+        <!-- Profile Main Layout Grid -->
+        <div class="profile-layout-grid">
           
-          <!-- Left Column: Settings -->
-          <div class="profile-main" style="display: flex; flex-direction: column; gap: 2rem;">
+          <!-- Left Column: Settings Cards -->
+          <div class="profile-main-col">
             
-            <!-- Personal Info -->
-            <div class="content-card" style="background: white; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden;">
-              <div class="card-header" style="padding: 1.5rem 2rem; border-bottom: 1px solid #E2E8F0; background: #F8FAFC;">
-                <h3 style="margin: 0; color: #1E293B; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">?? Personal Details</h3>
+            <!-- Card 1: Personal Details -->
+            <div class="profile-card">
+              <div class="pcard-header">
+                <div class="pcard-title">
+                  <span class="pcard-icon">&#128100;</span>
+                  <div>
+                    <h3>Personal Details</h3>
+                    <p>Update your legal name, contact email and identity.</p>
+                  </div>
+                </div>
               </div>
-              <div class="card-body" style="padding: 2rem;">
+              <div class="pcard-body">
                 <form>
-                  <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                    <div class="form-group">
-                      <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Full Name</label>
-                      <input type="text" [(ngModel)]="userName" name="userName" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 1rem; color: #1E293B; background: #F8FAFC;">
+                  <div class="pform-grid">
+                    <div class="pform-group">
+                      <label>Full Name</label>
+                      <input type="text" [(ngModel)]="userName" name="userName" class="pform-input">
                     </div>
-                    <div class="form-group">
-                      <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Email Address</label>
-                      <input type="email" value="passenger@example.com" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 1rem; color: #1E293B; background: #F8FAFC;">
+                    <div class="pform-group">
+                      <label>Email Address</label>
+                      <input type="email" value="passenger@example.com" class="pform-input">
                     </div>
-                    <div class="form-group" style="grid-column: span 2;">
-                      <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Phone Number <span style="color: #EF4444;">*</span></label>
-                      <div style="display: flex; gap: 1rem;">
-                        <input type="text" value="+92 300 1234567" class="form-control" disabled style="flex: 1; padding: 0.75rem; border: 1px solid #E2E8F0; border-radius: 8px; font-size: 1rem; color: #94A3B8; background: #F1F5F9; cursor: not-allowed;">
-                        <button type="button" class="bc-btn outline" style="white-space: nowrap;">Change via OTP</button>
+                    <div class="pform-group full-width">
+                      <label>Phone Number <span class="req-star">*</span></label>
+                      <div class="phone-otp-row">
+                        <input type="text" value="+92 300 1234567" class="pform-input phone-disabled" disabled>
+                        <button type="button" class="btn-otp-action">Change via OTP</button>
                       </div>
-                      <p style="font-size: 0.8rem; color: #64748B; margin-top: 0.5rem; margin-bottom: 0;">Changing your phone number requires OTP verification sent to your current number.</p>
+                      <span class="pform-hint">Changing your phone number requires instant SMS OTP verification.</span>
                     </div>
                   </div>
                   
-                  <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end;">
-                    <button type="button" class="bc-btn primary">Save Changes</button>
+                  <div class="pcard-footer-action">
+                    <button type="button" class="btn-profile-save">Save Changes</button>
                   </div>
                 </form>
               </div>
             </div>
 
-            <!-- Preferences & Settings -->
-            <div class="content-card" style="background: white; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden;">
-              <div class="card-header" style="padding: 1.5rem 2rem; border-bottom: 1px solid #E2E8F0; background: #F8FAFC;">
-                <h3 style="margin: 0; color: #1E293B; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">?? App Preferences</h3>
+            <!-- Card 2: App Preferences -->
+            <div class="profile-card">
+              <div class="pcard-header">
+                <div class="pcard-title">
+                  <span class="pcard-icon">&#9881;&#65039;</span>
+                  <div>
+                    <h3>Travel &amp; App Preferences</h3>
+                    <p>Configure language, seating preference and push alerts.</p>
+                  </div>
+                </div>
               </div>
-              <div class="card-body" style="padding: 2rem;">
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-                  <div class="form-group">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Language</label>
-                    <select class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 1rem; color: #1E293B; background: white; cursor: pointer;">
-                      <option value="en">English</option>
-                      <option value="ur">Urdu</option>
+              <div class="pcard-body">
+                <div class="pform-grid">
+                  <div class="pform-group">
+                    <label>Preferred Language</label>
+                    <select class="pform-select">
+                      <option value="en">English (Default)</option>
+                      <option value="ur">Urdu (اردو)</option>
                     </select>
                   </div>
-                  <div class="form-group">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569; font-size: 0.9rem;">Preferred Seat Type</label>
-                    <select class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 1rem; color: #1E293B; background: white; cursor: pointer;">
-                      <option value="window">Window</option>
-                      <option value="aisle">Aisle</option>
-                      <option value="any">Any (Default)</option>
+                  <div class="pform-group">
+                    <label>Preferred Seat Type</label>
+                    <select class="pform-select">
+                      <option value="window">Window Seat</option>
+                      <option value="aisle">Aisle Seat</option>
+                      <option value="any">Any Seat (First Available)</option>
                     </select>
                   </div>
                 </div>
 
-                <div style="border-top: 1px dashed #E2E8F0; padding-top: 1.5rem; margin-bottom: 1.5rem;">
-                  <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: #334155;">Notifications</h4>
-                  <label style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; cursor: pointer;">
-                    <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #0D766E;">
-                    <span style="color: #475569; font-weight: 500;">SMS Alerts (Booking, OTP, Delays)</span>
-                  </label>
-                  <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
-                    <input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #0D766E;">
-                    <span style="color: #475569; font-weight: 500;">Push Notifications (App Updates)</span>
-                  </label>
+                <div class="pnotif-section">
+                  <h4>Notifications &amp; Travel Alerts</h4>
+                  <div class="pnotif-options">
+                    <label class="pnotif-toggle-row">
+                      <input type="checkbox" checked>
+                      <div>
+                        <strong>SMS Booking Alerts &amp; ETA Updates</strong>
+                        <span>Receive booking receipts, live ETA changes and weather warning SMS.</span>
+                      </div>
+                    </label>
+                    <label class="pnotif-toggle-row">
+                      <input type="checkbox" checked>
+                      <div>
+                        <strong>Push Notifications</strong>
+                        <span>Instant app notifications about route updates and seat release timeouts.</span>
+                      </div>
+                    </label>
+                  </div>
                 </div>
-
               </div>
             </div>
 
           </div>
 
-          <!-- Right Column: Security & Actions -->
-          <div class="profile-sidebar" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <!-- Right Column: Sidebar Cards -->
+          <div class="profile-sidebar-col">
             
-            <!-- Quick Rebook Data -->
-            <div class="content-card" style="background: white; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden;">
-              <div class="card-header" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #E2E8F0; background: #F8FAFC;">
-                <h3 style="margin: 0; color: #1E293B; font-size: 1rem;">? Fast Rebooking</h3>
-              </div>
-              <div class="card-body" style="padding: 1.5rem;">
-                <p style="font-size: 0.85rem; color: #64748B; margin-top: 0; margin-bottom: 1rem;">Recent routes saved locally:</p>
-                
-                <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                  <div style="background: #F1F5F9; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: #334155; display: flex; justify-content: space-between; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#E2E8F0'" onmouseout="this.style.background='#F1F5F9'">
-                    <span>Muzaffarabad ? Pindi</span>
-                    <span style="color: #0D766E;">?</span>
+            <!-- Card 3: Quick Fast Rebooking -->
+            <div class="profile-card">
+              <div class="pcard-header">
+                <div class="pcard-title">
+                  <span class="pcard-icon">&#128260;</span>
+                  <div>
+                    <h3>Fast Rebooking</h3>
+                    <p>Recently saved local routes</p>
                   </div>
-                  <div style="background: #F1F5F9; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; color: #334155; display: flex; justify-content: space-between; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#E2E8F0'" onmouseout="this.style.background='#F1F5F9'">
-                    <span>Muzaffarabad ? Rawalpindi</span>
-                    <span style="color: #0D766E;">?</span>
+                </div>
+              </div>
+              <div class="pcard-body">
+                <div class="recent-routes-list">
+                  <div class="recent-route-pill" (click)="searchFrom='Muzaffarabad'; searchTo='Rawalpindi'; setActiveTab('search')">
+                    <div class="rr-info">
+                      <strong>Muzaffarabad &#10140; Rawalpindi</strong>
+                      <span>Coaster Express &bull; Daily</span>
+                    </div>
+                    <span class="rr-arrow">&#10140;</span>
+                  </div>
+                  <div class="recent-route-pill" (click)="searchFrom='Bagh'; searchTo='Muzaffarabad'; setActiveTab('search')">
+                    <div class="rr-info">
+                      <strong>Bagh &#10140; Muzaffarabad</strong>
+                      <span>Hiace Transit &bull; 2.5 hrs</span>
+                    </div>
+                    <span class="rr-arrow">&#10140;</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Security & Data -->
-            <div class="content-card" style="background: white; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); overflow: hidden;">
-              <div class="card-header" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #E2E8F0; background: #F8FAFC;">
-                <h3 style="margin: 0; color: #1E293B; font-size: 1rem;">?? Security & Data</h3>
+            <!-- Card 4: Security & Privacy -->
+            <div class="profile-card">
+              <div class="pcard-header">
+                <div class="pcard-title">
+                  <span class="pcard-icon">&#128274;</span>
+                  <div>
+                    <h3>Security &amp; Data</h3>
+                    <p>Password and data control</p>
+                  </div>
+                </div>
               </div>
-              <div class="card-body" style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
-                
-                <button class="bc-btn outline" style="width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1rem;">
-                  <span>Change Password</span>
-                  <span>?</span>
+              <div class="pcard-body pcard-actions-body">
+                <button class="btn-sec-item">
+                  <span>&#128273; Change Password</span>
+                  <span class="sec-arrow">&#10140;</span>
                 </button>
-                
-                <button class="bc-btn outline" style="width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1rem;" (click)="downloadData()">
-                  <span>Download My Data</span>
-                  <span>?</span>
+                <button class="btn-sec-item" (click)="downloadData()">
+                  <span>&#128190; Download My Data (GDPR)</span>
+                  <span class="sec-arrow">&#10140;</span>
                 </button>
               </div>
             </div>
 
-            <!-- Danger Zone -->
-            <div class="content-card danger-zone" style="background: #FEF2F2; border-radius: 16px; border: 1px solid #FCA5A5; overflow: hidden;">
-              <div class="card-header" style="padding: 1.25rem 1.5rem; border-bottom: 1px solid #FCA5A5;">
-                <h3 style="margin: 0; color: #DC2626; font-size: 1rem;">?? Danger Zone</h3>
+            <!-- Card 5: Danger Zone -->
+            <div class="profile-card danger-card">
+              <div class="pcard-header danger-header">
+                <div class="pcard-title">
+                  <span class="pcard-icon danger-icon">&#9888;&#65039;</span>
+                  <div>
+                    <h3 class="danger-title">Danger Zone</h3>
+                    <p class="danger-desc">Account deletion cannot be undone.</p>
+                  </div>
+                </div>
               </div>
-              <div class="card-body" style="padding: 1.5rem;">
-                <p style="font-size: 0.85rem; color: #991B1B; margin-top: 0; margin-bottom: 1rem;">Permanently delete your account. Active bookings will be cancelled and refunded.</p>
-                <button class="bc-btn danger" style="width: 100%;" (click)="deleteAccount()">Delete Account</button>
+              <div class="pcard-body">
+                <p class="danger-warning-text">Permanently delete your profile. All active tickets will be cancelled and refund initiated.</p>
+                <button class="btn-delete-account" (click)="deleteAccount()">Delete Account</button>
               </div>
             </div>
 
-            <button class="bc-btn outline" style="width: 100%; color: #475569; border: 1px solid #CBD5E1; margin-top: 0.5rem;" (click)="logout()">?? Log Out</button>
+            <!-- Log Out Action Button -->
+            <button class="btn-profile-logout" (click)="logout()">
+              &#128682; Log Out of Session
+            </button>
 
           </div>
         </div>
