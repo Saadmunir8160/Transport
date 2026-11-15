@@ -1850,79 +1850,99 @@
       <div *ngIf="activeTab === 'feedback'">
       </div>
       <!-- Notifications Tab -->
-      <div *ngIf="activeTab === 'notifications'" class="notifications-container" style="max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease-out;">
-        <div class="content-header" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end;">
+      <div *ngIf="activeTab === 'notifications'" class="notifications-container">
+        
+        <!-- Top Header & Actions -->
+        <div class="notif-header-row">
           <div>
-            <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B; margin-bottom: 0.25rem;">Notifications</h2>
-            <p style="color: #64748B; margin: 0;">You have <span style="font-weight: 700; color: #0D766E;">3 unread</span> alerts.</p>
+            <h2 class="notif-title">Notifications</h2>
+            <p class="notif-subtitle">You have <span class="unread-highlight">3 unread</span> travel &amp; booking alerts.</p>
           </div>
-          <button class="bc-btn outline" style="font-size: 0.85rem; padding: 0.5rem 1rem;">? Mark all as read</button>
+          <button class="btn-mark-all-read">
+            <span class="check-icon">&#10003;</span> Mark all as read
+          </button>
         </div>
 
-        <div class="notifications-list" style="display: flex; flex-direction: column; gap: 1rem;">
+        <!-- Notifications Feed List -->
+        <div class="notif-feed-list">
           
-          <!-- Critical Unread (Cancellation) -->
-          <div class="notif-card unread" style="background: white; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; border-left: 4px solid #DC2626; box-shadow: 0 4px 15px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
-            <div style="width: 40px; height: 40px; background: #FEE2E2; color: #DC2626; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">??</div>
-            <div style="flex: 1;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
-                <h4 style="margin: 0; color: #1E293B; font-size: 1rem;">Trip Cancelled</h4>
-                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">2 mins ago</span>
+          <!-- Notification 1: Critical (Trip Cancelled) -->
+          <div class="notif-box unread danger-border">
+            <div class="notif-icon-circle danger-icon-bg">
+              <span>&#128683;</span>
+            </div>
+            <div class="notif-main-content">
+              <div class="notif-row-top">
+                <h4 class="notif-item-title">Trip Cancelled</h4>
+                <span class="notif-timestamp">2 mins ago</span>
               </div>
-              <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.9rem; line-height: 1.4;">Your trip BKG-784321 from Muzaffarabad has been cancelled due to a vehicle breakdown. A full refund of Rs. 3050 has been initiated.</p>
-              <div style="display: flex; gap: 0.5rem;">
-                <span style="background: #F1F5F9; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">SMS Delivered</span>
-                <span style="background: #FEF2F2; color: #DC2626; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 700;">Critical</span>
+              <p class="notif-desc-text">Your trip <strong>BKG-784321</strong> from Muzaffarabad has been cancelled due to road maintenance. A full refund of <strong>Rs. 3050</strong> has been initiated.</p>
+              <div class="notif-chips-row">
+                <span class="n-chip sms">&#128172; SMS Delivered</span>
+                <span class="n-chip critical">&#9888;&#65039; Critical</span>
               </div>
             </div>
-            <div style="width: 10px; height: 10px; background: #0D766E; border-radius: 50%; margin-top: 0.5rem;"></div>
+            <div class="notif-unread-dot"></div>
           </div>
 
-          <!-- Important Unread (Delay) -->
-          <div class="notif-card unread" style="background: white; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; border-left: 4px solid #F59E0B; box-shadow: 0 4px 15px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
-            <div style="width: 40px; height: 40px; background: #FEF3C7; color: #D97706; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">??</div>
-            <div style="flex: 1;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
-                <h4 style="margin: 0; color: #1E293B; font-size: 1rem;">Trip Delayed</h4>
-                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">1 hr ago</span>
+          <!-- Notification 2: Warning (Trip Delayed) -->
+          <div class="notif-box unread warning-border">
+            <div class="notif-icon-circle warning-icon-bg">
+              <span>&#9201;&#65039;</span>
+            </div>
+            <div class="notif-main-content">
+              <div class="notif-row-top">
+                <h4 class="notif-item-title">Trip Delayed</h4>
+                <span class="notif-timestamp">1 hr ago</span>
               </div>
-              <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.9rem; line-height: 1.4;">Your bus for BKG-784320 is running 15 minutes late due to traffic congestion.</p>
-              <div style="display: flex; gap: 0.5rem;">
-                <span style="background: #F1F5F9; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">SMS Delivered</span>
+              <p class="notif-desc-text">Your bus for <strong>BKG-784320</strong> is running 15 minutes late due to Kohala pass traffic congestion.</p>
+              <div class="notif-chips-row">
+                <span class="n-chip sms">&#128172; SMS Delivered</span>
+                <span class="n-chip advisory">&#128338; +15 Mins Delay</span>
               </div>
             </div>
-            <div style="width: 10px; height: 10px; background: #0D766E; border-radius: 50%; margin-top: 0.5rem;"></div>
+            <div class="notif-unread-dot"></div>
           </div>
 
-          <!-- Normal Unread (Reminder) -->
-          <div class="notif-card unread" style="background: white; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; border-left: 4px solid #3B82F6; box-shadow: 0 4px 15px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
-            <div style="width: 40px; height: 40px; background: #DBEAFE; color: #2563EB; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">??</div>
-            <div style="flex: 1;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
-                <h4 style="margin: 0; color: #1E293B; font-size: 1rem;">Departure Reminder</h4>
-                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">2 hrs ago</span>
-              </div>
-              <p style="margin: 0 0 0.75rem 0; color: #475569; font-size: 0.9rem; line-height: 1.4;">Your trip to Muzaffarabad departs in 1 hour. Please reach the terminal 15 mins early.</p>
+          <!-- Notification 3: Info (Departure Reminder) -->
+          <div class="notif-box unread info-border">
+            <div class="notif-icon-circle info-icon-bg">
+              <span>&#128338;</span>
             </div>
-            <div style="width: 10px; height: 10px; background: #0D766E; border-radius: 50%; margin-top: 0.5rem;"></div>
+            <div class="notif-main-content">
+              <div class="notif-row-top">
+                <h4 class="notif-item-title">Departure Reminder</h4>
+                <span class="notif-timestamp">2 hrs ago</span>
+              </div>
+              <p class="notif-desc-text">Your trip to Muzaffarabad departs in 1 hour. Please reach the terminal 15 minutes prior to departure.</p>
+              <div class="notif-chips-row">
+                <span class="n-chip info-chip">&#128652; Boarding Soon</span>
+              </div>
+            </div>
+            <div class="notif-unread-dot"></div>
           </div>
 
-          <!-- Read (Booking Confirmed) -->
-          <div class="notif-card" style="background: #F8FAFC; border-radius: 12px; padding: 1.5rem; display: flex; gap: 1rem; border: 1px solid #E2E8F0; opacity: 0.8; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateX(5px)'" onmouseout="this.style.transform='translateX(0)'">
-            <div style="width: 40px; height: 40px; background: #D1FAE5; color: #059669; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0;">?</div>
-            <div style="flex: 1;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
-                <h4 style="margin: 0; color: #334155; font-size: 1rem;">Booking Confirmed</h4>
-                <span style="font-size: 0.75rem; color: #94A3B8; font-weight: 600;">Yesterday</span>
+          <!-- Notification 4: Success / Read (Booking Confirmed) -->
+          <div class="notif-box is-read">
+            <div class="notif-icon-circle success-icon-bg">
+              <span>&#10003;</span>
+            </div>
+            <div class="notif-main-content">
+              <div class="notif-row-top">
+                <h4 class="notif-item-title">Booking Confirmed</h4>
+                <span class="notif-timestamp">Yesterday</span>
               </div>
-              <p style="margin: 0 0 0.75rem 0; color: #64748B; font-size: 0.9rem; line-height: 1.4;">Your booking BKG-784321 has been confirmed. Your ticket is available offline.</p>
-              <div style="display: flex; gap: 0.5rem;">
-                <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">Email Sent</span>
-                <span style="background: #E2E8F0; color: #64748B; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">SMS Delivered</span>
+              <p class="notif-desc-text">Your booking <strong>BKG-784321</strong> has been confirmed. Digital boarding pass is cached and ready offline.</p>
+              <div class="notif-chips-row">
+                <span class="n-chip read-chip">&#128231; Email Sent</span>
+                <span class="n-chip read-chip">&#128172; SMS Delivered</span>
               </div>
             </div>
-          </div></div></div>
-      <!-- ========================================== -->
+          </div>
+
+        </div>
+      </div>
+
       <!-- SECURE PAYMENT GATEWAY INTERACTIVE MODAL  -->
       <!-- ========================================== -->
       <div *ngIf="showPaymentModal" class="payment-modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 99999; animation: fadeIn 0.2s ease-out; padding: 1rem;">

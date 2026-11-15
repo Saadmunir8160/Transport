@@ -6441,3 +6441,236 @@ details[open] .td-summary-link .td-arrow {
   color: #0F172A;
   border-color: #94A3B8;
 }
+
+/* Notifications Feed Redesign - Enterprise Clean Cards */
+.notifications-container {
+  max-width: 860px;
+  margin: 0.5rem auto 3rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.notif-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.notif-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 0 0 0.25rem 0;
+  letter-spacing: -0.3px;
+}
+
+.notif-subtitle {
+  color: #64748B;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.unread-highlight {
+  font-weight: 700;
+  color: #2457D6;
+}
+
+.btn-mark-all-read {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #334155;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.btn-mark-all-read:hover {
+  background: #F8FAFC;
+  border-color: #94A3B8;
+  color: #0F172A;
+}
+
+.check-icon {
+  font-size: 0.85rem;
+  color: #10B981;
+  font-weight: 800;
+}
+
+.notif-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.notif-box {
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  padding: 1.15rem 1.4rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.notif-box:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.notif-box.danger-border {
+  border-left: 4px solid #E11D48;
+}
+
+.notif-box.warning-border {
+  border-left: 4px solid #F59E0B;
+}
+
+.notif-box.info-border {
+  border-left: 4px solid #2457D6;
+}
+
+.notif-box.is-read {
+  background: #FAFBFD;
+  border-color: #E2E8F0;
+  opacity: 0.85;
+}
+
+.notif-icon-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.danger-icon-bg {
+  background: #FFF1F2;
+  color: #E11D48;
+  border: 1px solid #FFE4E6;
+}
+
+.warning-icon-bg {
+  background: #FFFBEB;
+  color: #D97706;
+  border: 1px solid #FEF3C7;
+}
+
+.info-icon-bg {
+  background: #EFF6FF;
+  color: #2457D6;
+  border: 1px solid #DBEAFE;
+}
+
+.success-icon-bg {
+  background: #F0FDF4;
+  color: #15803D;
+  border: 1px solid #DCFCE7;
+  font-weight: 800;
+}
+
+.notif-main-content {
+  flex: 1;
+}
+
+.notif-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.notif-item-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0F172A;
+  font-family: 'Outfit', sans-serif;
+}
+
+.notif-timestamp {
+  font-size: 0.72rem;
+  color: #94A3B8;
+  font-weight: 600;
+}
+
+.notif-desc-text {
+  margin: 0 0 0.65rem 0;
+  color: #475569;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.notif-desc-text strong {
+  color: #1E293B;
+}
+
+.notif-chips-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.n-chip {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.n-chip.sms {
+  background: #F1F5F9;
+  color: #475569;
+  border: 1px solid #E2E8F0;
+}
+
+.n-chip.critical {
+  background: #FFF1F2;
+  color: #E11D48;
+  border: 1px solid #FECDD3;
+  font-weight: 700;
+}
+
+.n-chip.advisory {
+  background: #FFFBEB;
+  color: #D97706;
+  border: 1px solid #FDE68A;
+  font-weight: 700;
+}
+
+.n-chip.info-chip {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+.n-chip.read-chip {
+  background: #F1F5F9;
+  color: #64748B;
+}
+
+.notif-unread-dot {
+  width: 8px;
+  height: 8px;
+  background: #2457D6;
+  border-radius: 50%;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(36, 87, 214, 0.4);
+}
