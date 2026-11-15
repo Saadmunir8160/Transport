@@ -495,6 +495,12 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     this.ticketCode = 'TKT-' + Math.floor(Math.random() * 10000);
   }
 
+  swapSearchStops() {
+    const temp = this.searchFrom;
+    this.searchFrom = this.searchTo;
+    this.searchTo = temp;
+  }
+
   searchRoutes() {
     this.passengerService.searchTrips(this.searchFrom, this.searchTo, this.searchDate).subscribe({
       next: (data) => {

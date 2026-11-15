@@ -270,75 +270,100 @@
         </div>
       </div>
 
-      <!-- Home Tab -->
-      <div *ngIf="activeTab === 'home'" class="home-tab">
+            <!-- Home Tab (Exact Screenshot Redesign) -->
+      <div *ngIf="activeTab === 'home'" class="p-home-wrapper">
         
-        <!-- Alert Banners -->
-        <div class="alert-banner warning">
-          <span class="alert-icon">⚠️</span>
-          <span>Road advisory on a booked route: Landslide reported near Muzaffarabad. Expect 30 mins delay.</span>
+        <!-- 1. Road Advisory Top Alert Banner -->
+        <div class="p-advisory-banner">
+          <div class="advisory-icon-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <span class="advisory-text">
+            Road advisory on a booked route: Landslide reported near Muzaffarabad. Expect 30 mins delay.
+          </span>
         </div>
         
-        <!-- Upcoming Trip Card -->
-        <div class="upcoming-trip-card" *ngIf="upcomingTrip">
-          <div class="trip-header">
-            <h3>Upcoming Trip</h3>
-            <span class="badge live">On Time</span>
+        <!-- 2. Upcoming Trip Card -->
+        <div class="p-upcoming-card" *ngIf="upcomingTrip">
+          <div class="upcoming-header">
+            <h3 class="upcoming-title">Upcoming Trip</h3>
+            <span class="p-status-pill pill-on-time">ON TIME</span>
           </div>
-          <div class="trip-body">
-            <div class="trip-route">{{ upcomingTrip.routeName }}</div>
-            <div class="trip-details-grid">
-              <div class="detail">
-                <span class="label">Departure</span>
-                <span class="value">{{ upcomingTrip.travelDate | date:'mediumDate' }} at {{ upcomingTrip.departureTime }}</span>
+          <div class="upcoming-body">
+            <h2 class="trip-route-name">{{ upcomingTrip.routeName }}</h2>
+            
+            <div class="trip-metrics-row">
+              <div class="metric-item">
+                <span class="metric-label">Departure</span>
+                <span class="metric-value">{{ upcomingTrip.travelDate | date:'MMM d, yyyy' }} at {{ upcomingTrip.departureTime }}</span>
               </div>
-              <div class="detail">
-                <span class="label">Seat Number</span>
-                <span class="value">{{ upcomingTrip.seatNumber }}</span>
+              <div class="metric-item">
+                <span class="metric-label">Seat Number</span>
+                <span class="metric-value">{{ upcomingTrip.seatNumber }}</span>
               </div>
-              <div class="detail">
-                <span class="label">Boarding Stop</span>
-                <span class="value">{{ upcomingTrip.boardingStop }}</span>
+              <div class="metric-item">
+                <span class="metric-label">Boarding Stop</span>
+                <span class="metric-value">{{ upcomingTrip.boardingStop }}</span>
               </div>
-              <div class="detail">
-                <span class="label">ETA</span>
-                <span class="value">{{ upcomingTrip.eta }}</span>
+              <div class="metric-item">
+                <span class="metric-label">ETA</span>
+                <span class="metric-value">{{ upcomingTrip.eta }}</span>
               </div>
             </div>
-            <div class="trip-actions">
-              <button class="btn-secondary" (click)="setActiveTab('bookings')">View ticket</button>
-              <button class="btn-primary">Track bus</button>
+
+            <div class="trip-action-buttons">
+              <button class="p-btn-view-ticket" (click)="setActiveTab('bookings')">View ticket</button>
+              <button class="p-btn-track-bus" (click)="setActiveTab('track-bus')">Track bus</button>
             </div>
           </div>
         </div>
 
-        <!-- Quick Search Bar -->
-        <div class="quick-search-card">
-          <h3>Quick Search</h3>
-          <div class="quick-search-form">
-            <input type="text" [(ngModel)]="searchFrom" placeholder="Origin stop (e.g. Muzaffarabad)" class="home-input">
-            <span class="exchange-icon">⇄</span>
-            <input type="text" [(ngModel)]="searchTo" placeholder="Destination stop" class="home-input">
-            <input type="date" [(ngModel)]="searchDate" class="home-input">
-            <button class="search-btn-large" (click)="setActiveTab('search'); searchRoutes()">Search Trips</button>
+        <!-- 3. Quick Search Box -->
+        <div class="p-quick-search-card">
+          <h3 class="quick-search-title">Quick Search</h3>
+          <div class="quick-search-row">
+            <div class="p-input-box">
+              <input type="text" [(ngModel)]="searchFrom" placeholder="Origin stop (e.g. Muzaffarabad)" class="p-clean-input">
+            </div>
+            <div class="p-swap-btn" (click)="swapSearchStops()">
+              <span>⇄</span>
+            </div>
+            <div class="p-input-box">
+              <input type="text" [(ngModel)]="searchTo" placeholder="Destination stop" class="p-clean-input">
+            </div>
+            <div class="p-input-box p-date-box">
+              <input type="date" [(ngModel)]="searchDate" class="p-clean-input">
+            </div>
+            <button class="p-btn-search-trips" (click)="setActiveTab('search'); searchRoutes()">
+              Search Trips
+            </button>
           </div>
         </div>
 
-        <!-- Recent Routes -->
-        <div class="recent-routes-section" *ngIf="recentRoutes && recentRoutes.length > 0">
-          <h3>Recent Routes</h3>
-          <div class="recent-routes-grid">
-            <div class="recent-card" *ngFor="let route of recentRoutes" (click)="searchFrom = route.startPoint; searchTo = route.endPoint; setActiveTab('search'); searchRoutes()">
-              <div class="recent-icon">🕒</div>
-              <div class="recent-info">
-                <h4>{{ route.startPoint }} → {{ route.endPoint }}</h4>
-                <p>One-tap to re-search</p>
+        <!-- 4. Recent Routes -->
+        <div class="p-recent-section" *ngIf="recentRoutes && recentRoutes.length > 0">
+          <h3 class="recent-heading">Recent Routes</h3>
+          <div class="p-recent-grid">
+            <div class="p-recent-card" *ngFor="let route of recentRoutes" (click)="searchFrom = route.startPoint; searchTo = route.endPoint; setActiveTab('search'); searchRoutes()">
+              <div class="recent-clock-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div class="recent-card-text">
+                <h4 class="recent-route-title">{{ route.startPoint }} &mdash; {{ route.endPoint }}</h4>
+                <p class="recent-sub">One-tap to re-search</p>
               </div>
             </div>
           </div>
         </div>
+
       </div>
-
       <!-- Search Routes Tab -->
       <div *ngIf="activeTab === 'search'" class="search-tab-container">
         
@@ -2054,15 +2079,19 @@
         </div>
       </div>
 
-      <!-- Floating Emergency SOS Button (Bottom Right) -->
-      <div class="emergency-sos-floating-container" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999;">
-        <button (click)="openSosModal()" class="emergency-sos-btn"
-          style="background: linear-gradient(135deg, #DC2626, #991B1B); color: white; border: none; border-radius: 50px; padding: 14px 24px; font-weight: 900; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 25px rgba(220, 38, 38, 0.45); cursor: pointer; animation: sosPulse 2s infinite;">
-          <span style="font-size: 1.3rem;">🚨</span>
-          <span>SOS EMERGENCY</span>
+            <!-- Floating Emergency SOS Button (Matching Screenshot) -->
+      <div class="p-sos-floating-wrap">
+        <button (click)="openSosModal()" class="p-sos-action-btn" title="Emergency SOS Dispatch">
+          <svg class="sos-siren-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 18h12"/>
+            <path d="M6 18a6 6 0 0 1 12 0"/>
+            <path d="M12 2v4"/>
+            <path d="M4.93 10.93 2.1 8.1"/>
+            <path d="M19.07 10.93l2.83-2.83"/>
+          </svg>
+          <span class="sos-text">SOS EMERGENCY</span>
         </button>
       </div>
-
       <!-- Emergency SOS Modal Dialog -->
       <div *ngIf="showSosModal" class="modal-backdrop" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 1rem;">
         <div style="background: white; border-radius: 20px; max-width: 520px; width: 100%; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
