@@ -3337,3 +3337,263 @@ body {
 .sos-text {
   font-family: inherit;
 }
+
+/* ==========================================================================
+   PASSENGER SEARCH TAB COMPACT & MODERN SAAS STYLING
+   ========================================================================== */
+
+.p-search-container {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0.5rem 0 3rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 3 Top Bento Stats (Compact & Clean) */
+.p-search-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .p-search-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.p-stat-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.p-stat-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-green {
+  background: #EAF8F1;
+}
+
+.icon-blue {
+  background: #EEF3FD;
+}
+
+.icon-amber {
+  background: #FEF8E7;
+}
+
+.p-stat-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-stat-num {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #182230;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.p-stat-label {
+  font-size: 0.75rem;
+  color: #718096;
+  margin: 2px 0 0 0;
+  font-weight: 500;
+}
+
+/* Primary Search Box Card (Clean, Compact, Rounded) */
+.p-search-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.p-card-header {
+  margin-bottom: 20px;
+}
+
+.p-search-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0 0 4px 0;
+}
+
+.p-badge-ai {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #4A5568;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.p-search-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+  .p-search-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .p-search-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.p-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.p-field-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4A5568;
+}
+
+.p-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.p-input-pin {
+  position: absolute;
+  left: 10px;
+  font-size: 0.8125rem;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.p-modern-input,
+.p-modern-select {
+  width: 100%;
+  padding: 8px 10px 8px 32px; /* Compact padding */
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  color: #182230;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.p-modern-input:focus,
+.p-modern-select:focus {
+  background: #FFFFFF;
+  border-color: #2457D6;
+}
+
+/* Filters toggle link */
+.p-filters-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: #4A5568;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 16px;
+  user-select: none;
+}
+
+.p-filters-toggle:hover {
+  color: #2457D6;
+}
+
+.p-filters-toggle svg.rotated {
+  transform: rotate(180deg);
+}
+
+.p-optional-filters-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  background: #F8FAFC;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.p-filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.p-filter-item label {
+  font-size: 0.6875rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.p-sub-select {
+  padding: 6px 10px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #182230;
+  outline: none;
+}
+
+.p-toggle-item {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.toggle-text {
+  font-size: 0.75rem;
+  color: #4A5568;
+}
+
+/* Sleek Blue/Teal Gradient Button matching screenshot */
+.p-search-submit-btn {
+  width: 100%;
+  padding: 12px 20px; /* Reduced from huge 1.25rem */
+  background: linear-gradient(90deg, #1D63D8 0%, #0D8B96 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(29, 99, 216, 0.25);
+  transition: all 0.2s ease;
+}
+
+.p-search-submit-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(29, 99, 216, 0.35);
+}

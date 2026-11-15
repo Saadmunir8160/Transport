@@ -235,15 +235,7 @@
 
     <!-- Content Area -->
     <div class="content-area">
-      <!-- Dashboard Stats -->
-      <div class="stats-grid" *ngIf="activeTab === 'search'">
-        <div class="stat-card">
-          <div class="stat-icon green">🗺️</div>
-          <div class="stat-info">
-            <h3>{{ trips.length }}</h3>
-            <p>Available Trips</p>
-          </div>
-        </div>
+      <!-- Duplicate stats removed -->
         <div class="stat-card">
           <div class="stat-icon blue">🤖</div>
           <div class="stat-info">
@@ -354,66 +346,122 @@
         </div>
 
       </div>
-      <!-- Search Routes Tab -->
-      <div *ngIf="activeTab === 'search'" class="search-tab-container">
+            <!-- Search Routes Tab (Compact & Professional Redesign) -->
+      <div *ngIf="activeTab === 'search'" class="p-search-container">
         
-        <!-- Primary Search Card -->
-        <div class="search-hero-card">
-          <div class="search-header-flex">
-            <h2>Find your next journey</h2>
-            <span class="badge ai-enhanced">AI Optimized</span>
+        <!-- 3 Bento Stat Cards (Compact Size & Modern SaaS Look) -->
+        <div class="p-search-stats-grid">
+          <!-- Available Trips -->
+          <div class="p-stat-card">
+            <div class="p-stat-icon-wrap icon-green">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0F9F6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/>
+                <line x1="9" y1="3" x2="9" y2="18"/>
+                <line x1="15" y1="6" x2="15" y2="21"/>
+              </svg>
+            </div>
+            <div class="p-stat-data">
+              <h3 class="p-stat-num">{{ trips.length || 0 }}</h3>
+              <p class="p-stat-label">Available Trips</p>
+            </div>
+          </div>
+
+          <!-- AI Smart Recommendations -->
+          <div class="p-stat-card">
+            <div class="p-stat-icon-wrap icon-blue">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2457D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="10" rx="2"/>
+                <circle cx="12" cy="5" r="2"/>
+                <path d="M12 7v4"/>
+                <line x1="8" y1="16" x2="8" y2="16"/>
+                <line x1="16" y1="16" x2="16" y2="16"/>
+              </svg>
+            </div>
+            <div class="p-stat-data">
+              <h3 class="p-stat-num">AI</h3>
+              <p class="p-stat-label">Smart Recommendations</p>
+            </div>
+          </div>
+
+          <!-- Service Rating -->
+          <div class="p-stat-card">
+            <div class="p-stat-icon-wrap icon-amber">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            </div>
+            <div class="p-stat-data">
+              <h3 class="p-stat-num">4.8</h3>
+              <p class="p-stat-label">Service Rating</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Primary Search Card (Compact & Clean) -->
+        <div class="p-search-card">
+          <div class="p-card-header">
+            <div>
+              <h2 class="p-search-title">Find your next journey</h2>
+              <span class="p-badge-ai">AI OPTIMIZED</span>
+            </div>
           </div>
           
-          <div class="search-form-grid">
-            <div class="input-group">
-              <label>Origin</label>
-              <div class="input-wrapper">
-                <span class="input-icon">📍</span>
-                <input type="text" [(ngModel)]="searchFrom" list="cities-from" placeholder="Where from?">
+          <div class="p-search-grid">
+            <!-- Origin -->
+            <div class="p-field-group">
+              <label class="p-field-label">Origin</label>
+              <div class="p-input-container">
+                <span class="p-input-pin">📍</span>
+                <input type="text" [(ngModel)]="searchFrom" list="cities-from" placeholder="Where from?" class="p-modern-input">
               </div>
             </div>
             
-            <div class="input-group">
-              <label>Destination</label>
-              <div class="input-wrapper">
-                <span class="input-icon">🎯</span>
-                <input type="text" [(ngModel)]="searchTo" list="cities-to" placeholder="Where to?">
+            <!-- Destination -->
+            <div class="p-field-group">
+              <label class="p-field-label">Destination</label>
+              <div class="p-input-container">
+                <span class="p-input-pin">🎯</span>
+                <input type="text" [(ngModel)]="searchTo" list="cities-to" placeholder="Where to?" class="p-modern-input">
               </div>
             </div>
 
-            <div class="input-group">
-              <label>Travel Date</label>
-              <div class="input-wrapper">
-                <span class="input-icon">📅</span>
-                <input type="date" [(ngModel)]="searchDate">
+            <!-- Travel Date -->
+            <div class="p-field-group">
+              <label class="p-field-label">Travel Date</label>
+              <div class="p-input-container">
+                <span class="p-input-pin">📅</span>
+                <input type="date" [(ngModel)]="searchDate" class="p-modern-input">
               </div>
             </div>
 
-            <div class="input-group">
-              <label>Passengers</label>
-              <div class="input-wrapper">
-                <span class="input-icon">👥</span>
-                <select [(ngModel)]="passengerCount" class="modern-select">
+            <!-- Passengers -->
+            <div class="p-field-group">
+              <label class="p-field-label">Passengers</label>
+              <div class="p-input-container">
+                <span class="p-input-pin">👥</span>
+                <select [(ngModel)]="passengerCount" class="p-modern-select">
                   <option value="1">1 Passenger</option>
                   <option value="2">2 Passengers</option>
                   <option value="3">3 Passengers</option>
-                  <option value="4">4 Passengers (Max)</option>
+                  <option value="4">4 Passengers</option>
                 </select>
               </div>
             </div>
           </div>
 
-          <!-- Advanced Filters Toggle -->
-          <div class="advanced-filters-toggle" (click)="showFilters = !showFilters">
-            <span>{{ showFilters ? 'Hide' : 'Show' }} advanced filters</span>
-            <svg [class.rotated]="showFilters" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          <!-- Advanced Filters Toggle Link -->
+          <div class="p-filters-toggle" (click)="showFilters = !showFilters">
+            <span>Show advanced filters</span>
+            <svg [class.rotated]="showFilters" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
           </div>
 
-          <!-- Optional Filters -->
-          <div class="optional-filters" *ngIf="showFilters">
-            <div class="filter-group">
+          <!-- Optional Filters Collapsible -->
+          <div class="p-optional-filters-row" *ngIf="showFilters">
+            <div class="p-filter-item">
               <label>Departure Time</label>
-              <select [(ngModel)]="filterTimeRange" class="modern-select">
+              <select [(ngModel)]="filterTimeRange" class="p-sub-select">
                 <option value="all">Any Time</option>
                 <option value="morning">Morning (6 AM - 12 PM)</option>
                 <option value="afternoon">Afternoon (12 PM - 6 PM)</option>
@@ -421,9 +469,9 @@
               </select>
             </div>
             
-            <div class="filter-group">
+            <div class="p-filter-item">
               <label>Vehicle Type</label>
-              <select [(ngModel)]="filterVehicleType" class="modern-select">
+              <select [(ngModel)]="filterVehicleType" class="p-sub-select">
                 <option value="all">Any Vehicle</option>
                 <option value="Bus">Bus</option>
                 <option value="Minibus">Minibus</option>
@@ -432,19 +480,21 @@
               </select>
             </div>
 
-            <div class="filter-group toggle-group">
+            <div class="p-filter-item p-toggle-item">
               <label class="switch">
                 <input type="checkbox" [(ngModel)]="filterAvailableOnly">
                 <span class="slider round"></span>
               </label>
-              <span>Available seats only</span>
+              <span class="toggle-text">Available seats only</span>
             </div>
           </div>
 
-          <button class="btn-primary search-btn-huge" (click)="setActiveTab('results'); searchRoutes()">Search Trips</button>
+          <!-- Main Search Action Button (Sleek Gradient Cyan-Blue) -->
+          <button class="p-search-submit-btn" (click)="setActiveTab('results'); searchRoutes()">
+            Search Trips
+          </button>
         </div>
       </div>
-
       <!-- Trip Results Tab -->
       <div *ngIf="activeTab === 'results'" class="results-tab-container">
         
