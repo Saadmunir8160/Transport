@@ -2994,3 +2994,193 @@
 .rules-list li strong {
   color: #334155;
 }
+
+/* ==========================================
+   ACCESS LOG REGISTER (EXACT SCREENSHOT MATCH)
+   ========================================== */
+
+.access-logs-container {
+  padding: 0.5rem 0 2rem 0;
+  width: 100%;
+}
+
+.access-log-card {
+  background: #FFFFFF;
+  border: 1px solid #E7EBF1;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.access-log-header {
+  padding: 16px 20px;
+  background: #F8FAFD;
+  border-bottom: 1px solid #EEF2F6;
+}
+
+.access-log-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0;
+}
+
+.access-log-title .lock-icon {
+  stroke: #2457D6;
+}
+
+.access-log-subtitle {
+  font-size: 0.75rem;
+  color: #718096;
+  margin: 3px 0 0 0;
+}
+
+.access-table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.access-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.access-table th {
+  padding: 12px 18px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #4A5568;
+  letter-spacing: 0.04em;
+  background: #FFFFFF;
+  border-bottom: 1px solid #EDF2F7;
+  text-transform: uppercase;
+}
+
+.access-table td {
+  padding: 18px 18px;
+  border-bottom: 1px solid #F1F5F9;
+  vertical-align: middle;
+}
+
+.access-table tbody tr:hover {
+  background-color: #F8FAFC;
+}
+
+.col-timestamp {
+  font-size: 0.75rem;
+  color: #4A5568;
+  white-space: nowrap;
+}
+
+.col-user .user-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #182230;
+}
+
+.col-user .user-role {
+  font-size: 0.6875rem;
+  color: #718096;
+  margin-top: 2px;
+}
+
+.col-org {
+  font-size: 0.8125rem;
+  color: #4A5568;
+}
+
+.event-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge-success {
+  background: #EAF8F1;
+  color: #0F9F6E;
+}
+
+.badge-failed {
+  background: #FDF1F1;
+  color: #D14343;
+}
+
+.badge-neutral {
+  background: #F1F5F9;
+  color: #475569;
+}
+
+.col-location .ip-address {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #182230;
+}
+
+.col-location .location-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.6875rem;
+  color: #718096;
+  margin-top: 3px;
+}
+
+.col-device {
+  font-size: 0.75rem;
+  color: #4A5568;
+}
+
+/* Actions: Stacked wide pills matching screenshot */
+.actions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.action-btn-block {
+  width: 100%;
+  padding: 4px 8px;
+  background: #FFF5F5;
+  color: #E53E3E;
+  border: 1px solid #FED7D7;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.action-btn-block:hover {
+  background: #FED7D7;
+}
+
+.action-btn-outline {
+  width: 100%;
+  padding: 4px 8px;
+  background: #FFFFFF;
+  color: #4A5568;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.action-btn-outline:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #182230;
+}
