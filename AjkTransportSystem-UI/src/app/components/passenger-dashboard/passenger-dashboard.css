@@ -4915,3 +4915,201 @@ details[open] .td-summary-link .td-arrow {
 .co-lock-icon {
   font-size: 0.8125rem;
 }
+
+
+/* Invoice Modal Popup */
+.invoice-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.invoice-modal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid #E2E8F0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.invoice-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #F1F5F9;
+  background: #FAFBFD;
+}
+
+.invoice-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.invoice-logo {
+  font-size: 1.6rem;
+}
+
+.invoice-brand h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  font-family: 'Outfit', sans-serif;
+}
+
+.invoice-brand p {
+  margin: 0.15rem 0 0 0;
+  font-size: 0.72rem;
+  color: #64748B;
+}
+
+.invoice-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #94A3B8;
+  cursor: pointer;
+  transition: color 0.15s;
+  padding: 0.25rem;
+}
+
+.invoice-close-btn:hover {
+  color: #0F172A;
+}
+
+.invoice-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  background: #F8FAFC;
+  border-bottom: 1px dashed #E2E8F0;
+}
+
+.inv-chip {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #334155;
+  background: #FFFFFF;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #E2E8F0;
+}
+
+.inv-status-chip {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+.inv-status-chip.completed {
+  background: #DCFCE7;
+  color: #15803D;
+}
+
+.inv-status-chip.cancelled {
+  background: #FEE2E2;
+  color: #B91C1C;
+}
+
+.inv-status-chip.upcoming, .inv-status-chip.active {
+  background: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.invoice-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.inv-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.inv-lbl {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94A3B8;
+  font-weight: 700;
+}
+
+.inv-val {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.inv-val.inv-price {
+  color: #059669;
+  font-size: 1.05rem;
+}
+
+.invoice-footer-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.25rem;
+  background: #FAFBFD;
+  border-top: 1px solid #F1F5F9;
+}
+
+.btn-inv-print {
+  flex: 1;
+  background: #2457D6;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: opacity 0.2s;
+}
+
+.btn-inv-print:hover {
+  opacity: 0.9;
+}
+
+.btn-inv-close {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #475569;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-inv-close:hover {
+  background: #F1F5F9;
+}

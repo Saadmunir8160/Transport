@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+﻿import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -153,6 +153,8 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
 
 
   activeBookingsTab = 'upcoming';
+  selectedInvoice: any = null;
+
   myBookings: any[] = [
     {
       id: 'AJK-839212',
@@ -164,6 +166,8 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
       endPoint: 'RWP Central',
       status: 'upcoming',
       amount: 2450,
+      amountPaid: 2450,
+      paymentMethod: 'Easypaisa',
       canCancel: true
     },
     {
@@ -176,6 +180,8 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
       endPoint: 'Rawalakot General Bus Stand',
       status: 'active',
       amount: 1550,
+      amountPaid: 1550,
+      paymentMethod: 'JazzCash',
       canCancel: false
     },
     {
@@ -188,7 +194,10 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
       endPoint: 'Terminal MZ',
       status: 'completed',
       amount: 800,
+      amountPaid: 800,
+      paymentMethod: 'Credit Card',
       canCancel: false,
+      arrivalTime: '01:15 PM',
       actualArrivalTime: '01:15 PM',
       delay: '15 mins'
     },
@@ -202,11 +211,26 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
       endPoint: 'Bhimber City',
       status: 'cancelled',
       amount: 1200,
+      amountPaid: 1200,
+      paymentMethod: 'Easypaisa',
       canCancel: false,
       reason: 'Passenger request',
+      cancelReason: 'Passenger request',
       refundStatus: 'Refunded to UPI'
     }
   ];
+
+  viewInvoice(booking: any) {
+    this.selectedInvoice = booking;
+  }
+
+  closeInvoice() {
+    this.selectedInvoice = null;
+  }
+
+  printInvoice() {
+    window.print();
+  }
 
   get filteredMyBookings() {
     return this.myBookings.filter(b => b.status === this.activeBookingsTab);

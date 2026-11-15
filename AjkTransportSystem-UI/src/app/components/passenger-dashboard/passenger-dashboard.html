@@ -1180,15 +1180,15 @@
               <!-- Footer Actions -->
               <div class="bc-footer">
                 <!-- Upcoming Actions -->
-                <button class="bc-btn outline" *ngIf="b.status === 'upcoming'" (click)="setActiveTab('ticket')">View Ticket</button>
+                <button class="bc-btn outline" *ngIf="b.status === 'upcoming'" (click)="viewTicket(b)">View Ticket</button>
                 <button class="bc-btn danger" *ngIf="b.status === 'upcoming'" (click)="cancellingBooking = b; setActiveTab('cancel-booking')">Cancel Booking</button>
 
                 <!-- Active Actions -->
-                <button class="bc-btn outline" *ngIf="b.status === 'active'" (click)="setActiveTab('ticket')">View Ticket (QR)</button>
+                <button class="bc-btn outline" *ngIf="b.status === 'active'" (click)="viewTicket(b)">View Ticket (QR)</button>
                 <button class="bc-btn primary" *ngIf="b.status === 'active'" (click)="setActiveTab('track-bus')">Track Bus</button>
 
                 <!-- Completed/Cancelled Actions -->
-                <button class="bc-btn outline" *ngIf="b.status === 'completed' || b.status === 'cancelled'">View Invoice</button>
+                <button class="bc-btn outline" *ngIf="b.status === 'completed' || b.status === 'cancelled'" (click)="viewInvoice(b)">View Invoice</button>
                 <button class="bc-btn primary" *ngIf="b.status === 'completed' || b.status === 'cancelled'" (click)="setActiveTab('search')">Rebook Trip</button>
               </div>
             </div>
@@ -1204,6 +1204,71 @@
       </div>
       </div>
 
+                  <!-- Invoice Modal Popup -->
+      <div class="invoice-modal-overlay" *ngIf="selectedInvoice" (click)="closeInvoice()">
+        <div class="invoice-modal-card" (click)="$event.stopPropagation()">
+          <div class="invoice-header">
+            <div class="invoice-brand">
+              <span class="invoice-logo">&#128652;</span>
+              <div>
+                <h3>AJK Transport System</h3>
+                <p>Official Passenger Travel Receipt &amp; Tax Invoice</p>
+              </div>
+            </div>
+            <button class="invoice-close-btn" (click)="closeInvoice()">&times;</button>
+          </div>
+
+          <div class="invoice-badge-row">
+            <span class="inv-chip">Invoice #: INV-{{ selectedInvoice.id }}</span>
+            <span class="inv-status-chip" [ngClass]="selectedInvoice.status">{{ selectedInvoice.status | uppercase }}</span>
+          </div>
+
+          <div class="invoice-info-grid">
+            <div class="inv-field">
+              <span class="inv-lbl">Issue Date</span>
+              <span class="inv-val">{{ selectedInvoice.date | date:'mediumDate' }}</span>
+            </div>
+            <div class="inv-field">
+              <span class="inv-lbl">Departure Time</span>
+              <span class="inv-val">{{ selectedInvoice.time }}</span>
+            </div>
+            <div class="inv-field">
+              <span class="inv-lbl">Route</span>
+              <span class="inv-val">{{ selectedInvoice.route }}</span>
+            </div>
+            <div class="inv-field">
+              <span class="inv-lbl">Seat Number(s)</span>
+              <span class="inv-val">{{ selectedInvoice.seats }}</span>
+            </div>
+            <div class="inv-field">
+              <span class="inv-lbl">Boarding Station</span>
+              <span class="inv-val">{{ selectedInvoice.startPoint }}</span>
+            </div>
+            <div class="inv-field">
+              <span class="inv-lbl">Destination</span>
+              <span class="inv-val">{{ selectedInvoice.endPoint }}</span>
+            </div>
+            <div class="inv-field">
+              <span class="inv-lbl">Payment Mode</span>
+              <span class="inv-val">{{ selectedInvoice.paymentMethod || 'Online Paid' }}</span>
+            </div>
+            <div class="inv-field">
+              <span class="inv-lbl">Total Fare Paid</span>
+              <span class="inv-val inv-price">Rs. {{ selectedInvoice.amountPaid || selectedInvoice.amount }}</span>
+            </div>
+          </div>
+
+          <div class="invoice-footer-actions">
+            <button class="btn-inv-print" (click)="printInvoice()">
+              &#128424;&#65039; Print Receipt
+            </button>
+            <button class="btn-inv-close" (click)="closeInvoice()">
+              Done
+            </button>
+          </div>
+        </div>
+      </div>
+
             <!-- Digital Ticket Tab -->
       <div *ngIf="activeTab === 'ticket' && selectedTrip" class="booking-confirmed-container">
         
@@ -1212,7 +1277,7 @@
             <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">My Ticket</h2>
             <p style="color: #64748B;">Digital Boarding Pass &mdash; <span style="color: #10B981; font-weight:600;">Available Offline</span></p>
           </div>
-          <button class="bc-btn outline" (click)="setActiveTab('bookings')">Back to bookings</button>
+          <!-- Back button removed -->
         </div>
 
         <div class="ticket-wrapper">
@@ -1302,7 +1367,7 @@
             <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--text-primary); letter-spacing: -0.5px;">Track My Bus</h2>
             <p style="color: var(--text-secondary); margin-top: 0.25rem;">Live GPS tracking for {{ selectedTrip.route }}</p>
           </div>
-          <button class="bc-btn outline" (click)="setActiveTab('bookings')">← Back to Bookings</button>
+          <!-- Back button removed -->
         </div>
 
         <!-- Advisory Banner -->
@@ -1404,7 +1469,7 @@
             <h2 style="font-size: 2rem; font-weight: 800; color: #1E293B;">Cancel Booking</h2>
             <p style="color: #64748B;">Review refund details before confirming.</p>
           </div>
-          <button class="bc-btn outline" (click)="setActiveTab('bookings')">Back to bookings</button>
+          <!-- Back button removed -->
         </div>
 
         <!-- STEP 1: Confirm Cancellation -->
@@ -1475,7 +1540,7 @@
             <p style="margin: 0.5rem 0 0 0; font-size: 0.85rem; color: #64748B;">Expect funds in 3-5 business days</p>
           </div>
 
-          <button class="bc-btn primary" style="padding: 1rem 2rem; font-size: 1.05rem;" (click)="setActiveTab('bookings')">Back to My Bookings</button>
+          <!-- Back button removed -->
         </div>
 
       </div>
