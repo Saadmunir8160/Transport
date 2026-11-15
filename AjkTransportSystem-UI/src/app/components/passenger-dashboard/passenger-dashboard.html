@@ -1,4 +1,4 @@
-<div class="passenger-wrapper">
+﻿<div class="passenger-wrapper">
   <!-- Mobile Backdrop Overlay -->
   <div class="mobile-backdrop" [class.active]="sidebarActive" (click)="sidebarActive = false"></div>
 
@@ -1009,7 +1009,11 @@
       <!-- Booking Confirmed Tab -->
       <div *ngIf="activeTab === 'booking-confirmed' && selectedTrip" class="booking-confirmed-container">
         <div class="success-header">
-          <div class="success-icon">✅</div>
+          <div class="success-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
           <h2>Booking Confirmed!</h2>
           <p>Your ticket has been sent via SMS and cached offline.</p>
         </div>
@@ -1024,8 +1028,8 @@
               </div>
               <h3 class="ticket-route">{{ selectedTrip.startPoint }} to {{ selectedTrip.endPoint }}</h3>
               <div class="ticket-date-time">
-                <span>📅 {{ selectedTrip.travelDate | date:'fullDate' }}</span>
-                <span>🕒 {{ selectedTrip.departureTime }}</span>
+                <span>&#128197; {{ selectedTrip.travelDate | date:'fullDate' }}</span>
+                <span>&#128338; {{ selectedTrip.departureTime }}</span>
               </div>
             </div>
 
@@ -1038,30 +1042,33 @@
             <div class="ticket-bottom">
               <div class="ticket-info-grid">
                 <div class="t-item">
-                  <span class="label">Boarding Stop</span>
+                  <span class="label">BOARDING STOP</span>
                   <span class="value">{{ selectedTrip.startPoint }} Terminal</span>
                 </div>
                 <div class="t-item">
-                  <span class="label">Drop-off Stop</span>
+                  <span class="label">DROP-OFF STOP</span>
                   <span class="value">{{ selectedTrip.endPoint }} Stop</span>
                 </div>
                 <div class="t-item">
-                  <span class="label">Seat(s)</span>
+                  <span class="label">SEAT(S)</span>
                   <span class="value seats-val">
-                    <span *ngFor="let s of selectedSeats; let last = last">{{ s.id }}{{ !last ? ', ' : '' }}</span>
+                    <ng-container *ngIf="selectedSeats && selectedSeats.length > 0; else defaultSeat">
+                      <span *ngFor="let s of selectedSeats; let last = last">{{ s.id }}{{ !last ? ', ' : '' }}</span>
+                    </ng-container>
+                    <ng-template #defaultSeat>1A</ng-template>
                   </span>
                 </div>
                 <div class="t-item">
-                  <span class="label">Vehicle</span>
+                  <span class="label">VEHICLE</span>
                   <span class="value">{{ selectedTrip.registration || 'AJK-4402' }}</span>
                 </div>
                 <div class="t-item">
-                  <span class="label">Driver</span>
+                  <span class="label">DRIVER</span>
                   <span class="value">Ahmed</span>
                 </div>
                 <div class="t-item">
-                  <span class="label">Total Paid</span>
-                  <span class="value payment-val">Rs. {{ (selectedTrip.fare * selectedSeats.length) + 50 }} ({{ paymentMethod }})</span>
+                  <span class="label">TOTAL PAID</span>
+                  <span class="value payment-val">Rs. {{ (selectedTrip.fare * (selectedSeats.length || 1)) + 50 }} ({{ paymentMethod || 'Card' }})</span>
                 </div>
               </div>
 
@@ -1073,25 +1080,27 @@
             </div>
             
             <div class="cancellation-reminder">
-              ⚠️ Free cancellation available until {{ selectedTrip.travelDate | date }} 06:00 AM.
+              <span>&#9888;&#65039;</span> Free cancellation available until {{ selectedTrip.travelDate | date }} 06:00 AM.
             </div>
           </div>
         </div>
 
         <div class="ticket-actions">
           <div class="primary-actions">
-            <button class="btn-primary" (click)="shareTicketViaWhatsApp()" style="background: #25D366; border-color: #25D366;">
-              <span class="icon">💬</span> Share on WhatsApp
+            <button class="btn-wa" (click)="shareTicketViaWhatsApp()">
+              <span class="icon">&#128172;</span> Share on WhatsApp
             </button>
-            <button class="btn-secondary" (click)="shareETAAlert()">
-              <span class="icon">⏱️</span> Send ETA Alert
+            <button class="btn-eta" (click)="shareETAAlert()">
+              <span class="icon">&#9201;&#65039;</span> Send ETA Alert
             </button>
-            <button class="btn-primary" (click)="setActiveTab('bookings')"><span class="icon">🎟️</span> View All Bookings</button>
+            <button class="btn-all-bookings" (click)="setActiveTab('bookings')">
+              <span class="icon">&#127919;</span> View All Bookings
+            </button>
           </div>
           <div class="secondary-actions">
-            <button class="action-chip" (click)="printTicketReceipt()">💾 Download PDF / Print</button>
-            <button class="action-chip" (click)="setActiveTab('track-bus')">📍 Live Map Tracking</button>
-            <button class="action-chip" (click)="shareTicketViaWhatsApp()">📱 WhatsApp PNR</button>
+            <button class="action-chip" (click)="printTicketReceipt()">&#128190; Download PDF / Print</button>
+            <button class="action-chip" (click)="setActiveTab('track-bus')">&#128205; Live Map Tracking</button>
+            <button class="action-chip" (click)="shareTicketViaWhatsApp()">&#128241; WhatsApp PNR</button>
           </div>
         </div>
       </div>
