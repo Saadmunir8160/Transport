@@ -4508,3 +4508,340 @@ details[open] .td-summary-link .td-arrow {
   text-align: center;
   margin: 0;
 }
+/* ==========================================================================
+   CHECKOUT PAGE (EXACT SCREENSHOT REDESIGN)
+   ========================================================================== */
+
+.co-page-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0.5rem 0 3rem 0;
+}
+
+.co-main-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 820px) {
+  .co-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.co-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.co-right-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.co-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+}
+
+.co-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.co-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0;
+}
+
+.co-title-pad {
+  margin-bottom: 18px;
+}
+
+.co-edit-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #2457D6;
+  cursor: pointer;
+}
+
+.co-edit-link:hover {
+  text-decoration: underline;
+}
+
+/* Forms */
+.co-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.co-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.co-field-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4A5568;
+}
+
+.co-input {
+  width: 100%;
+  padding: 9px 12px;
+  background: #F8FAFD;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: #182230;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.co-input:focus {
+  background: #FFFFFF;
+  border-color: #2457D6;
+}
+
+/* Payment Option Radio Cards */
+.co-payment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.co-payment-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.co-payment-item:hover {
+  border-color: #2457D6;
+  background: #FAFAFC;
+}
+
+.payment-item-active {
+  border-color: #2457D6 !important;
+  background: #F8FAFD !important;
+  box-shadow: 0 0 0 1px #2457D6;
+}
+
+.co-radio-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.co-radio-circle {
+  width: 16px;
+  height: 16px;
+  accent-color: #0F9F6E; /* Sleek Green / Blue accent */
+  cursor: pointer;
+}
+
+.co-pay-brand-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-easypaisa {
+  background: #00A651; /* Official Easypaisa Green */
+}
+
+.icon-jazzcash {
+  background: #ED1C24; /* Official JazzCash Red */
+}
+
+.icon-card {
+  font-size: 1.1rem;
+}
+
+.co-pay-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.co-pay-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #182230;
+}
+
+.co-pay-sub {
+  font-size: 0.6875rem;
+  color: #718096;
+}
+
+/* Fee Badges */
+.co-fee-badge {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.badge-green-fee {
+  background: #EAF8F1;
+  color: #0F9F6E;
+}
+
+.badge-red-fee {
+  background: #FDF1F1;
+  color: #D14343;
+}
+
+.badge-blue-fee {
+  background: #EEF3FD;
+  color: #2457D6;
+}
+
+/* Right Column: Order Summary Card */
+.co-summary-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.co-timer-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F1F5F9;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  color: #334155;
+  margin-bottom: 18px;
+}
+
+.co-order-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0 0 10px 0;
+}
+
+.co-route-line {
+  margin-bottom: 18px;
+}
+
+.co-route-cities {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #182230;
+  margin: 0 0 4px 0;
+}
+
+.co-route-meta {
+  font-size: 0.6875rem;
+  color: #718096;
+}
+
+/* Price Stack */
+.co-breakdown-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.co-breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8125rem;
+}
+
+.co-b-label {
+  color: #64748B;
+}
+
+.co-b-val {
+  color: #182230;
+  font-weight: 600;
+}
+
+.co-summary-divider {
+  height: 1px;
+  background: #EEF2F6;
+  margin: 4px 0;
+}
+
+.co-grand-row {
+  margin-top: 4px;
+}
+
+.co-total-label {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #182230;
+}
+
+.co-total-val {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #182230;
+}
+
+/* Action Pay Button (Gradient Blue/Teal matching screenshot) */
+.co-pay-btn {
+  width: 100%;
+  padding: 11px 16px;
+  background: linear-gradient(90deg, #1D63D8 0%, #0D8B96 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(29, 99, 216, 0.25);
+  transition: all 0.2s ease;
+  margin-bottom: 10px;
+}
+
+.co-pay-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(29, 99, 216, 0.35);
+}
+
+.co-secure-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.6875rem;
+  color: #718096;
+}
+
+.co-lock-icon {
+  font-size: 0.8125rem;
+}

@@ -857,127 +857,155 @@
         </div>
 
       </div>
-      <!-- Checkout Tab -->
-      <div *ngIf="activeTab === 'checkout' && selectedTrip" class="checkout-container">
-        <div class="back-link" (click)="setActiveTab('seat-selection')">
-          <span>← Back to seat selection</span>
-        </div>
+            <!-- Checkout Tab (Exact Screenshot Redesign) -->
+      <div *ngIf="activeTab === 'checkout' && selectedTrip" class="co-page-wrapper">
+        
+        <!-- Back to seat selection REMOVED as requested -->
 
-        <div class="checkout-grid">
-          <!-- Left: Details & Payment -->
-          <div class="checkout-main">
-            <!-- Passenger Details -->
-            <div class="checkout-card">
-              <div class="card-header-flex">
-                <h3>Passenger Details</h3>
-                <span class="edit-btn">Edit</span>
+        <div class="co-main-grid">
+          
+          <!-- Left Column: Passenger Details & Payment Method Cards -->
+          <div class="co-left-col">
+            
+            <!-- 1. Passenger Details Card -->
+            <div class="co-card">
+              <div class="co-card-header">
+                <h3 class="co-card-title">Passenger Details</h3>
+                <span class="co-edit-link">Edit</span>
               </div>
-              <div class="passenger-form">
-                <div class="input-group">
-                  <label>Full Name</label>
-                  <input type="text" [(ngModel)]="passengerName" class="home-input">
+              
+              <div class="co-form-stack">
+                <div class="co-field-group">
+                  <label class="co-field-label">Full Name</label>
+                  <input type="text" [(ngModel)]="passengerName" placeholder="Enter full name" class="co-input">
                 </div>
-                <div class="input-group">
-                  <label>Phone Number</label>
-                  <input type="text" [(ngModel)]="passengerPhone" class="home-input">
+                
+                <div class="co-field-group">
+                  <label class="co-field-label">Phone Number</label>
+                  <input type="text" [(ngModel)]="passengerPhone" placeholder="03XXXXXXXXX" class="co-input">
                 </div>
-                <div class="input-group">
-                  <label>Govt ID (Optional)</label>
-                  <input type="text" [(ngModel)]="passengerId" class="home-input" placeholder="CNIC or Passport">
+                
+                <div class="co-field-group">
+                  <label class="co-field-label">Govt ID (Optional)</label>
+                  <input type="text" [(ngModel)]="passengerId" placeholder="CNIC or Passport" class="co-input">
                 </div>
+              </div>
+            </div>
+
+            <!-- 2. Payment Method Card -->
+            <div class="co-card">
+              <h3 class="co-card-title co-title-pad">Payment Method</h3>
+              
+              <div class="co-payment-list">
+                
+                <!-- Easypaisa Mobile Account -->
+                <label class="co-payment-item" [class.payment-item-active]="paymentMethod === 'Easypaisa'">
+                  <div class="co-radio-wrap">
+                    <input type="radio" name="payment" value="Easypaisa" [(ngModel)]="paymentMethod" class="co-radio-circle">
+                    <span class="co-pay-brand-icon icon-easypaisa"></span>
+                  </div>
+                  
+                  <div class="co-pay-info">
+                    <div class="co-pay-title">Easypaisa Mobile Account</div>
+                    <div class="co-pay-sub">Instant debit via registered Telenor/Easypaisa mobile wallet</div>
+                  </div>
+                  
+                  <div class="co-fee-badge badge-green-fee">0% Fee</div>
+                </label>
+
+                <!-- JazzCash Wallet -->
+                <label class="co-payment-item" [class.payment-item-active]="paymentMethod === 'JazzCash'">
+                  <div class="co-radio-wrap">
+                    <input type="radio" name="payment" value="JazzCash" [(ngModel)]="paymentMethod" class="co-radio-circle">
+                    <span class="co-pay-brand-icon icon-jazzcash"></span>
+                  </div>
+                  
+                  <div class="co-pay-info">
+                    <div class="co-pay-title">JazzCash Wallet</div>
+                    <div class="co-pay-sub">Direct MPIN verification on your Jazz mobile account</div>
+                  </div>
+                  
+                  <div class="co-fee-badge badge-red-fee">Instant</div>
+                </label>
+
+                <!-- Debit / Credit Card -->
+                <label class="co-payment-item" [class.payment-item-active]="paymentMethod === 'Card'">
+                  <div class="co-radio-wrap">
+                    <input type="radio" name="payment" value="Card" [(ngModel)]="paymentMethod" class="co-radio-circle">
+                    <span class="co-pay-brand-icon icon-card">💳</span>
+                  </div>
+                  
+                  <div class="co-pay-info">
+                    <div class="co-pay-title">Debit / Credit Card</div>
+                    <div class="co-pay-sub">Visa, Mastercard, PayPak, UnionPay (3D Secure)</div>
+                  </div>
+                  
+                  <div class="co-fee-badge badge-blue-fee">Global</div>
+                </label>
+
               </div>
             </div>
 
-            <!-- Payment Methods -->
-            <div class="checkout-card">
-              <h3>Payment Method</h3>
-              <div class="payment-options" style="display: flex; flex-direction: column; gap: 0.85rem;">
-                <!-- Easypaisa -->
-                <label class="payment-radio" [class.selected]="paymentMethod === 'Easypaisa'" style="display:flex; align-items:center; gap: 1rem; padding: 1.1rem; border: 2px solid; border-color: paymentMethod === 'Easypaisa' ? '#0D766E' : '#E2E8F0'; border-radius: 14px; cursor: pointer; transition: all 0.2s; background: paymentMethod === 'Easypaisa' ? '#F0FDFA' : 'white';">
-                  <input type="radio" name="payment" value="Easypaisa" [(ngModel)]="paymentMethod" style="accent-color: #0D766E; width: 18px; height: 18px;">
-                  <div style="font-size: 1.8rem;">🟢</div>
-                  <div class="payment-info" style="flex:1;">
-                    <div style="font-weight: 700; color: #0F172A; font-size: 1.05rem;">Easypaisa Mobile Account</div>
-                    <div style="font-size: 0.85rem; color: #64748B;">Instant debit via registered Telenor/Easypaisa mobile wallet</div>
-                  </div>
-                  <span style="background: #CCFBF1; color: #0F766E; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px;">0% Fee</span>
-                </label>
-
-                <!-- JazzCash -->
-                <label class="payment-radio" [class.selected]="paymentMethod === 'JazzCash'" style="display:flex; align-items:center; gap: 1rem; padding: 1.1rem; border: 2px solid; border-color: paymentMethod === 'JazzCash' ? '#0D766E' : '#E2E8F0'; border-radius: 14px; cursor: pointer; transition: all 0.2s; background: paymentMethod === 'JazzCash' ? '#F0FDFA' : 'white';">
-                  <input type="radio" name="payment" value="JazzCash" [(ngModel)]="paymentMethod" style="accent-color: #0D766E; width: 18px; height: 18px;">
-                  <div style="font-size: 1.8rem;">🔴</div>
-                  <div class="payment-info" style="flex:1;">
-                    <div style="font-weight: 700; color: #0F172A; font-size: 1.05rem;">JazzCash Wallet</div>
-                    <div style="font-size: 0.85rem; color: #64748B;">Direct MPIN verification on your Jazz mobile account</div>
-                  </div>
-                  <span style="background: #FEE2E2; color: #B91C1C; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px;">Instant</span>
-                </label>
-
-                <!-- Debit/Credit Card -->
-                <label class="payment-radio" [class.selected]="paymentMethod === 'Card'" style="display:flex; align-items:center; gap: 1rem; padding: 1.1rem; border: 2px solid; border-color: paymentMethod === 'Card' ? '#0D766E' : '#E2E8F0'; border-radius: 14px; cursor: pointer; transition: all 0.2s; background: paymentMethod === 'Card' ? '#F0FDFA' : 'white';">
-                  <input type="radio" name="payment" value="Card" [(ngModel)]="paymentMethod" style="accent-color: #0D766E; width: 18px; height: 18px;">
-                  <div style="font-size: 1.8rem;">💳</div>
-                  <div class="payment-info" style="flex:1;">
-                    <div style="font-weight: 700; color: #0F172A; font-size: 1.05rem;">Debit / Credit Card</div>
-                    <div style="font-size: 0.85rem; color: #64748B;">Visa, Mastercard, PayPak, UnionPay (3D Secure)</div>
-                  </div>
-                  <span style="background: #E0E7FF; color: #4338CA; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px;">Global</span>
-                </label>
-              </div>
-            </div>
           </div>
 
-          <!-- Right: Order Summary (Sticky) -->
-          <div class="checkout-sidebar">
-            <div class="checkout-card sticky-card">
-              <!-- Timer Banner -->
-              <div class="timer-banner" [class.urgent]="holdTimeLeft < 60">
-                <span class="timer-icon">⏱️</span>
-                <span class="timer-text">Seats held for <strong>{{ holdTimerDisplay }}</strong></span>
-              </div>
-
-              <h3>Order Summary</h3>
+          <!-- Right Column: Order Summary Card (Matching Screenshot) -->
+          <div class="co-right-col">
+            <div class="co-card co-summary-card">
               
-              <div class="order-route-info">
-                <h4>{{ selectedTrip.startPoint }} → {{ selectedTrip.endPoint }}</h4>
-                <p>{{ selectedTrip.travelDate | date:'mediumDate' }} | {{ selectedTrip.departureTime }} - {{ selectedTrip.eta }}</p>
+              <!-- Seats Held Timer Pill -->
+              <div class="co-timer-pill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1E293B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <span>Seats held for <strong>{{ holdTimerDisplay || '10:00' }}</strong></span>
               </div>
 
-              <div class="order-seats-info">
-                <div class="seat-badge" *ngFor="let seat of selectedSeats">
-                  {{ seat.id }}
-                </div>
-              </div>
+              <h3 class="co-order-heading">Order Summary</h3>
 
-              <div class="fare-rows" style="margin-top: 1.5rem;">
-                <div class="fare-row">
-                  <span>Base fare (x{{ selectedSeats.length }})</span>
-                  <span>Rs. {{ selectedTrip.fare * selectedSeats.length }}</span>
-                </div>
-                <div class="fare-row">
-                  <span>Booking fee</span>
-                  <span>Rs. 50</span>
-                </div>
-                <div class="fare-divider"></div>
-                <div class="fare-row grand-total">
-                  <span>Total Amount</span>
-                  <span>Rs. {{ (selectedTrip.fare * selectedSeats.length) + 50 }}</span>
+              <div class="co-route-line">
+                <h4 class="co-route-cities">{{ selectedTrip.startPoint }} &rarr; {{ selectedTrip.endPoint }}</h4>
+                <div class="co-route-meta">
+                  {{ selectedTrip.travelDate | date:'MMM d, yyyy' }} &bull; {{ selectedTrip.departureTime }} &ndash; {{ selectedTrip.eta || '01:00 PM' }}
                 </div>
               </div>
 
-              <button class="btn-primary search-btn-huge" style="margin-top: 1.5rem;" (click)="confirmPayment()">
-                {{ paymentMethod === 'Cash' ? 'Reserve Seat' : 'Pay Rs. ' + ((selectedTrip.fare * selectedSeats.length) + 50) }}
+              <!-- Price Breakdown Stack -->
+              <div class="co-breakdown-stack">
+                <div class="co-breakdown-row">
+                  <span class="co-b-label">Base fare (x{{ selectedSeats.length || passengerCount }})</span>
+                  <span class="co-b-val">Rs. {{ selectedTrip.fare * (selectedSeats.length || passengerCount) }}</span>
+                </div>
+                
+                <div class="co-breakdown-row">
+                  <span class="co-b-label">Booking fee</span>
+                  <span class="co-b-val">Rs. 50</span>
+                </div>
+                
+                <div class="co-summary-divider"></div>
+
+                <div class="co-breakdown-row co-grand-row">
+                  <span class="co-total-label">Total Amount</span>
+                  <span class="co-total-val">Rs. {{ (selectedTrip.fare * (selectedSeats.length || passengerCount)) + 50 }}</span>
+                </div>
+              </div>
+
+              <!-- Gradient Blue/Teal Pay Action Button -->
+              <button class="co-pay-btn" (click)="confirmPayment()">
+                Pay Rs. {{ (selectedTrip.fare * (selectedSeats.length || passengerCount)) + 50 }}
               </button>
-              
-              <div class="secure-badge">
-                🔒 256-bit Secure Encrypted Payment
+
+              <div class="co-secure-footer">
+                <span class="co-lock-icon">🔒</span>
+                <span>256-bit Secure Encrypted Payment</span>
               </div>
+
             </div>
           </div>
-        </div>
-      </div>
 
+        </div>
+
+      </div>
       <!-- Booking Confirmed Tab -->
       <div *ngIf="activeTab === 'booking-confirmed' && selectedTrip" class="booking-confirmed-container">
         <div class="success-header">
