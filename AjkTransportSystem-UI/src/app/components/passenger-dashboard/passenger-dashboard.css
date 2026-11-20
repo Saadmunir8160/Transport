@@ -373,7 +373,7 @@ body {
   background: #0D1628 !important;
 }
 
-.profile-card {
+.sidebar-user-card {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -382,12 +382,8 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
 }
-.profile-card:hover {
+.sidebar-user-card:hover {
   background: rgba(255, 255, 255, 0.06) !important;
-}
-
-.profile-card:hover {
-  background: #F1F5F9;
 }
 
 .avatar-sa {
@@ -435,22 +431,7 @@ body {
   border-radius: 4px;
   transition: all 0.2s ease;
 }
-.profile-card:hover .logout-icon-btn {
-  color: #F87171 !important;
-  background: rgba(239, 68, 68, 0.15) !important;
-}
-
-.profile-card:hover .logout-icon-btn {
-  margin-left: auto;
-  color: #8FA2BF !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-.profile-card:hover .logout-icon-btn {
+.sidebar-user-card:hover .logout-icon-btn {
   color: #F87171 !important;
   background: rgba(239, 68, 68, 0.15) !important;
 }
