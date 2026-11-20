@@ -17,6 +17,8 @@ export class LoginComponent {
   // Login State
   email = '';
   password = '';
+  showPassword = false;
+  showRegPassword = false;
   message = '';
   loading = false;
   

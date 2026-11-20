@@ -270,6 +270,34 @@ body {
   margin-bottom: 1.25rem;
 }
 
+.form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.01em;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #64748b;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: #38bdf8;
+}
+
 .input-pill {
   width: 100%;
   padding: 0.85rem 1.25rem;
@@ -277,9 +305,42 @@ body {
   border-radius: var(--radius-md);
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
   color: var(--text-main);
   background: var(--bg-surface);
+}
+
+.input-pill.with-icon {
+  padding-left: 2.75rem;
+}
+
+.input-pill.with-action {
+  padding-right: 3rem;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.password-toggle-btn:hover {
+  color: #38bdf8;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.password-toggle-btn:focus {
+  outline: none;
+  color: #38bdf8;
 }
 
 .input-pill::placeholder {
