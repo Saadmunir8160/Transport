@@ -2484,3 +2484,158 @@
     width: 100%;
   }
 }
+
+
+/* =========================================================
+   Modern Driver Trip History Tab Styles
+   ========================================================= */
+
+.driver-history-page {
+  padding: 1.5rem 1.5rem 3rem 1.5rem;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 65px);
+}
+
+.history-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.history-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.history-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.history-portal-badge {
+  display: inline-block;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  color: #0d766e;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.history-main-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.history-sub-title {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.export-pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.export-pdf-btn:hover {
+  border-color: #0d766e;
+  color: #0d766e;
+}
+
+.history-filter-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.15rem 1.35rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.history-table-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+/* History Plan / Actual display */
+.history-plan-actual {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.82rem;
+}
+
+.plan-time {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.actual-time {
+  color: #0d766e;
+  font-weight: 600;
+}
+
+/* Stop Timeline list in drawer */
+.history-timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+}
+
+.history-timeline-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.45rem 0;
+  border-bottom: 1px dashed #f1f5f9;
+  font-size: 0.82rem;
+}
+
+.history-timeline-item:last-child {
+  border-bottom: none;
+}
+
+.timeline-station-name {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.station-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #0d766e;
+}
+
+.timeline-planned-time {
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.timeline-pax-diff {
+  display: flex;
+  gap: 0.65rem;
+  font-size: 0.78rem;
+}
