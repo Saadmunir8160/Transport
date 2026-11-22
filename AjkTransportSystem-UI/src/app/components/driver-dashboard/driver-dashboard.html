@@ -1787,72 +1787,148 @@
       </div>
 
       <!-- SYNC QUEUE TAB -->
-      <div *ngIf="activeTab === 'sync_queue'" class="dashboard-content enterprise-tab">
-        <div class="enterprise-header">
-          <h2 class="welcome-title">Sync Queue</h2>
-          <p class="date-subtitle">Pending and failed offline records</p>
-        </div>
-
-        <div class="enterprise-grid">
-          <div class="enterprise-card" style="grid-column: span 12; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; gap: 2rem;">
-              <div>
-                <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Total Pending Upload</p>
-                <h3 style="margin: 0; font-size: 1.5rem; color: #0f172a;">{{ getDetailedQueue().length }}</h3>
-              </div>
-              <div>
-                <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Failed Records</p>
-                <h3 style="margin: 0; font-size: 1.5rem; color: #e11d48;">{{ getFailedRecords().length }}</h3>
-              </div>
-              <div>
-                <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Synced Today</p>
-                <h3 style="margin: 0; font-size: 1.5rem; color: #059669;">{{ getSyncedTodayCount() }}</h3>
-              </div>
+      <div *ngIf="activeTab === 'sync_queue'" class="dashboard-content enterprise-tab driver-sync-queue-page">
+        <div class="sync-queue-container">
+          
+          <!-- Page Header -->
+          <div class="sq-page-header">
+            <div class="sq-header-left">
+              <span class="sq-portal-badge">Offline Buffer & Retry Engine</span>
+              <h2 class="sq-main-title">Sync Queue</h2>
+              <p class="sq-sub-title">Review pending local transactions, failed sync entries, and push buffered actions to the central database.</p>
             </div>
-            <div style="display: flex; gap: 1rem;">
-              <button class="btn btn-secondary" (click)="retryFailed()" [disabled]="!isOnline() || getFailedRecords().length === 0">Retry Failed</button>
-              <button class="btn btn-primary" (click)="forceSync()" [disabled]="!isOnline()">Force Sync All</button>
+            <div class="sq-header-actions">
+              <button class="dh-btn dh-btn-secondary" (click)="retryFailed()" [disabled]="!isOnline() || getFailedRecords().length === 0">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+                Retry Failed ({{ getFailedRecords().length }})
+              </button>
+              <button class="dh-btn dh-btn-primary" (click)="forceSync()" [disabled]="!isOnline()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                Force Sync All
+              </button>
             </div>
           </div>
 
-          <div class="enterprise-card" style="grid-column: span 12;">
-            <div class="card-header border-bottom">
-              <h3 style="margin: 0; font-size: 1.1rem; color: #0f172a;">Pending & Failed Records List</h3>
+          <!-- Queue Health Summary Bar (3 Metrics) -->
+          <div class="sq-summary-card">
+            <div class="sq-metrics-grid">
+              
+              <div class="sq-metric-item">
+                <div class="sq-icon-circle bg-amber-soft">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="sq-metric-text">
+                  <span class="sq-metric-label">Total Pending Upload</span>
+                  <div class="sq-metric-val" [class.val-amber]="getDetailedQueue().length > 0">{{ getDetailedQueue().length }}</div>
+                  <span class="sq-metric-sub">Buffered in browser storage</span>
+                </div>
+              </div>
+
+              <div class="sq-metric-item">
+                <div class="sq-icon-circle bg-red-soft">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+                </div>
+                <div class="sq-metric-text">
+                  <span class="sq-metric-label">Failed Records</span>
+                  <div class="sq-metric-val" [class.val-red]="getFailedRecords().length > 0">{{ getFailedRecords().length }}</div>
+                  <span class="sq-metric-sub">Network / conflict rejections</span>
+                </div>
+              </div>
+
+              <div class="sq-metric-item">
+                <div class="sq-icon-circle bg-green-soft">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div class="sq-metric-text">
+                  <span class="sq-metric-label">Synced Successfully Today</span>
+                  <div class="sq-metric-val val-green">{{ getSyncedTodayCount() }}</div>
+                  <span class="sq-metric-sub">Pushed to central database</span>
+                </div>
+              </div>
+
             </div>
-            <div class="card-body" style="padding: 0;">
-              <table class="enterprise-table" style="width: 100%; text-align: left;">
+          </div>
+
+          <!-- Pending & Failed Records Table Card -->
+          <div class="sq-table-card">
+            <div class="r-card-header">
+              <div class="header-with-icon">
+                <span class="header-icon-badge action-badge">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                </span>
+                <div>
+                  <h3 class="r-card-title">Pending & Failed Records List</h3>
+                  <span class="r-card-subtitle">Granular queue ledger with device timestamps</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="trips-table-wrapper">
+              <table class="trips-modern-table">
                 <thead>
-                  <tr style="background-color: #f8fafc; border-bottom: 1px solid #e2e8f0;">
-                    <th style="padding: 1rem;">Record Type</th>
-                    <th style="padding: 1rem;">Trip ID</th>
-                    <th style="padding: 1rem;">Created At (Device Time)</th>
-                    <th style="padding: 1rem;">Status</th>
-                    <th style="padding: 1rem;">Action</th>
+                  <tr>
+                    <th class="th-type">Record Type</th>
+                    <th class="th-trip">Trip Reference</th>
+                    <th class="th-time">Device Timestamp</th>
+                    <th class="th-status">Queue Status</th>
+                    <th class="th-action text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <ng-container *ngFor="let record of getDetailedQueue().concat(getFailedRecords())">
-                    <tr style="border-bottom: 1px solid #e2e8f0;">
-                      <td style="padding: 1rem; font-weight: 600; text-transform: capitalize;">{{ record.type.replace('_', ' ') }}</td>
-                      <td style="padding: 1rem;">{{ record.tripId || 'N/A' }}</td>
-                      <td style="padding: 1rem;">{{ record.createdAt | date:'short' }}</td>
-                      <td style="padding: 1rem;">
-                        <span class="status-badge" [ngClass]="{'badge-danger': record.status === 'failed', 'badge-warning': record.status === 'pending'}">
+                    <tr class="trip-row">
+                      <td class="td-type">
+                        <span class="record-type-badge">
+                          {{ record.type.replace('_', ' ') }}
+                        </span>
+                      </td>
+                      <td class="td-trip">
+                        <span class="trip-ref-code">{{ record.tripId ? ('Trip #' + record.tripId) : 'N/A' }}</span>
+                      </td>
+                      <td class="td-time">
+                        <span class="device-time-text">{{ record.createdAt | date:'MMM d, y, h:mm a' }}</span>
+                      </td>
+                      <td class="td-status">
+                        <span class="trip-badge" [ngClass]="{
+                          'badge-cancelled': record.status === 'failed',
+                          'badge-scheduled': record.status === 'pending'
+                        }">
+                          <span class="status-dot"></span>
                           {{ record.status }}
                         </span>
                       </td>
-                      <td style="padding: 1rem;">
-                        <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem;" *ngIf="record.status === 'failed'" (click)="viewErrorDetail(record)">View Error</button>
+                      <td class="td-action text-right">
+                        <button class="trip-action-pill-btn" *ngIf="record.status === 'failed'" (click)="viewErrorDetail(record)">
+                          View Error
+                        </button>
+                        <span *ngIf="record.status !== 'failed'" class="pending-auto-sync-text">Auto-syncs on reconnect</span>
                       </td>
                     </tr>
                   </ng-container>
+
+                  <!-- Empty State -->
                   <tr *ngIf="getDetailedQueue().length === 0 && getFailedRecords().length === 0">
-                    <td colspan="5" style="padding: 2rem; text-align: center; color: #64748b;">All offline records are synced. Queue is empty.</td>
+                    <td colspan="5" class="p-0">
+                      <div class="trips-empty-state">
+                        <div class="empty-icon-circle green-circle">
+                          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                          </svg>
+                        </div>
+                        <h3 class="empty-state-title">All Offline Records Are Synced!</h3>
+                        <p class="empty-state-desc">
+                          The local upload queue is completely empty. All passenger stops, trip dispatches, and reports are up-to-date with the main database.
+                        </p>
+                      </div>
+                    </td>
                   </tr>
+
                 </tbody>
               </table>
             </div>
           </div>
+
         </div>
       </div>
 
