@@ -246,7 +246,7 @@ using (var scope = app.Services.CreateScope())
             {
                 usersToSeed.Add(new User
                 {
-                    Name = "Tariq Mehmood",
+                    Name = "Driver",
                     Email = "driver@ajk.com",
                     PasswordHash = AuthService.HashPassword(driverPass),
                     Role = "Driver",

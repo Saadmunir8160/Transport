@@ -2276,7 +2276,7 @@
                       <span *ngIf="!profileData.photoUrl">{{ profileData.name ? profileData.name.charAt(0).toUpperCase() : 'T' }}</span>
                     </div>
                     <div class="driver-title-block">
-                      <h3 class="driver-official-name">{{ profileData.name || 'Tariq Mehmood' }}</h3>
+                      <h3 class="driver-official-name">{{ profileData.name || userName || 'Assigned Driver' }}</h3>
                       <span class="driver-org-tag">{{ profileData.organization || 'AJK State Transport Authority' }}</span>
                       <span class="driver-emp-id">Employee ID: <strong>{{ profileData.userId || '4' }}</strong></span>
                     </div>
