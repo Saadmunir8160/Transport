@@ -1821,86 +1821,174 @@
       </div>
 
       <!-- REPORT ISSUE TAB -->
-      <div *ngIf="activeTab === 'report_issue'" class="dashboard-content enterprise-tab">
-        <div class="enterprise-header">
-          <h2 class="welcome-title">Report an Issue</h2>
-          <p class="date-subtitle">Log vehicle problems, road hazards, or trip delays. Works offline.</p>
-        </div>
-
-        <div class="enterprise-grid">
-          <div class="enterprise-card">
-            <div class="card-header border-bottom">
-              <h3 class="card-title">Submit New Issue</h3>
+      <div *ngIf="activeTab === 'report_issue'" class="dashboard-content enterprise-tab driver-report-page">
+        <div class="report-container">
+          
+          <!-- Page Header -->
+          <div class="report-page-header">
+            <div class="report-header-left">
+              <span class="report-portal-badge">Incident & Hazard Dispatch</span>
+              <h2 class="report-main-title">Report an Issue</h2>
+              <p class="report-sub-title">Log vehicle breakdowns, road blockages, weather hazards, or trip delays directly to control dispatch. Works seamlessly offline.</p>
             </div>
-            <div class="card-body" style="padding: 1.5rem;">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                <div>
-                  <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Category</label>
-                  <select [(ngModel)]="newIssue.category" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px;">
-                    <option value="">Select Category</option>
-                    <option value="Breakdown">Vehicle Breakdown</option>
-                    <option value="RoadBlocked">Road Blocked / Hazard</option>
-                    <option value="Accident">Accident</option>
-                    <option value="Delay">Trip Delay</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Severity</label>
-                  <select [(ngModel)]="newIssue.severity" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px;">
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                    <option value="Critical">Critical</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div style="margin-bottom: 1rem;">
-                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Description</label>
-                <textarea [(ngModel)]="newIssue.description" class="form-control" rows="4" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 6px; resize: vertical;" placeholder="Describe the issue in detail..."></textarea>
-              </div>
-
-              <div style="margin-bottom: 1.5rem;">
-                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Photo Evidence (Optional)</label>
-                <input type="file" accept="image/*" (change)="onIssuePhotoSelected($event)" class="form-control" style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 6px; width: 100%;" />
-                <div *ngIf="newIssue.photoUrl" style="margin-top: 1rem;">
-                  <img [src]="newIssue.photoUrl" style="max-height: 200px; border-radius: 6px;" />
-                </div>
-              </div>
-
-              <button class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;" (click)="submitIssue()">Submit Report</button>
+            <div class="emergency-quick-call">
+              <span class="call-label">Control Room Emergency</span>
+              <a href="tel:05822921444" class="call-number-link">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                05822-921444
+              </a>
             </div>
           </div>
 
-          <div class="enterprise-card">
-            <div class="card-header border-bottom">
-              <h3 class="card-title">My Open Issues</h3>
-            </div>
-            <div class="card-body">
-              <div *ngIf="openIssues.length === 0" style="padding: 2rem; text-align: center; color: #64748b;">
-                You have no open issues.
+          <!-- Main 2-Column Split: Form on Left, Open Issues on Right -->
+          <div class="report-split-grid">
+            
+            <!-- LEFT: Incident Submission Form -->
+            <div class="report-form-card">
+              <div class="r-card-header">
+                <div class="header-with-icon">
+                  <span class="header-icon-badge action-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                  </span>
+                  <div>
+                    <h3 class="r-card-title">Submit Incident Report</h3>
+                    <span class="r-card-subtitle">Immediate alert sent to Central Command</span>
+                  </div>
+                </div>
               </div>
-              <ul style="list-style: none; padding: 0; margin: 0;" *ngIf="openIssues.length > 0">
-                <li *ngFor="let issue of openIssues" style="border-bottom: 1px solid #f1f5f9; padding: 1rem;">
-                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                    <strong style="color: #0f172a;">{{ issue.category }}</strong>
-                    <span class="status-badge" [ngClass]="{'badge-danger': issue.severity === 'Critical' || issue.severity === 'High', 'badge-warning': issue.severity === 'Medium'}">
-                      {{ issue.severity }}
-                    </span>
+
+              <div class="r-card-body">
+                <div class="form-row-2col">
+                  <div class="r-form-group">
+                    <label class="r-label">
+                      Incident Category <span class="required-star">*</span>
+                    </label>
+                    <div class="select-wrapper">
+                      <select [(ngModel)]="newIssue.category" class="r-select">
+                        <option value="">Select Category</option>
+                        <option value="Breakdown">Vehicle Breakdown (Engine, Brake, Tire)</option>
+                        <option value="RoadBlocked">Road Blocked / Landslide / Hazard</option>
+                        <option value="Accident">Accident / Collision</option>
+                        <option value="Delay">Severe Weather / Route Delay</option>
+                        <option value="Other">Other Operational Issue</option>
+                      </select>
+                    </div>
                   </div>
-                  <p style="font-size: 0.9rem; color: #475569; margin: 0 0 0.5rem 0;">{{ issue.description }}</p>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
-                    <span style="color: #64748b;">{{ issue.submittedAt | date:'medium' }}</span>
-                    <span style="color: #059669; font-weight: 600;">{{ issue.status }}</span>
+
+                  <div class="r-form-group">
+                    <label class="r-label">
+                      Severity Level <span class="required-star">*</span>
+                    </label>
+                    <div class="select-wrapper">
+                      <select [(ngModel)]="newIssue.severity" class="r-select">
+                        <option value="Low">Low - Informational Notice</option>
+                        <option value="Medium">Medium - Delay / Minor Fix</option>
+                        <option value="High">High - Urgent Assistance Needed</option>
+                        <option value="Critical">Critical - Immediate Rescue / Stop</option>
+                      </select>
+                    </div>
                   </div>
-                  <div *ngIf="issue.adminResponse" style="margin-top: 0.75rem; padding: 0.75rem; background-color: #f8fafc; border-left: 3px solid #0ea5e9; border-radius: 0 4px 4px 0;">
-                    <strong style="font-size: 0.8rem; color: #0284c7;">Admin Response:</strong>
-                    <p style="margin: 0; font-size: 0.85rem; color: #334155;">{{ issue.adminResponse }}</p>
+                </div>
+
+                <div class="r-form-group">
+                  <label class="r-label">
+                    Incident Description <span class="required-star">*</span>
+                  </label>
+                  <textarea [(ngModel)]="newIssue.description" class="r-textarea" rows="4" placeholder="Describe the location, problem details, vehicle symptoms, or passenger status..."></textarea>
+                </div>
+
+                <div class="r-form-group">
+                  <label class="r-label">
+                    Photo Evidence (Optional)
+                  </label>
+                  <div class="custom-file-upload">
+                    <label class="upload-dropzone">
+                      <input type="file" accept="image/*" (change)="onIssuePhotoSelected($event)" class="file-hidden-input" />
+                      <div class="dropzone-content">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>Click to attach photo evidence from mobile camera or gallery</span>
+                      </div>
+                    </label>
+                    <div *ngIf="newIssue.photoUrl" class="photo-preview-wrap">
+                      <img [src]="newIssue.photoUrl" class="photo-preview-img" alt="Attached evidence" />
+                      <button type="button" class="remove-photo-btn" (click)="newIssue.photoUrl = ''">&times;</button>
+                    </div>
                   </div>
-                </li>
-              </ul>
+                </div>
+
+                <div class="r-form-footer">
+                  <button class="dh-btn dh-btn-primary submit-issue-btn" (click)="submitIssue()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Submit Report to Control Room
+                  </button>
+                </div>
+              </div>
             </div>
+
+            <!-- RIGHT: Active / Open Issues Log -->
+            <div class="report-status-card">
+              <div class="r-card-header">
+                <div class="header-with-icon">
+                  <span class="header-icon-badge info-badge">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </span>
+                  <div>
+                    <h3 class="r-card-title">My Reported Issues</h3>
+                    <span class="r-card-subtitle">{{ openIssues.length }} logged incidents</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="r-card-body p-0">
+                <!-- Empty State -->
+                <div *ngIf="openIssues.length === 0" class="report-empty-state">
+                  <div class="empty-icon-circle green-circle">
+                    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  </div>
+                  <h4 class="empty-state-title">No Active Issues</h4>
+                  <p class="empty-state-desc">All past incidents are cleared. There are currently no pending vehicle breakdowns or road hazards reported on your account.</p>
+                </div>
+
+                <!-- Issues Feed -->
+                <div *ngIf="openIssues.length > 0" class="issues-feed-list">
+                  <div *ngFor="let issue of openIssues" class="issue-feed-item">
+                    <div class="issue-item-top">
+                      <div class="issue-cat-wrap">
+                        <span class="issue-category-title">{{ issue.category }}</span>
+                        <span class="issue-time-sub">{{ issue.submittedAt | date:'MMM d, y, h:mm a' }}</span>
+                      </div>
+                      <span class="issue-severity-pill" [ngClass]="{
+                        'sev-critical': issue.severity === 'Critical',
+                        'sev-high': issue.severity === 'High',
+                        'sev-medium': issue.severity === 'Medium',
+                        'sev-low': issue.severity === 'Low'
+                      }">
+                        {{ issue.severity }}
+                      </span>
+                    </div>
+
+                    <p class="issue-desc-text">{{ issue.description }}</p>
+
+                    <div class="issue-status-bar">
+                      <span class="status-indicator">
+                        <span class="status-pulse-dot"></span>
+                        Status: <strong>{{ issue.status }}</strong>
+                      </span>
+                    </div>
+
+                    <div *ngIf="issue.adminResponse" class="issue-admin-response-box">
+                      <div class="admin-resp-label">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Control Room Response:
+                      </div>
+                      <p class="admin-resp-text">{{ issue.adminResponse }}</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
