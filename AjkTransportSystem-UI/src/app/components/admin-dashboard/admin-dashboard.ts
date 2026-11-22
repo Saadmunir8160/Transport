@@ -936,7 +936,7 @@ export class AdminDashboardComponent implements OnInit {
                 organizationId: '101',
                 organizationName: 'AJK Transport HQ',
                 location: 'Muzaffarabad, AJK',
-                subdomain: 'demo',
+                subdomain: 'ajk',
                 status: 'Active',
                 contactPhone: '+92 5822 000000',
                 contactEmail: 'hq@ajktransport.com',
