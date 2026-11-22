@@ -1606,94 +1606,181 @@
       </div>
 
       <!-- OFFLINE STATUS TAB -->
-      <div *ngIf="activeTab === 'offline_status'" class="dashboard-content enterprise-tab">
-        <div class="enterprise-header">
-          <h2 class="welcome-title">Connectivity Dashboard</h2>
-          <p class="date-subtitle">Network & Offline Sync Status</p>
-        </div>
-
-        <div class="enterprise-grid">
-          <!-- Current Connection Status -->
-          <div class="enterprise-card" style="grid-column: span 12; display: flex; align-items: center; justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 1rem;">
-              <div class="status-indicator" [ngClass]="isOnline() ? 'status-active' : 'status-danger'" style="width: 24px; height: 24px; border-radius: 50%;"></div>
-              <div>
-                <h3 style="margin: 0; font-size: 1.25rem;">{{ isOnline() ? 'Online' : 'Offline' }}</h3>
-                <p style="margin: 0; color: #64748b;">Connection: {{ getConnectionType() }}</p>
-              </div>
+      <div *ngIf="activeTab === 'offline_status'" class="dashboard-content enterprise-tab driver-connectivity-page">
+        <div class="connectivity-container">
+          
+          <!-- Page Header -->
+          <div class="conn-page-header">
+            <div class="conn-header-left">
+              <span class="conn-portal-badge">Network & Sync Telemetry</span>
+              <h2 class="conn-main-title">Connectivity Dashboard</h2>
+              <p class="conn-sub-title">Monitor your real-time network connection, background upload queues, and offline driver mode status.</p>
             </div>
-            <div style="text-align: right;">
-              <p style="margin: 0; color: #64748b; font-size: 0.875rem;">Last Successful Sync</p>
-              <h4 style="margin: 0;">{{ getLastSyncTime() | date:'medium' }}</h4>
+            <div class="conn-header-right">
+              <button class="dh-btn dh-btn-primary force-sync-action-btn" (click)="forceSync()" [disabled]="!isOnline()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                Force Sync Now
+              </button>
             </div>
-            <button class="btn btn-primary" (click)="forceSync()" [disabled]="!isOnline()">Force Sync Now</button>
           </div>
 
-          <!-- Pending Sync Queues -->
-          <div class="enterprise-card" style="grid-column: span 12;">
-            <div class="card-header border-bottom">
-              <h3 style="margin: 0; font-size: 1.1rem; color: #0f172a;">Pending Upload Queues</h3>
+          <!-- Live Network Status Hero Card -->
+          <div class="conn-hero-card">
+            <div class="conn-hero-left">
+              <div class="live-signal-badge" [ngClass]="isOnline() ? 'signal-online' : 'signal-offline'">
+                <span class="signal-radar-dot"></span>
+                <span class="signal-text">{{ isOnline() ? 'Online' : 'Offline' }}</span>
+              </div>
+              <div class="conn-tech-details">
+                <span class="conn-network-type">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.58 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                  Carrier Network: <strong>{{ getConnectionType() }}</strong>
+                </span>
+                <span class="conn-network-hint" *ngIf="isOnline()">Connected to central dispatch telemetry server</span>
+                <span class="conn-network-hint hint-offline" *ngIf="!isOnline()">Operating in local offline cache mode. Trips will sync once network is restored.</span>
+              </div>
             </div>
-            <div class="card-body">
-              <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
-                <div style="flex: 1; padding: 1rem; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
-                  <h4 style="margin: 0; color: #64748b; font-size: 0.875rem;">Offline Stops</h4>
-                  <p style="font-size: 2rem; font-weight: 700; margin: 0.5rem 0;">{{ getQueueLength('offline_stops') }}</p>
-                </div>
-                <div style="flex: 1; padding: 1rem; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
-                  <h4 style="margin: 0; color: #64748b; font-size: 0.875rem;">Trip Starts</h4>
-                  <p style="font-size: 2rem; font-weight: 700; margin: 0.5rem 0;">{{ getQueueLength('offline_starts') }}</p>
-                </div>
-                <div style="flex: 1; padding: 1rem; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
-                  <h4 style="margin: 0; color: #64748b; font-size: 0.875rem;">Trip Ends</h4>
-                  <p style="font-size: 2rem; font-weight: 700; margin: 0.5rem 0;">{{ getQueueLength('offline_ends') }}</p>
-                </div>
-                <div style="flex: 1; padding: 1rem; background-color: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center;">
-                  <h4 style="margin: 0; color: #64748b; font-size: 0.875rem;">Issues/Photos</h4>
-                  <p style="font-size: 2rem; font-weight: 700; margin: 0.5rem 0;">{{ getQueueLength('offline_issues') }}</p>
-                </div>
+
+            <div class="conn-hero-right">
+              <div class="sync-timestamp-box">
+                <span class="sync-ts-label">Last Successful Sync</span>
+                <span class="sync-ts-time">{{ getLastSyncTime() | date:'MMM d, y, h:mm:ss a' }}</span>
               </div>
             </div>
           </div>
 
-          <!-- Feature Availability -->
-          <div class="enterprise-card" style="grid-column: span 6;">
-            <div class="card-header border-bottom">
-              <h3 style="margin: 0; font-size: 1.1rem; color: #059669; display: flex; align-items: center; gap: 0.5rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                Available Offline
-              </h3>
+          <!-- Pending Queues 4-Stat Grid Card -->
+          <div class="conn-queues-card">
+            <div class="r-card-header">
+              <div class="header-with-icon">
+                <span class="header-icon-badge action-badge">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </span>
+                <div>
+                  <h3 class="r-card-title">Pending Upload Queues</h3>
+                  <span class="r-card-subtitle">Local driver actions awaiting server upload</span>
+                </div>
+              </div>
             </div>
-            <div class="card-body">
-              <ul style="padding-left: 1.5rem; color: #475569; line-height: 1.8;">
-                <li>Home screen (last cached schedule)</li>
-                <li>Active trip screen & stop marking</li>
-                <li>Start trip & End trip</li>
-                <li>Report issue (photos queued locally)</li>
-                <li>Passenger list for today's routes</li>
-                <li>Route and stop list</li>
-                <li>My vehicle details</li>
-                <li>Trip history (last 30 days)</li>
-              </ul>
+
+            <div class="conn-queues-body">
+              <div class="queue-stat-item">
+                <span class="q-label">Offline Stops</span>
+                <span class="q-number" [class.q-active]="getQueueLength('offline_stops') > 0">{{ getQueueLength('offline_stops') }}</span>
+                <span class="q-sub">Waypoints logged</span>
+              </div>
+
+              <div class="queue-stat-item">
+                <span class="q-label">Trip Starts</span>
+                <span class="q-number" [class.q-active]="getQueueLength('offline_starts') > 0">{{ getQueueLength('offline_starts') }}</span>
+                <span class="q-sub">Dispatches queued</span>
+              </div>
+
+              <div class="queue-stat-item">
+                <span class="q-label">Trip Ends</span>
+                <span class="q-number" [class.q-active]="getQueueLength('offline_ends') > 0">{{ getQueueLength('offline_ends') }}</span>
+                <span class="q-sub">Summaries pending</span>
+              </div>
+
+              <div class="queue-stat-item">
+                <span class="q-label">Issues & Evidence</span>
+                <span class="q-number" [class.q-active]="getQueueLength('offline_issues') > 0">{{ getQueueLength('offline_issues') }}</span>
+                <span class="q-sub">Hazard reports</span>
+              </div>
             </div>
           </div>
 
-          <div class="enterprise-card" style="grid-column: span 6;">
-            <div class="card-header border-bottom">
-              <h3 style="margin: 0; font-size: 1.1rem; color: #e11d48; display: flex; align-items: center; gap: 0.5rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.58 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-                Requires Internet
-              </h3>
+          <!-- Offline Capabilities 2-Column Split: Available vs Requires Internet -->
+          <div class="conn-capabilities-grid">
+            
+            <!-- Left: Available Offline -->
+            <div class="conn-cap-card cap-available">
+              <div class="cap-card-header">
+                <div class="cap-header-icon bg-green-soft">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div>
+                  <h3 class="cap-card-title text-green">Available Offline</h3>
+                  <span class="cap-card-sub">Fully functional during mountain signal dropouts</span>
+                </div>
+              </div>
+
+              <div class="cap-card-body">
+                <ul class="cap-feature-list">
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>Home screen (cached schedule & upcoming trip)</span>
+                  </li>
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>Active trip route navigation & stop departure marking</span>
+                  </li>
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>Start Trip checklist & End Trip completion</span>
+                  </li>
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>Report incident / hazard (photos queued locally)</span>
+                  </li>
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>Passenger manifest list for today's assigned route</span>
+                  </li>
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>Route waypoints, stops list & ETA projections</span>
+                  </li>
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>Vehicle inspection details & safety guidelines</span>
+                  </li>
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>Trip history records (last 30 days)</span>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div class="card-body">
-              <ul style="padding-left: 1.5rem; color: #475569; line-height: 1.8;">
-                <li>Booking a passenger seat (prevents conflict)</li>
-                <li>Real-time ETA calculation</li>
-                <li>Viewing newly added admin notes</li>
-                <li>Receiving live cancellation notifications</li>
-                <li>Syncing queued offline actions to server</li>
-              </ul>
+
+            <!-- Right: Requires Internet -->
+            <div class="conn-cap-card cap-required">
+              <div class="cap-card-header">
+                <div class="cap-header-icon bg-red-soft">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"/><path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"/><path d="M10.71 5.05A16 16 0 0 1 22.58 9"/><path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                </div>
+                <div>
+                  <h3 class="cap-card-title text-red">Requires Active Internet</h3>
+                  <span class="cap-card-sub">Real-time sync and live cloud services</span>
+                </div>
+              </div>
+
+              <div class="cap-card-body">
+                <ul class="cap-feature-list red-list">
+                  <li>
+                    <span class="cloud-icon">☁</span>
+                    <span>Live passenger seat booking & reservation verification</span>
+                  </li>
+                  <li>
+                    <span class="cloud-icon">☁</span>
+                    <span>Real-time GPS traffic updates & dynamic delay calculation</span>
+                  </li>
+                  <li>
+                    <span class="cloud-icon">☁</span>
+                    <span>Receiving newly added admin dispatch notes</span>
+                  </li>
+                  <li>
+                    <span class="cloud-icon">☁</span>
+                    <span>Instant passenger cancellation push notifications</span>
+                  </li>
+                  <li>
+                    <span class="cloud-icon">☁</span>
+                    <span>Uploading queued offline actions and evidence photos to server</span>
+                  </li>
+                </ul>
+              </div>
             </div>
+
           </div>
 
         </div>

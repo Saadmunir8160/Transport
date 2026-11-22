@@ -3032,3 +3032,344 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* =========================================================
+   Modern Driver Connectivity Dashboard Tab Styles
+   ========================================================= */
+
+.driver-connectivity-page {
+  padding: 1.5rem 1.5rem 3rem 1.5rem;
+  background-color: #f8fafc;
+  min-height: calc(100vh - 65px);
+}
+
+.connectivity-container {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.conn-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.conn-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 720px;
+}
+
+.conn-portal-badge {
+  display: inline-block;
+  background: #f0fdfa;
+  border: 1px solid #ccfbf1;
+  color: #0d766e;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.conn-main-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.conn-sub-title {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.force-sync-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(13, 118, 110, 0.25);
+  padding: 0.65rem 1.25rem;
+}
+
+/* Live Network Hero Card */
+.conn-hero-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  flex-wrap: wrap;
+}
+
+.conn-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.live-signal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 24px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.signal-online {
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.signal-offline {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.signal-radar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.25);
+}
+
+.conn-tech-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.conn-network-type {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.conn-network-hint {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.hint-offline {
+  color: #d97706;
+}
+
+.sync-timestamp-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.55rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-align: right;
+}
+
+.sync-ts-label {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sync-ts-time {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Queues 4-Stat Grid Card */
+.conn-queues-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.conn-queues-body {
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.queue-stat-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.25rem;
+}
+
+.q-label {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.q-number {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+}
+
+.q-number.q-active {
+  color: #d97706;
+}
+
+.q-sub {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+/* Offline Capabilities 2-Column Split */
+.conn-capabilities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.conn-cap-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.cap-card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cap-header-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bg-green-soft { background: #ecfdf5; }
+.bg-red-soft { background: #fef2f2; }
+
+.cap-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cap-card-sub {
+  font-size: 0.74rem;
+  color: #64748b;
+}
+
+.cap-card-body {
+  padding: 1.25rem;
+}
+
+.cap-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.cap-feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.84rem;
+  color: #334155;
+}
+
+.check-icon {
+  width: 18px;
+  height: 18px;
+  background: #ecfdf5;
+  color: #059669;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.cloud-icon {
+  width: 18px;
+  height: 18px;
+  background: #fef2f2;
+  color: #dc2626;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .conn-capabilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .conn-queues-body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .conn-hero-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sync-timestamp-box {
+    text-align: left;
+    width: 100%;
+  }
+}
