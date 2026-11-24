@@ -688,7 +688,9 @@ export class SuperAdminDashboardComponent implements OnInit {
         };
       },
       error: (err) => {
-        alert(err.error?.message || err.error || 'Failed to onboard organization. Check for unique Subdomain/ID.');
+        console.error('Onboard error full details:', err);
+        const detailedMsg = err.error?.message || (typeof err.error === 'string' ? err.error : null) || err.message || 'Failed to onboard organization. Check for unique Subdomain/ID.';
+        alert(detailedMsg);
       }
     });
   }
