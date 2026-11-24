@@ -11,6 +11,7 @@ using AjkTransportSystem.API.Data;
 using AjkTransportSystem.API.Models;
 using AjkTransportSystem.API.DTOs;
 using AjkTransportSystem.API.Services;
+using Google.Apis.Auth;
 
 namespace AjkTransportSystem.API.Controllers
 {
@@ -306,6 +307,127 @@ namespace AjkTransportSystem.API.Controllers
             {
                 _logger.LogError(ex, "Exception during login action: Type={ExceptionType}, Message={ExceptionMessage}, StackTrace={StackTrace}", ex.GetType().FullName, ex.Message, ex.StackTrace);
                 return StatusCode(500, new { error = "Server error", message = ex.Message });
+            }
+        }
+
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto dto)
+        {
+            try
+            {
+                if (dto == null || string.IsNullOrWhiteSpace(dto.Credential))
+                {
+                    return BadRequest(new { message = "Google credential token is required." });
+                }
+
+                var clientId = _config["Authentication:Google:ClientId"];
+                var settings = new GoogleJsonWebSignature.ValidationSettings
+                {
+                    Audience = new[] { clientId }
+                };
+
+                GoogleJsonWebSignature.Payload payload;
+                try
+                {
+                    payload = await GoogleJsonWebSignature.ValidateAsync(dto.Credential, settings);
+                }
+                catch (InvalidJwtException ex)
+                {
+                    _logger.LogWarning(ex, "Invalid Google token received.");
+                    return Unauthorized(new { message = "Invalid Google token." });
+                }
+
+                if (payload == null || string.IsNullOrWhiteSpace(payload.Email))
+                {
+                    return Unauthorized(new { message = "Could not retrieve user info from Google." });
+                }
+
+                var googleEmail = payload.Email.Trim().ToLower();
+                var user = _context.Users.FirstOrDefault(u => u.Email != null && u.Email.ToLower() == googleEmail);
+
+                if (user == null)
+                {
+                    // Auto-register new user via Google as Passenger
+                    user = new User
+                    {
+                        Email = googleEmail,
+                        Name = !string.IsNullOrWhiteSpace(payload.Name) ? payload.Name : payload.Email.Split('@')[0],
+                        Role = "Passenger",
+                        Status = "Active",
+                        PasswordHash = AuthService.HashPassword(Guid.NewGuid().ToString("N")), // secure random hash
+                        LanguagePreference = "English"
+                    };
+
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+
+                    _logger.LogInformation("Auto-registered new user via Google: {Email}", googleEmail);
+                }
+
+                // Check inactive organization if applicable
+                if (user.OrganizationId != null)
+                {
+                    var org = _context.Organizations.FirstOrDefault(o => o.OrganizationId == user.OrganizationId);
+                    if (org != null && org.Status != "Active")
+                    {
+                        return Unauthorized(new { message = "Your organization is currently inactive. Please contact support." });
+                    }
+                }
+
+                var sessionGuid = Guid.NewGuid().ToString();
+                var session = new UserSession
+                {
+                    UserId = user.UserId,
+                    TokenHash = sessionGuid,
+                    IpAddress = HttpContext.Connection.RemoteIpAddress?.ToString(),
+                    Device = Request.Headers["User-Agent"].ToString(),
+                    LoginTime = DateTime.UtcNow,
+                    LastActivity = DateTime.UtcNow,
+                    ExpiresAt = DateTime.UtcNow.AddDays(1),
+                    IsRevoked = false
+                };
+
+                try
+                {
+                    _context.UserSessions.Add(session);
+                    _context.SaveChanges();
+
+                    _context.AuditLogs.Add(new AuditLog
+                    {
+                        Action = "Google Login",
+                        EntityName = "User",
+                        EntityId = user.UserId.ToString(),
+                        Description = $"User {user.Email} logged in with Google",
+                        Timestamp = DateTime.UtcNow
+                    });
+                    _context.SaveChanges();
+                }
+                catch (Exception logEx)
+                {
+                    _logger.LogWarning(logEx, "Non-fatal error creating session or audit log for google user: {Email}", googleEmail);
+                }
+
+                var tokenString = GenerateJwtToken(user, session.SessionId.ToString());
+                _logger.LogInformation("Google Login successful for user {Email} with role {Role}", user.Email, user.Role);
+
+                return Ok(new
+                {
+                    token = tokenString,
+                    user = new
+                    {
+                        user.UserId,
+                        user.Name,
+                        user.Email,
+                        user.Role,
+                        user.OrganizationId,
+                        sessionId = session.SessionId
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in GoogleLogin: {Message}", ex.Message);
+                return StatusCode(500, new { error = "Server error during Google login", message = ex.Message });
             }
         }
 

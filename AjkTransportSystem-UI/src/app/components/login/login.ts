@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth';
 import { environment } from '../../../environments/environment';
+
+declare const google: any;
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, AfterViewInit {
   // Login State
   email = '';
   password = '';
@@ -42,6 +44,85 @@ export class LoginComponent {
     if (this.router.url === '/register') {
       this.activeTab = 'register';
     }
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.initGoogleSignIn();
+  }
+
+  initGoogleSignIn() {
+    const checkGoogle = setInterval(() => {
+      if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+        clearInterval(checkGoogle);
+        google.accounts.id.initialize({
+          client_id: environment.googleClientId,
+          callback: (response: any) => this.handleGoogleCredentialResponse(response),
+          auto_select: false,
+          cancel_on_tap_outside: true
+        });
+      }
+    }, 300);
+  }
+
+  onGoogleLogin() {
+    this.message = '';
+    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+      google.accounts.id.initialize({
+        client_id: environment.googleClientId,
+        callback: (response: any) => this.handleGoogleCredentialResponse(response),
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
+      google.accounts.id.prompt((notification: any) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          console.log('Google prompt not displayed/skipped, opening fallback dialog');
+        }
+      });
+    } else {
+      this.message = 'Google service is initializing, please try again in a few seconds.';
+    }
+  }
+
+  handleGoogleCredentialResponse(response: any) {
+    if (!response || !response.credential) {
+      this.message = 'Unable to get Google credentials';
+      return;
+    }
+
+    this.loading = true;
+    this.message = 'Verifying Google account...';
+
+    this.authService.googleLogin(response.credential).subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        const userData = res.user ? res.user : res;
+        const storedUser = {
+          ...userData,
+          token: res.token,
+          loginTime: new Date().getTime()
+        };
+        localStorage.setItem('user', JSON.stringify(storedUser));
+        this.message = 'Google Login successful!';
+
+        if (userData.role === 'SuperAdmin') {
+          this.router.navigate(['/superadmin']);
+        } else if (userData.role === 'TransportAdmin' || userData.role === 'Admin') {
+          this.router.navigate(['/admin']);
+        } else if (userData.role === 'Driver') {
+          this.router.navigate(['/driver']);
+        } else {
+          this.router.navigate(['/passenger']);
+        }
+      },
+      error: (err: any) => {
+        this.loading = false;
+        console.error('Google login error:', err);
+        this.message = err.error?.message || 'Failed to authenticate with Google. Please try again.';
+      }
+    });
   }
 
   onLogin() {
@@ -176,9 +257,5 @@ export class LoginComponent {
         }
       }
     });
-  }
-
-  onGoogleLogin() {
-    this.message = 'Google Sign-In is not configured. Please use standard sign-in.';
   }
 }

@@ -19,6 +19,7 @@ export class AuthService {
   }
   
   login(p1?: any, p2?: any, p3?: any): Observable<any> { return this.http.post(this.apiUrl + '/login', p1, { headers: this.getHeaders() }); }
+  googleLogin(credential: string): Observable<any> { return this.http.post(this.apiUrl + '/google-login', { credential }); }
   register(p1?: any, p2?: any, p3?: any): Observable<any> { return this.http.post(this.apiUrl + '/register', p1, { headers: this.getHeaders() }); }
   createAdmin(p1?: any, p2?: any, p3?: any): Observable<any> { return this.http.post(this.apiUrl + '/createAdmin', p1, { headers: this.getHeaders() }); }
 }
