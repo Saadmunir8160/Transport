@@ -326,16 +326,24 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  isGuest: boolean = false;
+
   ngOnInit() {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (!user.userId) {
-      this.router.navigate(['/login']);
-      return;
+    // Sirf tab Passenger maano agar logged in user ka role Passenger ho
+    if (!user || !user.userId || user.role !== 'Passenger') {
+      this.isGuest = true;
+      this.userName = 'Guest Passenger';
+      this.userEmail = 'guest@ajktransport.pk';
+      this.userRole = 'Guest';
+      this.userId = 0;
+    } else {
+      this.isGuest = false;
+      this.userName = user.name || 'Passenger';
+      this.userEmail = user.email;
+      this.userId = user.userId;
+      this.userRole = user.role;
     }
-    this.userName = user.name;
-    this.userEmail = user.email;
-    this.userId = user.userId;
-    this.userRole = user.role;
     this.loadRoutes();
     this.loadRecommendations();
     this.loadDistrictWeather('Muzaffarabad');
@@ -463,6 +471,11 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
   }
 
   goToCheckout() {
+    if (this.isGuest) {
+      alert('Please sign in or create an account to confirm your seat booking.');
+      this.router.navigate(['/login']);
+      return;
+    }
     this.activeTab = 'checkout';
     this.holdTimeLeft = 600;
     setInterval(() => {
@@ -1028,6 +1041,12 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
   }
 
   setActiveTab(tab: string) {
+    const authRequiredTabs = ['bookings', 'ticket', 'cancel-booking', 'profile'];
+    if (this.isGuest && authRequiredTabs.includes(tab)) {
+      alert('Please sign in to view your bookings and personal tickets.');
+      this.router.navigate(['/login']);
+      return;
+    }
     this.activeTab = tab;
     if (tab === 'track-bus') { this.initLiveMap(); this.realtimeService.startConnection(this.selectedTrip?.id || '1'); }
     if (window.innerWidth <= 768) {
