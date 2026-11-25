@@ -555,10 +555,55 @@ export class SuperAdminDashboardComponent implements OnInit {
   }
 
   loadOrganizations() {
-    this.mockData.getOrganizations().subscribe(data => {
-      this.organizations = data;
-      this.applyOrgFilters();
+    this.superAdminService.getMasterOrganizations().subscribe({
+      next: (apiOrgs: any[]) => {
+        if (apiOrgs && apiOrgs.length > 0) {
+          this.organizations = apiOrgs.map(o => ({
+            id: o.organizationCode || `ORG-${o.organizationId}`,
+            organizationId: o.organizationId,
+            name: o.organizationName,
+            area: o.district || o.location || 'AJK',
+            subdomain: o.subdomain,
+            adminName: o.adminName || 'Assigned Admin',
+            totalDrivers: o.totalDrivers || 0,
+            totalVehicles: o.totalVehicles || 0,
+            totalTrips: o.totalTrips || 0,
+            status: o.status || 'Active',
+            createdAt: o.createdAt || new Date().toISOString(),
+            lastActivity: o.lastActivityDate || o.createdAt
+          }));
+        } else {
+          this.organizations = [];
+        }
+        // Naye organizations hamesha top par (descending sort by creation date / ID)
+        this.organizations.sort((a, b) => {
+          const dateA = new Date(a.createdAt).getTime() || a.organizationId || 0;
+          const dateB = new Date(b.createdAt).getTime() || b.organizationId || 0;
+          return dateB - dateA;
+        });
+        this.applyOrgFilters();
+      },
+      error: () => {
+        this.mockData.getOrganizations().subscribe(data => {
+          this.organizations = data;
+          this.applyOrgFilters();
+        });
+      }
     });
+  }
+
+  deleteOrganization(org: any) {
+    if (confirm(`Are you sure you want to delete organization "${org.name}"? This action will remove it from active services.`)) {
+      this.superAdminService.deleteOrganization(org.organizationId).subscribe({
+        next: (res: any) => {
+          alert(res.message || 'Organization deleted successfully.');
+          this.loadOrganizations();
+        },
+        error: (err: any) => {
+          alert(err.error?.message || 'Failed to delete organization.');
+        }
+      });
+    }
   }
 
   applyOrgFilters() {

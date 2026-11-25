@@ -34,6 +34,8 @@ export class SuperAdminService {
   toggleAdminStatus(adminId: any): Observable<any> { return this.http.post(`${this.apiUrl}/transport-admins/${adminId}/toggle-status`, {}, { headers: this.getHeaders() }); }
   transferAdmin(adminId: any, newOrgId: any): Observable<any> { return this.http.put(`${this.apiUrl}/transport-admins/${adminId}/transfer?newOrgId=${newOrgId}`, {}, { headers: this.getHeaders() }); }
   createTransportAdmin(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/transport-admins`, p, { headers: this.getHeaders() }); }
+  deleteOrganization(orgId: any): Observable<any> { return this.http.delete(`${this.apiUrl}/organizations/${orgId}`, { headers: this.getHeaders() }); }
+  getMasterOrganizations(): Observable<any> { return this.http.get(`${this.apiUrl}/organizations/master-list`, { headers: this.getHeaders() }); }
   getAuditLogs(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/audit-logs`, { headers: this.getHeaders() }); }
   getAccessLogs(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/access-logs`, { headers: this.getHeaders() }); }
   getAnomalyAlerts(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/anomaly-alerts`, { headers: this.getHeaders() }); }

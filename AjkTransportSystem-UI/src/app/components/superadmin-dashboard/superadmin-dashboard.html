@@ -1248,16 +1248,9 @@
                 <td>{{ org.createdAt | date:'MMM d, yyyy' }}</td>
                 <td>{{ org.lastActivity ? (org.lastActivity | date:'short') : 'N/A' }}</td>
                 <td class="action-col" (click)="$event.stopPropagation()">
-                  <div class="dropdown-container">
-                    <button class="kebab-btn">⋮</button>
-                    <!-- Example dropdown placeholder -->
-                    <div class="dropdown-menu hidden">
-                      <button (click)="viewOrgDetails(org)">View full details</button>
-                      <button>Edit organization info</button>
-                      <button>Activate/Deactivate</button>
-                      <button>Assign/Change admin</button>
-                      <button (click)="setActiveTab('dashboard')">View org dashboard (read-only)</button>
-                    </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <button class="btn-icon" title="View details" (click)="viewOrgDetails(org)" style="background: none; border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 4px; cursor: pointer; color: #475569;">👁️</button>
+                    <button class="btn-icon" title="Delete organization" (click)="deleteOrganization(org)" style="background: #fee2e2; border: 1px solid #fecaca; padding: 4px 8px; border-radius: 4px; cursor: pointer; color: #dc2626;" title="Delete Organization">🗑️</button>
                   </div>
                 </td>
               </tr>

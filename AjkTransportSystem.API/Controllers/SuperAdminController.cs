@@ -346,6 +346,29 @@ namespace AjkTransportSystem.API.Controllers
             await _context.SaveChangesAsync();
             return Ok(org);
         }
+        [HttpDelete("organizations/{id}")]
+        public async Task<IActionResult> DeleteOrganization(int id)
+        {
+            var org = await _context.Organizations.FindAsync(id);
+            if (org == null || org.IsSoftDeleted) return NotFound();
+
+            // Soft-delete to preserve foreign key historical audits safely
+            org.IsSoftDeleted = true;
+            org.Status = "Deleted";
+            org.UpdatedAt = DateTime.UtcNow;
+
+            _context.AuditLogs.Add(new AuditLog 
+            { 
+                Action = "Deleted Organization", 
+                EntityName = "Organization", 
+                EntityId = org.OrganizationCode, 
+                Description = $"Super Admin deleted organization {org.OrganizationName} (ID: {id})" 
+            });
+
+            await _context.SaveChangesAsync();
+            return Ok(new { message = $"Organization {org.OrganizationName} deleted successfully." });
+        }
+
         // ==========================================
         // SUBDOMAIN MANAGEMENT
         // ==========================================
