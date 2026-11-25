@@ -1248,9 +1248,9 @@
                 <td>{{ org.createdAt | date:'MMM d, yyyy' }}</td>
                 <td>{{ org.lastActivity ? (org.lastActivity | date:'short') : 'N/A' }}</td>
                 <td class="action-col" (click)="$event.stopPropagation()">
-                  <div style="display: flex; align-items: center; gap: 8px;">
-                    <button class="btn-icon" title="View details" (click)="viewOrgDetails(org)" style="background: none; border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 4px; cursor: pointer; color: #475569;">👁️</button>
-                    <button class="btn-icon" title="Delete organization" (click)="deleteOrganization(org)" style="background: #fee2e2; border: 1px solid #fecaca; padding: 4px 8px; border-radius: 4px; cursor: pointer; color: #dc2626;" title="Delete Organization">🗑️</button>
+                  <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px;">
+                    <button class="btn-action-view" (click)="viewOrgDetails(org)" title="View Details" style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: 600; cursor: pointer; color: #334155;">View</button>
+                    <button class="btn-action-delete" (click)="deleteOrganization(org)" title="Delete Organization" style="background: #fee2e2; border: 1px solid #fca5a5; padding: 4px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: 600; cursor: pointer; color: #dc2626;">Delete</button>
                   </div>
                 </td>
               </tr>

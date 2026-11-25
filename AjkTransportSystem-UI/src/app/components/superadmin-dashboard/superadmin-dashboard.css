@@ -372,8 +372,8 @@
 }
 
 .avatar-sa {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #1E293B !important;
   color: #38BDF8 !important;
@@ -1368,8 +1368,8 @@
   text-align: left;
 }
 .data-table th {
-  padding: 16px;
-  font-size: 0.8125rem;
+  padding: 8px 10px;
+  font-size: 0.72rem;
   text-transform: uppercase;
   color: #475569;
   font-weight: 700;
@@ -1378,8 +1378,8 @@
   background: #F8FAFC;
 }
 .data-table td {
-  padding: 18px 16px;
-  font-size: 0.9375rem;
+  padding: 8px 10px;
+  font-size: 0.8rem;
   color: #1E293B;
   border-bottom: 1px solid #F1F5F9;
   vertical-align: middle;
@@ -1402,8 +1402,8 @@
 .font-medium { font-weight: 500; }
 
 .logo-initial {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 6px;
   background: #E2E8F0;
   display: flex;
@@ -2715,8 +2715,8 @@
 }
 
 .qa-icon-square {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 8px;
   display: flex;
   align-items: center;
