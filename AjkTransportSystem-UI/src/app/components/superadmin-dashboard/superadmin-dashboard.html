@@ -1109,9 +1109,9 @@
               </div>
 
               <div class="wizard-form-group">
-                <label>Temporary Password</label>
+                <label>Password <span class="required-star">*</span></label>
                 <div class="password-gen-wrap">
-                  <input [(ngModel)]="wizardAdmin.password" name="waPassword" placeholder="Temporary Password" readonly>
+                  <input [(ngModel)]="wizardAdmin.password" name="waPassword" placeholder="Enter or Generate Password" required>
                   <button type="button" class="btn-gen-pwd" (click)="generateTempPassword()" title="Generate Random Password">
                     Generate
                   </button>
@@ -1721,12 +1721,12 @@
                 </small>
               </div>
               <div class="form-group" style="grid-column: 1 / -1;">
-                <label>Temporary Password</label>
-                <div style="display: flex; gap: 10px;">
+                <label>Password</label>
+                <div style="display: flex; gap: 8px;">
                   <input [(ngModel)]="newTransportAdmin.password" name="taPassword" type="text"
-                    placeholder="Generated password" readonly style="background: #f1f5f9; flex: 1;">
+                    placeholder="Enter or Generate Password" style="flex: 1; background: #ffffff;">
                   <button type="button" (click)="generateAdminTempPassword()"
-                    style="padding: 0.5rem 1rem; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">Generate</button>
+                    class="btn-gen-pwd" style="height: auto; padding: 0.5rem 1rem;">Generate</button>
                 </div>
               </div>
               <div class="form-group" style="grid-column: 1 / -1;">
