@@ -1557,13 +1557,23 @@
 
       <!-- SUBDOMAIN MANAGER TAB -->
       <div *ngIf="activeTab === 'subdomains'">
-        <div class="content-card">
-          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>🌐 Subdomain Manager</h2>
-            <button class="add-btn" (click)="loadSubdomains()" style="margin: 0;">🔄 Refresh Status</button>
+        <div class="table-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid #E2E8F0; background: #ffffff;">
+            <div>
+              <h3 style="font-size: 1rem; font-weight: 700; color: #0F172A; margin: 0;">Subdomain Manager</h3>
+              <p style="font-size: 0.775rem; color: #64748B; margin: 2px 0 0 0;">Manage tenant custom subdomains, DNS status, and SSL certificates</p>
+            </div>
+            <button (click)="loadSubdomains()" class="floating-action-btn" style="width: auto; padding: 0 12px; height: 32px; gap: 6px; font-weight: 600; font-size: 0.75rem;" title="Refresh Status">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+              Refresh
+            </button>
           </div>
 
-          <div style="overflow-x: auto; margin-top: 1.5rem;">
+          <div style="overflow-x: auto;">
             <table class="data-table" *ngIf="subdomains.length > 0">
               <thead>
                 <tr>
@@ -1573,52 +1583,69 @@
                   <th>Full URL</th>
                   <th>SSL Status</th>
                   <th>Last DNS Check</th>
-                  <th>DNS Verified</th>
-                  <th>Actions</th>
+                  <th>DNS Status</th>
+                  <th style="text-align: right; padding-right: 14px;">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let org of subdomains">
-                  <td><strong>{{ org.organizationId }}</strong></td>
-                  <td>{{ org.organizationName }}</td>
+                  <td class="font-mono text-muted">{{ org.organizationId }}</td>
+                  <td class="font-medium">{{ org.organizationName }}</td>
                   <td>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                      <span *ngIf="!org.isEditingSubdomain">{{ org.subdomain || 'N/A' }}</span>
-                      <input *ngIf="org.isEditingSubdomain" [(ngModel)]="org.editSubdomain" placeholder="Prefix only"
-                        style="padding: 0.25rem 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; width: 100px;">
-
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                      <span *ngIf="!org.isEditingSubdomain" class="font-mono text-link"
+                        (click)="org.isEditingSubdomain = true; org.editSubdomain = org.subdomain"
+                        title="Click to edit subdomain">
+                        {{ org.subdomain || 'Not set' }}
+                      </span>
                       <button *ngIf="!org.isEditingSubdomain"
                         (click)="org.isEditingSubdomain = true; org.editSubdomain = org.subdomain"
-                        style="background: none; border: none; color: #3b82f6; cursor: pointer;"
-                        title="Edit Subdomain">✏️</button>
-                      <div *ngIf="org.isEditingSubdomain" style="display: flex; gap: 5px;">
-                        <button (click)="saveSubdomain(org)"
-                          style="background: #10b981; color: white; border: none; border-radius: 4px; padding: 2px 5px; cursor: pointer;">✅</button>
-                        <button (click)="org.isEditingSubdomain = false"
-                          style="background: #ef4444; color: white; border: none; border-radius: 4px; padding: 2px 5px; cursor: pointer;">❌</button>
+                        class="floating-action-btn" style="width: 22px; height: 22px;" title="Edit subdomain">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                      </button>
+
+                      <!-- In-line Edit Mode -->
+                      <div *ngIf="org.isEditingSubdomain" style="display: flex; gap: 4px; align-items: center;">
+                        <input [(ngModel)]="org.editSubdomain"
+                          style="height: 28px; padding: 2px 8px; border: 1px solid #0F172A; border-radius: 4px; font-size: 0.75rem; width: 120px; font-family: ui-monospace, monospace; outline: none; background: #ffffff; color: #0F172A;">
+                        <button (click)="saveSubdomain(org)" class="floating-action-btn" style="width: 24px; height: 24px;" title="Save">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                        </button>
+                        <button (click)="org.isEditingSubdomain = false" class="floating-action-btn" style="width: 24px; height: 24px;" title="Cancel">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                          </svg>
+                        </button>
                       </div>
                     </div>
                   </td>
                   <td>
                     <a *ngIf="org.fullUrl" [href]="'https://' + org.fullUrl" target="_blank"
-                      style="color: #3b82f6; text-decoration: none;">{{ org.fullUrl }}</a>
-                    <span *ngIf="!org.fullUrl" style="color: #94a3b8;">Not Configured</span>
+                      class="font-mono text-link" style="color: #0F172A !important; text-decoration: underline;">
+                      {{ org.fullUrl }}
+                    </a>
+                    <span *ngIf="!org.fullUrl" class="text-muted">Not Configured</span>
                   </td>
                   <td>
-                    <span class="role-badge" [ngClass]="{
-                        'superadmin-role': org.sslStatus === 'Valid', 
-                        'passenger-role': org.sslStatus === 'Suspended',
-                        'driver-role': org.sslStatus === 'Not Configured'
-                      }">
-                      {{ org.sslStatus }}
+                    <span class="status-chip active" style="background: #ffffff !important; color: #0F172A !important; border: 1px solid #CBD5E1 !important;">
+                      {{ org.sslStatus || 'Active' }}
                     </span>
                   </td>
-                  <td>{{ org.lastDnsCheck | date:'short' }}</td>
+                  <td>{{ org.lastDnsCheck ? (org.lastDnsCheck | date:'MMM d, h:mm a') : 'Recent' }}</td>
                   <td>
-                    <span *ngIf="org.dnsVerified" style="color: #10b981; font-weight: bold;">✓ Verified</span>
-                    <span *ngIf="!org.dnsVerified" style="color: #ef4444; font-weight: bold;">✗ Unverified</span>
+                    <span class="status-chip" [style.background]="org.dnsVerified ? '#FFFFFF' : '#FFFFFF'"
+                      [style.color]="org.dnsVerified ? '#0F172A' : '#64748B'"
+                      style="border: 1px solid #CBD5E1 !important;">
+                      {{ org.dnsVerified ? '✓ Verified' : 'Pending' }}
+                    </span>
                   </td>
-                  <td>
+                  <td class="action-col" (click)="$event.stopPropagation()">
                     <div class="action-btn-group">
                       <button class="floating-action-btn" title="Force DNS Re-check" (click)="forceDnsCheck(org)">
                         <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
