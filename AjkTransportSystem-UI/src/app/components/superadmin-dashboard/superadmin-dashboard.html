@@ -1249,8 +1249,8 @@
                 <td>{{ org.lastActivity ? (org.lastActivity | date:'short') : 'N/A' }}</td>
                 <td class="action-col" (click)="$event.stopPropagation()">
                   <div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px;">
-                    <button class="btn-action-view" (click)="viewOrgDetails(org)" title="View Details" style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: 600; cursor: pointer; color: #334155;">View</button>
-                    <button class="btn-action-delete" (click)="deleteOrganization(org)" title="Delete Organization" style="background: #fee2e2; border: 1px solid #fca5a5; padding: 4px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: 600; cursor: pointer; color: #dc2626;">Delete</button>
+                    <button class="btn-action-view" (click)="viewOrgDetails(org)" title="View Details">View</button>
+                    <button class="btn-action-delete" (click)="deleteOrganization(org)" title="Delete Organization">Delete</button>
                   </div>
                 </td>
               </tr>
