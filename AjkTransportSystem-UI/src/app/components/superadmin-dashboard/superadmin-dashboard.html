@@ -1162,16 +1162,46 @@
         <!-- Summary Chips -->
         <div class="summary-chips">
           <div class="summary-chip total">
-            <span class="chip-label">Total</span>
-            <span class="chip-value">{{ organizations.length }}</span>
+            <div class="chip-top">
+              <span class="chip-label">Total Organizations</span>
+              <div class="chip-icon-box total">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="chip-value">{{ organizations.length }}</div>
+            <div class="chip-sub">Registered platform tenants</div>
           </div>
+
           <div class="summary-chip active">
-            <span class="chip-label">Active</span>
-            <span class="chip-value">{{ getActiveOrgCount() }}</span>
+            <div class="chip-top">
+              <span class="chip-label">Active Tenants</span>
+              <div class="chip-icon-box active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="chip-value">{{ getActiveOrgCount() }}</div>
+            <div class="chip-sub text-success">Operating & operational</div>
           </div>
+
           <div class="summary-chip inactive">
-            <span class="chip-label">Inactive</span>
-            <span class="chip-value">{{ organizations.length - getActiveOrgCount() }}</span>
+            <div class="chip-top">
+              <span class="chip-label">Inactive Tenants</span>
+              <div class="chip-icon-box inactive">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="chip-value">{{ organizations.length - getActiveOrgCount() }}</div>
+            <div class="chip-sub text-muted">Paused / suspended</div>
           </div>
         </div>
 

@@ -1231,43 +1231,97 @@
 }
 
 /* Organizations / Table Page Layout */
+/* Premium Minimal Summary Chips */
 .summary-chips {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
+  display: flex !important;
+  gap: 16px !important;
+  margin-bottom: 20px !important;
+  flex-wrap: wrap !important;
 }
+
 .summary-chip {
-  background: var(--card-bg, #ffffff);
-  border: 1px solid var(--border-color, #E3E8EF);
-  border-left: 4px solid #CBD5E1;
-  border-radius: 12px;
-  padding: 12px 20px;
-  display: flex;
-  flex-direction: column;
-  min-width: 150px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  padding: 14px 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 175px !important;
+  flex: 1 1 175px !important;
+  max-width: 260px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  border-left: none !important;
 }
+
 .summary-chip:hover {
-  border-left-color: var(--accent, #2DD4BF);
-  border-top-color: var(--accent, #2DD4BF);
-  border-right-color: var(--accent, #2DD4BF);
-  border-bottom-color: var(--accent, #2DD4BF);
-  background: linear-gradient(to right, rgba(45, 212, 191, 0.05), rgba(45, 212, 191, 0.01));
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(45, 212, 191, 0.1);
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.04) !important;
+  border-color: #CBD5E1 !important;
 }
+
+.summary-chip .chip-top {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 8px !important;
+}
+
 .summary-chip .chip-label {
-  font-size: 0.8125rem;
-  color: var(--text-muted, #5B6B82);
-  font-weight: 500;
-  margin-bottom: 4px;
+  font-size: 0.78rem !important;
+  color: #64748B !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
 }
+
+.summary-chip .chip-icon-box {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.summary-chip .chip-icon-box.total {
+  background: #EFF6FF !important;
+  color: #2563EB !important;
+}
+
+.summary-chip .chip-icon-box.active {
+  background: #ECFDF5 !important;
+  color: #059669 !important;
+}
+
+.summary-chip .chip-icon-box.inactive {
+  background: #F8FAFC !important;
+  color: #64748B !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
 .summary-chip .chip-value {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-color, #0E1A2B);
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  color: #0F172A !important;
+  line-height: 1.2 !important;
+  margin-bottom: 4px !important;
+  letter-spacing: -0.02em !important;
+}
+
+.summary-chip .chip-sub {
+  font-size: 0.72rem !important;
+  color: #94A3B8 !important;
+  font-weight: 500 !important;
+}
+
+.summary-chip .chip-sub.text-success {
+  color: #059669 !important;
+}
+
+.summary-chip .chip-sub.text-muted {
+  color: #64748B !important;
 }
 
 /* Modern Unified Filter Bar - Compact */
