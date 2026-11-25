@@ -976,27 +976,7 @@
       </div>
 
       <!-- CREATE ORGANIZATION WIZARD TAB -->
-      <div *ngIf="activeTab === 'createOrganization'" class="wizard-container">
-        <!-- Page Title & Navigation -->
-        <div class="wizard-header-bar">
-          <div class="wizard-title-group">
-            <div class="breadcrumb" style="margin-bottom: 2px;">
-              <span class="breadcrumb-group" (click)="setActiveTab('organizations')" style="cursor: pointer;">Organizations</span>
-              <span class="breadcrumb-separator">/</span>
-              <span class="breadcrumb-current">New Organization</span>
-            </div>
-            <h1 class="wizard-page-title">Onboard New Transport Company</h1>
-            <p class="wizard-page-desc">Provision tenant workspace, auto-configure custom subdomain, and assign initial organization admin.</p>
-          </div>
-          <button type="button" class="btn-wizard-back" (click)="setActiveTab('organizations')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Back to Organizations
-          </button>
-        </div>
-
+      <div *ngIf="activeTab === 'createOrganization'" class="wizard-container" style="margin-top: 10px;">
         <form (ngSubmit)="createOrganizationWizard()" class="wizard-form-card">
           <!-- Step 1: Organization Details -->
           <div class="wizard-section">
@@ -1011,13 +991,13 @@
             <div class="wizard-grid-4">
               <div class="wizard-form-group">
                 <label>Organization Name <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardOrg.organizationName" name="wOrgName" placeholder="e.g. Kashmir Skyways"
+                <input [(ngModel)]="wizardOrg.organizationName" name="wOrgName"
                   (input)="onOrgNameChange()" required>
               </div>
 
               <div class="wizard-form-group">
                 <label>Organization ID (Code) <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardOrg.organizationCode" name="wOrgCode" placeholder="Auto-generated" required>
+                <input [(ngModel)]="wizardOrg.organizationCode" name="wOrgCode" required>
               </div>
 
               <div class="wizard-form-group">
@@ -1044,22 +1024,22 @@
 
               <div class="wizard-form-group span-2">
                 <label>Office Address</label>
-                <input [(ngModel)]="wizardOrg.location" name="wLocation" placeholder="Full branch / depot street address">
+                <input [(ngModel)]="wizardOrg.location" name="wLocation">
               </div>
 
               <div class="wizard-form-group">
                 <label>Contact Phone</label>
-                <input [(ngModel)]="wizardOrg.contactPhone" name="wPhone" placeholder="+92 300 0000000">
+                <input [(ngModel)]="wizardOrg.contactPhone" name="wPhone">
               </div>
 
               <div class="wizard-form-group">
                 <label>Contact Email</label>
-                <input [(ngModel)]="wizardOrg.contactEmail" name="wEmail" type="email" placeholder="contact@company.com">
+                <input [(ngModel)]="wizardOrg.contactEmail" name="wEmail" type="email">
               </div>
 
               <div class="wizard-form-group span-2">
                 <label>Office Operating Hours</label>
-                <input [(ngModel)]="wizardOrg.officeHours" name="wHours" placeholder="e.g. 08:00 AM - 08:00 PM (Daily)">
+                <input [(ngModel)]="wizardOrg.officeHours" name="wHours">
               </div>
             </div>
           </div>
@@ -1078,7 +1058,7 @@
               <div class="wizard-form-group">
                 <label>Subdomain Prefix <span class="required-star">*</span></label>
                 <div class="subdomain-input-wrap">
-                  <input [(ngModel)]="wizardOrg.subdomain" name="wSubdomain" placeholder="e.g. kashmirskyways"
+                  <input [(ngModel)]="wizardOrg.subdomain" name="wSubdomain"
                     (input)="sanitizeSubdomain()" required>
                   <span class="subdomain-suffix">.transport-system.com</span>
                 </div>
@@ -1115,23 +1095,23 @@
             <div class="wizard-grid-4">
               <div class="wizard-form-group">
                 <label>Admin Full Name <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardAdmin.name" name="waName" placeholder="e.g. Babar Azam" required>
+                <input [(ngModel)]="wizardAdmin.name" name="waName" required>
               </div>
 
               <div class="wizard-form-group">
                 <label>Official Email <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardAdmin.email" name="waEmail" type="email" placeholder="admin@company.com" required>
+                <input [(ngModel)]="wizardAdmin.email" name="waEmail" type="email" required>
               </div>
 
               <div class="wizard-form-group">
                 <label>Mobile Number <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardAdmin.phone" name="waPhone" placeholder="+92 300 0000000" required>
+                <input [(ngModel)]="wizardAdmin.phone" name="waPhone" required>
               </div>
 
               <div class="wizard-form-group">
                 <label>Temporary Password</label>
                 <div class="password-gen-wrap">
-                  <input [(ngModel)]="wizardAdmin.password" name="waPassword" placeholder="Auto-generated" readonly>
+                  <input [(ngModel)]="wizardAdmin.password" name="waPassword" readonly>
                   <button type="button" class="btn-gen-pwd" (click)="generateTempPassword()" title="Generate Random Password">
                     Generate
                   </button>
