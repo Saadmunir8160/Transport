@@ -29,11 +29,11 @@ export class SuperAdminService {
   getOfflineSyncLogs(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/sync-logs`, { headers: this.getHeaders() }); }
   getChartAnalytics(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/chart-analytics`, { headers: this.getHeaders() }); }
   onboardOrganization(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/organizations/onboard`, p, { headers: this.getHeaders() }); }
-  toggleOrganizationStatus(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/toggle-org`, p, { headers: this.getHeaders() }); }
-  resetAdminPassword(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/reset-password`, p, { headers: this.getHeaders() }); }
-  toggleAdminStatus(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/toggle-admin`, p, { headers: this.getHeaders() }); }
-  transferAdmin(p1?: any, p2?: any): Observable<any> { return this.http.post(`${this.apiUrl}/transfer-admin`, p1, { headers: this.getHeaders() }); }
-  createTransportAdmin(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/create-ta`, p, { headers: this.getHeaders() }); }
+  toggleOrganizationStatus(orgId: any): Observable<any> { return this.http.post(`${this.apiUrl}/organizations/${orgId}/toggle-status`, {}, { headers: this.getHeaders() }); }
+  resetAdminPassword(adminId: any): Observable<any> { return this.http.post(`${this.apiUrl}/transport-admins/${adminId}/reset-password`, {}, { headers: this.getHeaders() }); }
+  toggleAdminStatus(adminId: any): Observable<any> { return this.http.post(`${this.apiUrl}/transport-admins/${adminId}/toggle-status`, {}, { headers: this.getHeaders() }); }
+  transferAdmin(adminId: any, newOrgId: any): Observable<any> { return this.http.put(`${this.apiUrl}/transport-admins/${adminId}/transfer?newOrgId=${newOrgId}`, {}, { headers: this.getHeaders() }); }
+  createTransportAdmin(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/transport-admins`, p, { headers: this.getHeaders() }); }
   getAuditLogs(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/audit-logs`, { headers: this.getHeaders() }); }
   getAccessLogs(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/access-logs`, { headers: this.getHeaders() }); }
   getAnomalyAlerts(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/anomaly-alerts`, { headers: this.getHeaders() }); }
@@ -44,6 +44,6 @@ export class SuperAdminService {
   getNotificationConfig(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/notif-config`, { headers: this.getHeaders() }); }
   getMyProfile(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/profile`, { headers: this.getHeaders() }); }
   getActiveSessions(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/sessions`, { headers: this.getHeaders() }); }
-  revokeSession(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/revoke-session`, p, { headers: this.getHeaders() }); }
-  banSessionIp(p?: any): Observable<any> { return this.http.post(`${this.apiUrl}/ban-ip`, p, { headers: this.getHeaders() }); }
+  revokeSession(sessionId: any): Observable<any> { return this.http.post(`${this.apiUrl}/sessions/${sessionId}/revoke`, {}, { headers: this.getHeaders() }); }
+  banSessionIp(sessionId: any): Observable<any> { return this.http.post(`${this.apiUrl}/sessions/${sessionId}/ban-ip`, {}, { headers: this.getHeaders() }); }
 }
