@@ -570,15 +570,15 @@
 
           <div class="dash-header-controls">
             <div class="dash-time-toggles">
-              <button class="time-toggle-btn active">Today</button>
-              <button class="time-toggle-btn">7d</button>
-              <button class="time-toggle-btn">30d</button>
+              <button class="time-toggle-btn" [class.active]="selectedTimeRange === 'today'" (click)="setTimeRange('today')">Today</button>
+              <button class="time-toggle-btn" [class.active]="selectedTimeRange === '7d'" (click)="setTimeRange('7d')">7d</button>
+              <button class="time-toggle-btn" [class.active]="selectedTimeRange === '30d'" (click)="setTimeRange('30d')">30d</button>
             </div>
             <div class="live-pulse-badge">
               <span class="live-pulse-dot"></span>
               Live Data
             </div>
-            <button class="export-csv-btn">
+            <button class="export-csv-btn" (click)="exportDashboardCSV()" title="Download platform metrics as CSV">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Export CSV
             </button>
@@ -762,7 +762,7 @@
         <!-- Middle Row: Activity Graph (Highlighted with Amber/Gold border) + Top Organizations -->
         <div class="dash-charts-2col">
           <!-- Platform Activity 30 Days -->
-          <div class="dash-chart-card highlighted-amber-card">
+          <div class="dash-chart-card ">
             <div class="chart-card-top">
               <div>
                 <div style="display: flex; align-items: center; gap: 8px;">
