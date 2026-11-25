@@ -991,13 +991,13 @@
             <div class="wizard-grid-4">
               <div class="wizard-form-group">
                 <label>Organization Name <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardOrg.organizationName" name="wOrgName"
+                <input [(ngModel)]="wizardOrg.organizationName" name="wOrgName" placeholder="Organization Name"
                   (input)="onOrgNameChange()" required>
               </div>
 
               <div class="wizard-form-group">
                 <label>Organization ID (Code) <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardOrg.organizationCode" name="wOrgCode" required>
+                <input [(ngModel)]="wizardOrg.organizationCode" name="wOrgCode" placeholder="Organization ID" required>
               </div>
 
               <div class="wizard-form-group">
@@ -1024,22 +1024,22 @@
 
               <div class="wizard-form-group span-2">
                 <label>Office Address</label>
-                <input [(ngModel)]="wizardOrg.location" name="wLocation">
+                <input [(ngModel)]="wizardOrg.location" name="wLocation" placeholder="Office Address">
               </div>
 
               <div class="wizard-form-group">
                 <label>Contact Phone</label>
-                <input [(ngModel)]="wizardOrg.contactPhone" name="wPhone">
+                <input [(ngModel)]="wizardOrg.contactPhone" name="wPhone" placeholder="Contact Phone">
               </div>
 
               <div class="wizard-form-group">
                 <label>Contact Email</label>
-                <input [(ngModel)]="wizardOrg.contactEmail" name="wEmail" type="email">
+                <input [(ngModel)]="wizardOrg.contactEmail" name="wEmail" type="email" placeholder="Contact Email">
               </div>
 
               <div class="wizard-form-group span-2">
                 <label>Office Operating Hours</label>
-                <input [(ngModel)]="wizardOrg.officeHours" name="wHours">
+                <input [(ngModel)]="wizardOrg.officeHours" name="wHours" placeholder="Operating Hours">
               </div>
             </div>
           </div>
@@ -1058,7 +1058,7 @@
               <div class="wizard-form-group">
                 <label>Subdomain Prefix <span class="required-star">*</span></label>
                 <div class="subdomain-input-wrap">
-                  <input [(ngModel)]="wizardOrg.subdomain" name="wSubdomain"
+                  <input [(ngModel)]="wizardOrg.subdomain" name="wSubdomain" placeholder="Subdomain Prefix"
                     (input)="sanitizeSubdomain()" required>
                   <span class="subdomain-suffix">.transport-system.com</span>
                 </div>
@@ -1094,24 +1094,24 @@
 
             <div class="wizard-grid-4">
               <div class="wizard-form-group">
-                <label>Admin Full Name <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardAdmin.name" name="waName" required>
+                <label>Admin Name <span class="required-star">*</span></label>
+                <input [(ngModel)]="wizardAdmin.name" name="waName" placeholder="Admin Name" required>
               </div>
 
               <div class="wizard-form-group">
-                <label>Official Email <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardAdmin.email" name="waEmail" type="email" required>
+                <label>Admin Email <span class="required-star">*</span></label>
+                <input [(ngModel)]="wizardAdmin.email" name="waEmail" type="email" placeholder="Admin Email" required>
               </div>
 
               <div class="wizard-form-group">
-                <label>Mobile Number <span class="required-star">*</span></label>
-                <input [(ngModel)]="wizardAdmin.phone" name="waPhone" required>
+                <label>Admin Phone <span class="required-star">*</span></label>
+                <input [(ngModel)]="wizardAdmin.phone" name="waPhone" placeholder="Admin Phone" required>
               </div>
 
               <div class="wizard-form-group">
                 <label>Temporary Password</label>
                 <div class="password-gen-wrap">
-                  <input [(ngModel)]="wizardAdmin.password" name="waPassword" readonly>
+                  <input [(ngModel)]="wizardAdmin.password" name="waPassword" placeholder="Temporary Password" readonly>
                   <button type="button" class="btn-gen-pwd" (click)="generateTempPassword()" title="Generate Random Password">
                     Generate
                   </button>
