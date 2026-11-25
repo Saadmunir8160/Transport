@@ -3285,21 +3285,29 @@
 
       <!-- ACTIVE SESSIONS TAB -->
       <div *ngIf="activeTab === 'sessions'">
-        <div class="content-card">
-          <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>🔐 Active User Sessions</h2>
-            <button class="add-btn" (click)="loadActiveSessions()" style="margin: 0;">🔄 Refresh</button>
-          </div>
-          <p style="color: #64748b; margin-top: 0.5rem; margin-bottom: 1.5rem;">Monitor and manage real-time active user
-            sessions across all organizations.</p>
-
-          <!-- Filters -->
-          <div
-            style="display: flex; gap: 15px; margin-bottom: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; flex-wrap: wrap;">
+        <div class="content-card" style="padding: 0; overflow: hidden; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+          <!-- Standard Header -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; border-bottom: 1px solid #F1F5F9; background: #FFFFFF;">
             <div>
-              <label style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 0.25rem;">Role</label>
+              <h2 style="font-size: 1.15rem; font-weight: 700; color: #0F172A; margin: 0; display: flex; align-items: center; gap: 8px;">
+                Active User Sessions
+              </h2>
+              <p style="font-size: 0.8125rem; color: #64748B; margin: 4px 0 0 0;">Monitor and manage real-time active user sessions across all organizations.</p>
+            </div>
+            <button class="btn-refresh-status" (click)="loadActiveSessions()" title="Refresh Sessions">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+              <span>Refresh</span>
+            </button>
+          </div>
+
+          <!-- Standard Filter Bar -->
+          <div style="display: flex; gap: 12px; padding: 14px 24px; background: #FAFAFA; border-bottom: 1px solid #F1F5F9; flex-wrap: wrap; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 0.8125rem; font-weight: 600; color: #0F172A;">Role:</span>
               <select [(ngModel)]="sessionRoleFilter" (change)="filterSessions()"
-                style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; min-width: 150px;">
+                style="padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.8125rem; color: #0F172A; background: #FFFFFF; outline: none; cursor: pointer;">
                 <option value="">All Roles</option>
                 <option value="SuperAdmin">Super Admin</option>
                 <option value="TransportAdmin">Org Admin</option>
@@ -3307,22 +3315,19 @@
                 <option value="Passenger">Passenger</option>
               </select>
             </div>
-            <div>
-              <label
-                style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 0.25rem;">Organization</label>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 0.8125rem; font-weight: 600; color: #0F172A;">Organization:</span>
               <select [(ngModel)]="sessionOrgFilter" (change)="filterSessions()"
-                style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; min-width: 150px;">
+                style="padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.8125rem; color: #0F172A; background: #FFFFFF; outline: none; cursor: pointer;">
                 <option value="">All Organizations</option>
                 <option value="System">System (Super Admins)</option>
-                <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}
-                </option>
+                <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}</option>
               </select>
             </div>
-            <div>
-              <label
-                style="display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 0.25rem;">Activity</label>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 0.8125rem; font-weight: 600; color: #0F172A;">Activity:</span>
               <select [(ngModel)]="sessionActivityFilter" (change)="filterSessions()"
-                style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; min-width: 150px;">
+                style="padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 0.8125rem; color: #0F172A; background: #FFFFFF; outline: none; cursor: pointer;">
                 <option value="">Any Time</option>
                 <option value="5">Active in last 5 mins</option>
                 <option value="15">Active in last 15 mins</option>
@@ -3359,7 +3364,10 @@
                   <td>{{ session.lastActivity | date:'shortTime' }}</td>
                   <td>{{ getSessionDuration(session.loginTime) }}</td>
                   <td>
-                    <span class="role-badge" [ngClass]="session.isRevoked ? 'passenger-role' : 'superadmin-role'">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;"
+                      [style.background]="session.isRevoked ? '#F1F5F9' : '#0F172A'"
+                      [style.color]="session.isRevoked ? '#64748B' : '#FFFFFF'">
+                      <span [style.background]="session.isRevoked ? '#94A3B8' : '#FFFFFF'" style="width: 5px; height: 5px; border-radius: 50%; display: inline-block;"></span>
                       {{ session.isRevoked ? 'Revoked' : 'Active' }}
                     </span>
                   </td>
