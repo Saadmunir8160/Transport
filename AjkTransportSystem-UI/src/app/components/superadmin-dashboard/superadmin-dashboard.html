@@ -1017,12 +1017,12 @@
                 <div class="form-group">
                   <label>Organization Name *</label>
                   <input [(ngModel)]="wizardOrg.organizationName" name="wOrgName" placeholder="e.g. AJK Transport Co."
-                    required>
+                    (input)="onOrgNameChange()" required>
                 </div>
                 <div class="form-group">
                   <label>Organization ID (Code) *</label>
                   <input [(ngModel)]="wizardOrg.organizationCode" name="wOrgCode"
-                    placeholder="Auto-generated if left blank">
+                    placeholder="Auto-generated based on name">
                 </div>
                 <div class="form-group">
                   <label>Area / District *</label>
@@ -1060,10 +1060,7 @@
                     <option value="Inactive">Inactive</option>
                   </select>
                 </div>
-                <div class="form-group" style="grid-column: 1 / -1;">
-                  <label>Organization Logo</label>
-                  <input type="file" accept="image/*" style="padding: 0.5rem 0;">
-                </div>
+
               </div>
             </div>
 

@@ -649,6 +649,28 @@ export class SuperAdminDashboardComponent implements OnInit {
     sendWelcomeEmail: true
   };
 
+  onOrgNameChange() {
+    if (!this.wizardOrg.organizationName) {
+      return;
+    }
+    // Clean name: extract capital initials or first word + random code
+    const words = this.wizardOrg.organizationName.trim().split(/\s+/);
+    let codePrefix = '';
+    if (words.length >= 2) {
+      codePrefix = (words[0].substring(0, 3) + '-' + words[1].substring(0, 3)).toUpperCase();
+    } else {
+      codePrefix = words[0].substring(0, 4).toUpperCase();
+    }
+    const randomSuffix = Math.floor(100 + Math.random() * 900);
+    this.wizardOrg.organizationCode = `${codePrefix}-${randomSuffix}`;
+
+    // Auto-generate Subdomain prefix if empty
+    if (!this.wizardOrg.subdomain) {
+      const cleanSub = this.wizardOrg.organizationName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      this.wizardOrg.subdomain = cleanSub.substring(0, 15);
+    }
+  }
+
   sanitizeSubdomain() {
     if (this.wizardOrg.subdomain) {
       this.wizardOrg.subdomain = this.wizardOrg.subdomain.toLowerCase().replace(/[^a-z0-9]/g, '');
