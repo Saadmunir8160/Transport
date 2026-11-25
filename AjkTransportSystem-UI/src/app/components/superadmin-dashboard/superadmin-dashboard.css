@@ -1231,28 +1231,27 @@
 }
 
 /* Organizations / Table Page Layout */
-/* Premium Minimal Summary Chips */
+/* Premium Full-Width Summary Cards */
 .summary-chips {
   display: flex !important;
   gap: 16px !important;
   margin-bottom: 20px !important;
-  flex-wrap: wrap !important;
+  width: 100% !important;
 }
 
 .summary-chip {
   background: #ffffff !important;
   border: 1px solid #E2E8F0 !important;
   border-radius: 12px !important;
-  padding: 14px 18px !important;
+  padding: 16px 20px !important;
   display: flex !important;
   flex-direction: column !important;
-  min-width: 175px !important;
-  flex: 1 1 175px !important;
-  max-width: 260px !important;
+  flex: 1 1 0 !important;
+  width: 100% !important;
+  max-width: none !important;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   position: relative !important;
-  border-left: none !important;
 }
 
 .summary-chip:hover {
@@ -1277,8 +1276,8 @@
 }
 
 .summary-chip .chip-icon-box {
-  width: 28px !important;
-  height: 28px !important;
+  width: 30px !important;
+  height: 30px !important;
   border-radius: 8px !important;
   display: flex !important;
   align-items: center !important;
@@ -1302,7 +1301,7 @@
 }
 
 .summary-chip .chip-value {
-  font-size: 1.5rem !important;
+  font-size: 1.6rem !important;
   font-weight: 800 !important;
   color: #0F172A !important;
   line-height: 1.2 !important;
@@ -1311,7 +1310,7 @@
 }
 
 .summary-chip .chip-sub {
-  font-size: 0.72rem !important;
+  font-size: 0.75rem !important;
   color: #94A3B8 !important;
   font-weight: 500 !important;
 }

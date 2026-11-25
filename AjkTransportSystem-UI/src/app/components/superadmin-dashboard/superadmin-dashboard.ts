@@ -545,7 +545,7 @@ export class SuperAdminDashboardComponent implements OnInit {
   orgDateFrom = '';
   orgDateTo = '';
   orgCurrentPage = 1;
-  orgPageSize = 5;
+  orgPageSize = 4;
 
   selectedOrgDetails: any = null;
   orgDetailTab: string = 'overview';

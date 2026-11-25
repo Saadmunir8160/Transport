@@ -1229,11 +1229,11 @@
                 <th>Assigned admin</th>
                 <th class="num-col">Drivers</th>
                 <th class="num-col">Vehicles</th>
-                <th class="num-col">Trips (lifetime)</th>
+                <th class="num-col" style="text-align: center !important;">Trips (lifetime)</th>
                 <th>Status</th>
                 <th>Created date</th>
                 <th>Last activity</th>
-                <th class="action-col"></th>
+                <th class="action-col" style="text-align: right !important; padding-right: 14px !important;">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -1250,7 +1250,7 @@
                 <td>{{ org.adminName || 'Unassigned' }}</td>
                 <td class="num-col">{{ org.totalDrivers || 0 }}</td>
                 <td class="num-col">{{ org.totalVehicles || 0 }}</td>
-                <td class="num-col">{{ org.totalTrips || 0 }}</td>
+                <td class="num-col" style="text-align: center !important;">{{ org.totalTrips || 0 }}</td>
                 <td>
                   <span class="status-chip" [ngClass]="org.status.toLowerCase()">{{ org.status }}</span>
                 </td>
@@ -1283,7 +1283,7 @@
               (click)="orgSearchText=''; orgStatusFilter=''; orgRegionFilter=''; applyOrgFilters()">Clear
               filters</button>
           </div>
-          <div class="pagination-bar" *ngIf="filteredOrganizations.length > 0"
+          <div class="pagination-bar" *ngIf="filteredOrganizations.length > orgPageSize"
             style="background: #ffffff; border: 1px solid var(--border-color, #E3E8EF); border-top: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
             <span style="font-weight: 500;">Showing {{(orgCurrentPage - 1) * orgPageSize + 1}}-{{(orgCurrentPage *
               orgPageSize) > filteredOrganizations.length ? filteredOrganizations.length : (orgCurrentPage *
