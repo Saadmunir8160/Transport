@@ -976,146 +976,190 @@
       </div>
 
       <!-- CREATE ORGANIZATION WIZARD TAB -->
-      <div *ngIf="activeTab === 'createOrganization'">
-        <div class="content-card">
-          <div class="card-header">
-            <h2>🏢 Onboard New Transport Company</h2>
-            <p style="color: #7f8c8d; font-size: 0.95rem; margin-top: 0.5rem;">Create a new organization, provision its
-              subdomain, and set up its first admin.</p>
+      <div *ngIf="activeTab === 'createOrganization'" class="wizard-container">
+        <!-- Page Title & Navigation -->
+        <div class="wizard-header-bar">
+          <div class="wizard-title-group">
+            <div class="breadcrumb" style="margin-bottom: 2px;">
+              <span class="breadcrumb-group" (click)="setActiveTab('organizations')" style="cursor: pointer;">Organizations</span>
+              <span class="breadcrumb-separator">/</span>
+              <span class="breadcrumb-current">New Organization</span>
+            </div>
+            <h1 class="wizard-page-title">Onboard New Transport Company</h1>
+            <p class="wizard-page-desc">Provision tenant workspace, auto-configure custom subdomain, and assign initial organization admin.</p>
+          </div>
+          <button type="button" class="btn-wizard-back" (click)="setActiveTab('organizations')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back to Organizations
+          </button>
+        </div>
+
+        <form (ngSubmit)="createOrganizationWizard()" class="wizard-form-card">
+          <!-- Step 1: Organization Details -->
+          <div class="wizard-section">
+            <div class="wizard-section-header">
+              <div class="step-badge">1</div>
+              <div>
+                <h3 class="step-title">Organization Details</h3>
+                <p class="step-subtitle">Primary business profile and official regional contact details</p>
+              </div>
+            </div>
+
+            <div class="wizard-grid-4">
+              <div class="wizard-form-group">
+                <label>Organization Name <span class="required-star">*</span></label>
+                <input [(ngModel)]="wizardOrg.organizationName" name="wOrgName" placeholder="e.g. Kashmir Skyways"
+                  (input)="onOrgNameChange()" required>
+              </div>
+
+              <div class="wizard-form-group">
+                <label>Organization ID (Code) <span class="required-star">*</span></label>
+                <input [(ngModel)]="wizardOrg.organizationCode" name="wOrgCode" placeholder="Auto-generated" required>
+              </div>
+
+              <div class="wizard-form-group">
+                <label>Area / District <span class="required-star">*</span></label>
+                <select [(ngModel)]="wizardOrg.district" name="wDistrict" required>
+                  <option value="">Select District</option>
+                  <option value="Muzaffarabad">Muzaffarabad</option>
+                  <option value="Mirpur">Mirpur</option>
+                  <option value="Kotli">Kotli</option>
+                  <option value="Rawalakot">Rawalakot</option>
+                  <option value="Bagh">Bagh</option>
+                  <option value="Bhimber">Bhimber</option>
+                  <option value="Neelum">Neelum</option>
+                </select>
+              </div>
+
+              <div class="wizard-form-group">
+                <label>Status</label>
+                <select [(ngModel)]="wizardOrg.status" name="wStatus">
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+
+              <div class="wizard-form-group span-2">
+                <label>Office Address</label>
+                <input [(ngModel)]="wizardOrg.location" name="wLocation" placeholder="Full branch / depot street address">
+              </div>
+
+              <div class="wizard-form-group">
+                <label>Contact Phone</label>
+                <input [(ngModel)]="wizardOrg.contactPhone" name="wPhone" placeholder="+92 300 0000000">
+              </div>
+
+              <div class="wizard-form-group">
+                <label>Contact Email</label>
+                <input [(ngModel)]="wizardOrg.contactEmail" name="wEmail" type="email" placeholder="contact@company.com">
+              </div>
+
+              <div class="wizard-form-group span-2">
+                <label>Office Operating Hours</label>
+                <input [(ngModel)]="wizardOrg.officeHours" name="wHours" placeholder="e.g. 08:00 AM - 08:00 PM (Daily)">
+              </div>
+            </div>
           </div>
 
-          <form (ngSubmit)="createOrganizationWizard()">
-            <!-- Step 1: Organization details -->
-            <div style="margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e8f0;">
-              <h3 style="color: #2c3e50; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
-                <span
-                  style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">1</span>
-                Organization Details
-              </h3>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Organization Name *</label>
-                  <input [(ngModel)]="wizardOrg.organizationName" name="wOrgName" placeholder="e.g. AJK Transport Co."
-                    (input)="onOrgNameChange()" required>
-                </div>
-                <div class="form-group">
-                  <label>Organization ID (Code) *</label>
-                  <input [(ngModel)]="wizardOrg.organizationCode" name="wOrgCode"
-                    placeholder="Auto-generated based on name">
-                </div>
-                <div class="form-group">
-                  <label>Area / District *</label>
-                  <select [(ngModel)]="wizardOrg.district" name="wDistrict" required>
-                    <option value="">Select District</option>
-                    <option value="Muzaffarabad">Muzaffarabad</option>
-                    <option value="Mirpur">Mirpur</option>
-                    <option value="Kotli">Kotli</option>
-                    <option value="Rawalakot">Rawalakot</option>
-                    <option value="Bagh">Bagh</option>
-                    <option value="Bhimber">Bhimber</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Office Address</label>
-                  <input [(ngModel)]="wizardOrg.location" name="wLocation" placeholder="Full office address">
-                </div>
-                <div class="form-group">
-                  <label>Contact Phone</label>
-                  <input [(ngModel)]="wizardOrg.contactPhone" name="wPhone" placeholder="+92 300 0000000">
-                </div>
-                <div class="form-group">
-                  <label>Contact Email</label>
-                  <input [(ngModel)]="wizardOrg.contactEmail" name="wEmail" type="email"
-                    placeholder="contact@company.com">
-                </div>
-                <div class="form-group">
-                  <label>Office Hours</label>
-                  <input [(ngModel)]="wizardOrg.officeHours" name="wHours" placeholder="e.g. 09:00 AM - 05:00 PM">
-                </div>
-                <div class="form-group">
-                  <label>Status</label>
-                  <select [(ngModel)]="wizardOrg.status" name="wStatus">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-                </div>
-
+          <!-- Step 2: Subdomain & Web Access -->
+          <div class="wizard-section">
+            <div class="wizard-section-header">
+              <div class="step-badge">2</div>
+              <div>
+                <h3 class="step-title">Subdomain & Dedicated Web Access</h3>
+                <p class="step-subtitle">Unique portal web address automatically routed for this tenant</p>
               </div>
             </div>
 
-            <!-- Step 2: Subdomain -->
-            <div style="margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid #e2e8f0;">
-              <h3 style="color: #2c3e50; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
-                <span
-                  style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">2</span>
-                Subdomain & Web Access
-              </h3>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Subdomain Prefix *</label>
-                  <div style="display: flex; align-items: center;">
-                    <input [(ngModel)]="wizardOrg.subdomain" name="wSubdomain" placeholder="e.g. muzaffarabad"
-                      (input)="sanitizeSubdomain()" required
-                      style="border-radius: 6px 0 0 6px; border-right: none; flex: 1;">
-                    <span
-                      style="background: #e2e8f0; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-left: none; border-radius: 0 6px 6px 0; color: #64748b;">.kashmirtms.com</span>
-                  </div>
-                  <small style="color: #64748b; margin-top: 0.5rem; display: flex; align-items: center; gap: 5px;">
-                    <span style="color: #10b981;">✓</span> SSL Auto-provisioned on save
-                  </small>
+            <div class="wizard-grid-2">
+              <div class="wizard-form-group">
+                <label>Subdomain Prefix <span class="required-star">*</span></label>
+                <div class="subdomain-input-wrap">
+                  <input [(ngModel)]="wizardOrg.subdomain" name="wSubdomain" placeholder="e.g. kashmirskyways"
+                    (input)="sanitizeSubdomain()" required>
+                  <span class="subdomain-suffix">.transport-system.com</span>
+                </div>
+                <div class="subdomain-hint">
+                  <span class="ssl-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    Auto-provisioned SSL secured
+                  </span>
+                </div>
+              </div>
+
+              <div class="subdomain-preview-card">
+                <div class="preview-label">Live Tenant URL Preview:</div>
+                <div class="preview-url">
+                  https://<strong>{{ wizardOrg.subdomain || 'prefix' }}</strong>.transport-system.com
+                </div>
+                <div class="preview-note">Passengers and operators will access their dedicated portal via this address.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: First Admin User -->
+          <div class="wizard-section no-border">
+            <div class="wizard-section-header">
+              <div class="step-badge">3</div>
+              <div>
+                <h3 class="step-title">Initial Organization Administrator</h3>
+                <p class="step-subtitle">Credentials for the primary management user who oversees this fleet</p>
+              </div>
+            </div>
+
+            <div class="wizard-grid-4">
+              <div class="wizard-form-group">
+                <label>Admin Full Name <span class="required-star">*</span></label>
+                <input [(ngModel)]="wizardAdmin.name" name="waName" placeholder="e.g. Babar Azam" required>
+              </div>
+
+              <div class="wizard-form-group">
+                <label>Official Email <span class="required-star">*</span></label>
+                <input [(ngModel)]="wizardAdmin.email" name="waEmail" type="email" placeholder="admin@company.com" required>
+              </div>
+
+              <div class="wizard-form-group">
+                <label>Mobile Number <span class="required-star">*</span></label>
+                <input [(ngModel)]="wizardAdmin.phone" name="waPhone" placeholder="+92 300 0000000" required>
+              </div>
+
+              <div class="wizard-form-group">
+                <label>Temporary Password</label>
+                <div class="password-gen-wrap">
+                  <input [(ngModel)]="wizardAdmin.password" name="waPassword" placeholder="Auto-generated" readonly>
+                  <button type="button" class="btn-gen-pwd" (click)="generateTempPassword()" title="Generate Random Password">
+                    Generate
+                  </button>
                 </div>
               </div>
             </div>
 
-            <!-- Step 3: First Admin User -->
-            <div style="margin-bottom: 2rem;">
-              <h3 style="color: #2c3e50; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px;">
-                <span
-                  style="background: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem;">3</span>
-                First Admin User
-              </h3>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label>Admin Name *</label>
-                  <input [(ngModel)]="wizardAdmin.name" name="waName" placeholder="Admin Full Name" required>
-                </div>
-                <div class="form-group">
-                  <label>Admin Email *</label>
-                  <input [(ngModel)]="wizardAdmin.email" name="waEmail" type="email" placeholder="admin@company.com"
-                    required>
-                </div>
-                <div class="form-group">
-                  <label>Admin Phone *</label>
-                  <input [(ngModel)]="wizardAdmin.phone" name="waPhone" placeholder="+92 300 0000000" required>
-                </div>
-                <div class="form-group">
-                  <label>Temporary Password</label>
-                  <div style="display: flex; gap: 10px;">
-                    <input [(ngModel)]="wizardAdmin.password" name="waPassword" placeholder="Auto-generated" readonly
-                      style="background: #f1f5f9; flex: 1;">
-                    <button type="button" (click)="generateTempPassword()"
-                      style="padding: 0 1rem; background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;">Generate</button>
-                  </div>
-                </div>
-              </div>
-              <div style="margin-top: 1rem; display: flex; align-items: center; gap: 10px;">
-                <input type="checkbox" [(ngModel)]="wizardAdmin.sendWelcomeEmail" name="waSendEmail"
-                  id="sendEmailToggle" style="width: 1.2rem; height: 1.2rem;">
-                <label for="sendEmailToggle" style="color: #475569; margin: 0; cursor: pointer;">Send welcome email with
-                  login URL, credentials, and 48-hour password reset link.</label>
-              </div>
+            <div class="welcome-checkbox-row">
+              <input type="checkbox" [(ngModel)]="wizardAdmin.sendWelcomeEmail" name="waSendEmail" id="sendEmailToggle">
+              <label for="sendEmailToggle">
+                Send welcome email with login URL, temporary credentials, and a 48-hour password reset link.
+              </label>
             </div>
+          </div>
 
-            <div
-              style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 3rem; border-top: 1px solid #e2e8f0; padding-top: 2rem;">
-              <button type="button" class="action-btn"
-                style="background: #f1f5f9; color: #475569; padding: 0.75rem 2rem; font-size: 1rem;"
-                (click)="setActiveTab('organizations')">Cancel</button>
-              <button type="submit" class="add-btn"
-                style="margin: 0; padding: 0.75rem 2.5rem; font-size: 1rem;">Complete Onboarding ✅</button>
-            </div>
-          </form>
-        </div>
+          <!-- Wizard Actions Footer -->
+          <div class="wizard-footer-bar">
+            <button type="button" class="btn-wizard-cancel" (click)="setActiveTab('organizations')">
+              Cancel
+            </button>
+            <button type="submit" class="btn-wizard-submit">
+              Complete Onboarding
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
       <div *ngIf="activeTab === 'organizations'">
         <div class="page-header">
