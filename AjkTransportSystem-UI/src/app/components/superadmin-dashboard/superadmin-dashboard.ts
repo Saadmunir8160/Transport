@@ -192,6 +192,13 @@ export class SuperAdminDashboardComponent implements OnInit {
   reportOrg: string = '';
   reportFormat: string = 'PDF';
 
+  generatedReports: any[] = [
+    { id: 'REP-1049', name: 'Organization summary report', format: 'PDF', generatedAt: '2026-11-25 18:40', dateRange: 'This Month', generatedBy: 'Super Admin', size: '245 KB' },
+    { id: 'REP-1048', name: 'Driver activity report', format: 'Excel', generatedAt: '2026-11-24 12:15', dateRange: 'Last Month', generatedBy: 'Super Admin', size: '1.2 MB' },
+    { id: 'REP-1047', name: 'Vehicle usage and compliance report', format: 'CSV', generatedAt: '2026-11-23 09:30', dateRange: 'This Year', generatedBy: 'Super Admin', size: '680 KB' },
+    { id: 'REP-1046', name: 'Booking and revenue summary', format: 'PDF', generatedAt: '2026-11-20 16:05', dateRange: 'This Month', generatedBy: 'Super Admin', size: '410 KB' }
+  ];
+
   availableReports = [
     { id: 'orgSummary', name: 'Organization summary report', description: 'One row per org — trips, bookings, drivers, vehicles, compliance' },
     { id: 'driverActivity', name: 'Driver activity report', description: 'Activity across all orgs' },
@@ -1278,8 +1285,42 @@ export class SuperAdminDashboardComponent implements OnInit {
   }
 
   generateReport() {
-    // In a real app, this would trigger an API call to generate the report file
-    alert(`Generating report: ${this.reportType}\nFormat: ${this.reportFormat}\nDate Range: ${this.reportDateRange}\nOrganization: ${this.reportOrg || 'All'}`);
+    const rep = this.availableReports.find(r => r.id === this.reportType) || { name: 'Platform Report' };
+    const newRep = {
+      id: `REP-${Math.floor(1050 + Math.random() * 900)}`,
+      name: rep.name,
+      format: this.reportFormat,
+      generatedAt: new Date().toISOString().replace('T', ' ').slice(0, 16),
+      dateRange: this.reportDateRange,
+      generatedBy: 'Super Admin',
+      size: this.reportFormat === 'Excel' ? '1.4 MB' : this.reportFormat === 'CSV' ? '450 KB' : '320 KB'
+    };
+    this.generatedReports.unshift(newRep);
+
+    if (this.reportFormat === 'CSV') {
+      const csvContent = 'data:text/csv;charset=utf-8,Report Name,Generated At,Range,Organization\n' +
+        `"${rep.name}","${newRep.generatedAt}","${this.reportDateRange}","${this.reportOrg || 'All'}"\n`;
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `${this.reportType}_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else if (this.reportFormat === 'PDF') {
+      window.print();
+    } else {
+      alert(`Report "${rep.name}" (${this.reportFormat}) generated successfully and added to Recent Reports table.`);
+    }
+  }
+
+  downloadReport(rep: any) {
+    alert(`Downloading ${rep.name} [${rep.id}] as ${rep.format}...`);
+  }
+
+  deleteReport(rep: any) {
+    if (!confirm(`Delete report ${rep.id}?`)) return;
+    this.generatedReports = this.generatedReports.filter(r => r.id !== rep.id);
   }
 
   loadEtaModelMonitor() {

@@ -2742,39 +2742,36 @@
 
       <!-- GLOBAL REPORTS TAB -->
       <div *ngIf="activeTab === 'globalReports'">
-        <div class="card-header"
-          style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h2>📑 Global Reports</h2>
-            <p style="color: #7f8c8d; font-size: 0.95rem; margin-top: 0.5rem;">Formal reports generated from platform
-              data.</p>
-          </div>
-        </div>
-
-        <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 24px;">
 
           <!-- Report Generator Form -->
-          <div class="content-card" style="flex: 2; min-width: 400px; margin-bottom: 0;">
-            <h3 style="margin-top: 0; color: #1e293b; margin-bottom: 1.5rem;">Generate Report</h3>
+          <div class="content-card" style="flex: 2; min-width: 420px; margin: 0; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #EDF2F7;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <h3 style="margin: 0; font-size: 14px; font-weight: 700; color: #0F172A;">Generate Report</h3>
+            </div>
 
-            <div class="form-group" style="margin-bottom: 1.5rem;">
-              <label style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.5rem;">Select Report
-                Type</label>
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px;">Select Report Type</label>
               <select [(ngModel)]="reportType"
-                style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc; font-size: 0.95rem;">
+                style="width: 100%; height: 38px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAFC; font-size: 13px; color: #0F172A;">
                 <option *ngFor="let rep of availableReports" [value]="rep.id">{{ rep.name }}</option>
               </select>
-              <div style="margin-top: 0.5rem; color: #64748b; font-size: 0.85rem;" *ngFor="let rep of availableReports">
+              <div style="margin-top: 6px; color: #64748B; font-size: 12px;" *ngFor="let rep of availableReports">
                 <span *ngIf="reportType === rep.id">{{ rep.description }}</span>
               </div>
             </div>
 
-            <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-              <div class="form-group" style="flex: 1; min-width: 200px;">
-                <label style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.5rem;">Date
-                  Range</label>
+            <div style="display: flex; gap: 14px; margin-bottom: 16px; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 180px;">
+                <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px;">Date Range</label>
                 <select [(ngModel)]="reportDateRange"
-                  style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc;">
+                  style="width: 100%; height: 38px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAFC; font-size: 13px; color: #0F172A;">
                   <option value="today">Today</option>
                   <option value="thisWeek">This Week</option>
                   <option value="thisMonth">This Month</option>
@@ -2783,78 +2780,143 @@
                   <option value="custom">Custom Range...</option>
                 </select>
               </div>
-              <div class="form-group" style="flex: 1; min-width: 200px;">
-                <label
-                  style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.5rem;">Organization</label>
+              <div style="flex: 1; min-width: 180px;">
+                <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 0.5px;">Organization</label>
                 <select [(ngModel)]="reportOrg"
-                  style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc;">
+                  style="width: 100%; height: 38px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAFC; font-size: 13px; color: #0F172A;">
                   <option value="">All Organizations</option>
-                  <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}
-                  </option>
+                  <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}</option>
                 </select>
               </div>
             </div>
 
-            <div class="form-group" style="margin-bottom: 2rem;">
-              <label style="display: block; font-weight: 600; color: #334155; margin-bottom: 0.5rem;">Export
-                Format</label>
-              <div style="display: flex; gap: 1.5rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="format" value="PDF" [(ngModel)]="reportFormat"> PDF Document
+            <div style="margin-bottom: 20px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Export Format</label>
+              <div style="display: flex; gap: 20px; align-items: center;">
+                <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #0F172A; cursor: pointer;">
+                  <input type="radio" name="format" value="PDF" [(ngModel)]="reportFormat" style="accent-color: #0F172A;"> PDF Document
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="format" value="Excel" [(ngModel)]="reportFormat"> Excel (.xlsx)
+                <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #0F172A; cursor: pointer;">
+                  <input type="radio" name="format" value="Excel" [(ngModel)]="reportFormat" style="accent-color: #0F172A;"> Excel (.xlsx)
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="format" value="CSV" [(ngModel)]="reportFormat"> CSV Data
+                <label style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; color: #0F172A; cursor: pointer;">
+                  <input type="radio" name="format" value="CSV" [(ngModel)]="reportFormat" style="accent-color: #0F172A;"> CSV Data
                 </label>
               </div>
             </div>
 
             <button class="add-btn" (click)="generateReport()"
-              style="width: 100%; padding: 1rem; font-size: 1rem; margin: 0; justify-content: center; background: #10b981;">
-              📥 Generate & Download Report
+              style="width: 100%; height: 40px; padding: 0 16px; font-size: 13px; font-weight: 600; margin: 0; display: inline-flex; justify-content: center; align-items: center; gap: 8px; background: #0F172A; color: #FFFFFF; border: none; border-radius: 6px; cursor: pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Generate & Download Report
             </button>
           </div>
 
           <!-- Scheduled Reports Sidebar -->
           <div class="content-card"
-            style="flex: 1; min-width: 300px; margin-bottom: 0; background: #f8fafc; border: 1px solid #e2e8f0;">
-            <h3
-              style="margin-top: 0; color: #1e293b; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-              ⏱️ Scheduled Reports</h3>
-
-            <div
-              style="background: #fff; padding: 1rem; border-radius: 6px; border: 1px solid #cbd5e1; margin-bottom: 1rem;">
-              <div
-                style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                <h4 style="margin: 0; color: #0f172a;">Weekly Platform Summary</h4>
-                <span
-                  style="background: #dcfce7; color: #166534; font-size: 0.7rem; padding: 2px 6px; border-radius: 12px; font-weight: 600;">ACTIVE</span>
-              </div>
-              <p style="margin: 0; font-size: 0.85rem; color: #475569; margin-bottom: 0.8rem;">Sent every Monday at
-                08:00 AM (UTC).</p>
-              <div style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Recipients: <span
-                  style="color: #3b82f6;">Super Admin Email</span></div>
+            style="flex: 1; min-width: 320px; margin: 0; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #EDF2F7;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <h3 style="margin: 0; font-size: 14px; font-weight: 700; color: #0F172A;">Scheduled Reports</h3>
             </div>
 
-            <div style="background: #fff; padding: 1rem; border-radius: 6px; border: 1px solid #cbd5e1;">
-              <div
-                style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                <h4 style="margin: 0; color: #0f172a;">Monthly Org Performance</h4>
-                <span
-                  style="background: #dcfce7; color: #166534; font-size: 0.7rem; padding: 2px 6px; border-radius: 12px; font-weight: 600;">ACTIVE</span>
+            <div style="background: #F8FAFC; padding: 14px; border-radius: 6px; border: 1px solid #E2E8F0; margin-bottom: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <h4 style="margin: 0; font-size: 13px; font-weight: 600; color: #0F172A;">Weekly Platform Summary</h4>
+                <span style="background: #0F172A; color: #FFFFFF; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; letter-spacing: 0.5px;">ACTIVE</span>
               </div>
-              <p style="margin: 0; font-size: 0.85rem; color: #475569; margin-bottom: 0.8rem;">Sent on the 1st of every
-                month at 09:00 AM.</p>
-              <div style="font-size: 0.8rem; color: #64748b; font-weight: 600;">Recipients: <span
-                  style="color: #3b82f6;">Each Org Admin Email</span></div>
+              <p style="margin: 0 0 8px 0; font-size: 12px; color: #64748B;">Sent every Monday at 08:00 AM (UTC).</p>
+              <div style="font-size: 11px; color: #64748B; font-weight: 500;">
+                Recipients: <span style="color: #0F172A; font-weight: 600;">Super Admin Email</span>
+              </div>
             </div>
 
-            <button class="action-btn"
-              style="width: 100%; margin-top: 1.5rem; justify-content: center; background: #eef2f6; color: #1e293b; border: 1px solid #cbd5e1;">
+            <div style="background: #F8FAFC; padding: 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <h4 style="margin: 0; font-size: 13px; font-weight: 600; color: #0F172A;">Monthly Org Performance</h4>
+                <span style="background: #0F172A; color: #FFFFFF; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; letter-spacing: 0.5px;">ACTIVE</span>
+              </div>
+              <p style="margin: 0 0 8px 0; font-size: 12px; color: #64748B;">Sent on the 1st of every month at 09:00 AM.</p>
+              <div style="font-size: 11px; color: #64748B; font-weight: 500;">
+                Recipients: <span style="color: #0F172A; font-weight: 600;">Each Org Admin Email</span>
+              </div>
+            </div>
+
+            <button class="action-btn-clean"
+              style="width: 100%; height: 36px; margin-top: 16px; justify-content: center; background: #F8FAFC; color: #0F172A; border: 1px solid #E2E8F0; font-size: 12px; font-weight: 600;"
+              (click)="scheduleEmailReport()">
               Manage Schedules
             </button>
+          </div>
+        </div>
+
+        <!-- Recent Generated Reports Table Section -->
+        <div class="content-card" style="border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; background: #FFFFFF; margin-bottom: 24px;">
+          <div style="padding: 16px 20px; border-bottom: 1px solid #EDF2F7; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+              <h3 style="margin: 0; font-size: 14px; font-weight: 700; color: #0F172A;">Generated Reports History</h3>
+            </div>
+            <span style="font-size: 12px; color: #64748B;">{{ generatedReports.length }} Reports Archival</span>
+          </div>
+
+          <div style="overflow-x: auto; width: 100%;">
+            <table class="data-table" *ngIf="generatedReports.length > 0">
+              <thead>
+                <tr>
+                  <th style="width: 12%;">REPORT ID</th>
+                  <th style="width: 26%;">REPORT NAME</th>
+                  <th style="width: 10%;">FORMAT</th>
+                  <th style="width: 16%;">GENERATED AT</th>
+                  <th style="width: 14%;">DATE RANGE</th>
+                  <th style="width: 10%;">FILE SIZE</th>
+                  <th style="width: 12%; text-align: right;">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let rep of generatedReports">
+                  <td style="font-size: 12px; font-weight: 600; color: #64748B; font-family: monospace;">{{ rep.id }}</td>
+                  <td>
+                    <span style="font-size: 13px; font-weight: 600; color: #0F172A;">{{ rep.name }}</span>
+                  </td>
+                  <td>
+                    <span style="display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0;">
+                      {{ rep.format }}
+                    </span>
+                  </td>
+                  <td style="font-size: 12px; color: #475569;">{{ rep.generatedAt }}</td>
+                  <td style="font-size: 12px; color: #475569;">{{ rep.dateRange }}</td>
+                  <td style="font-size: 12px; color: #64748B; font-family: monospace;">{{ rep.size }}</td>
+                  <td style="text-align: right;">
+                    <div style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px;">
+                      <button class="action-btn-clean" title="Download Report" (click)="downloadReport(rep)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                          <polyline points="7 10 12 15 17 10"/>
+                          <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                      </button>
+                      <button class="action-btn-clean" title="Delete Archive" (click)="deleteReport(rep)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
