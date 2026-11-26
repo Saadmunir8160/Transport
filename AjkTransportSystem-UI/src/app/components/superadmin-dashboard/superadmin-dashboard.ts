@@ -558,7 +558,7 @@ export class SuperAdminDashboardComponent implements OnInit {
     });
     this.charts = {};
 
-    // 1. Organizations per month (Line Chart)
+    // 1. Organizations per month (Line Mini Chart)
     const orgsCanvas = document.getElementById('orgsChart') as HTMLCanvasElement;
     if (orgsCanvas && data?.organizationsPerMonth?.length) {
       this.charts.orgs = new Chart(orgsCanvas, {
@@ -570,12 +570,11 @@ export class SuperAdminDashboardComponent implements OnInit {
             data: data.organizationsPerMonth.map((d: any) => d.count !== undefined ? d.count : d.Count),
             borderColor: '#0F172A',
             borderWidth: 2,
-            pointBackgroundColor: '#0F172A',
-            pointRadius: 4,
-            pointHoverRadius: 6,
+            pointRadius: 2,
+            pointHoverRadius: 4,
             tension: 0.3,
             fill: true,
-            backgroundColor: 'rgba(15, 23, 42, 0.05)'
+            backgroundColor: 'rgba(15, 23, 42, 0.06)'
           }]
         },
         options: {
@@ -583,17 +582,17 @@ export class SuperAdminDashboardComponent implements OnInit {
           maintainAspectRatio: false,
           plugins: {
             legend: { display: false },
-            tooltip: { cornerRadius: 6 }
+            tooltip: { cornerRadius: 4 }
           },
           scales: {
-            y: { beginAtZero: true, grid: { color: '#F1F5F9' } },
-            x: { grid: { display: false } }
+            y: { display: false },
+            x: { display: false }
           }
         }
       });
     }
 
-    // 2. Trips per Organization (Bar Chart)
+    // 2. Trips per Organization (Bar Mini Chart)
     const tripsCanvas = document.getElementById('tripsChart') as HTMLCanvasElement;
     if (tripsCanvas && data?.tripsPerOrganization?.length) {
       this.charts.trips = new Chart(tripsCanvas, {
@@ -604,7 +603,7 @@ export class SuperAdminDashboardComponent implements OnInit {
             label: 'Total Trips',
             data: data.tripsPerOrganization.map((d: any) => d.count !== undefined ? d.count : d.Count),
             backgroundColor: '#0F172A',
-            borderRadius: 6
+            borderRadius: 4
           }]
         },
         options: {
@@ -612,17 +611,17 @@ export class SuperAdminDashboardComponent implements OnInit {
           maintainAspectRatio: false,
           plugins: {
             legend: { display: false },
-            tooltip: { cornerRadius: 6 }
+            tooltip: { cornerRadius: 4 }
           },
           scales: {
-            y: { beginAtZero: true, grid: { color: '#F1F5F9' } },
-            x: { grid: { display: false } }
+            y: { display: false },
+            x: { display: false }
           }
         }
       });
     }
 
-    // 3. Bookings per Organization (Doughnut Chart)
+    // 3. Bookings per Organization (Doughnut Mini Chart)
     const bookingsCanvas = document.getElementById('bookingsChart') as HTMLCanvasElement;
     if (bookingsCanvas && data?.bookingsPerOrganization?.length) {
       this.charts.bookings = new Chart(bookingsCanvas, {
@@ -632,17 +631,17 @@ export class SuperAdminDashboardComponent implements OnInit {
           datasets: [{
             data: data.bookingsPerOrganization.map((d: any) => d.count !== undefined ? d.count : d.Count),
             backgroundColor: ['#0F172A', '#334155', '#64748B', '#94A3B8', '#CBD5E1'],
-            borderWidth: 2,
+            borderWidth: 1.5,
             borderColor: '#FFFFFF'
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          cutout: '70%',
+          cutout: '65%',
           plugins: {
-            legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 11 } } },
-            tooltip: { cornerRadius: 6 }
+            legend: { display: false },
+            tooltip: { cornerRadius: 4 }
           }
         }
       });

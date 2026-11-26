@@ -712,6 +712,48 @@
               <span class="kpi-meta-sub">99.98% Uptime (API: 42ms · DB: 3x Pool)</span>
             </div>
           </div>
+
+          <!-- Mini Chart 1: Organizations created per month -->
+          <div class="dash-kpi-card mini-chart-kpi-card" (click)="setActiveTab('organizations')">
+            <div class="kpi-card-header">
+              <div>
+                <span class="kpi-card-label">ORGS CREATED / MO</span>
+                <div style="font-size: 11px; color: #64748B;">Total: 8 registered</div>
+              </div>
+              <span class="kpi-pill-badge blue-pill" style="font-size: 10px; padding: 2px 6px;">+33% QoQ</span>
+            </div>
+            <div style="height: 60px; width: 100%; position: relative; margin-top: 4px;">
+              <canvas id="orgsChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Mini Chart 2: Trips per organization -->
+          <div class="dash-kpi-card mini-chart-kpi-card" (click)="setActiveTab('liveTrips')">
+            <div class="kpi-card-header">
+              <div>
+                <span class="kpi-card-label">TRIPS / ORG</span>
+                <div style="font-size: 11px; color: #64748B;">120 trips today</div>
+              </div>
+              <span class="kpi-pill-badge purple-pill" style="font-size: 10px; padding: 2px 6px;">5 Active</span>
+            </div>
+            <div style="height: 60px; width: 100%; position: relative; margin-top: 4px;">
+              <canvas id="tripsChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Mini Chart 3: Bookings per organization -->
+          <div class="dash-kpi-card mini-chart-kpi-card" (click)="setActiveTab('bookings')">
+            <div class="kpi-card-header">
+              <div>
+                <span class="kpi-card-label">BOOKINGS / ORG</span>
+                <div style="font-size: 11px; color: #64748B;">900 bookings today</div>
+              </div>
+              <span class="kpi-pill-badge amber-pill" style="font-size: 10px; padding: 2px 6px;">900 Total</span>
+            </div>
+            <div style="height: 60px; width: 100%; position: relative; margin-top: 4px; display: flex; align-items: center; justify-content: center;">
+              <canvas id="bookingsChart"></canvas>
+            </div>
+          </div>
         </div>
 
         <!-- Middle Row: Activity Graph (Highlighted with Amber/Gold border) + Top Organizations -->
