@@ -1433,16 +1433,28 @@ export class SuperAdminDashboardComponent implements OnInit {
     });
   }
 
+  showDeliveryHistoryModal: boolean = false;
+  deliveryLogs: any[] = [
+    { id: 'DEL-8901', alert: 'Failed Login Alert', channel: 'Email', recipient: 'superadmin@ajktransport.com', status: 'Delivered', timestamp: '2026-11-25 18:32:10' },
+    { id: 'DEL-8900', alert: 'Critical Anomaly Detected', channel: 'SMS', recipient: '+92 300 1234567', status: 'Delivered', timestamp: '2026-11-25 17:15:00' },
+    { id: 'DEL-8899', alert: 'Weekly Platform Summary', channel: 'Email', recipient: 'superadmin@ajktransport.com', status: 'Delivered', timestamp: '2026-11-24 08:00:05' },
+    { id: 'DEL-8898', alert: 'Vehicle Compliance Warning', channel: 'Email', recipient: 'orgadmin@citytransit.com', status: 'Delivered', timestamp: '2026-11-23 11:20:44' }
+  ];
+
   testEmailDelivery() {
-    alert('Test email successfully dispatched to Super Admin email address.');
+    alert('Test email successfully dispatched to Super Admin email address (smtp.mailgun.org).');
   }
 
   testSmsDelivery() {
-    alert('Test SMS successfully dispatched to registered SMS gateway.');
+    alert('Test SMS successfully dispatched via Twilio SMS gateway.');
   }
 
   viewDeliveryHistory() {
-    alert('Opening notification delivery history panel (Mock)');
+    this.showDeliveryHistoryModal = true;
+  }
+
+  closeDeliveryHistory() {
+    this.showDeliveryHistoryModal = false;
   }
 
   

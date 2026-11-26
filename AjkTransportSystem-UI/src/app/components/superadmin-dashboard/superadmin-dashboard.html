@@ -3443,80 +3443,67 @@
       <!-- NOTIFICATION CONFIG TAB -->
       <div *ngIf="activeTab === 'notifications'">
 
-        <div class="page-header">
-          <div class="breadcrumb">
-            <span class="breadcrumb-group">Platform</span>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-current">Notification Config</span>
-          </div>
-          <div class="header-actions">
-            <button class="qa-btn" (click)="testEmailDelivery()"
-              style="background: white; color: #0F172A; border: 1px solid #E2E8F0; padding: 10px 16px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="20" height="16" x="2" y="4" rx="2" />
-                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-              </svg>
-              Test Email
-            </button>
-            <button class="qa-btn" (click)="testSmsDelivery()"
-              style="background: white; color: #0F172A; border: 1px solid #E2E8F0; padding: 10px 16px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
-                <path d="M12 18h.01" />
-              </svg>
-              Test SMS
-            </button>
-            <button class="qa-btn" (click)="viewDeliveryHistory()"
-              style="background: var(--sa-sidebar-accent); color: white; border: none; padding: 10px 16px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="16" y1="13" x2="8" y2="13" />
-                <line x1="16" y1="17" x2="8" y2="17" />
-                <polyline points="10 9 9 9 8 9" />
-              </svg>
-              Delivery History
-            </button>
-          </div>
+        <!-- Top Action Bar (Horizontal Single-Row Alignment, No Duplicate Breadcrumb) -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <button class="btn-refresh-status" (click)="testEmailDelivery()" title="Test Email Gateway">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="16" x="2" y="4" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            Test Email
+          </button>
+          <button class="export-csv-btn" (click)="testSmsDelivery()" title="Test SMS Gateway">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+              <path d="M12 18h.01" />
+            </svg>
+            Test SMS
+          </button>
+          <button class="action-btn-clean" (click)="viewDeliveryHistory()" style="height: 34px; padding: 0 14px; gap: 6px; font-size: 12px; font-weight: 600; width: auto; background: #0F172A; color: #FFFFFF; border: none; border-radius: 6px;" title="View Delivery Log">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+            Delivery History
+          </button>
         </div>
 
-        <div class="chart-card" style="padding: 0; overflow: hidden; margin-top: 16px;">
-          <div style="padding: 24px; border-bottom: 1px solid #F1F5F9;">
-            <h3
-              style="margin: 0 0 8px 0; font-size: 1.125rem; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 8px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                style="color: var(--sa-sidebar-accent);">
-                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-              </svg>
-              Alert Categories & Routing
-            </h3>
-            <p style="margin: 0; font-size: 0.9375rem; color: #64748B;">Control what alerts are sent, to whom, and
-              through which channel.</p>
+        <!-- Notification Rules Table Card (Pure White Monochrome) -->
+        <div class="content-card" style="padding: 0; overflow: hidden; margin: 0 0 24px 0; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px;">
+          <div style="padding: 18px 20px; border-bottom: 1px solid #EDF2F7; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                </svg>
+                <h3 style="margin: 0; font-size: 14px; font-weight: 700; color: #0F172A;">Alert Categories & Routing</h3>
+              </div>
+              <p style="margin: 3px 0 0 24px; font-size: 12px; color: #64748B;">Control what alerts are sent, to whom, and through which channel.</p>
+            </div>
           </div>
 
-          <div class="table-container" style="overflow-x: auto;">
-            <table class="data-table" style="margin: 0; border: none; border-radius: 0;">
+          <div style="overflow-x: auto; width: 100%;">
+            <table class="data-table" style="margin: 0; border: none;">
               <thead>
                 <tr>
-                  <th style="padding-left: 24px;">Alert Category</th>
-                  <th>Channel</th>
-                  <th>Recipients</th>
-                  <th>Frequency</th>
-                  <th style="padding-right: 24px;">Status</th>
+                  <th style="padding-left: 20px; width: 25%;">Alert Category</th>
+                  <th style="width: 20%;">Channel</th>
+                  <th style="width: 25%;">Recipients</th>
+                  <th style="width: 18%;">Frequency</th>
+                  <th style="padding-right: 20px; text-align: right; width: 12%;">Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let config of notificationConfig">
-                  <td style="padding-left: 24px; font-weight: 600; color: #0F172A; font-size: 0.9375rem;">{{
-                    config.category }}</td>
+                  <td style="padding-left: 20px; font-weight: 600; color: #0F172A; font-size: 13px;">
+                    {{ config.category }}
+                  </td>
                   <td>
-                    <select [(ngModel)]="config.channel" class="styled-select"
-                      style="padding: 8px 12px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAF9; font-size: 0.875rem; color: #0F172A; min-width: 140px; cursor: pointer;">
+                    <select [(ngModel)]="config.channel"
+                      style="padding: 6px 10px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAFC; font-size: 12px; color: #0F172A; min-width: 130px; cursor: pointer;">
                       <option value="Email">Email</option>
                       <option value="SMS">SMS</option>
                       <option value="In-app">In-app</option>
@@ -3526,30 +3513,65 @@
                     </select>
                   </td>
                   <td>
-                    <select [(ngModel)]="config.recipients" class="styled-select"
-                      style="padding: 8px 12px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAF9; font-size: 0.875rem; color: #0F172A; min-width: 200px; cursor: pointer;">
+                    <select [(ngModel)]="config.recipients"
+                      style="padding: 6px 10px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAFC; font-size: 12px; color: #0F172A; min-width: 180px; cursor: pointer;">
                       <option value="Super Admin only">Super Admin only</option>
                       <option value="Org Admin only">Org Admin only</option>
                       <option value="Super Admin + Org Admin">Super Admin + Org Admin</option>
                     </select>
                   </td>
                   <td>
-                    <select [(ngModel)]="config.frequency" class="styled-select"
-                      style="padding: 8px 12px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAF9; font-size: 0.875rem; color: #0F172A; min-width: 150px; cursor: pointer;">
+                    <select [(ngModel)]="config.frequency"
+                      style="padding: 6px 10px; border: 1px solid #E2E8F0; border-radius: 6px; background: #F8FAFC; font-size: 12px; color: #0F172A; min-width: 130px; cursor: pointer;">
                       <option value="real-time">Real-time</option>
                       <option value="digest (daily)">Daily Digest</option>
                       <option value="weekly">Weekly Summary</option>
                     </select>
                   </td>
-                  <td style="padding-right: 24px;">
-                    <span class="status-chip healthy"
-                      style="background: #DCFCE7; color: #166534; border: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; font-size: 0.8125rem;">
-                      <span style="width: 6px; height: 6px; border-radius: 50%; background: #166534;"></span> Active
+                  <td style="padding-right: 20px; text-align: right;">
+                    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #0F172A; color: #FFFFFF;">
+                      Active
                     </span>
                   </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- Delivery History Modal -->
+        <div *ngIf="showDeliveryHistoryModal" class="modal-backdrop" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px;">
+          <div style="background: #FFFFFF; border-radius: 10px; width: 100%; max-width: 650px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border: 1px solid #E2E8F0; overflow: hidden;">
+            <div style="padding: 16px 20px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h3 style="margin: 0; font-size: 14px; font-weight: 700; color: #0F172A;">Notification Delivery Log</h3>
+                <span style="font-size: 12px; color: #64748B;">Audit trace of recently dispatched emails and SMS</span>
+              </div>
+              <button (click)="closeDeliveryHistory()" style="background: transparent; border: none; cursor: pointer; color: #64748B; padding: 4px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <div style="padding: 16px 20px; max-height: 60vh; overflow-y: auto;">
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div *ngFor="let log of deliveryLogs" style="padding: 10px 14px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 6px;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                    <div style="font-size: 13px; font-weight: 600; color: #0F172A;">{{ log.alert }}</div>
+                    <span style="font-size: 11px; padding: 2px 6px; border-radius: 4px; background: #0F172A; color: #FFFFFF; font-weight: 600;">{{ log.channel }}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748B;">
+                    <span>To: {{ log.recipient }}</span>
+                    <span>{{ log.timestamp }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 12px 20px; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end; background: #FAFAFA;">
+              <button (click)="closeDeliveryHistory()" style="padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 600; background: #0F172A; color: #FFFFFF; border: none; cursor: pointer;">
+                Close
+              </button>
+            </div>
           </div>
         </div>
       </div>
