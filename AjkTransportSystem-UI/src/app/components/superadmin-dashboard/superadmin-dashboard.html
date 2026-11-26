@@ -2179,98 +2179,150 @@
       </div>
       
             <!-- ANOMALY ALERTS TAB -->
-      <div *ngIf="activeTab === 'anomalyDetection'" class="anomaly-page-wrapper">
+      <div *ngIf="activeTab === 'anomalyDetection'">
+        <!-- Top Action Bar -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <button (click)="loadAnomalyAlerts()" class="btn-refresh-status" title="Refresh Anomaly Alerts">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+            </svg>
+            Refresh
+          </button>
+          <button (click)="exportAnomalyAlerts()" class="export-csv-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Export List
+          </button>
+        </div>
 
-        <div class="anomaly-card">
-          <!-- Card Header matching screenshot -->
-          <div class="anomaly-header">
+        <div class="content-card" style="border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; background: #FFFFFF;">
+          <!-- Card Header with clean monochrome warning icon -->
+          <div style="padding: 16px 20px; border-bottom: 1px solid #EDF2F7; display: flex; justify-content: space-between; align-items: center;">
             <div>
-              <h3 class="anomaly-title">
-                <svg class="warning-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                  stroke="#2457D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                  <line x1="12" y1="9" x2="12" y2="13" />
-                  <line x1="12" y1="17" x2="12.01" y2="17" />
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                  <line x1="12" y1="9" x2="12" y2="13"/>
+                  <line x1="12" y1="17" x2="12.01" y2="17"/>
                 </svg>
-                Active Anomalies
-              </h3>
-              <p class="anomaly-subtitle">AI-assisted detection of unusual platform behaviour.</p>
+                <h3 style="margin: 0; font-size: 14px; font-weight: 700; color: #0F172A;">Active Anomalies</h3>
+              </div>
+              <p style="margin: 3px 0 0 24px; font-size: 12px; color: #64748B;">AI-assisted detection of unusual platform behaviour.</p>
             </div>
             <div>
-              <span class="unresolved-badge" *ngIf="getUnresolvedAnomalyCount() > 0">
-                <span class="red-dot"></span>
+              <span *ngIf="getUnresolvedAnomalyCount() > 0" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: #0F172A; color: #FFFFFF; letter-spacing: 0.5px;">
+                <span style="width: 6px; height: 6px; border-radius: 50%; background: #FFFFFF; display: inline-block;"></span>
                 {{ getUnresolvedAnomalyCount() }} UNRESOLVED
               </span>
             </div>
           </div>
 
-          <!-- Table Container (Pure Clean White, Compact Professional Look) -->
-          <div class="anomaly-table-wrapper">
-            <table class="anomaly-table" *ngIf="filteredAnomalyAlerts.length > 0">
+          <!-- Table Container -->
+          <div style="overflow-x: auto; width: 100%;">
+            <table class="data-table" *ngIf="filteredAnomalyAlerts.length > 0">
               <thead>
                 <tr>
                   <th style="width: 14%;">TIMESTAMP</th>
-                  <th style="width: 22%;">ANOMALY TYPE</th>
+                  <th style="width: 24%;">ANOMALY TYPE</th>
                   <th style="width: 10%;">SEVERITY</th>
                   <th style="width: 14%;">ORGANIZATION</th>
-                  <th style="width: 14%;">ENTITY INVOLVED</th>
+                  <th style="width: 16%;">ENTITY INVOLVED</th>
                   <th style="width: 10%;">STATUS</th>
-                  <th style="width: 16%; text-align: center;">ACTIONS</th>
+                  <th style="width: 12%; text-align: right;">ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let anomaly of filteredAnomalyAlerts">
                   <!-- Timestamp -->
-                  <td class="col-timestamp">{{ anomaly.timestamp }}</td>
+                  <td style="font-size: 12px; color: #475569;">{{ anomaly.timestamp }}</td>
 
                   <!-- Anomaly Type -->
-                  <td class="col-type">
-                    <span class="anomaly-type-text">{{ anomaly.anomalyType }}</span>
+                  <td>
+                    <span style="font-weight: 600; color: #0F172A; font-size: 13px;">{{ anomaly.anomalyType }}</span>
                   </td>
 
                   <!-- Severity Badge -->
-                  <td class="col-severity">
-                    <span *ngIf="anomaly.severity === 'critical'" class="sev-badge sev-critical">CRITICAL</span>
-                    <span *ngIf="anomaly.severity === 'warning'" class="sev-badge sev-warning">WARNING</span>
-                    <span *ngIf="anomaly.severity !== 'critical' && anomaly.severity !== 'warning'" class="sev-badge sev-neutral">{{ anomaly.severity | uppercase }}</span>
+                  <td>
+                    <span *ngIf="anomaly.severity === 'critical'" style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; background: #0F172A; color: #FFFFFF;">
+                      CRITICAL
+                    </span>
+                    <span *ngIf="anomaly.severity === 'warning'" style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; background: #F8FAFC; color: #0F172A; border: 1px solid #CBD5E1;">
+                      WARNING
+                    </span>
+                    <span *ngIf="anomaly.severity !== 'critical' && anomaly.severity !== 'warning'" style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #F1F5F9; color: #475569;">
+                      {{ anomaly.severity | uppercase }}
+                    </span>
                   </td>
 
                   <!-- Organization -->
-                  <td class="col-org">{{ anomaly.organization }}</td>
+                  <td style="font-size: 13px; color: #334155;">{{ anomaly.organization }}</td>
 
                   <!-- Entity Involved -->
-                  <td class="col-entity">
-                    <span class="entity-text">{{ anomaly.entityInvolved }}</span>
+                  <td>
+                    <span style="font-size: 12px; font-weight: 500; color: #0F172A; font-family: monospace;">{{ anomaly.entityInvolved }}</span>
                   </td>
 
-                  <!-- Status with indicator dot -->
-                  <td class="col-status">
-                    <div class="status-indicator-box">
-                      <span *ngIf="anomaly.status === 'open'" class="status-flex status-open">
-                        <span class="status-dot dot-red"></span> Open
-                      </span>
-                      <span *ngIf="anomaly.status === 'investigating'" class="status-flex status-investigating">
-                        <span class="status-dot dot-amber"></span> Investigating
-                      </span>
-                      <span *ngIf="anomaly.status === 'false positive'" class="status-flex status-false">
-                        <span class="status-circle-outline"></span> False Positive
-                      </span>
-                      <span *ngIf="anomaly.status === 'resolved'" class="status-flex status-resolved">
-                        <span class="status-dot dot-green"></span> Resolved
-                      </span>
-                    </div>
+                  <!-- Status -->
+                  <td>
+                    <span *ngIf="anomaly.status === 'open'" style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #0F172A;">
+                      <span style="width: 7px; height: 7px; border-radius: 50%; background: #0F172A; display: inline-block;"></span> Open
+                    </span>
+                    <span *ngIf="anomaly.status === 'investigating'" style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #475569;">
+                      <span style="width: 7px; height: 7px; border-radius: 50%; background: #94A3B8; display: inline-block;"></span> Investigating
+                    </span>
+                    <span *ngIf="anomaly.status === 'false positive'" style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 500; color: #64748B;">
+                      <span style="width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid #64748B; display: inline-block;"></span> False Positive
+                    </span>
+                    <span *ngIf="anomaly.status === 'resolved'" style="display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #0F172A;">
+                      <span style="width: 7px; height: 7px; border-radius: 50%; background: #0F172A; display: inline-block;"></span> Resolved
+                    </span>
                   </td>
 
-                  <!-- Compact Professional Stacked Action Buttons -->
-                  <td class="col-actions">
-                    <div class="actions-stack-compact" *ngIf="anomaly.status !== 'false positive' && anomaly.status !== 'resolved'">
-                      <button class="btn-investigate">Investigate</button>
-                      <button class="btn-clean-outline">Escalate</button>
-                      <button class="btn-block-entity">Block Entity</button>
-                      <button class="btn-clean-outline">Mark False Positive</button>
+                  <!-- Action Icons -->
+                  <td style="text-align: right;">
+                    <div *ngIf="anomaly.status !== 'false positive' && anomaly.status !== 'resolved'" style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px;">
+                      <!-- Investigate -->
+                      <button class="action-btn-clean" title="Investigate Anomaly" (click)="investigateAnomaly(anomaly)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="11" cy="11" r="8"/>
+                          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                      </button>
+
+                      <!-- Escalate -->
+                      <button class="action-btn-clean" title="Escalate Priority" (click)="escalateAnomaly(anomaly)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="18 15 12 9 6 15"/>
+                        </svg>
+                      </button>
+
+                      <!-- Block Entity -->
+                      <button class="action-btn-clean" title="Block Involved Entity" (click)="blockAnomalyEntity(anomaly)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <circle cx="12" cy="12" r="10"/>
+                          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                        </svg>
+                      </button>
+
+                      <!-- Mark False Positive -->
+                      <button class="action-btn-clean" title="Mark False Positive" (click)="markFalsePositive(anomaly)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                      </button>
                     </div>
-                    <div class="actions-stack-compact" *ngIf="anomaly.status === 'false positive' || anomaly.status === 'resolved'">
-                      <button class="btn-clean-outline">View Notes</button>
+
+                    <div *ngIf="anomaly.status === 'false positive' || anomaly.status === 'resolved'" style="display: inline-flex; align-items: center; justify-content: flex-end; gap: 6px;">
+                      <button class="action-btn-clean" title="View Details / Notes" (click)="viewAnomalyNotes(anomaly)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                          <polyline points="14 2 14 8 20 8"/>
+                          <line x1="16" y1="13" x2="8" y2="13"/>
+                          <line x1="16" y1="17" x2="8" y2="17"/>
+                          <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -2278,12 +2330,70 @@
             </table>
 
             <div *ngIf="filteredAnomalyAlerts.length === 0" style="padding: 48px; text-align: center; color: #64748B;">
-              <p style="margin: 0; font-size: 1rem;">No anomaly alerts found.</p>
-              <p style="margin: 4px 0 0 0; font-size: 0.8125rem;">The AI detection system hasn't flagged any unusual activity.</p>
+              <p style="margin: 0; font-size: 14px;">No anomaly alerts found.</p>
+              <p style="margin: 4px 0 0 0; font-size: 12px;">The AI detection system hasn't flagged any unusual activity.</p>
             </div>
           </div>
         </div>
 
+        <!-- Anomaly Details / Investigation Modal -->
+        <div *ngIf="selectedAnomaly" class="modal-backdrop" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px;">
+          <div style="background: #FFFFFF; border-radius: 10px; width: 100%; max-width: 580px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); overflow: hidden; border: 1px solid #E2E8F0;">
+            <!-- Modal Header -->
+            <div style="padding: 16px 20px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; background: #FFFFFF;">
+              <div>
+                <h3 style="margin: 0; font-size: 15px; font-weight: 700; color: #0F172A;">Anomaly Investigation</h3>
+                <span style="font-size: 12px; color: #64748B;">Alert ID #{{ selectedAnomaly.AnomalyId || selectedAnomaly.anomalyId || '600x' }}</span>
+              </div>
+              <button (click)="closeAnomalyModal()" style="background: transparent; border: none; cursor: pointer; color: #64748B; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Modal Body -->
+            <div style="padding: 20px; max-height: 70vh; overflow-y: auto;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Anomaly Type</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A;">{{ selectedAnomaly.anomalyType }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Severity</span>
+                  <span style="font-size: 13px; font-weight: 700; color: #0F172A; text-transform: uppercase;">{{ selectedAnomaly.severity }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Organization</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A;">{{ selectedAnomaly.organization }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Current Status</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A; text-transform: capitalize;">{{ selectedAnomaly.status }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0; grid-column: span 2;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Entity Involved</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A; font-family: monospace;">{{ selectedAnomaly.entityInvolved }}</span>
+                </div>
+              </div>
+
+              <div style="background: #F8FAFC; padding: 12px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 4px;">AI Analysis & Recommendations</span>
+                <p style="margin: 0; font-size: 12px; color: #334155; line-height: 1.5;">
+                  The system flagged an abnormal deviation from baseline statistical frequency. Review entity event history and enforce temporary rate-limiting or verification challenge if necessary.
+                </p>
+              </div>
+            </div>
+            <!-- Modal Footer -->
+            <div style="padding: 12px 20px; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end; gap: 8px; background: #FAFAFA;">
+              <button (click)="markFalsePositive(selectedAnomaly); closeAnomalyModal()" style="padding: 7px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; background: #FFFFFF; color: #0F172A; border: 1px solid #CBD5E1; cursor: pointer;">
+                Mark False Positive
+              </button>
+              <button (click)="closeAnomalyModal()" style="padding: 7px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; background: #0F172A; color: #FFFFFF; border: none; cursor: pointer;">
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- PLATFORM ANALYTICS TAB -->
       <div *ngIf="activeTab === 'platformAnalytics'">

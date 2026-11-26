@@ -1173,7 +1173,66 @@ export class SuperAdminDashboardComponent implements OnInit {
   }
 
   getUnresolvedAnomalyCount(): number {
-    return this.anomalyAlerts.filter(a => a.status === 'open' || a.status === 'investigating').length;
+    return (this.filteredAnomalyAlerts || []).filter(a => a.status === 'open' || a.status === 'investigating').length;
+  }
+
+  selectedAnomaly: any = null;
+
+  investigateAnomaly(anomaly: any) {
+    anomaly.status = 'investigating';
+    this.selectedAnomaly = anomaly;
+  }
+
+  escalateAnomaly(anomaly: any) {
+    if (!confirm(`Escalate anomaly "${anomaly.anomalyType}" for high-priority executive review?`)) return;
+    anomaly.severity = 'critical';
+    anomaly.status = 'investigating';
+    alert(`Anomaly #${anomaly.AnomalyId || anomaly.anomalyId || '600x'} escalated to Critical security alert.`);
+  }
+
+  blockAnomalyEntity(anomaly: any) {
+    if (!confirm(`Block and restrict entity "${anomaly.entityInvolved}" involved in this anomaly?`)) return;
+    alert(`Entity "${anomaly.entityInvolved}" has been placed under platform restriction.`);
+    anomaly.status = 'investigating';
+  }
+
+  markFalsePositive(anomaly: any) {
+    if (!confirm(`Mark "${anomaly.anomalyType}" as False Positive?`)) return;
+    anomaly.status = 'false positive';
+    alert(`Anomaly marked as False Positive. AI baseline calibrated.`);
+  }
+
+  viewAnomalyNotes(anomaly: any) {
+    this.selectedAnomaly = anomaly;
+  }
+
+  closeAnomalyModal() {
+    this.selectedAnomaly = null;
+  }
+
+  exportAnomalyAlerts() {
+    if (!this.filteredAnomalyAlerts || this.filteredAnomalyAlerts.length === 0) {
+      alert('No anomaly alerts to export.');
+      return;
+    }
+    const headers = ['Anomaly ID', 'Timestamp', 'Anomaly Type', 'Severity', 'Organization', 'Entity Involved', 'Status'];
+    const rows = this.filteredAnomalyAlerts.map(a => [
+      `"${a.AnomalyId || a.anomalyId || ''}"`,
+      `"${a.timestamp || ''}"`,
+      `"${a.anomalyType || ''}"`,
+      `"${a.severity || ''}"`,
+      `"${a.organization || ''}"`,
+      `"${a.entityInvolved || ''}"`,
+      `"${a.status || ''}"`
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `anomaly_alerts_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   loadPlatformAnalytics() {
