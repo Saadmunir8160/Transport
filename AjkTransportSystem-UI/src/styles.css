@@ -442,11 +442,13 @@ table.data-table tbody tr:last-child td {
 }
 
 /* Hide default ugly scrollbars for all sidebar navigation across dashboards while preserving scroll */
-.sidebar-nav {
+.sidebar-nav,
+.cmd-palette-body {
   scrollbar-width: none !important; /* Firefox */
   -ms-overflow-style: none !important; /* IE and Edge */
 }
-.sidebar-nav::-webkit-scrollbar {
+.sidebar-nav::-webkit-scrollbar,
+.cmd-palette-body::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
