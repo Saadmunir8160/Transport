@@ -161,6 +161,7 @@ export class SuperAdminDashboardComponent implements OnInit {
   transportAdmins: any[] = [];
   auditLogs: any[] = [];
   filteredAuditLogs: any[] = [];
+  selectedAuditLog: any = null;
   
   auditDateFilter: string = '';
   auditOrgFilter: string = '';
@@ -1018,6 +1019,43 @@ export class SuperAdminDashboardComponent implements OnInit {
 
   getDistinctAuditEntities(): string[] {
     return Array.from(new Set(this.auditLogs.map(l => l.entityType))) as string[];
+  }
+
+  viewAuditLogDetails(log: any) {
+    this.selectedAuditLog = log;
+  }
+
+  closeAuditLogModal() {
+    this.selectedAuditLog = null;
+  }
+
+  exportAuditLogs() {
+    if (!this.filteredAuditLogs || this.filteredAuditLogs.length === 0) {
+      alert('No audit logs available to export.');
+      return;
+    }
+    const headers = ['Log ID', 'Timestamp (UTC)', 'Actor Name', 'Role', 'Organization', 'Action', 'Entity Type', 'Entity ID', 'Result', 'IP Address', 'Reason'];
+    const rows = this.filteredAuditLogs.map(log => [
+      `"${log.auditLogId || ''}"`,
+      `"${log.timestamp || ''}"`,
+      `"${log.actorName || ''}"`,
+      `"${log.actorRole || ''}"`,
+      `"${log.organization || ''}"`,
+      `"${log.action || ''}"`,
+      `"${log.entityType || ''}"`,
+      `"${log.entityId || ''}"`,
+      `"${log.result || ''}"`,
+      `"${log.ipAddress || ''}"`,
+      `"${log.reason || ''}"`
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `system_audit_logs_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   loadAccessLogs() {

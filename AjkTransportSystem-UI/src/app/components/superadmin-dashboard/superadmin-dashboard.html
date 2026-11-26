@@ -1845,77 +1845,72 @@
 
       <!-- AUDIT LOGS TAB -->
       <div *ngIf="activeTab === 'auditLogs'">
-        <div class="card-header"
-          style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h2>📜 System Audit Logs</h2>
-            <p style="color: #7f8c8d; font-size: 0.95rem; margin-top: 0.5rem;">Immutable, append-only record of every
-              admin action on the platform.</p>
-          </div>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="action-btn" style="background: #eef2f6; color: #1e293b;">Set Retention Period</button>
-            <button class="action-btn" style="background: #eef2f6; color: #1e293b;">Configure Actions</button>
-            <button class="action-btn" style="background: #f8fafc; border: 1px solid #e2e8f0; color: #1e293b;">Export to
-              CSV/PDF</button>
+        <!-- Top Action Bar -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <button (click)="loadAuditLogs()" class="btn-refresh-status" title="Refresh Audit Logs">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+            </svg>
+            Refresh
+          </button>
+          <button (click)="exportAuditLogs()" class="export-csv-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Export List
+          </button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="content-card" style="padding: 14px 20px; margin-bottom: 20px; border: 1px solid #E2E8F0; background: #FFFFFF; border-radius: 8px;">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+            <div style="flex: 1; min-width: 180px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Search Actor</label>
+              <input type="text" [(ngModel)]="auditActorFilter" (input)="filterAuditLogs()" placeholder="Actor name..."
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+            </div>
+            <div style="min-width: 140px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Organization</label>
+              <select [(ngModel)]="auditOrgFilter" (change)="filterAuditLogs()"
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+                <option value="">All Organizations</option>
+                <option *ngFor="let o of getDistinctAuditOrgs()" [value]="o">{{ o }}</option>
+              </select>
+            </div>
+            <div style="min-width: 130px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Role</label>
+              <select [(ngModel)]="auditRoleFilter" (change)="filterAuditLogs()"
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+                <option value="">All Roles</option>
+                <option *ngFor="let r of getDistinctAuditRoles()" [value]="r">{{ r }}</option>
+              </select>
+            </div>
+            <div style="min-width: 130px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Action Type</label>
+              <select [(ngModel)]="auditActionFilter" (change)="filterAuditLogs()"
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+                <option value="">All Actions</option>
+                <option *ngFor="let a of getDistinctAuditActions()" [value]="a">{{ a | titlecase }}</option>
+              </select>
+            </div>
+            <div style="min-width: 130px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Entity Type</label>
+              <select [(ngModel)]="auditEntityFilter" (change)="filterAuditLogs()"
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+                <option value="">All Entities</option>
+                <option *ngFor="let e of getDistinctAuditEntities()" [value]="e">{{ e }}</option>
+              </select>
+            </div>
+            <div style="min-width: 130px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">IP Address</label>
+              <input type="text" [(ngModel)]="auditIpFilter" (input)="filterAuditLogs()" placeholder="IP..."
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+            </div>
           </div>
         </div>
 
-        <div class="filter-bar"
-          style="margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; background: #fff; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; align-items: center;">
-          <div class="filter-group" style="flex: 1; min-width: 200px;">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Search
-              Actor</label>
-            <input type="text" [(ngModel)]="auditActorFilter" (input)="filterAuditLogs()" placeholder="Name..."
-              style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-          </div>
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Organization</label>
-            <select [(ngModel)]="auditOrgFilter" (change)="filterAuditLogs()"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 130px;">
-              <option value="">All Orgs</option>
-              <option *ngFor="let o of getDistinctAuditOrgs()" [value]="o">{{ o }}</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Role</label>
-            <select [(ngModel)]="auditRoleFilter" (change)="filterAuditLogs()"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 130px;">
-              <option value="">All Roles</option>
-              <option *ngFor="let r of getDistinctAuditRoles()" [value]="r">{{ r }}</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Action
-              Type</label>
-            <select [(ngModel)]="auditActionFilter" (change)="filterAuditLogs()"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 130px;">
-              <option value="">All Actions</option>
-              <option *ngFor="let a of getDistinctAuditActions()" [value]="a">{{ a | titlecase }}</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Entity
-              Type</label>
-            <select [(ngModel)]="auditEntityFilter" (change)="filterAuditLogs()"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 130px;">
-              <option value="">All Entities</option>
-              <option *ngFor="let e of getDistinctAuditEntities()" [value]="e">{{ e }}</option>
-            </select>
-          </div>
-          <div class="filter-group" style="min-width: 140px;">
-            <label style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">IP
-              Address</label>
-            <input type="text" [(ngModel)]="auditIpFilter" (input)="filterAuditLogs()" placeholder="IP..."
-              style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc;">
-          </div>
-        </div>
-
-        <div class="content-card">
+        <!-- Table Card -->
+        <div class="content-card" style="border: 1px solid #E2E8F0; border-radius: 8px; overflow: hidden; background: #FFFFFF;">
           <table class="data-table" *ngIf="filteredAuditLogs.length > 0">
             <thead>
               <tr>
@@ -1926,64 +1921,123 @@
                 <th>Action</th>
                 <th>Entity (ID)</th>
                 <th>Result</th>
-                <th>Actions</th>
+                <th style="text-align: right;">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let log of filteredAuditLogs">
-                <td style="font-size: 0.85rem; color: #64748b;">#{{ log.auditLogId }}</td>
-                <td style="font-size: 0.85rem;">{{ log.timestamp }}</td>
+                <td style="font-size: 12px; font-weight: 600; color: #64748B; font-family: monospace;">#{{ log.auditLogId }}</td>
+                <td style="font-size: 12px; color: #334155;">{{ log.timestamp }}</td>
                 <td>
-                  <div style="font-weight: 600; color: #1e293b;">{{ log.actorName }}</div>
-                  <div style="font-size: 0.75rem; color: #64748b;">{{ log.actorRole }}</div>
+                  <div style="font-weight: 600; color: #0F172A; font-size: 13px;">{{ log.actorName }}</div>
+                  <div style="font-size: 11px; color: #64748B;">{{ log.actorRole }}</div>
                 </td>
-                <td>{{ log.organization }}</td>
+                <td style="font-size: 13px; color: #334155;">{{ log.organization }}</td>
                 <td>
-                  <span
-                    [ngClass]="{'bg-green-100 text-green-800': log.action === 'create', 'bg-blue-100 text-blue-800': log.action === 'update', 'bg-red-100 text-red-800': log.action === 'delete', 'bg-gray-100 text-gray-800': log.action !== 'create' && log.action !== 'update' && log.action !== 'delete'}"
-                    style="padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;">
+                  <span style="display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0;">
                     {{ log.action }}
                   </span>
                 </td>
                 <td>
-                  <div style="font-weight: 600; color: #334155;">{{ log.entityType }}</div>
-                  <div style="font-size: 0.75rem; color: #64748b;">{{ log.entityId }}</div>
+                  <div style="font-weight: 600; color: #0F172A; font-size: 13px;">{{ log.entityType }}</div>
+                  <div style="font-size: 11px; color: #64748B; font-family: monospace;">{{ log.entityId }}</div>
                 </td>
                 <td>
-                  <div *ngIf="log.result === 'success'"
-                    style="color: #10b981; font-weight: 600; display: flex; align-items: center; gap: 4px;">✅ Success
+                  <div *ngIf="log.result === 'success'" style="display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #0F172A; color: #FFFFFF;">
+                    Success
                   </div>
                   <div *ngIf="log.result === 'failed'" style="display: flex; flex-direction: column;">
-                    <span style="color: #ef4444; font-weight: 600; display: flex; align-items: center; gap: 4px;">❌
-                      Failed</span>
-                    <span style="font-size: 0.7rem; color: #ef4444; margin-top: 2px;">{{ log.reason }}</span>
+                    <span style="display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: #F8FAFC; color: #0F172A; border: 1px solid #CBD5E1; width: fit-content;">
+                      Failed
+                    </span>
+                    <span *ngIf="log.reason" style="font-size: 11px; color: #64748B; margin-top: 2px;">{{ log.reason }}</span>
                   </div>
                 </td>
-                <td>
-                  <button class="action-btn"
-                    style="background: #f8fafc; border: 1px solid #e2e8f0; font-size: 0.75rem;">View Details</button>
+                <td style="text-align: right;">
+                  <button class="action-btn-clean" title="View Details" (click)="viewAuditLogDetails(log)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div class="empty-state" *ngIf="filteredAuditLogs.length === 0">
-            <p>No audit logs found matching the criteria.</p>
+          <div class="empty-state" *ngIf="filteredAuditLogs.length === 0" style="padding: 48px; text-align: center;">
+            <p style="color: #64748B; font-size: 14px; margin: 0;">No audit logs found matching the criteria.</p>
           </div>
         </div>
 
-        <div
-          style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
-          <h3 style="margin-top: 0; color: #1e293b; font-size: 1rem;">🔒 Audit Log Security Rules</h3>
-          <ul
-            style="color: #475569; font-size: 0.9rem; margin: 0.5rem 0 0 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem;">
-            <li><strong>Immutable:</strong> Logs are append-only. There is no update or delete endpoint.</li>
-            <li><strong>Access Control:</strong> Only Super Admins can read the full audit log. Organization Admins can
-              only see their organization's slice.</li>
-            <li><strong>Failures Recorded:</strong> Failed actions (e.g. failed logins, blocked deletions) are logged
-              alongside successes.</li>
-            <li><strong>Protected:</strong> The audit log is protected from deletion even by Super Admins. It requires a
-              server-level command to purge old records.</li>
-          </ul>
+        <!-- Audit Log Details Modal -->
+        <div *ngIf="selectedAuditLog" class="modal-backdrop" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.45); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 16px;">
+          <div style="background: #FFFFFF; border-radius: 10px; width: 100%; max-width: 580px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); overflow: hidden; border: 1px solid #E2E8F0;">
+            <!-- Modal Header -->
+            <div style="padding: 16px 20px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; background: #FFFFFF;">
+              <div>
+                <h3 style="margin: 0; font-size: 15px; font-weight: 700; color: #0F172A;">Audit Log Details</h3>
+                <span style="font-size: 12px; color: #64748B; font-family: monospace;">Record ID #{{ selectedAuditLog.auditLogId }}</span>
+              </div>
+              <button (click)="closeAuditLogModal()" style="background: transparent; border: none; cursor: pointer; color: #64748B; padding: 4px; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Modal Body -->
+            <div style="padding: 20px; max-height: 70vh; overflow-y: auto;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Actor Name</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A;">{{ selectedAuditLog.actorName || 'N/A' }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Actor Role</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A;">{{ selectedAuditLog.actorRole || 'N/A' }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Organization</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A;">{{ selectedAuditLog.organization || 'N/A' }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Timestamp</span>
+                  <span style="font-size: 13px; font-weight: 500; color: #0F172A;">{{ selectedAuditLog.timestamp || 'N/A' }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Action</span>
+                  <span style="font-size: 13px; font-weight: 700; color: #0F172A; text-transform: uppercase;">{{ selectedAuditLog.action || 'N/A' }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Result</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A; text-transform: capitalize;">{{ selectedAuditLog.result || 'N/A' }}</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">Entity Type & ID</span>
+                  <span style="font-size: 13px; font-weight: 600; color: #0F172A;">{{ selectedAuditLog.entityType }} ({{ selectedAuditLog.entityId }})</span>
+                </div>
+                <div style="background: #F8FAFC; padding: 10px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                  <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 2px;">IP Address</span>
+                  <span style="font-size: 13px; font-weight: 500; color: #0F172A; font-family: monospace;">{{ selectedAuditLog.ipAddress || 'N/A' }}</span>
+                </div>
+              </div>
+
+              <div *ngIf="selectedAuditLog.reason" style="background: #F8FAFC; padding: 12px 14px; border-radius: 6px; border: 1px solid #E2E8F0; margin-bottom: 16px;">
+                <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 4px;">Failure Reason</span>
+                <span style="font-size: 13px; color: #0F172A;">{{ selectedAuditLog.reason }}</span>
+              </div>
+
+              <div *ngIf="selectedAuditLog.details" style="background: #F8FAFC; padding: 12px 14px; border-radius: 6px; border: 1px solid #E2E8F0;">
+                <span style="display: block; font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 600; margin-bottom: 4px;">Metadata / Changes</span>
+                <pre style="margin: 0; font-size: 12px; color: #0F172A; font-family: monospace; white-space: pre-wrap; word-break: break-all;">{{ selectedAuditLog.details | json }}</pre>
+              </div>
+            </div>
+            <!-- Modal Footer -->
+            <div style="padding: 12px 20px; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end; background: #FAFAFA;">
+              <button (click)="closeAuditLogModal()" style="padding: 7px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; background: #0F172A; color: #FFFFFF; border: none; cursor: pointer;">
+                Close
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
