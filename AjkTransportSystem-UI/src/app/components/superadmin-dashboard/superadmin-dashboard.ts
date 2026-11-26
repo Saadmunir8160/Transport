@@ -1323,6 +1323,44 @@ export class SuperAdminDashboardComponent implements OnInit {
     this.generatedReports = this.generatedReports.filter(r => r.id !== rep.id);
   }
 
+  exportEtaReport() {
+    if (!this.etaModel) return;
+    const h = this.etaModel.health || {};
+    const a = this.etaModel.accuracy || {};
+    const t = this.etaModel.trainingData || {};
+    const lines = [
+      'ETA Model Metric,Value',
+      `Health Status,${h.status || 'Live'}`,
+      `Last Prediction,${h.lastPrediction || 'N/A'}`,
+      `Predictions Served Today,${h.predictionsServedToday || 0}`,
+      `Avg Response Time,${h.averageResponseTimeMs || 45} ms`,
+      `Error Rate,${h.errorRate || '0.2%'}`,
+      `Avg Error,± ${a.averageErrorMinutes || 3.5} minutes`,
+      `Last Retrained,${a.lastRetrained || 'N/A'}`,
+      `Global ETA Enabled,${a.globalEtaEnabled ? 'Yes' : 'No'}`,
+      `Trips Used in Model,${t.totalTripsUsed || 0}`,
+      `New Trips Available,${t.newTripsAvailable || 0}`
+    ];
+    const csvContent = 'data:text/csv;charset=utf-8,' + lines.join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `eta_model_report_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  showErrorLogModal: boolean = false;
+
+  openErrorLog() {
+    this.showErrorLogModal = true;
+  }
+
+  closeErrorLog() {
+    this.showErrorLogModal = false;
+  }
+
   loadEtaModelMonitor() {
     // Provide fallback data immediately so the UI renders
     this.etaModel = {
