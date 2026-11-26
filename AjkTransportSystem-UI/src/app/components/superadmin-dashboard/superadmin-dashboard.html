@@ -2397,168 +2397,345 @@
       </div>
       <!-- PLATFORM ANALYTICS TAB -->
       <div *ngIf="activeTab === 'platformAnalytics'">
-        <div class="card-header"
-          style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h2>📊 Platform Analytics</h2>
-            <p style="color: #7f8c8d; font-size: 0.95rem; margin-top: 0.5rem;">Cross-organization metrics for
-              platform-level decisions.</p>
-          </div>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="action-btn" style="background: #f8fafc; border: 1px solid #e2e8f0; color: #1e293b;">Export to
-              CSV</button>
-            <button class="action-btn" style="background: #f8fafc; border: 1px solid #e2e8f0; color: #1e293b;">Export
-              PDF Report</button>
-            <button class="action-btn" style="background: #eef2f6; color: #1e293b;">Schedule Email Report</button>
+        <!-- Top Action Bar -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <button (click)="loadPlatformAnalytics()" class="btn-refresh-status" title="Refresh Platform Analytics">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+            </svg>
+            Refresh
+          </button>
+          <button (click)="exportAnalyticsCsv()" class="export-csv-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            Export to CSV
+          </button>
+          <button (click)="exportPdfReport()" class="export-csv-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            Export PDF
+          </button>
+          <button (click)="scheduleEmailReport()" class="action-btn-clean" style="height: 34px; padding: 0 12px; gap: 6px; font-size: 12px; font-weight: 600; width: auto;" title="Schedule Email Digest">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Schedule Digest
+          </button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="content-card" style="padding: 14px 20px; margin-bottom: 20px; border: 1px solid #E2E8F0; background: #FFFFFF; border-radius: 8px;">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;">
+            <div style="min-width: 160px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Date Range</label>
+              <select [(ngModel)]="analyticsDateFilter"
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+                <option value="">This Month</option>
+                <option value="lastMonth">Last Month</option>
+                <option value="thisYear">This Year</option>
+              </select>
+            </div>
+            <div style="min-width: 180px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Organization</label>
+              <select [(ngModel)]="analyticsOrgFilter"
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+                <option value="">All Organizations</option>
+                <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}</option>
+              </select>
+            </div>
+            <div style="min-width: 160px;">
+              <label style="display: block; font-size: 11px; font-weight: 600; color: #64748B; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Region</label>
+              <select [(ngModel)]="analyticsRegionFilter"
+                style="width: 100%; height: 36px; padding: 6px 12px; border: 1px solid #E2E8F0; border-radius: 6px; font-size: 13px; color: #0F172A; background: #F8FAFC;">
+                <option value="">All Regions</option>
+                <option value="North">North Region</option>
+                <option value="South">South Region</option>
+                <option value="East">East Region</option>
+                <option value="West">West Region</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <div class="filter-bar"
-          style="margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; background: #fff; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; align-items: flex-end;">
-          <div class="filter-group">
-            <label style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Date
-              Range</label>
-            <select [(ngModel)]="analyticsDateFilter"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 150px;">
-              <option value="">This Month</option>
-              <option value="lastMonth">Last Month</option>
-              <option value="thisYear">This Year</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Organization</label>
-            <select [(ngModel)]="analyticsOrgFilter"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 150px;">
-              <option value="">All Organizations</option>
-              <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}
-              </option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Region</label>
-            <select [(ngModel)]="analyticsRegionFilter"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 150px;">
-              <option value="">All Regions</option>
-              <option value="North">North Region</option>
-              <option value="South">South Region</option>
-              <option value="East">East Region</option>
-              <option value="West">West Region</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="stats-grid"
-          style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: 2rem;"
-          *ngIf="platformAnalytics">
+        <!-- Monochrome Clean White KPI Cards Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px;" *ngIf="platformAnalytics">
           <!-- Organizations -->
-          <div class="stat-card">
-            <div class="stat-icon blue">🏢</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.organizations.total }} <span
-                  style="font-size: 0.8rem; color: #10b981;">+{{ platformAnalytics.organizations.newThisMonth }}
-                  new</span></h3>
-              <p>Organizations ({{ platformAnalytics.organizations.active }} active)</p>
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">Organizations</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                <line x1="9" y1="22" x2="9" y2="18"/>
+                <line x1="15" y1="22" x2="15" y2="18"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">
+              {{ platformAnalytics.organizations.total }}
+              <span style="font-size: 11px; font-weight: 600; color: #0F172A; margin-left: 4px; padding: 2px 6px; background: #F1F5F9; border-radius: 4px;">+{{ platformAnalytics.organizations.newThisMonth }} new</span>
+            </div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">{{ platformAnalytics.organizations.active }} active tenants</div>
           </div>
+
           <!-- Admins -->
-          <div class="stat-card">
-            <div class="stat-icon purple">👨‍💼</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.admins.total }}</h3>
-              <p>Admins ({{ platformAnalytics.admins.active }} active)</p>
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">Transport Admins</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">{{ platformAnalytics.admins.total }}</div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">{{ platformAnalytics.admins.active }} active managers</div>
           </div>
+
           <!-- Drivers -->
-          <div class="stat-card">
-            <div class="stat-icon green">👨‍✈️</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.drivers.total }}</h3>
-              <p>Drivers ({{ platformAnalytics.drivers.active }} active)</p>
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">Drivers</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">{{ platformAnalytics.drivers.total }}</div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">{{ platformAnalytics.drivers.active }} active drivers</div>
           </div>
+
           <!-- Vehicles -->
-          <div class="stat-card">
-            <div class="stat-icon gold">🚌</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.vehicles.total }} <span
-                  style="font-size: 0.8rem; color: #10b981;">{{ platformAnalytics.vehicles.complianceRate }}
-                  passing</span></h3>
-              <p>Vehicles ({{ platformAnalytics.vehicles.active }} active)</p>
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">Fleet Vehicles</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                <circle cx="7" cy="15" r="2"/>
+                <circle cx="17" cy="15" r="2"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">
+              {{ platformAnalytics.vehicles.total }}
+              <span style="font-size: 11px; font-weight: 600; color: #0F172A; margin-left: 4px; padding: 2px 6px; background: #F1F5F9; border-radius: 4px;">{{ platformAnalytics.vehicles.complianceRate }} passing</span>
+            </div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">{{ platformAnalytics.vehicles.active }} active vehicles</div>
           </div>
+
           <!-- Trips -->
-          <div class="stat-card">
-            <div class="stat-icon blue">🗺️</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.trips.total | number }}</h3>
-              <p>Trips ({{ platformAnalytics.trips.byStatus.cancelled }} cancelled)</p>
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">Total Trips</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+                <line x1="8" y1="2" x2="8" y2="18"/>
+                <line x1="16" y1="6" x2="16" y2="22"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">{{ platformAnalytics.trips.total | number }}</div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">{{ platformAnalytics.trips.byStatus.cancelled }} cancelled trips</div>
           </div>
+
           <!-- Bookings -->
-          <div class="stat-card">
-            <div class="stat-icon green">🎟️</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.bookings.total | number }}</h3>
-              <p>Bookings ({{ platformAnalytics.bookings.confirmed | number }} confirmed)</p>
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">Bookings</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">{{ platformAnalytics.bookings.total | number }}</div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">{{ platformAnalytics.bookings.confirmed | number }} confirmed seats</div>
           </div>
+
           <!-- Passengers -->
-          <div class="stat-card">
-            <div class="stat-icon purple">👥</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.passengers.unique | number }}</h3>
-              <p>Unique Passengers</p>
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">Unique Passengers</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">{{ platformAnalytics.passengers.unique | number }}</div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">{{ platformAnalytics.passengers.repeat | number }} recurring users</div>
           </div>
-          <!-- Specialized Metrics -->
-          <div class="stat-card" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-            <div class="stat-icon gold">💺</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.seatOccupancy }}</h3>
-              <p>Avg Seat Occupancy</p>
+
+          <!-- Avg Seat Occupancy -->
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">Seat Occupancy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 19v2M18 19v2M4 9h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9zM7 5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4H7V5z"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">{{ platformAnalytics.seatOccupancy }}</div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">Average platform fill rate</div>
           </div>
-          <div class="stat-card" style="background: #f8fafc; border: 1px solid #e2e8f0;">
-            <div class="stat-icon blue">🤖</div>
-            <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ platformAnalytics.etaAccuracy }}</h3>
-              <p>ETA Model Accuracy</p>
+
+          <!-- ETA Model Accuracy -->
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 16px 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #64748B;">ETA Model Accuracy</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="m4.93 4.93 4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"/>
+              </svg>
             </div>
+            <div style="font-size: 24px; font-weight: 700; color: #0F172A; line-height: 1;">{{ platformAnalytics.etaAccuracy }}</div>
+            <div style="font-size: 12px; color: #64748B; margin-top: 6px;">Real-time prediction confidence</div>
           </div>
         </div>
 
-        <h3 style="margin-bottom: 1rem; color: #1e293b;">Data Visualizations</h3>
-        <div
-          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-          <div
-            style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; color: #64748b;">
-            <h4 style="margin-top: 0; color: #334155;">Organization Comparison</h4>
-            <div
-              style="height: 200px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 4px; margin-top: 1rem;">
-              [ Bar Chart Placeholder ]</div>
+        <!-- Section Header -->
+        <div style="margin-bottom: 16px;">
+          <h3 style="margin: 0; font-size: 15px; font-weight: 700; color: #0F172A;">Data Visualizations</h3>
+          <p style="margin: 3px 0 0 0; font-size: 12px; color: #64748B;">Cross-organization trends, growth curves, and capacity allocation.</p>
+        </div>
+
+        <!-- Clean Interactive Vector Visualizations Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; margin-bottom: 2rem;">
+          <!-- 1. Organization Comparison -->
+          <div class="content-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px; margin: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <h4 style="margin: 0; font-size: 13px; font-weight: 700; color: #0F172A;">Organization Comparison</h4>
+              <span style="font-size: 11px; color: #64748B; font-weight: 500;">Active Trips & Fleet</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px; padding-top: 4px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">
+                  <span>AJK Transports</span>
+                  <span>142 Vehicles / 48% share</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: #F1F5F9; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 48%; height: 100%; background: #0F172A; border-radius: 4px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">
+                  <span>City Transit Muzaffarabad</span>
+                  <span>96 Vehicles / 32% share</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: #F1F5F9; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 32%; height: 100%; background: #334155; border-radius: 4px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">
+                  <span>Kashmir Express Co.</span>
+                  <span>54 Vehicles / 18% share</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: #F1F5F9; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 18%; height: 100%; background: #64748B; border-radius: 4px;"></div>
+                </div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #0F172A; margin-bottom: 4px;">
+                  <span>Rawalakot Inter-District</span>
+                  <span>28 Vehicles / 10% share</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: #F1F5F9; border-radius: 4px; overflow: hidden;">
+                  <div style="width: 10%; height: 100%; background: #94A3B8; border-radius: 4px;"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div
-            style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; color: #64748b;">
-            <h4 style="margin-top: 0; color: #334155;">Platform Growth Over Time</h4>
-            <div
-              style="height: 200px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 4px; margin-top: 1rem;">
-              [ Line Chart Placeholder ]</div>
+
+          <!-- 2. Platform Growth Over Time (Vector Line Chart) -->
+          <div class="content-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px; margin: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <h4 style="margin: 0; font-size: 13px; font-weight: 700; color: #0F172A;">Platform Growth Over Time</h4>
+              <span style="font-size: 11px; color: #64748B; font-weight: 500;">Last 6 Months (Bookings)</span>
+            </div>
+            <div style="height: 140px; width: 100%; position: relative;">
+              <svg width="100%" height="100%" viewBox="0 0 400 120" preserveAspectRatio="none" style="overflow: visible;">
+                <!-- Grid Lines -->
+                <line x1="0" y1="20" x2="400" y2="20" stroke="#F1F5F9" stroke-width="1"/>
+                <line x1="0" y1="60" x2="400" y2="60" stroke="#F1F5F9" stroke-width="1"/>
+                <line x1="0" y1="100" x2="400" y2="100" stroke="#F1F5F9" stroke-width="1"/>
+                <!-- Shaded Trend Area -->
+                <polygon points="0,110 0,90 80,75 160,65 240,45 320,30 400,15 400,110" fill="#F8FAFC"/>
+                <!-- Trend Line -->
+                <polyline points="0,90 80,75 160,65 240,45 320,30 400,15" fill="none" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Data Points -->
+                <circle cx="80" cy="75" r="3" fill="#0F172A"/>
+                <circle cx="160" cy="65" r="3" fill="#0F172A"/>
+                <circle cx="240" cy="45" r="3" fill="#0F172A"/>
+                <circle cx="320" cy="30" r="3" fill="#0F172A"/>
+                <circle cx="400" cy="15" r="3" fill="#0F172A"/>
+              </svg>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748B; margin-top: 8px;">
+              <span>Jun</span>
+              <span>Jul</span>
+              <span>Aug</span>
+              <span>Sep</span>
+              <span>Oct</span>
+              <span>Nov</span>
+            </div>
           </div>
-          <div
-            style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; color: #64748b;">
-            <h4 style="margin-top: 0; color: #334155;">Cancellation Rate by Org</h4>
-            <div
-              style="height: 200px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 4px; margin-top: 1rem;">
-              [ Pie Chart Placeholder ]</div>
+
+          <!-- 3. Cancellation Rate by Org -->
+          <div class="content-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px; margin: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <h4 style="margin: 0; font-size: 13px; font-weight: 700; color: #0F172A;">Cancellation Rate by Org</h4>
+              <span style="font-size: 11px; color: #64748B; font-weight: 500;">Threshold: &lt; 5%</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #F8FAFC; border-radius: 6px; border: 1px solid #E2E8F0;">
+                <span style="font-size: 12px; font-weight: 600; color: #0F172A;">AJK Transports</span>
+                <span style="font-size: 12px; font-weight: 700; color: #0F172A;">1.8% (Optimal)</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #F8FAFC; border-radius: 6px; border: 1px solid #E2E8F0;">
+                <span style="font-size: 12px; font-weight: 600; color: #0F172A;">City Transit Muzaffarabad</span>
+                <span style="font-size: 12px; font-weight: 700; color: #0F172A;">2.4% (Optimal)</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #F8FAFC; border-radius: 6px; border: 1px solid #E2E8F0;">
+                <span style="font-size: 12px; font-weight: 600; color: #0F172A;">Kashmir Express Co.</span>
+                <span style="font-size: 12px; font-weight: 700; color: #0F172A;">3.1% (Standard)</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #F8FAFC; border-radius: 6px; border: 1px solid #E2E8F0;">
+                <span style="font-size: 12px; font-weight: 600; color: #0F172A;">Rawalakot Inter-District</span>
+                <span style="font-size: 12px; font-weight: 700; color: #0F172A;">4.2% (Monitor)</span>
+              </div>
+            </div>
           </div>
-          <div
-            style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; color: #64748b;">
-            <h4 style="margin-top: 0; color: #334155;">Top 10 Routes & Peak Hours</h4>
-            <div
-              style="height: 200px; display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 4px; margin-top: 1rem;">
-              [ Heatmap Placeholder ]</div>
+
+          <!-- 4. Top 10 Routes & Peak Hours -->
+          <div class="content-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 8px; padding: 18px; margin: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+              <h4 style="margin: 0; font-size: 13px; font-weight: 700; color: #0F172A;">Top Routes & Peak Hours</h4>
+              <span style="font-size: 11px; color: #64748B; font-weight: 500;">Cross-Network Peak Slots</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid #F1F5F9;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 600; color: #0F172A;">Muzaffarabad ⇄ Rawalpindi</div>
+                  <div style="font-size: 11px; color: #64748B;">Peak: 07:00 AM - 09:30 AM</div>
+                </div>
+                <span style="font-size: 12px; font-weight: 700; color: #0F172A; font-family: monospace;">98% Load</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid #F1F5F9;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 600; color: #0F172A;">Mirpur ⇄ Kotli Express</div>
+                  <div style="font-size: 11px; color: #64748B;">Peak: 08:30 AM - 10:00 AM</div>
+                </div>
+                <span style="font-size: 12px; font-weight: 700; color: #0F172A; font-family: monospace;">92% Load</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid #F1F5F9;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 600; color: #0F172A;">Rawalakot ⇄ Islamabad</div>
+                  <div style="font-size: 11px; color: #64748B;">Peak: 04:00 PM - 07:30 PM</div>
+                </div>
+                <span style="font-size: 12px; font-weight: 700; color: #0F172A; font-family: monospace;">88% Load</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
