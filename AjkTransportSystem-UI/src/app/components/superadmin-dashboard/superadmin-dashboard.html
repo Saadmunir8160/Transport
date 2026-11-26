@@ -3848,107 +3848,113 @@
       <!-- LIVE TRIPS TAB -->
       <div *ngIf="activeTab === 'liveTrips' || activeTab === 'crossOrgTrips'">
 
-        <div class="page-header">
-          <div class="breadcrumb">
-            <span class="breadcrumb-group">Platform</span>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-current">All Trips (Live)</span>
-          </div>
-          <div class="header-actions">
-            <span
-              style="font-size: 0.8125rem; font-weight: 500; color: #64748B; margin-right: 8px; display: flex; align-items: center; gap: 4px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="rotating-icon" [ngClass]="{'active': tripRefreshCountdown < 5}">
-                <path d="M21 2v6h-6" />
-                <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
-                <path d="M3 22v-6h6" />
-                <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
-              </svg>
-              Auto-refresh in {{ tripRefreshCountdown }}s
-            </span>
-            <button class="qa-btn" (click)="loadCrossOrgTrips()"
-              style="background: white; color: #475569; border: 1px solid #E2E8F0; padding: 10px 16px;">
-              Refresh Now
-            </button>
-            <button class="qa-btn" (click)="exportTrips()"
-              style="background: white; color: #0F172A; border: 1px solid #E2E8F0; padding: 10px 16px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              Export
-            </button>
-          </div>
+        <!-- Top Actions Bar -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <span
+            style="font-size: 0.775rem; font-weight: 500; color: #64748B; margin-right: 4px; display: inline-flex; align-items: center; gap: 4px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="rotating-icon" [ngClass]="{'active': tripRefreshCountdown < 5}">
+              <path d="M21 2v6h-6" />
+              <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+              <path d="M3 22v-6h6" />
+              <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+            </svg>
+            Auto-refresh in {{ tripRefreshCountdown }}s
+          </span>
+          <button class="btn-refresh-status" (click)="loadCrossOrgTrips()" title="Refresh Now">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Refresh Now</span>
+          </button>
+          <button class="export-csv-btn" (click)="exportTrips()" title="Export Trips">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span>Export</span>
+          </button>
         </div>
 
-        <!-- Live View Widgets -->
-        <div class="stats-grid" style="margin-bottom: 24px; gap: 16px;">
-          <div class="chart-card" style="padding: 20px; flex: 1; border-left: 4px solid #0EA5E9;">
-            <div
-              style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin-bottom: 8px; text-transform: uppercase;">
-              Total Trips Today</div>
-            <div style="font-size: 2rem; font-weight: 700; color: #0F172A; line-height: 1;">{{ getTodayTripsCount() }}
+        <!-- Live View Widgets (Pure Monochrome Cards) -->
+        <div style="display: flex; gap: 14px; margin-bottom: 20px; flex-wrap: wrap;">
+          <!-- 1. Total Trips Today -->
+          <div class="content-card" style="padding: 16px 20px; flex: 1 1 0; min-width: 170px; margin: 0; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+              Total Trips Today
             </div>
-            <div
-              style="font-size: 0.8125rem; color: #0EA5E9; margin-top: 8px; display: flex; align-items: center; gap: 4px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-              </svg>
+            <div style="font-size: 1.85rem; font-weight: 800; color: #0F172A; line-height: 1;">
+              {{ getTodayTripsCount() }}
+            </div>
+            <div style="font-size: 0.775rem; color: #64748B; margin-top: 8px; font-weight: 500;">
               All Organizations
             </div>
           </div>
-          <div class="chart-card" style="padding: 20px; flex: 1; border-left: 4px solid #10B981;">
-            <div
-              style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin-bottom: 8px; text-transform: uppercase;">
-              Active Right Now</div>
-            <div style="font-size: 2rem; font-weight: 700; color: #0F172A; line-height: 1;">{{ getActiveTripsCount() }}
+
+          <!-- 2. Active Right Now -->
+          <div class="content-card" style="padding: 16px 20px; flex: 1 1 0; min-width: 170px; margin: 0; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+              Active Right Now
             </div>
-            <div
-              style="font-size: 0.8125rem; color: #10B981; margin-top: 8px; display: flex; align-items: center; gap: 4px;">
-              <span class="live-pulse"
-                style="width: 8px; height: 8px; background-color: #10B981; border-radius: 50%; display: inline-block;"></span>
+            <div style="font-size: 1.85rem; font-weight: 800; color: #0F172A; line-height: 1;">
+              {{ getActiveTripsCount() }}
+            </div>
+            <div style="font-size: 0.775rem; color: #0F172A; margin-top: 8px; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+              <span style="width: 6px; height: 6px; background-color: #0F172A; border-radius: 50%; display: inline-block;"></span>
               On the road
             </div>
           </div>
-          <div class="chart-card" style="padding: 20px; flex: 1; border-left: 4px solid #EAB308;">
-            <div
-              style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin-bottom: 8px; text-transform: uppercase;">
-              Scheduled</div>
-            <div style="font-size: 2rem; font-weight: 700; color: #0F172A; line-height: 1;">{{ getScheduledTripsCount()
-              }}</div>
-            <div style="font-size: 0.8125rem; color: #EAB308; margin-top: 8px;">Not started yet</div>
+
+          <!-- 3. Scheduled -->
+          <div class="content-card" style="padding: 16px 20px; flex: 1 1 0; min-width: 170px; margin: 0; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+              Scheduled
+            </div>
+            <div style="font-size: 1.85rem; font-weight: 800; color: #0F172A; line-height: 1;">
+              {{ getScheduledTripsCount() }}
+            </div>
+            <div style="font-size: 0.775rem; color: #64748B; margin-top: 8px; font-weight: 500;">
+              Not started yet
+            </div>
           </div>
-          <div class="chart-card" style="padding: 20px; flex: 1; border-left: 4px solid #64748B;">
-            <div
-              style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin-bottom: 8px; text-transform: uppercase;">
-              Completed</div>
-            <div style="font-size: 2rem; font-weight: 700; color: #0F172A; line-height: 1;">{{ getCompletedTripsCount()
-              }}</div>
-            <div style="font-size: 0.8125rem; color: #64748B; margin-top: 8px;">Reached destination</div>
+
+          <!-- 4. Completed -->
+          <div class="content-card" style="padding: 16px 20px; flex: 1 1 0; min-width: 170px; margin: 0; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+              Completed
+            </div>
+            <div style="font-size: 1.85rem; font-weight: 800; color: #0F172A; line-height: 1;">
+              {{ getCompletedTripsCount() }}
+            </div>
+            <div style="font-size: 0.775rem; color: #64748B; margin-top: 8px; font-weight: 500;">
+              Reached destination
+            </div>
           </div>
-          <div class="chart-card" style="padding: 20px; flex: 1; border-left: 4px solid #EF4444;">
-            <div
-              style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin-bottom: 8px; text-transform: uppercase;">
-              Cancelled</div>
-            <div style="font-size: 2rem; font-weight: 700; color: #0F172A; line-height: 1;">{{ getCancelledTripsCount()
-              }}</div>
-            <div style="font-size: 0.8125rem; color: #EF4444; margin-top: 8px;">Aborted trips</div>
+
+          <!-- 5. Cancelled -->
+          <div class="content-card" style="padding: 16px 20px; flex: 1 1 0; min-width: 170px; margin: 0; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+            <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">
+              Cancelled
+            </div>
+            <div style="font-size: 1.85rem; font-weight: 800; color: #0F172A; line-height: 1;">
+              {{ getCancelledTripsCount() }}
+            </div>
+            <div style="font-size: 0.775rem; color: #64748B; margin-top: 8px; font-weight: 500;">
+              Aborted trips
+            </div>
           </div>
         </div>
 
-        <div class="chart-card" style="padding: 24px; margin-bottom: 24px;">
-          <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;">
+        <!-- Filter Bar -->
+        <div class="chart-card" style="padding: 14px 20px; margin-bottom: 20px; border: 1px solid #E2E8F0;">
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
             <div style="flex: 1; min-width: 150px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Organization</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Organization</label>
               <select [(ngModel)]="tripOrgFilter" (change)="filterTrips()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">All Organizations</option>
                 <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}
                 </option>
@@ -3956,9 +3962,9 @@
             </div>
             <div style="flex: 1; min-width: 150px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Status</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Status</label>
               <select [(ngModel)]="tripStatusFilter" (change)="filterTrips()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">All Statuses</option>
                 <option value="Scheduled">Scheduled</option>
                 <option value="Active">Active</option>
@@ -3968,19 +3974,18 @@
             </div>
             <div style="flex: 1; min-width: 150px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Route</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Route</label>
               <select [(ngModel)]="tripRouteFilter" (change)="filterTrips()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">All Routes</option>
                 <option *ngFor="let route of getDistinctTripRoutes()" [value]="route">{{ route }}</option>
               </select>
             </div>
             <div style="flex: 1; min-width: 150px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Date
-                Range</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Date Range</label>
               <select [(ngModel)]="tripDateFilter" (change)="filterTrips()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="today">Today Only</option>
                 <option value="all">All Time</option>
               </select>
@@ -3988,20 +3993,14 @@
           </div>
         </div>
 
-        <div class="chart-card" style="padding: 0; overflow: hidden; margin-bottom: 24px;">
-          <div style="padding: 24px; border-bottom: 1px solid #F1F5F9;">
+        <!-- Live Trips Tracker Table Card -->
+        <div class="content-card" style="padding: 0; overflow: hidden; margin-bottom: 24px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+          <div style="padding: 14px 20px; border-bottom: 1px solid #F1F5F9; background: #FFFFFF;">
             <h3
-              style="margin: 0 0 4px 0; font-size: 1.125rem; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 8px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                style="color: var(--sa-sidebar-accent);">
-                <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
+              style="margin: 0; font-size: 1rem; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 8px;">
               Live Trips Tracker
             </h3>
-            <p style="margin: 0; font-size: 0.9375rem; color: #64748B;">Real-time map and schedule of every trip running
-              across all organizations.</p>
+            <p style="margin: 2px 0 0 0; font-size: 0.8125rem; color: #64748B;">Real-time schedule of active trips running across all organizations.</p>
           </div>
 
           <div class="table-container" style="overflow-x: auto;">
@@ -4009,89 +4008,75 @@
               *ngIf="filteredTrips && filteredTrips.length > 0">
               <thead>
                 <tr>
-                  <th style="padding-left: 24px;">Trip & Org</th>
-                  <th>Route & Departure</th>
-                  <th>Driver & Vehicle</th>
-                  <th>Status & ETA</th>
-                  <th>Progress</th>
-                  <th style="padding-right: 24px; text-align: right;">Actions</th>
+                  <th style="padding: 10px 16px;">Trip & Org</th>
+                  <th style="padding: 10px 16px;">Route & Departure</th>
+                  <th style="padding: 10px 16px;">Driver & Vehicle</th>
+                  <th style="padding: 10px 16px;">Status & ETA</th>
+                  <th style="padding: 10px 16px;">Progress</th>
+                  <th style="padding: 10px 16px; text-align: right;">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let trip of filteredTrips">
-                  <td style="padding-left: 24px;">
-                    <div style="font-weight: 700; color: #0F172A; font-size: 0.9375rem;">TRP-{{ trip.tripId }}</div>
-                    <div style="font-size: 0.8125rem; color: #475569; margin-top: 2px; font-weight: 500;">{{
+                  <td style="padding: 10px 16px;">
+                    <div style="font-weight: 700; color: #0F172A; font-size: 0.875rem;">TRP-{{ trip.tripId }}</div>
+                    <div style="font-size: 0.775rem; color: #475569; margin-top: 1px; font-weight: 500;">{{
                       trip.organizationName }}</div>
                   </td>
-                  <td>
-                    <div style="font-weight: 700; color: #334155; font-size: 0.9375rem;">{{ trip.routeName }}</div>
-                    <div style="font-size: 0.8125rem; color: #64748B; margin-top: 2px;">
+                  <td style="padding: 10px 16px;">
+                    <div style="font-weight: 600; color: #0F172A; font-size: 0.875rem;">{{ trip.routeName }}</div>
+                    <div style="font-size: 0.775rem; color: #64748B; margin-top: 1px;">
                       {{ trip.travelDate | date:'shortDate' }} at {{ trip.departureTime }}
                     </div>
                   </td>
-                  <td>
+                  <td style="padding: 10px 16px;">
                     <div style="font-weight: 600; color: #0F172A; font-size: 0.875rem;">{{ trip.driverName }}</div>
-                    <div style="font-size: 0.8125rem; color: #64748B; margin-top: 2px;">{{ trip.vehicleRegistration }}
+                    <div style="font-size: 0.775rem; color: #64748B; margin-top: 1px;">{{ trip.vehicleRegistration }}
                     </div>
                   </td>
-                  <td>
-                    <div style="margin-bottom: 4px;">
+                  <td style="padding: 10px 16px;">
+                    <div style="margin-bottom: 2px;">
                       <span *ngIf="trip.status === 'Active'"
-                        style="background: #D1FAE5; color: #059669; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px;">
-                        <span class="live-pulse"
-                          style="width: 6px; height: 6px; background-color: #059669; border-radius: 50%; display: inline-block;"></span>
+                        style="background: #0F172A; color: #FFFFFF; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                        <span style="width: 5px; height: 5px; background-color: #FFFFFF; border-radius: 50%; display: inline-block;"></span>
                         Active
                       </span>
                       <span *ngIf="trip.status === 'Scheduled'"
-                        style="background: #FEF9C3; color: #B45309; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Scheduled</span>
+                        style="background: #F1F5F9; color: #0F172A; border: 1px solid #CBD5E1; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Scheduled</span>
                       <span *ngIf="trip.status === 'Completed'"
-                        style="background: #F1F5F9; color: #475569; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Completed</span>
+                        style="background: #F1F5F9; color: #64748B; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Completed</span>
                       <span *ngIf="trip.status === 'Cancelled'"
-                        style="background: #FEE2E2; color: #B91C1C; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Cancelled</span>
+                        style="background: #F1F5F9; color: #94A3B8; text-decoration: line-through; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Cancelled</span>
                     </div>
                     <div *ngIf="trip.status === 'Active' || trip.status === 'Scheduled'"
-                      style="font-size: 0.8125rem; color: #475569; font-weight: 500;">
+                      style="font-size: 0.775rem; color: #475569; font-weight: 500;">
                       ETA: {{ trip.eta | date:'shortTime' }}
                     </div>
                   </td>
-                  <td>
+                  <td style="padding: 10px 16px;">
                     <div
-                      style="font-size: 0.875rem; color: #334155; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                        stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
-                        <circle cx="12" cy="10" r="3" />
-                      </svg>
+                      style="font-size: 0.8125rem; color: #0F172A; margin-bottom: 2px; display: flex; align-items: center; gap: 4px;">
                       {{ trip.lastStopReached || 'Not started' }}
                     </div>
-                    <div style="font-size: 0.8125rem; color: #64748B;">
+                    <div style="font-size: 0.775rem; color: #64748B;">
                       <span style="font-weight: 600; color: #0F172A;">{{ trip.bookedSeats }}</span> seats booked
                     </div>
                   </td>
-                  <td style="padding-right: 24px; text-align: right;">
-                    <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                      <button class="qa-btn"
-                        style="background: white; color: #3B82F6; border: 1px solid #BFDBFE; padding: 6px 10px; font-size: 0.8125rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                          style="margin-right: 4px;">
+                  <td style="padding: 10px 16px; text-align: right;">
+                    <div style="display: flex; gap: 6px; justify-content: flex-end;">
+                      <button class="action-btn-clean" title="View Trip Details">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                           <circle cx="12" cy="12" r="3" />
                         </svg>
-                        Trip
                       </button>
-                      <button class="qa-btn"
-                        style="background: white; color: #8B5CF6; border: 1px solid #DDD6FE; padding: 6px 10px; font-size: 0.8125rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                          style="margin-right: 4px;">
+                      <button class="action-btn-clean" title="Passengers List">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                           <circle cx="9" cy="7" r="4" />
                           <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                         </svg>
-                        Pax
                       </button>
                     </div>
                   </td>
@@ -4100,35 +4085,19 @@
             </table>
 
             <div *ngIf="!filteredTrips || filteredTrips.length === 0"
-              style="padding: 48px; text-align: center; color: #64748B;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+              style="padding: 36px 20px; text-align: center; color: #64748B;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                style="margin-bottom: 16px; opacity: 0.5;">
+                style="margin-bottom: 8px; opacity: 0.5;">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                 <polyline points="9 22 9 12 15 12 15 22" />
               </svg>
-              <p style="margin: 0; font-size: 1rem;">No trips found matching your criteria.</p>
+              <p style="margin: 0; font-size: 0.875rem; font-weight: 500;">No trips found matching your criteria.</p>
             </div>
           </div>
         </div>
 
-        <div
-          style="background: rgba(13, 118, 110, 0.05); border: 1px solid rgba(13, 118, 110, 0.2); padding: 24px; border-radius: 8px;">
-          <h3
-            style="margin: 0 0 8px 0; color: #0F766E; font-size: 1.0625rem; display: flex; align-items: center; gap: 8px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="16" x2="12" y2="12" />
-              <line x1="12" y1="8" x2="12.01" y2="8" />
-            </svg>
-            Trip Management Rules
-          </h3>
-          <p style="color: #115E59; font-size: 0.9375rem; margin: 0; line-height: 1.5;">
-            Super Admins cannot cancel or modify trips — that responsibility belongs exclusively to the Organization
-            Admin. This page provides a high-level, read-only operational view and auto-refreshes every 30 seconds.
-          </p>
-        </div>
+
       </div>
 
       <!-- ALL BOOKINGS TAB -->
