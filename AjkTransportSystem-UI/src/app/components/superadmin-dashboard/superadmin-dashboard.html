@@ -4103,44 +4103,32 @@
       <!-- ALL BOOKINGS TAB -->
       <div *ngIf="activeTab === 'bookings' || activeTab === 'crossOrgBookings'">
 
-        <div class="page-header">
-          <div class="breadcrumb">
-            <span class="breadcrumb-group">Platform</span>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-current">All Bookings</span>
-          </div>
-          <div class="header-actions">
-            <button class="qa-btn" (click)="loadCrossOrgBookings()"
-              style="background: white; color: #475569; border: 1px solid #E2E8F0; padding: 10px 16px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 2v6h-6" />
-                <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
-                <path d="M3 22v-6h6" />
-                <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
-              </svg>
-              Refresh
-            </button>
-            <button class="qa-btn" (click)="exportBookings()"
-              style="background: white; color: #0F172A; border: 1px solid #E2E8F0; padding: 10px 16px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              Export Report
-            </button>
-          </div>
+        <!-- Top Actions Bar -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <button class="btn-refresh-status" (click)="loadCrossOrgBookings()" title="Refresh Bookings">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Refresh</span>
+          </button>
+          <button class="export-csv-btn" (click)="exportBookings()" title="Export Bookings Report">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span>Export Report</span>
+          </button>
         </div>
 
-        <div class="chart-card" style="padding: 24px; margin-bottom: 24px;">
-          <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;">
+        <!-- Filter Bar -->
+        <div class="chart-card" style="padding: 14px 20px; margin-bottom: 20px; border: 1px solid #E2E8F0;">
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
             <div style="flex: 1; min-width: 140px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Organization</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Organization</label>
               <select [(ngModel)]="bookingOrgFilter" (change)="filterBookings()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">All Organizations</option>
                 <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}
                 </option>
@@ -4148,10 +4136,9 @@
             </div>
             <div style="flex: 1; min-width: 140px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Date
-                Range</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Date Range</label>
               <select [(ngModel)]="bookingDateFilter" (change)="filterBookings()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="all">All Time</option>
                 <option value="today">Today</option>
                 <option value="week">Last 7 Days</option>
@@ -4160,9 +4147,9 @@
             </div>
             <div style="flex: 1; min-width: 120px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Status</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Status</label>
               <select [(ngModel)]="bookingStatusFilter" (change)="filterBookings()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">All Statuses</option>
                 <option value="Confirmed">Confirmed</option>
                 <option value="Pending">Pending</option>
@@ -4171,145 +4158,100 @@
             </div>
             <div style="flex: 1; min-width: 120px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Payment</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Payment</label>
               <select [(ngModel)]="bookingPaymentFilter" (change)="filterBookings()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">All Payments</option>
                 <option value="Paid">Paid</option>
                 <option value="Pending">Pending</option>
               </select>
             </div>
-            <div style="flex: 1.5; min-width: 180px;">
+            <div style="flex: 1.5; min-width: 170px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Search
-                Passenger</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Search Passenger</label>
               <input type="text" [(ngModel)]="bookingPassengerSearch" (input)="filterBookings()"
                 placeholder="Name or Ticket Code..." class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
             </div>
           </div>
         </div>
 
-        <div class="chart-card" style="padding: 0; overflow: hidden; margin-bottom: 24px;">
-          <div style="padding: 24px; border-bottom: 1px solid #F1F5F9;">
+        <!-- Booking Register Card -->
+        <div class="content-card" style="padding: 0; overflow: hidden; margin-bottom: 24px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+          <div style="padding: 14px 20px; border-bottom: 1px solid #F1F5F9; background: #FFFFFF;">
             <h3
-              style="margin: 0 0 4px 0; font-size: 1.125rem; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 8px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                style="color: var(--sa-sidebar-accent);">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <line x1="3" y1="9" x2="21" y2="9" />
-                <line x1="9" y1="21" x2="9" y2="9" />
-              </svg>
+              style="margin: 0; font-size: 1rem; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 8px;">
               Booking Register
             </h3>
-            <p style="margin: 0; font-size: 0.9375rem; color: #64748B;">Platform-wide booking records across all
-              registered organizations.</p>
+            <p style="margin: 2px 0 0 0; font-size: 0.8125rem; color: #64748B;">Platform-wide booking records across all registered organizations.</p>
           </div>
 
           <div class="table-container" style="overflow-x: auto;">
             <table class="data-table" style="margin: 0; border: none; border-radius: 0;"
               *ngIf="filteredBookings && filteredBookings.length > 0">
-              Complaints
-              Passenger grievance submission. Research: AI chatbot reduces support costs 60% — for Phase 2; Phase 1 uses
-              a simple form.
-
-              Complaint form fields
-              Category (driver behaviour, vehicle condition, booking issue, route problem, payment issue, other)Trip or
-              booking reference (auto-populated if on that booking's page)Description (free text, min 20
-              characters)Photo upload (optional)Preferred resolution (refund, apology, other)Contact method preference
-              (SMS, email, in-app)
-              My complaints list
-              Complaint IDCategoryStatus (open, in progress, resolved)Submitted atAdmin response and resolution
-              Rules
-              Complaint requires internet.
-
-              Passenger can submit max 3 complaints per trip (to prevent spam).
-
-              Admin sees complaint in org's Complaints page and must respond within SLA.
-
               <thead>
                 <tr>
-                  <th style="padding-left: 24px;">Ticket Info</th>
-                  <th>Passenger</th>
-                  <th>Organization</th>
-                  <th>Journey</th>
-                  <th>Seat / Fare</th>
-                  <th>Status & Payment</th>
-                  <th>Booked At</th>
-                  <th style="padding-right: 24px; text-align: right;">Actions</th>
+                  <th style="padding: 10px 16px;">Ticket Info</th>
+                  <th style="padding: 10px 16px;">Passenger</th>
+                  <th style="padding: 10px 16px;">Organization</th>
+                  <th style="padding: 10px 16px;">Journey</th>
+                  <th style="padding: 10px 16px;">Seat / Fare</th>
+                  <th style="padding: 10px 16px;">Status & Payment</th>
+                  <th style="padding: 10px 16px;">Booked At</th>
+                  <th style="padding: 10px 16px; text-align: right;">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let booking of filteredBookings">
-                  <td style="padding-left: 24px; white-space: nowrap;">
-                    <div style="font-weight: 700; color: #0F172A; font-size: 0.9375rem;">{{ booking.ticketCode }}</div>
-                    <div style="font-size: 0.8125rem; color: #64748B; margin-top: 2px;">BKG-{{ booking.bookingId }}
+                  <td style="padding: 10px 16px; white-space: nowrap;">
+                    <div style="font-weight: 700; color: #0F172A; font-size: 0.875rem;">{{ booking.ticketCode }}</div>
+                    <div style="font-size: 0.775rem; color: #64748B; margin-top: 1px;">BKG-{{ booking.bookingId }}
                     </div>
                   </td>
-                  <td>
-                    <div style="font-weight: 600; color: #334155; font-size: 0.9375rem;">{{ booking.passengerName }}
+                  <td style="padding: 10px 16px;">
+                    <div style="font-weight: 600; color: #0F172A; font-size: 0.875rem;">{{ booking.passengerName }}
                     </div>
                   </td>
-                  <td style="color: #475569; font-size: 0.9375rem; font-weight: 500;">{{ booking.organizationName }}
+                  <td style="padding: 10px 16px; color: #475569; font-size: 0.875rem; font-weight: 500;">{{ booking.organizationName }}
                   </td>
-                  <td>
-                    <div style="font-weight: 600; color: #0F172A; font-size: 0.875rem;">{{ booking.tripReference }}
+                  <td style="padding: 10px 16px;">
+                    <div style="font-weight: 600; color: #0F172A; font-size: 0.8125rem;">{{ booking.tripReference }}
                     </div>
-                    <div style="font-size: 0.8125rem; color: #64748B; margin-top: 2px;">{{ booking.routeName }}</div>
+                    <div style="font-size: 0.775rem; color: #64748B; margin-top: 1px;">{{ booking.routeName }}</div>
                   </td>
-                  <td>
-                    <div style="font-weight: 600; color: #0F172A; font-size: 0.875rem;">{{ booking.seat }}</div>
-                    <div style="font-size: 0.8125rem; color: #64748B; margin-top: 2px;">PKR {{ booking.totalFare }}
+                  <td style="padding: 10px 16px;">
+                    <div style="font-weight: 600; color: #0F172A; font-size: 0.8125rem;">{{ booking.seat }}</div>
+                    <div style="font-size: 0.775rem; color: #64748B; margin-top: 1px;">PKR {{ booking.totalFare }}
                     </div>
                   </td>
-                  <td>
-                    <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
+                  <td style="padding: 10px 16px;">
+                    <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 2px;">
                       <span *ngIf="booking.status === 'Confirmed'"
-                        style="background: #DCFCE7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Confirmed</span>
+                        style="background: #0F172A; color: #FFFFFF; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Confirmed</span>
                       <span *ngIf="booking.status === 'Pending'"
-                        style="background: #FEF9C3; color: #854D0E; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Pending</span>
+                        style="background: #F1F5F9; color: #0F172A; border: 1px solid #CBD5E1; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Pending</span>
                       <span *ngIf="booking.status === 'Cancelled'"
-                        style="background: #FEE2E2; color: #9F1239; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Cancelled</span>
+                        style="background: #F1F5F9; color: #94A3B8; text-decoration: line-through; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Cancelled</span>
                     </div>
                     <div
                       style="display: flex; align-items: center; gap: 4px; font-size: 0.75rem; font-weight: 600; color: #475569;">
-                      <svg *ngIf="booking.paymentStatus === 'Paid'" xmlns="http://www.w3.org/2000/svg" width="12"
-                        height="12" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="3"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                      <svg *ngIf="booking.paymentStatus !== 'Paid'" xmlns="http://www.w3.org/2000/svg" width="12"
-                        height="12" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="3"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                      </svg>
                       {{ booking.paymentStatus }}
                     </div>
                   </td>
-                  <td style="font-size: 0.875rem; color: #64748B;">{{ booking.bookingDate | date:'short' }}</td>
-                  <td style="padding-right: 24px; text-align: right;">
-                    <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                      <button class="qa-btn"
-                        style="background: white; color: #3B82F6; border: 1px solid #BFDBFE; padding: 6px 10px; font-size: 0.8125rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                          style="margin-right: 4px;">
+                  <td style="padding: 10px 16px; font-size: 0.8125rem; color: #64748B;">{{ booking.bookingDate | date:'short' }}</td>
+                  <td style="padding: 10px 16px; text-align: right;">
+                    <div style="display: flex; gap: 6px; justify-content: flex-end;">
+                      <button class="action-btn-clean" title="Details">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
                           <circle cx="12" cy="12" r="3" />
                         </svg>
-                        Details
                       </button>
-                      <button class="qa-btn"
-                        style="background: white; color: #8B5CF6; border: 1px solid #DDD6FE; padding: 6px 10px; font-size: 0.8125rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                          style="margin-right: 4px;">
+                      <button class="action-btn-clean" title="Pax Profile">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                           <circle cx="12" cy="7" r="4" />
                         </svg>
-                        Pax Profile
                       </button>
                     </div>
                   </td>
@@ -4318,40 +4260,22 @@
             </table>
 
             <div *ngIf="!filteredBookings || filteredBookings.length === 0"
-              style="padding: 48px; text-align: center; color: #64748B;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+              style="padding: 36px 20px; text-align: center; color: #64748B;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                style="margin-bottom: 16px; opacity: 0.5;">
+                style="margin-bottom: 8px; opacity: 0.5;">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                 <line x1="16" y1="2" x2="16" y2="6" />
                 <line x1="8" y1="2" x2="8" y2="6" />
                 <line x1="3" y1="10" x2="21" y2="10" />
               </svg>
-              <p style="margin: 0; font-size: 1rem;">No platform bookings found.</p>
-              <p style="margin: 4px 0 0 0; font-size: 0.875rem;">Try adjusting your filters or date range.</p>
+              <p style="margin: 0; font-size: 0.875rem; font-weight: 500;">No platform bookings found.</p>
+              <p style="margin: 2px 0 0 0; font-size: 0.775rem;">Try adjusting your filters or date range.</p>
             </div>
           </div>
         </div>
 
-        <div
-          style="background: rgba(13, 118, 110, 0.05); border: 1px solid rgba(13, 118, 110, 0.2); padding: 24px; border-radius: 8px;">
-          <h3
-            style="margin: 0 0 8px 0; color: #0F766E; font-size: 1.0625rem; display: flex; align-items: center; gap: 8px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="16" x2="12" y2="12" />
-              <line x1="12" y1="8" x2="12.01" y2="8" />
-            </svg>
-            Platform-Wide Booking Rules
-          </h3>
-          <p style="color: #115E59; font-size: 0.9375rem; margin: 0; line-height: 1.5;">
-            Super Admins have a read-only view of bookings for cross-organization dispute resolution and compliance
-            checks.
-            <strong>Cancellations and rescheduling must be performed by the respective Organization Admin or
-              Passenger.</strong>
-          </p>
-        </div>
+
       </div>
 
       <div *ngIf="activeTab === 'users'">
