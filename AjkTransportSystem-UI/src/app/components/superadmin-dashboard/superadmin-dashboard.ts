@@ -482,6 +482,27 @@ export class SuperAdminDashboardComponent implements OnInit {
     document.body.removeChild(link);
   }
 
+  exportAlertHistory() {
+    if (!this.filteredAlerts || this.filteredAlerts.length === 0) return;
+    const headers = ['Alert Type', 'Severity', 'Organization', 'Triggered At', 'Status', 'Acknowledged By'];
+    const rows = this.filteredAlerts.map(a => [
+      a.alertType,
+      a.severity,
+      a.organization,
+      a.triggeredAt,
+      a.status,
+      a.acknowledgedBy || 'N/A'
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `platform_alerts_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
 
   loadChartAnalytics() {
     this.superAdminService.getChartAnalytics().subscribe({
