@@ -385,7 +385,7 @@ export class SuperAdminDashboardComponent implements OnInit {
       transportAdmins: 'Organization Admins',
       createAdmin: 'Create Admin',
       sessions: 'Active Sessions',
-      drivers: 'Cross-Organization Drivers',
+      drivers: 'All Drivers',
       vehicles: 'Cross-Organization Vehicles',
       routes: 'All Routes',
       liveTrips: 'Live Trips',

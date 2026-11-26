@@ -539,9 +539,9 @@
       <button class="btn-exit-view" (click)="setActiveTab('organizations')">Exit view</button>
     </div>
 
-    <!-- Read-only banner for system wide views -->
+    <!-- Read-only banner for system wide views (hidden per design request) -->
     <div class="org-readonly-banner"
-      *ngIf="['drivers', 'vehicles', 'routes', 'liveTrips', 'bookings'].includes(activeTab)">
+      *ngIf="false && ['drivers', 'vehicles', 'routes', 'liveTrips', 'bookings'].includes(activeTab)">
       <div class="banner-content">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -3425,77 +3425,68 @@
       <!-- ALL DRIVERS TAB -->
       <div *ngIf="activeTab === 'drivers' || activeTab === 'crossOrgDrivers'">
 
-        <div class="page-header">
-          <div class="breadcrumb">
-            <span class="breadcrumb-group">Platform</span>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-current">All Drivers</span>
-          </div>
+        <div class="page-header" style="margin-bottom: 16px;">
+          <div></div>
           <div class="header-actions">
-            <button class="qa-btn" (click)="loadCrossOrgDrivers()"
-              style="background: white; color: #475569; border: 1px solid #E2E8F0; padding: 10px 16px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 2v6h-6" />
-                <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
-                <path d="M3 22v-6h6" />
-                <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+            <button class="btn-refresh-status" (click)="loadCrossOrgDrivers()" title="Refresh Drivers">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
               </svg>
-              Refresh
+              <span>Refresh</span>
             </button>
             <button class="qa-btn" (click)="exportDrivers()"
-              style="background: white; color: #0F172A; border: 1px solid #E2E8F0; padding: 10px 16px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              style="background: white; color: #0F172A; border: 1px solid #E2E8F0; padding: 6px 14px; font-size: 0.8125rem; font-weight: 600; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              Export List
+              <span>Export List</span>
             </button>
           </div>
         </div>
 
-        <div class="chart-card" style="padding: 24px; margin-bottom: 24px;">
-          <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end;">
-            <div style="flex: 1.5; min-width: 180px;">
+        <div class="chart-card" style="padding: 14px 20px; margin-bottom: 20px; border: 1px solid #E2E8F0;">
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+            <div style="flex: 1.5; min-width: 170px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Organization</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Organization</label>
               <select [(ngModel)]="driverOrgFilter" (change)="filterDrivers()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">All Organizations</option>
                 <option *ngFor="let org of organizations" [value]="org.organizationName">{{ org.organizationName }}
                 </option>
               </select>
             </div>
-            <div style="flex: 1; min-width: 140px;">
+            <div style="flex: 1; min-width: 130px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Status</label>
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Status</label>
               <select [(ngModel)]="driverStatusFilter" (change)="filterDrivers()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">All Statuses</option>
                 <option value="Active">Active</option>
                 <option value="Inactive">Inactive</option>
               </select>
             </div>
-            <div style="flex: 1; min-width: 160px;">
+            <div style="flex: 1; min-width: 150px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Licence
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Licence
                 Expiry Range</label>
               <select [(ngModel)]="driverExpiryFilter" (change)="filterDrivers()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">Any Time</option>
                 <option value="expired">Expired</option>
                 <option value="30days">Expires in &lt; 30 days</option>
                 <option value="valid">Valid (&gt; 30 days)</option>
               </select>
             </div>
-            <div style="flex: 1; min-width: 140px;">
+            <div style="flex: 1; min-width: 130px;">
               <label
-                style="display: block; font-size: 0.8125rem; color: #475569; margin-bottom: 6px; font-weight: 600;">Active
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Active
                 Trip</label>
               <select [(ngModel)]="driverActiveTripFilter" (change)="filterDrivers()" class="form-input"
-                style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #CBD5E1; font-size: 0.9375rem;">
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
                 <option value="">Any</option>
                 <option value="yes">Currently on Trip</option>
                 <option value="no">Idle</option>
@@ -3504,22 +3495,14 @@
           </div>
         </div>
 
-        <div class="chart-card" style="padding: 0; overflow: hidden; margin-bottom: 24px;">
-          <div style="padding: 24px; border-bottom: 1px solid #F1F5F9;">
+        <!-- Registered Drivers Card -->
+        <div class="content-card" style="padding: 0; overflow: hidden; margin-bottom: 24px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+          <div style="padding: 14px 20px; border-bottom: 1px solid #F1F5F9; background: #FFFFFF;">
             <h3
-              style="margin: 0 0 4px 0; font-size: 1.125rem; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 8px;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                style="color: var(--sa-sidebar-accent);">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
+              style="margin: 0; font-size: 1rem; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 8px;">
               Registered Drivers
             </h3>
-            <p style="margin: 0; font-size: 0.9375rem; color: #64748B;">Cross-organization list of all drivers
-              registered on the platform.</p>
+            <p style="margin: 2px 0 0 0; font-size: 0.8125rem; color: #64748B;">Cross-organization list of all drivers registered on the platform.</p>
           </div>
 
           <div class="table-container" style="overflow-x: auto;">
@@ -3527,36 +3510,36 @@
               *ngIf="filteredDrivers && filteredDrivers.length > 0">
               <thead>
                 <tr>
-                  <th style="padding-left: 24px;">Driver & Contact</th>
-                  <th>Organization</th>
-                  <th>Licence Details</th>
-                  <th>Vehicle & Activity</th>
-                  <th>Status</th>
-                  <th style="padding-right: 24px; text-align: right;">Actions</th>
+                  <th style="padding: 10px 16px;">Driver & Contact</th>
+                  <th style="padding: 10px 16px;">Organization</th>
+                  <th style="padding: 10px 16px;">Licence Details</th>
+                  <th style="padding: 10px 16px;">Vehicle & Activity</th>
+                  <th style="padding: 10px 16px;">Status</th>
+                  <th style="padding: 10px 16px; text-align: right;">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let driver of filteredDrivers">
-                  <td style="padding-left: 24px;">
-                    <div style="font-weight: 600; color: #0F172A; font-size: 0.9375rem;">{{ driver.name }}</div>
-                    <div style="font-size: 0.8125rem; color: #64748B; margin-top: 2px;">DRV-{{ driver.userId }} • {{
+                  <td style="padding: 10px 16px;">
+                    <div style="font-weight: 600; color: #0F172A; font-size: 0.875rem;">{{ driver.name }}</div>
+                    <div style="font-size: 0.775rem; color: #64748B; margin-top: 1px;">DRV-{{ driver.userId }} • {{
                       driver.phone || 'N/A' }}</div>
                   </td>
-                  <td>
-                    <div style="color: #475569; font-weight: 500; font-size: 0.9375rem;">{{ driver.organizationName }}
+                  <td style="padding: 10px 16px;">
+                    <div style="color: #475569; font-weight: 500; font-size: 0.875rem;">{{ driver.organizationName }}
                     </div>
                   </td>
-                  <td>
-                    <div style="font-weight: 600; color: #334155; font-size: 0.875rem;">{{ driver.licenseNumber ||
+                  <td style="padding: 10px 16px;">
+                    <div style="font-weight: 600; color: #334155; font-size: 0.8125rem;">{{ driver.licenseNumber ||
                       'Unverified' }}</div>
-                    <div style="font-size: 0.8125rem; font-weight: 500; margin-top: 2px;"
+                    <div style="font-size: 0.775rem; font-weight: 500; margin-top: 1px;"
                       [style.color]="getExpiryColor(driver.licenseExpiryDate)">
                       Exp: {{ driver.licenseExpiryDate ? (driver.licenseExpiryDate | date:'shortDate') : 'Unknown' }}
                     </div>
                   </td>
-                  <td>
-                    <div style="font-size: 0.875rem; color: #0F172A; font-weight: 500;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                  <td style="padding: 10px 16px;">
+                    <div style="font-size: 0.8125rem; color: #0F172A; font-weight: 500;">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         style="color: #64748B; margin-right: 4px; vertical-align: middle;">
                         <rect x="2" y="7" width="20" height="15" rx="2" ry="2" />
@@ -3564,38 +3547,30 @@
                       </svg>
                       {{ driver.assignedVehicle || 'None' }}
                     </div>
-                    <div style="font-size: 0.8125rem; color: #64748B; margin-top: 4px;">
+                    <div style="font-size: 0.775rem; color: #64748B; margin-top: 2px;">
                       {{ driver.tripsCompleted || 0 }} trips completed
                     </div>
                   </td>
-                  <td>
+                  <td style="padding: 10px 16px;">
                     <span *ngIf="driver.status === 'Active'"
-                      style="background: #DCFCE7; color: #166534; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">Active</span>
+                      style="background: #0F172A; color: #FFFFFF; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">Active</span>
                     <span *ngIf="driver.status !== 'Active'"
-                      style="background: #F1F5F9; color: #475569; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;">{{
+                      style="background: #F1F5F9; color: #64748B; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">{{
                       driver.status || 'Inactive' }}</span>
                   </td>
-                  <td style="padding-right: 24px; text-align: right;">
-                    <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                      <button class="qa-btn"
-                        style="background: white; color: #3B82F6; border: 1px solid #BFDBFE; padding: 6px 10px; font-size: 0.8125rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                          style="margin-right: 4px;">
+                  <td style="padding: 10px 16px; text-align: right;">
+                    <div style="display: flex; gap: 6px; justify-content: flex-end;">
+                      <button class="action-btn-clean" title="View Profile">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                           <circle cx="12" cy="7" r="4" />
                         </svg>
-                        Profile
                       </button>
-                      <button class="qa-btn"
-                        style="background: white; color: #F59E0B; border: 1px solid #FDE68A; padding: 6px 10px; font-size: 0.8125rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                          style="margin-right: 4px;">
+                      <button class="action-btn-clean" title="Trip History">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                           <circle cx="12" cy="12" r="10" />
                           <polyline points="12 6 12 12 16 14" />
                         </svg>
-                        History
                       </button>
                     </div>
                   </td>
@@ -3604,40 +3579,22 @@
             </table>
 
             <div *ngIf="!filteredDrivers || filteredDrivers.length === 0"
-              style="padding: 48px; text-align: center; color: #64748B;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+              style="padding: 24px; text-align: center; color: #64748B;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                style="margin-bottom: 16px; opacity: 0.5;">
+                style="margin-bottom: 8px; opacity: 0.5;">
                 <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                 <circle cx="9" cy="7" r="4" />
                 <line x1="19" y1="8" x2="23" y2="12" />
                 <line x1="23" y1="8" x2="19" y2="12" />
               </svg>
-              <p style="margin: 0; font-size: 1rem;">No drivers found.</p>
-              <p style="margin: 4px 0 0 0; font-size: 0.875rem;">Try adjusting your filters.</p>
+              <p style="margin: 0; font-size: 0.875rem; font-weight: 500;">No drivers found.</p>
+              <p style="margin: 2px 0 0 0; font-size: 0.775rem;">Try adjusting your filters.</p>
             </div>
           </div>
         </div>
 
-        <div
-          style="background: rgba(13, 118, 110, 0.05); border: 1px solid rgba(13, 118, 110, 0.2); padding: 24px; border-radius: 8px;">
-          <h3
-            style="margin: 0 0 8px 0; color: #0F766E; font-size: 1.0625rem; display: flex; align-items: center; gap: 8px;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="16" x2="12" y2="12" />
-              <line x1="12" y1="8" x2="12.01" y2="8" />
-            </svg>
-            Driver Management Restrictions
-          </h3>
-          <ul style="color: #115E59; font-size: 0.9375rem; margin: 0; padding-left: 20px; line-height: 1.6;">
-            <li>Super Admins cannot add, edit, or deactivate drivers. These actions belong exclusively to the
-              Organization Admin.</li>
-            <li>Super Admins cannot assign drivers to a trip.</li>
-            <li>This view is strictly for auditing and cross-organizational reporting.</li>
-          </ul>
-        </div>
+
       </div>
 
       <!-- CROSS ORG VEHICLES TAB -->
