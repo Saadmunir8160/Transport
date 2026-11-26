@@ -459,6 +459,29 @@ export class SuperAdminDashboardComponent implements OnInit {
     return Array.from(new Set(this.offlineSyncData.logs.map((l: any) => l.organization))) as string[];
   }
 
+  exportSyncLog() {
+    if (!this.filteredSyncLogs || this.filteredSyncLogs.length === 0) return;
+    const headers = ['Sync ID', 'Record Type', 'Driver', 'Device', 'Organization', 'Created Locally', 'Synced At', 'Status'];
+    const rows = this.filteredSyncLogs.map(l => [
+      l.syncId,
+      l.recordType,
+      l.driverName,
+      l.device,
+      l.organization,
+      l.createdLocallyAt,
+      l.syncedAt || 'N/A',
+      l.status
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `offline_sync_logs_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
 
   loadChartAnalytics() {
     this.superAdminService.getChartAnalytics().subscribe({

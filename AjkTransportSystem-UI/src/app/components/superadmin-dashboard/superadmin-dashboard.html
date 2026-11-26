@@ -4919,172 +4919,146 @@
 
       <!-- Offline Sync Monitor Tab -->
       <div *ngIf="activeTab === 'offlineSync'">
-        <div class="card-header"
-          style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h2>🔄 Offline Sync Monitor</h2>
-            <p style="color: #7f8c8d; font-size: 0.95rem; margin-top: 0.5rem;">Tracks offline data stored locally by
-              drivers and passengers, and its sync status.</p>
-          </div>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="action-btn" style="background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;">Force
-              Retry Failed Syncs</button>
-            <button class="action-btn" style="background: #eef2f6; color: #1e293b;">Export Sync Log</button>
+        <!-- Top Actions Bar -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <button class="btn-refresh-status" (click)="loadOfflineSyncLogs()" title="Refresh Logs">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Refresh</span>
+          </button>
+          <button class="export-csv-btn" (click)="exportSyncLog()" title="Export Sync Log">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            <span>Export Log</span>
+          </button>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="chart-card" style="padding: 14px 20px; margin-bottom: 20px; border: 1px solid #E2E8F0;">
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+            <div style="flex: 1; min-width: 150px;">
+              <label
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Organization</label>
+              <select [(ngModel)]="syncOrgFilter" (change)="filterSyncLogs()" class="form-input"
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
+                <option value="">All Organizations</option>
+                <option *ngFor="let org of getDistinctSyncOrgs()" [value]="org">{{ org }}</option>
+              </select>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+              <label
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Record Type</label>
+              <select [(ngModel)]="syncRecordTypeFilter" (change)="filterSyncLogs()" class="form-input"
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
+                <option value="">All Types</option>
+                <option value="Trip Status">Trip Status</option>
+                <option value="Stop Log">Stop Log</option>
+                <option value="Issue Report">Issue Report</option>
+              </select>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+              <label
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Status</label>
+              <select [(ngModel)]="syncStatusFilter" (change)="filterSyncLogs()" class="form-input"
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
+                <option value="">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Synced">Synced</option>
+                <option value="Failed">Failed</option>
+                <option value="Conflict">Conflict</option>
+              </select>
+            </div>
+            <div style="flex: 1; min-width: 150px;">
+              <label
+                style="display: block; font-size: 0.775rem; color: #0F172A; margin-bottom: 4px; font-weight: 600;">Date Range</label>
+              <select [(ngModel)]="syncDateFilter" (change)="filterSyncLogs()" class="form-input"
+                style="width: 100%; padding: 6px 10px; border-radius: 6px; border: 1px solid #E2E8F0; font-size: 0.8125rem;">
+                <option value="">Any Time</option>
+                <option value="today">Last 24 Hours</option>
+                <option value="week">Last 7 Days</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <div class="stats-grid"
-          style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;"
-          *ngIf="offlineSyncData">
-          <div class="stat-card">
-            <div class="stat-icon gold">⏳</div>
-            <div class="stat-info">
-              <h3>{{ offlineSyncData.summary.pendingSync }}</h3>
-              <p>Records Pending Sync</p>
-            </div>
+        <!-- Sync Logs Card -->
+        <div class="content-card" style="padding: 0; overflow: hidden; margin-bottom: 24px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+          <div style="padding: 14px 20px; border-bottom: 1px solid #F1F5F9; background: #FFFFFF;">
+            <h3
+              style="margin: 0; font-size: 1rem; font-weight: 700; color: #0F172A; display: flex; align-items: center; gap: 8px;">
+              Offline Sync Logs
+            </h3>
+            <p style="margin: 2px 0 0 0; font-size: 0.8125rem; color: #64748B;">Tracks offline data stored locally by drivers and passengers, and its synchronization status.</p>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon green">✅</div>
-            <div class="stat-info">
-              <h3>{{ offlineSyncData.summary.syncedLast24h }}</h3>
-              <p>Synced in Last 24h</p>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon red">❌</div>
-            <div class="stat-info">
-              <h3>{{ offlineSyncData.summary.syncFailures }}</h3>
-              <p>Sync Failures</p>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon blue">📱</div>
-            <div class="stat-info">
-              <h3>{{ offlineSyncData.summary.devicesOffline }}</h3>
-              <p>Devices Seen Offline</p>
-            </div>
-          </div>
-        </div>
 
-        <div class="filter-bar"
-          style="margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; background: #fff; padding: 1rem; border-radius: 8px; border: 1px solid #e2e8f0; align-items: center;">
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Organization</label>
-            <select [(ngModel)]="syncOrgFilter" (change)="filterSyncLogs()"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 150px;">
-              <option value="">All Organizations</option>
-              <option *ngFor="let org of getDistinctSyncOrgs()" [value]="org">{{ org }}</option>
-            </select>
+          <div class="table-container" style="overflow-x: auto;">
+            <table class="data-table" style="margin: 0; border: none; border-radius: 0;" *ngIf="filteredSyncLogs.length > 0">
+              <thead>
+                <tr>
+                  <th style="padding: 10px 16px;">Sync ID</th>
+                  <th style="padding: 10px 16px;">Record Type</th>
+                  <th style="padding: 10px 16px;">Driver / Device</th>
+                  <th style="padding: 10px 16px;">Organization</th>
+                  <th style="padding: 10px 16px;">Created Locally</th>
+                  <th style="padding: 10px 16px;">Synced At</th>
+                  <th style="padding: 10px 16px;">Status</th>
+                  <th style="padding: 10px 16px; text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let log of filteredSyncLogs">
+                  <td style="padding: 10px 16px; font-weight: 600; color: #0F172A;">#{{ log.syncId }}</td>
+                  <td style="padding: 10px 16px;">
+                    <span style="background: #F1F5F9; color: #0F172A; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                      {{ log.recordType }}
+                    </span>
+                  </td>
+                  <td style="padding: 10px 16px;">
+                    <div style="font-weight: 600; color: #0F172A; font-size: 0.875rem;">{{ log.driverName }}</div>
+                    <div style="font-size: 0.775rem; color: #64748B; margin-top: 1px;">{{ log.device }}</div>
+                  </td>
+                  <td style="padding: 10px 16px; color: #475569; font-size: 0.875rem;">{{ log.organization }}</td>
+                  <td style="padding: 10px 16px; font-size: 0.8125rem; color: #64748B;">{{ log.createdLocallyAt }}</td>
+                  <td style="padding: 10px 16px; font-size: 0.8125rem; color: #64748B;">{{ log.syncedAt || '—' }}</td>
+                  <td style="padding: 10px 16px;">
+                    <span *ngIf="log.status === 'Synced'"
+                      style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; background: #0F172A; color: #FFFFFF;">
+                      <span style="width: 5px; height: 5px; border-radius: 50%; background: #FFFFFF; display: inline-block;"></span>
+                      Synced
+                    </span>
+                    <span *ngIf="log.status === 'Pending'"
+                      style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; background: #F1F5F9; color: #0F172A; border: 1px solid #CBD5E1;">
+                      Pending
+                    </span>
+                    <div *ngIf="log.status === 'Failed' || log.status === 'Conflict'" style="display: flex; flex-direction: column;">
+                      <span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600; background: #F1F5F9; color: #64748B;">
+                        {{ log.status }}
+                      </span>
+                      <span style="font-size: 0.7rem; color: #64748B; margin-top: 2px;">{{ log.conflictReason }}</span>
+                    </div>
+                  </td>
+                  <td style="padding: 10px 16px; text-align: right;">
+                    <button *ngIf="log.status === 'Conflict' || log.status === 'Failed'" class="action-btn-clean" title="Retry / Resolve">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Record
-              Type</label>
-            <select [(ngModel)]="syncRecordTypeFilter" (change)="filterSyncLogs()"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 150px;">
-              <option value="">All Types</option>
-              <option value="Trip Status">Trip Status</option>
-              <option value="Stop Log">Stop Log</option>
-              <option value="Issue Report">Issue Report</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label
-              style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Status</label>
-            <select [(ngModel)]="syncStatusFilter" (change)="filterSyncLogs()"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 150px;">
-              <option value="">All Statuses</option>
-              <option value="Pending">Pending</option>
-              <option value="Synced">Synced</option>
-              <option value="Failed">Failed</option>
-              <option value="Conflict">Conflict</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label style="display: block; font-size: 0.8rem; color: #64748b; margin-bottom: 4px; font-weight: 600;">Date
-              Range</label>
-            <select [(ngModel)]="syncDateFilter" (change)="filterSyncLogs()"
-              style="padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 4px; background: #f8fafc; min-width: 150px;">
-              <option value="">Any Time</option>
-              <option value="today">Last 24 Hours</option>
-              <option value="week">Last 7 Days</option>
-            </select>
-          </div>
-        </div>
 
-        <div class="content-card">
-          <table class="data-table" *ngIf="filteredSyncLogs.length > 0">
-            <thead>
-              <tr>
-                <th>Sync ID</th>
-                <th>Record Type</th>
-                <th>Driver / Device</th>
-                <th>Organization</th>
-                <th>Created Locally</th>
-                <th>Synced At</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let log of filteredSyncLogs">
-                <td>#{{ log.syncId }}</td>
-                <td><span
-                    style="background: #eef2f6; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">{{
-                    log.recordType }}</span></td>
-                <td>
-                  <div style="font-weight: 600; color: #1e293b;">{{ log.driverName }}</div>
-                  <div style="font-size: 0.75rem; color: #64748b;">{{ log.device }}</div>
-                </td>
-                <td>{{ log.organization }}</td>
-                <td style="font-size: 0.85rem;">{{ log.createdLocallyAt }}</td>
-                <td style="font-size: 0.85rem;">{{ log.syncedAt || '—' }}</td>
-                <td>
-                  <span *ngIf="log.status === 'Synced'"
-                    style="color: #10b981; font-weight: 600; display: flex; align-items: center; gap: 4px;">✅
-                    Synced</span>
-                  <span *ngIf="log.status === 'Pending'"
-                    style="color: #f59e0b; font-weight: 600; display: flex; align-items: center; gap: 4px;">⏳
-                    Pending</span>
-                  <div *ngIf="log.status === 'Failed'" style="display: flex; flex-direction: column;">
-                    <span style="color: #ef4444; font-weight: 600; display: flex; align-items: center; gap: 4px;">❌
-                      Failed</span>
-                    <span style="font-size: 0.7rem; color: #ef4444; margin-top: 2px;">{{ log.conflictReason }}</span>
-                  </div>
-                  <div *ngIf="log.status === 'Conflict'" style="display: flex; flex-direction: column;">
-                    <span style="color: #d97706; font-weight: 600; display: flex; align-items: center; gap: 4px;">⚠️
-                      Conflict</span>
-                    <span style="font-size: 0.7rem; color: #d97706; margin-top: 2px;">{{ log.conflictReason }}</span>
-                  </div>
-                </td>
-                <td>
-                  <button *ngIf="log.status === 'Conflict'" class="action-btn"
-                    style="background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; font-size: 0.75rem;">Resolve
-                    Conflict</button>
-                  <button *ngIf="log.status === 'Failed'" class="action-btn"
-                    style="background: #f8fafc; border: 1px solid #e2e8f0; font-size: 0.75rem;">Retry Sync</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="empty-state" *ngIf="filteredSyncLogs.length === 0">
-            <p>No offline sync logs found for the selected criteria.</p>
+          <div class="empty-state" *ngIf="filteredSyncLogs.length === 0" style="padding: 36px 20px; text-align: center; border: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: #94A3B8; margin-bottom: 8px;">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <p style="margin: 0; font-size: 0.875rem; font-weight: 500; color: #64748B;">No offline sync logs found for the selected criteria.</p>
           </div>
-        </div>
-
-        <div
-          style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
-          <h3 style="margin-top: 0; color: #1e293b; font-size: 1rem;">📌 Offline Sync Rules</h3>
-          <ul
-            style="color: #475569; font-size: 0.9rem; margin: 0.5rem 0 0 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.4rem;">
-            <li><strong>Booking Creation</strong> is not allowed offline. Seat conflicts cannot be reliably resolved
-              without the server.</li>
-            <li><strong>Trip Status</strong> (Start, Stop, Complete) and <strong>Stop Logs</strong> are the primary
-              supported offline records.</li>
-            <li><strong>Conflicts</strong> happen when the server record changed while the device was offline (e.g.,
-              Trip cancelled on server while driver started it offline).</li>
-          </ul>
         </div>
       </div>
 
