@@ -160,17 +160,20 @@
   padding: 0 16px;
   display: flex;
   flex-direction: column;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 .sidebar-nav::-webkit-scrollbar {
-  width: 3px;
+  display: none;
+  width: 0px;
+  height: 0px;
 }
 .sidebar-nav::-webkit-scrollbar-thumb {
   background: transparent;
-  border-radius: 4px;
 }
 .sidebar-nav:hover::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: transparent;
 }
 
 .nav-group-header {
