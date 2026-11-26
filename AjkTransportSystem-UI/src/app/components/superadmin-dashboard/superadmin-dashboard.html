@@ -3425,26 +3425,22 @@
       <!-- ALL DRIVERS TAB -->
       <div *ngIf="activeTab === 'drivers' || activeTab === 'crossOrgDrivers'">
 
-        <div class="page-header" style="margin-bottom: 16px;">
-          <div></div>
-          <div class="header-actions">
-            <button class="btn-refresh-status" (click)="loadCrossOrgDrivers()" title="Refresh Drivers">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
-              </svg>
-              <span>Refresh</span>
-            </button>
-            <button class="qa-btn" (click)="exportDrivers()"
-              style="background: white; color: #0F172A; border: 1px solid #E2E8F0; padding: 6px 14px; font-size: 0.8125rem; font-weight: 600; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              <span>Export List</span>
-            </button>
-          </div>
+        <!-- Top Actions Bar -->
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-bottom: 16px;">
+          <button class="btn-refresh-status" (click)="loadCrossOrgDrivers()" title="Refresh Drivers">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span>Refresh</span>
+          </button>
+          <button class="export-csv-btn" (click)="exportDrivers()" title="Export Drivers List as CSV">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Export List</span>
+          </button>
         </div>
 
         <div class="chart-card" style="padding: 14px 20px; margin-bottom: 20px; border: 1px solid #E2E8F0;">
