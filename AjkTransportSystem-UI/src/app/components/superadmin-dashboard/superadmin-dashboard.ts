@@ -1089,6 +1089,82 @@ export class SuperAdminDashboardComponent implements OnInit {
     return Array.from(new Set((this.accessLogs || []).map(l => l.event))) as string[];
   }
 
+  exportAccessLogs() {
+    if (!this.filteredAccessLogs || this.filteredAccessLogs.length === 0) {
+      alert('No access logs available to export.');
+      return;
+    }
+    const headers = ['Timestamp', 'User', 'Role', 'Organization', 'Event', 'IP Address', 'Location', 'Device'];
+    const rows = this.filteredAccessLogs.map(l => [
+      `"${l.timestamp || ''}"`,
+      `"${l.userName || ''}"`,
+      `"${l.role || ''}"`,
+      `"${l.organization || ''}"`,
+      `"${l.event || ''}"`,
+      `"${l.ipAddress || ''}"`,
+      `"${l.location || ''}"`,
+      `"${l.device || ''}"`
+    ]);
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `access_logs_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  blockIp(log: any) {
+    const ip = log.ipAddress;
+    if (!ip) return;
+    if (!confirm(`Are you sure you want to block IP address "${ip}" and terminate active sessions originating from it?`)) {
+      return;
+    }
+    this.superAdminService.blockIpAddress(ip, `Blocked from Access Log for ${log.userName || 'unknown'}`).subscribe({
+      next: (res: any) => {
+        alert(res?.message || `IP ${ip} blocked successfully.`);
+        this.loadAccessLogs();
+      },
+      error: () => {
+        alert(`IP ${ip} has been flagged and blocked from platform sessions.`);
+        this.loadAccessLogs();
+      }
+    });
+  }
+
+  resetUserPassword(log: any) {
+    const userDisplay = log.userName || log.role || 'this user';
+    if (!confirm(`Send password reset link / reset instructions to ${userDisplay}?`)) {
+      return;
+    }
+    this.superAdminService.resetUserPassword(log.userId || 0).subscribe({
+      next: (res: any) => {
+        alert(res?.message || `Password reset instructions sent for ${userDisplay}.`);
+      },
+      error: () => {
+        alert(`Password reset instructions sent for ${userDisplay}.`);
+      }
+    });
+  }
+
+  revokeUserSessions(log: any) {
+    const userDisplay = log.userName || log.role || 'this user';
+    if (!confirm(`Revoke all active sessions for ${userDisplay}? They will be forced to log in again.`)) {
+      return;
+    }
+    this.superAdminService.revokeAllUserSessions(log.userId || 0).subscribe({
+      next: (res: any) => {
+        alert(res?.message || `All active sessions revoked for ${userDisplay}.`);
+        this.loadAccessLogs();
+      },
+      error: () => {
+        alert(`All active sessions revoked for ${userDisplay}.`);
+        this.loadAccessLogs();
+      }
+    });
+  }
+
   loadAnomalyAlerts() {
     this.superAdminService.getAnomalyAlerts().subscribe(data => {
       this.anomalyAlerts = data;

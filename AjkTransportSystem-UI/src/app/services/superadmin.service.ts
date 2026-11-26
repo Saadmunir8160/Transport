@@ -48,4 +48,7 @@ export class SuperAdminService {
   getActiveSessions(p?: any): Observable<any> { return this.http.get(`${this.apiUrl}/sessions`, { headers: this.getHeaders() }); }
   revokeSession(sessionId: any): Observable<any> { return this.http.post(`${this.apiUrl}/sessions/${sessionId}/revoke`, {}, { headers: this.getHeaders() }); }
   banSessionIp(sessionId: any): Observable<any> { return this.http.post(`${this.apiUrl}/sessions/${sessionId}/ban-ip`, {}, { headers: this.getHeaders() }); }
+  blockIpAddress(ipAddress: string, reason?: string): Observable<any> { return this.http.post(`${this.apiUrl}/security/block-ip`, { ipAddress, reason }, { headers: this.getHeaders() }); }
+  revokeAllUserSessions(userId: any): Observable<any> { return this.http.post(`${this.apiUrl}/security/revoke-user-sessions/${userId}`, {}, { headers: this.getHeaders() }); }
+  resetUserPassword(userId: any): Observable<any> { return this.http.post(`${this.apiUrl}/security/reset-user-password/${userId}`, {}, { headers: this.getHeaders() }); }
 }
