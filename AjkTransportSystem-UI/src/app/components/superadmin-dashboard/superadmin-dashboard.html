@@ -4449,15 +4449,21 @@
       </div>
 
       <div *ngIf="activeTab === 'routes'">
-        <div class="content-card">
-          <div class="card-header">
-            <h2>Add New Route</h2>
+        <!-- Add New Route Card -->
+        <div class="content-card" style="padding: 0; overflow: hidden; margin-bottom: 24px; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+          <div style="padding: 16px 24px; border-bottom: 1px solid #F1F5F9; background: #FFFFFF;">
+            <h2 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0; display: flex; align-items: center; gap: 8px;">
+              Add New Route
+            </h2>
+            <p style="font-size: 0.8125rem; color: #64748B; margin: 4px 0 0 0;">Create and configure transit corridors and distance metrics across regions.</p>
           </div>
-          <form (ngSubmit)="addRoute()">
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Route Name</label>
-                <select [(ngModel)]="routeName" name="routeName" required>
+
+          <form (ngSubmit)="addRoute()" style="padding: 20px 24px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px;">
+              <div class="form-group" style="margin: 0;">
+                <label style="display: block; font-size: 0.8125rem; font-weight: 600; color: #0F172A; margin-bottom: 6px;">Route Name *</label>
+                <select [(ngModel)]="routeName" name="routeName" required
+                  style="width: 100%; height: 38px; padding: 0 12px; font-size: 0.875rem; border: 1px solid #E2E8F0; border-radius: 6px; outline: none; background: #FFFFFF; color: #0F172A; box-sizing: border-box; cursor: pointer;">
                   <option value="">Select Route Name</option>
                   <option value="Express">Express</option>
                   <option value="Direct">Direct</option>
@@ -4469,9 +4475,10 @@
                   <option value="VIP">VIP</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label>Start Point</label>
-                <select [(ngModel)]="startPoint" name="startPoint" (change)="calculateDistance()" required>
+              <div class="form-group" style="margin: 0;">
+                <label style="display: block; font-size: 0.8125rem; font-weight: 600; color: #0F172A; margin-bottom: 6px;">Start Point *</label>
+                <select [(ngModel)]="startPoint" name="startPoint" (change)="calculateDistance()" required
+                  style="width: 100%; height: 38px; padding: 0 12px; font-size: 0.875rem; border: 1px solid #E2E8F0; border-radius: 6px; outline: none; background: #FFFFFF; color: #0F172A; box-sizing: border-box; cursor: pointer;">
                   <option value="">Select Start City</option>
                   <option value="Muzaffarabad">Muzaffarabad</option>
                   <option value="Mirpur">Mirpur</option>
@@ -4487,9 +4494,10 @@
                   <option value="Islamabad">Islamabad</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label>End Point</label>
-                <select [(ngModel)]="endPoint" name="endPoint" (change)="calculateDistance()" required>
+              <div class="form-group" style="margin: 0;">
+                <label style="display: block; font-size: 0.8125rem; font-weight: 600; color: #0F172A; margin-bottom: 6px;">End Point *</label>
+                <select [(ngModel)]="endPoint" name="endPoint" (change)="calculateDistance()" required
+                  style="width: 100%; height: 38px; padding: 0 12px; font-size: 0.875rem; border: 1px solid #E2E8F0; border-radius: 6px; outline: none; background: #FFFFFF; color: #0F172A; box-sizing: border-box; cursor: pointer;">
                   <option value="">Select End City</option>
                   <option value="Muzaffarabad">Muzaffarabad</option>
                   <option value="Mirpur">Mirpur</option>
@@ -4505,42 +4513,81 @@
                   <option value="Islamabad">Islamabad</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label>Distance (km) - Auto-calculated</label>
-                <input [(ngModel)]="distance" name="distance" type="number" placeholder="Select cities first" readonly
-                  style="background: #e9ecef;">
+              <div class="form-group" style="margin: 0;">
+                <label style="display: block; font-size: 0.8125rem; font-weight: 600; color: #0F172A; margin-bottom: 6px;">Distance (km)</label>
+                <input [(ngModel)]="distance" name="distance" type="number" placeholder="Auto-calculated" readonly
+                  style="width: 100%; height: 38px; padding: 0 12px; font-size: 0.875rem; border: 1px solid #E2E8F0; border-radius: 6px; outline: none; background: #F8FAFC; color: #64748B; box-sizing: border-box;">
               </div>
             </div>
-            <button type="submit" class="add-btn">➕ Add Route</button>
+
+            <div style="display: flex; justify-content: flex-end; padding-top: 4px;">
+              <button type="submit"
+                style="height: 38px; padding: 0 20px; background: #0F172A; color: #FFFFFF; border: 1px solid #0F172A; border-radius: 6px; font-size: 0.8125rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.15s ease;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Add Route</span>
+              </button>
+            </div>
           </form>
         </div>
 
-        <div class="content-card">
-          <div class="card-header">
-            <h2>All Routes</h2>
+        <!-- All Routes Card -->
+        <div class="content-card" style="padding: 0; overflow: hidden; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px rgba(0,0,0,0.02);">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid #F1F5F9; background: #FFFFFF;">
+            <div>
+              <h2 style="font-size: 1.05rem; font-weight: 700; color: #0F172A; margin: 0;">
+                All Routes
+              </h2>
+              <p style="font-size: 0.8125rem; color: #64748B; margin: 4px 0 0 0;">Comprehensive list of active transit routes and designated terminals.</p>
+            </div>
+            <button class="btn-refresh-status" (click)="loadRoutes()" title="Refresh Routes">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+              </svg>
+              <span>Refresh</span>
+            </button>
           </div>
-          <table class="data-table" *ngIf="routes.length > 0">
-            <thead>
-              <tr>
-                <th>Route Name</th>
-                <th>Start Point</th>
-                <th>End Point</th>
-                <th>Distance</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let route of routes">
-                <td><strong>{{ route.routeName }}</strong></td>
-                <td>{{ route.startPoint }}</td>
-                <td>{{ route.endPoint }}</td>
-                <td>{{ route.distance }} km</td>
-                <td><button class="action-btn" (click)="deleteRoute(route.routeId)">🗑️ Delete</button></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="empty-state" *ngIf="routes.length === 0">
-            <p>No routes added yet.</p>
+
+          <div class="table-container" style="overflow-x: auto;">
+            <table class="data-table" style="margin: 0; border: none; border-radius: 0;" *ngIf="routes.length > 0">
+              <thead>
+                <tr>
+                  <th style="padding: 10px 16px;">Route Name</th>
+                  <th style="padding: 10px 16px;">Start Point</th>
+                  <th style="padding: 10px 16px;">End Point</th>
+                  <th style="padding: 10px 16px;">Distance</th>
+                  <th style="padding: 10px 16px; text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let route of routes">
+                  <td style="padding: 10px 16px;"><strong style="color: #0F172A;">{{ route.routeName }}</strong></td>
+                  <td style="padding: 10px 16px; color: #475569;">{{ route.startPoint }}</td>
+                  <td style="padding: 10px 16px; color: #475569;">{{ route.endPoint }}</td>
+                  <td style="padding: 10px 16px; color: #0F172A; font-weight: 600;">{{ route.distance }} km</td>
+                  <td style="padding: 10px 16px; text-align: right;">
+                    <button class="action-btn-clean" (click)="deleteRoute(route.routeId)" title="Delete Route">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="empty-state" *ngIf="routes.length === 0" style="padding: 36px 20px; text-align: center; border: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: #94A3B8; margin-bottom: 8px;">
+              <path d="M3 3v18h18"/>
+              <path d="m19 9-5 5-4-4-3 3"/>
+            </svg>
+            <p style="margin: 0; font-size: 0.875rem; font-weight: 500; color: #64748B;">No routes added yet.</p>
           </div>
         </div>
       </div>
