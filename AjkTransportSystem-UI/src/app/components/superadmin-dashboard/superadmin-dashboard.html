@@ -714,51 +714,6 @@
           </div>
         </div>
 
-        <!-- 3 Charts Row (Organizations, Trips, Bookings) -->
-        <div class="dash-charts-3col">
-          <!-- Chart 1: Organizations created per month -->
-          <div class="dash-chart-card">
-            <div class="chart-card-top">
-              <div>
-                <h3 class="chart-title">Organizations created per month</h3>
-                <p class="chart-sub">Cumulative tenant onboarding (Total: 8 Orgs)</p>
-              </div>
-              <span class="chart-badge-blue">+33% QoQ</span>
-            </div>
-            <div class="chart-canvas-wrap">
-              <canvas id="orgsChart"></canvas>
-            </div>
-          </div>
-
-          <!-- Chart 2: Trips per organization -->
-          <div class="dash-chart-card">
-            <div class="chart-card-top">
-              <div>
-                <h3 class="chart-title">Trips per organization</h3>
-                <p class="chart-sub">Active fleet dispatch distribution (120 trips today)</p>
-              </div>
-              <span class="chart-badge-purple">5 Active</span>
-            </div>
-            <div class="chart-canvas-wrap">
-              <canvas id="tripsChart"></canvas>
-            </div>
-          </div>
-
-          <!-- Chart 3: Bookings per organization (Donut Chart) -->
-          <div class="dash-chart-card">
-            <div class="chart-card-top">
-              <div>
-                <h3 class="chart-title">Bookings per organization</h3>
-                <p class="chart-sub">Ticket reservation share (900 bookings today)</p>
-              </div>
-              <span class="chart-badge-amber">900 Total</span>
-            </div>
-            <div class="chart-canvas-wrap donut-wrap">
-              <canvas id="bookingsChart"></canvas>
-            </div>
-          </div>
-        </div>
-
         <!-- Middle Row: Activity Graph (Highlighted with Amber/Gold border) + Top Organizations -->
         <div class="dash-charts-2col">
           <!-- Platform Activity 30 Days -->
@@ -772,8 +727,8 @@
                 <p class="chart-sub">Daily completed trips and confirmed seat bookings across all tenants</p>
               </div>
               <div class="legend-toggles">
-                <span class="legend-pill blue-legend">● Bookings</span>
-                <span class="legend-pill orange-legend">● Trips</span>
+                <span class="legend-pill" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; background: #0F172A; color: #FFFFFF;">● Bookings</span>
+                <span class="legend-pill" style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; background: #F1F5F9; color: #334155; border: 1px solid #E2E8F0;">● Trips</span>
               </div>
             </div>
             <div class="chart-canvas-wrap">
