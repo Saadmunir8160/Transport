@@ -213,11 +213,10 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="display: none;">
             <select [(ngModel)]="language" name="language" class="input-pill">
               <option value="English">English</option>
               <option value="Urdu">Urdu (اردو)</option>
-              <option value="Hindi">Hindi (हिंदी)</option>
             </select>
           </div>
 
@@ -251,10 +250,6 @@
           <button type="submit" class="btn-pill gradient-orange" [disabled]="loading || timer <= 0">
             <span *ngIf="!loading">Verify & Create Account</span>
             <span *ngIf="loading">Verifying...</span>
-          </button>
-
-          <button type="button" class="btn-pill" style="background: transparent; color: #4f46e5; border: 1px solid #4f46e5; margin-top: 1rem;" (click)="step = 'details'">
-            ← Edit Phone Number
           </button>
         </form>
       </div>
