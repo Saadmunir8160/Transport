@@ -550,6 +550,12 @@ export class SuperAdminDashboardComponent implements OnInit {
   }
 
   charts: any = {};
+  activityMetric: 'bookings' | 'trips' = 'bookings';
+
+  setActivityMetric(metric: 'bookings' | 'trips') {
+    this.activityMetric = metric;
+    this.renderActivityChart();
+  }
 
   renderCharts(data: any) {
     // Destroy existing charts if any
@@ -647,66 +653,82 @@ export class SuperAdminDashboardComponent implements OnInit {
       });
     }
 
-    // 4. Platform Activity Last 30 Days (Dual Area Line Chart)
-    const activityCanvas = document.getElementById('activityChart') as HTMLCanvasElement;
-    if (activityCanvas) {
-      const days = Array.from({ length: 30 }, (_, i) => {
-        const d = new Date();
-        d.setDate(d.getDate() - (29 - i));
-        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      });
-      // Generate deterministic or data-driven trip/booking curves
-      const bookingsTrend = [18, 22, 25, 29, 35, 42, 38, 45, 52, 60, 58, 65, 72, 68, 75, 80, 85, 92, 88, 95, 102, 110, 105, 118, 125, 130, 128, 135, 142, 150];
-      const tripsTrend = [12, 15, 18, 20, 24, 28, 26, 30, 34, 38, 36, 40, 45, 42, 48, 50, 54, 58, 55, 60, 64, 68, 65, 72, 76, 80, 78, 82, 88, 92];
+    // 4. Platform Activity Last 30 Days (Interactive Toggle: Bookings vs Trips)
+    this.renderActivityChart();
+  }
 
-      this.charts.activity = new Chart(activityCanvas, {
-        type: 'line',
-        data: {
-          labels: days,
-          datasets: [
-            {
-              label: 'Bookings',
-              data: bookingsTrend,
-              borderColor: '#0F172A',
-              backgroundColor: 'rgba(15, 23, 42, 0.08)',
-              borderWidth: 2.5,
-              tension: 0.35,
-              fill: true,
-              pointRadius: 2,
-              pointHoverRadius: 6
-            },
-            {
-              label: 'Trips',
-              data: tripsTrend,
-              borderColor: '#64748B',
-              backgroundColor: 'rgba(100, 116, 139, 0.04)',
-              borderWidth: 2,
-              borderDash: [4, 4],
-              tension: 0.35,
-              fill: true,
-              pointRadius: 2,
-              pointHoverRadius: 6
-            }
-          ]
+  renderActivityChart() {
+    const activityCanvas = document.getElementById('activityChart') as HTMLCanvasElement;
+    if (!activityCanvas) return;
+
+    if (this.charts.activity) {
+      try { this.charts.activity.destroy(); } catch (e) {}
+    }
+
+    const days = Array.from({ length: 30 }, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - (29 - i));
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    });
+
+    const bookingsTrend = [18, 22, 25, 29, 35, 42, 38, 45, 52, 60, 58, 65, 72, 68, 75, 80, 85, 92, 88, 95, 102, 110, 105, 118, 125, 130, 128, 135, 142, 150];
+    const tripsTrend = [12, 15, 18, 20, 24, 28, 26, 30, 34, 38, 36, 40, 45, 42, 48, 50, 54, 58, 55, 60, 64, 68, 65, 72, 76, 80, 78, 82, 88, 92];
+
+    const isBookings = this.activityMetric === 'bookings';
+    const activeData = isBookings ? bookingsTrend : tripsTrend;
+    const activeLabel = isBookings ? 'Daily Confirmed Bookings' : 'Daily Completed Trips';
+
+    this.charts.activity = new Chart(activityCanvas, {
+      type: 'line',
+      data: {
+        labels: days,
+        datasets: [
+          {
+            label: activeLabel,
+            data: activeData,
+            borderColor: '#0F172A',
+            backgroundColor: 'rgba(15, 23, 42, 0.08)',
+            borderWidth: 2.5,
+            tension: 0.35,
+            fill: true,
+            pointBackgroundColor: '#0F172A',
+            pointRadius: 3,
+            pointHoverRadius: 6
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+          duration: 400
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { display: false },
-            tooltip: { cornerRadius: 6 }
-          },
-          scales: {
-            y: { beginAtZero: true, grid: { color: '#F1F5F9' } },
-            x: {
-              grid: { display: false },
-              ticks: { maxTicksLimit: 10, font: { size: 10 } }
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            cornerRadius: 6,
+            callbacks: {
+              label: (context) => ` ${context.dataset.label}: ${context.parsed.y}`
             }
           }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: '#F1F5F9' },
+            ticks: {
+              font: { size: 11, weight: '500' }
+            }
+          },
+          x: {
+            grid: { display: false },
+            ticks: { maxTicksLimit: 10, font: { size: 10 } }
+          }
         }
-      });
-    }
+      }
+    });
+  }
   }
 
   organizations: any[] = [];
