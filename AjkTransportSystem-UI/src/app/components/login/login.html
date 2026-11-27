@@ -169,15 +169,16 @@
           </div>
 
           <div class="form-group">
-            <div class="phone-input" style="display: flex; gap: 0.5rem;">
-              <span class="prefix" style="padding: 0.75rem 1rem; border: 1px solid #e5e7eb; border-radius: 9999px; background: #f9fafb; font-weight: 500;">+92</span>
-              <input type="tel" [(ngModel)]="phone" name="phone" placeholder="3XX XXXXXXX" class="input-pill" style="flex: 1;" required>
-            </div>
-            <small style="color: #6b7280; margin-left: 0.5rem; font-size: 0.75rem;">Primary identifier for SMS tickets</small>
+            <input type="email" [(ngModel)]="regEmail" name="regEmail" placeholder="Email Address (for OTP Code)" class="input-pill" required>
+            <small style="color: #6b7280; margin-left: 0.5rem; font-size: 0.75rem;">Verification code will be sent to this email</small>
           </div>
 
           <div class="form-group">
-            <input type="email" [(ngModel)]="regEmail" name="regEmail" placeholder="Email (Optional)" class="input-pill">
+            <div class="phone-input" style="display: flex; gap: 0.5rem;">
+              <span class="prefix" style="padding: 0.75rem 1rem; border: 1px solid #e5e7eb; border-radius: 9999px; background: #f9fafb; font-weight: 500;">+92</span>
+              <input type="tel" [(ngModel)]="phone" name="phone" placeholder="3XX XXXXXXX (Optional)" class="input-pill" style="flex: 1;">
+            </div>
+            <small style="color: #6b7280; margin-left: 0.5rem; font-size: 0.75rem;">Contact number for ticket updates</small>
           </div>
 
           <div class="form-group">
@@ -234,8 +235,8 @@
       <!-- STEP 2: OTP -->
       <div *ngIf="step === 'otp'">
         <div style="text-align: center; margin-bottom: 2rem;">
-          <h3 style="margin-bottom: 0.5rem;">Verify Phone Number</h3>
-          <p style="color: #6b7280; font-size: 0.9rem;">We sent a 6-digit code to <strong style="color: #111827;">+92 {{ phone }}</strong></p>
+          <h3 style="margin-bottom: 0.5rem;">Verify Email Address</h3>
+          <p style="color: #6b7280; font-size: 0.9rem;">We sent a 6-digit code to <strong style="color: #111827;">{{ regEmail }}</strong></p>
         </div>
 
         <form (ngSubmit)="verifyOtp()">
@@ -252,6 +253,12 @@
             <span *ngIf="loading">Verifying...</span>
           </button>
         </form>
+
+        <div style="text-align: center; margin-top: 1.5rem;">
+          <button type="button" (click)="step = 'details'" style="background: none; border: none; color: #4f46e5; font-size: 0.9rem; cursor: pointer; text-decoration: underline;">
+            ← Edit Registration Details
+          </button>
+        </div>
       </div>
 
       <p *ngIf="message" class="message" [class.success]="!message.includes('Invalid') && !message.includes('Try again')" [class.error]="message.includes('Invalid') || message.includes('Try again')">

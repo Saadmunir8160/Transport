@@ -182,8 +182,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   requestOtp() {
     this.message = '';
-    if (!this.name || !this.phone || !this.regPassword) {
-      this.message = 'Please fill all required fields';
+    if (!this.name || !this.regEmail || !this.regPassword) {
+      this.message = 'Please provide Full Name, Email, and Password.';
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.regEmail)) {
+      this.message = 'Please enter a valid email address.';
       return;
     }
     if (this.regPassword.length < 8) {
@@ -193,16 +198,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     this.loading = true;
     
-    this.http.post(`${environment.apiUrl}/Auth/send-otp`, { phone: this.phone }).subscribe({
+    this.http.post(`${environment.apiUrl}/Auth/send-email-otp`, { 
+      email: this.regEmail, 
+      name: this.name 
+    }).subscribe({
       next: (res: any) => {
         this.loading = false;
         this.step = 'otp';
-        this.message = 'OTP sent via SMS to ' + this.phone;
+        this.message = 'OTP verification code sent to ' + this.regEmail;
         this.startTimer();
       },
       error: (err: any) => {
         this.loading = false;
-        this.message = err.error?.message || 'Failed to send OTP';
+        this.message = err.error?.message || 'Failed to send OTP to email';
       }
     });
   }

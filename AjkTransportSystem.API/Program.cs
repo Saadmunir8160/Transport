@@ -93,6 +93,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<AjkTransportSystem.API.Services.ITenantProvider, AjkTransportSystem.API.Services.TenantProvider>();
+builder.Services.AddScoped<AjkTransportSystem.API.Services.IEmailService, AjkTransportSystem.API.Services.EmailService>();
 
 // Read and validate database connection string case-insensitively from Configuration
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")

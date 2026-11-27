@@ -22,12 +22,76 @@ namespace AjkTransportSystem.API.Controllers
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
         private readonly ILogger<AuthController> _logger;
+        private readonly AjkTransportSystem.API.Services.IEmailService _emailService;
 
-        public AuthController(AppDbContext context, IConfiguration config, ILogger<AuthController> logger)
+        public AuthController(AppDbContext context, IConfiguration config, ILogger<AuthController> logger, AjkTransportSystem.API.Services.IEmailService emailService)
         {
             _context = context;
             _config = config;
             _logger = logger;
+            _emailService = emailService;
+        }
+
+        [HttpPost("send-email-otp")]
+        public async Task<IActionResult> SendEmailOtp([FromBody] SendEmailOtpDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(dto.Email) || !IsValidEmail(dto.Email))
+                return BadRequest(new { message = "A valid email address is required." });
+
+            var existingRealUser = _context.Users.FirstOrDefault(u => u.Email != null && u.Email.ToLower() == dto.Email.ToLower() && u.Role != "Temp");
+            if (existingRealUser != null)
+            {
+                return BadRequest(new { message = "This email is already registered. Please log in instead." });
+            }
+
+            var tempUser = _context.Users.FirstOrDefault(u => u.Email != null && u.Email.ToLower() == dto.Email.ToLower() && u.Role == "Temp");
+            if (tempUser == null)
+            {
+                tempUser = new User
+                {
+                    Email = dto.Email.Trim().ToLower(),
+                    Name = !string.IsNullOrWhiteSpace(dto.Name) ? dto.Name : "Passenger",
+                    Role = "Temp"
+                };
+                _context.Users.Add(tempUser);
+            }
+
+            if (tempUser.OTPAttempts >= 3 && tempUser.OTPExpiry > DateTime.UtcNow)
+            {
+                return BadRequest(new { message = "Maximum verification attempts reached. Please wait 15 minutes." });
+            }
+
+            var otp = new Random().Next(100000, 999999).ToString();
+            tempUser.PhoneOTP = otp;
+            tempUser.OTPExpiry = DateTime.UtcNow.AddMinutes(10);
+            tempUser.OTPAttempts = 0;
+            await _context.SaveChangesAsync();
+
+            // Send Real Email via SMTP
+            try
+            {
+                string subject = "Your AJK Transport Verification Code";
+                string htmlBody = $@"
+                <div style='font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #ffffff;'>
+                    <h2 style='color: #0F172A; text-align: center; margin-bottom: 20px;'>AJK Transport System</h2>
+                    <p style='color: #475569; font-size: 15px;'>Hello,</p>
+                    <p style='color: #475569; font-size: 15px;'>Your 6-digit email verification code is:</p>
+                    <div style='text-align: center; margin: 24px 0;'>
+                        <span style='display: inline-block; font-size: 32px; font-weight: bold; letter-spacing: 6px; color: #0F172A; background-color: #f1f5f9; padding: 12px 24px; border-radius: 6px; border: 1px dashed #cbd5e1;'>{otp}</span>
+                    </div>
+                    <p style='color: #64748b; font-size: 13px;'>This code will expire in <strong>10 minutes</strong>. If you did not request this code, please ignore this email.</p>
+                    <hr style='border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;' />
+                    <p style='color: #94a3b8; font-size: 11px; text-align: center;'>&copy; 2026 AJK Transport Management System. All rights reserved.</p>
+                </div>";
+
+                await _emailService.SendEmailAsync(dto.Email, subject, htmlBody);
+                return Ok(new { message = "Verification code sent to your email successfully." });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to send email OTP to {Email}", dto.Email);
+                return StatusCode(500, new { message = "Could not send verification email. Please check your email address or try again." });
+            }
         }
 
 
@@ -105,13 +169,20 @@ namespace AjkTransportSystem.API.Controllers
 
             // Check if email already exists
             
-            if (string.IsNullOrWhiteSpace(dto.Phone))
-                return BadRequest(new { message = "Phone number is required." });
-
             if (string.IsNullOrWhiteSpace(dto.OTP))
                 return BadRequest(new { message = "OTP is required." });
 
-            var tempUser = _context.Users.FirstOrDefault(u => u.Phone == dto.Phone && u.Role == "Temp");
+            // Support both Email-based OTP and Phone-based OTP
+            User? tempUser = null;
+            if (!string.IsNullOrWhiteSpace(dto.Email))
+            {
+                tempUser = _context.Users.FirstOrDefault(u => u.Email != null && u.Email.ToLower() == dto.Email.ToLower() && u.Role == "Temp");
+            }
+            if (tempUser == null && !string.IsNullOrWhiteSpace(dto.Phone))
+            {
+                tempUser = _context.Users.FirstOrDefault(u => u.Phone == dto.Phone && u.Role == "Temp");
+            }
+
             if (tempUser == null || tempUser.PhoneOTP != dto.OTP || tempUser.OTPExpiry < DateTime.UtcNow)
             {
                 if (tempUser != null)
@@ -535,13 +606,20 @@ namespace AjkTransportSystem.API.Controllers
 
             // Check if email exists
             
-            if (string.IsNullOrWhiteSpace(dto.Phone))
-                return BadRequest(new { message = "Phone number is required." });
-
             if (string.IsNullOrWhiteSpace(dto.OTP))
                 return BadRequest(new { message = "OTP is required." });
 
-            var tempUser = _context.Users.FirstOrDefault(u => u.Phone == dto.Phone && u.Role == "Temp");
+            // Support both Email-based OTP and Phone-based OTP
+            User? tempUser = null;
+            if (!string.IsNullOrWhiteSpace(dto.Email))
+            {
+                tempUser = _context.Users.FirstOrDefault(u => u.Email != null && u.Email.ToLower() == dto.Email.ToLower() && u.Role == "Temp");
+            }
+            if (tempUser == null && !string.IsNullOrWhiteSpace(dto.Phone))
+            {
+                tempUser = _context.Users.FirstOrDefault(u => u.Phone == dto.Phone && u.Role == "Temp");
+            }
+
             if (tempUser == null || tempUser.PhoneOTP != dto.OTP || tempUser.OTPExpiry < DateTime.UtcNow)
             {
                 if (tempUser != null)

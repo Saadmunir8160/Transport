@@ -16,4 +16,10 @@ namespace AjkTransportSystem.API.DTOs
     {
         public string Phone { get; set; }
     }
+
+    public class SendEmailOtpDto
+    {
+        public string Email { get; set; }
+        public string? Name { get; set; }
+    }
 }
