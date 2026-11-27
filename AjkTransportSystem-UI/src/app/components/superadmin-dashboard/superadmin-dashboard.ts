@@ -718,7 +718,7 @@ export class SuperAdminDashboardComponent implements OnInit {
             beginAtZero: true,
             grid: { color: '#F1F5F9' },
             ticks: {
-              font: { size: 11, weight: '500' }
+              font: { size: 11, weight: 'normal' }
             }
           },
           x: {
