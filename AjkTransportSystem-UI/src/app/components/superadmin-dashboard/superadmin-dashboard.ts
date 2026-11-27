@@ -729,7 +729,6 @@ export class SuperAdminDashboardComponent implements OnInit {
       }
     });
   }
-  }
 
   organizations: any[] = [];
   filteredOrganizations: any[] = [];
