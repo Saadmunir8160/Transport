@@ -786,7 +786,7 @@ namespace AjkTransportSystem.API.Controllers
         {
             var settings = new
             {
-                General = new { PlatformName = "AJK Transport System", Language = "English", Timezone = "Asia/Kolkata", DateFormat = "YYYY-MM-DD", LogoUrl = "/assets/logo.png" },
+                General = new { PlatformName = "AJK Transport System", Language = "English", Timezone = "Asia/Karachi", DateFormat = "YYYY-MM-DD", LogoUrl = "/assets/logo.png" },
                 Booking = new { MaxSeatsPerBooking = 4, SeatHoldTimeoutMinutes = 10, CancellationWindowMinutes = 60, AutoCancelNoShow = true },
                 Offline = new { SyncIntervalMinutes = 15, MaxOfflineDataAgeHours = 48, AllowedData = new[] { "trip info", "tickets", "routes", "schedules" } },
                 Security = new { SessionTimeoutMinutes = 30, MaxFailedLogins = 5, LockoutDurationMinutes = 15, PasswordRequirements = "Minimum 8 chars, 1 uppercase, 1 symbol", Enforce2FA = "required for admins" },
