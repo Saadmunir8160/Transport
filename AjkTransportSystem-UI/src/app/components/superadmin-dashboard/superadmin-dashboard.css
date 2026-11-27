@@ -396,14 +396,15 @@
 }
 
 .profile-name {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
   color: #F1F5F9 !important;
+  letter-spacing: 0.3px;
 }
 
 .profile-email {
-  font-size: 11px;
-  color: #8FA2BF !important;
+  font-size: 12px;
+  color: #94A3B8 !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -411,12 +412,13 @@
 
 .logout-icon-btn {
   margin-left: auto;
-  color: #8FA2BF !important;
+  color: #F87171 !important;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-  border-radius: 4px;
+  padding: 6px;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.1) !important;
   transition: all 0.2s ease;
 }
 .profile-card:hover .logout-icon-btn {
