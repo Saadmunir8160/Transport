@@ -1604,48 +1604,48 @@
 
 
                   <!-- Register Tab -->
-      <div *ngIf="activeTab === 'register'" class="register-tab" style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
-        <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 600; color: #1e293b;">Create Passenger Account</h2>
+      <div *ngIf="activeTab === 'register'" class="register-tab" style="max-width: 500px; margin: 1.5rem auto 3rem; background: white; padding: 2.2rem; border-radius: 12px; border: 1px solid #E2E8F0; box-shadow: 0 4px 16px rgba(15,23,42,0.04);">
+        <h2 style="margin-bottom: 1.5rem; font-size: 1.4rem; font-weight: 800; color: #0F172A; text-align: center;">Create Passenger Account</h2>
         
         <div *ngIf="regStep === 'details'">
           <form (ngSubmit)="requestOtp()">
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Full Name</label>
-              <input type="text" [(ngModel)]="regName" name="regName" class="form-control" placeholder="Enter your full name" required style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;">
+            <div class="form-group" style="margin-bottom: 1.1rem;">
+              <label style="display: block; margin-bottom: 0.4rem; color: #334155; font-weight: 600; font-size: 0.85rem;">Full Name</label>
+              <input type="text" [(ngModel)]="regName" name="regName" class="form-control" placeholder="Enter your full name" required style="width: 100%; height: 42px; padding: 0 0.85rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.9rem; color: #0F172A;">
             </div>
 
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Phone Number (Used for SMS Tickets)</label>
+            <div class="form-group" style="margin-bottom: 1.1rem;">
+              <label style="display: block; margin-bottom: 0.4rem; color: #334155; font-weight: 600; font-size: 0.85rem;">Phone Number (Used for SMS Tickets)</label>
               <div style="display: flex; gap: 0.5rem;">
-                <span style="padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; background: #f8fafc; color: #475569;">+92</span>
-                <input type="tel" [(ngModel)]="regPhone" name="regPhone" class="form-control" placeholder="3XX XXXXXXX" required style="flex: 1; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;">
+                <span style="display: flex; align-items: center; justify-content: center; height: 42px; padding: 0 1rem; border: 1px solid #CBD5E1; border-radius: 8px; background: #F8FAFC; color: #475569; font-weight: 600; font-size: 0.9rem;">+92</span>
+                <input type="tel" [(ngModel)]="regPhone" name="regPhone" class="form-control" placeholder="3XX XXXXXXX" required style="flex: 1; height: 42px; padding: 0 0.85rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.9rem; color: #0F172A;">
               </div>
             </div>
 
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Email (Optional - for PDF delivery)</label>
-              <input type="email" [(ngModel)]="regEmail" name="regEmail" class="form-control" placeholder="Enter email address" style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;">
+            <div class="form-group" style="margin-bottom: 1.1rem;">
+              <label style="display: block; margin-bottom: 0.4rem; color: #334155; font-weight: 600; font-size: 0.85rem;">Email (Optional - for PDF delivery)</label>
+              <input type="email" [(ngModel)]="regEmail" name="regEmail" class="form-control" placeholder="passenger@ajk.com" style="width: 100%; height: 42px; padding: 0 0.85rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.9rem; color: #0F172A;">
             </div>
 
-            <div class="form-group" style="margin-bottom: 1rem;">
-              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Password (Min 8 chars)</label>
-              <input type="password" [(ngModel)]="regPassword" name="regPassword" class="form-control" minlength="8" required style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem;">
+            <div class="form-group" style="margin-bottom: 1.1rem;">
+              <label style="display: block; margin-bottom: 0.4rem; color: #334155; font-weight: 600; font-size: 0.85rem;">Password (Min 8 chars)</label>
+              <input type="password" [(ngModel)]="regPassword" name="regPassword" class="form-control" minlength="8" required style="width: 100%; height: 42px; padding: 0 0.85rem; border: 1px solid #CBD5E1; border-radius: 8px; font-size: 0.9rem; color: #0F172A;">
             </div>
 
-            <div class="form-group" style="margin-bottom: 2rem;">
-              <label style="display: block; margin-bottom: 0.5rem; color: #475569; font-weight: 500;">Language Preference</label>
-              <select [(ngModel)]="regLanguage" name="regLanguage" class="form-control" style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; background: white;">
+            <div class="form-group" style="margin-bottom: 1.8rem;">
+              <label style="display: block; margin-bottom: 0.4rem; color: #334155; font-weight: 600; font-size: 0.85rem;">Language Preference</label>
+              <select [(ngModel)]="regLanguage" name="regLanguage" class="form-control" style="width: 100%; height: 42px; padding: 0 0.85rem; border: 1px solid #CBD5E1; border-radius: 8px; background: white; font-size: 0.9rem; color: #0F172A;">
                 <option value="English">English</option>
                 <option value="Urdu">Urdu (اردو)</option>
                 <option value="Hindi">Hindi (हिंदी)</option>
               </select>
             </div>
 
-            <button type="submit" class="primary-btn" [disabled]="regLoading" style="width: 100%; padding: 0.875rem; background: #4f46e5; color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">
+            <button type="submit" class="primary-btn" [disabled]="regLoading" style="width: 100%; height: 44px; background: #0F172A; color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: background 0.2s ease;">
               <span *ngIf="!regLoading">Send OTP Verification</span>
               <span *ngIf="regLoading">Sending...</span>
             </button>
-            <p *ngIf="regMessage" style="margin-top: 1rem; color: #ef4444; text-align: center;">{{ regMessage }}</p>
+            <p *ngIf="regMessage" style="margin-top: 1rem; color: #E11D48; text-align: center; font-size: 0.85rem; font-weight: 600;">{{ regMessage }}</p>
           </form>
         </div>
 
@@ -1664,7 +1664,7 @@
               {{ regTimer > 0 ? getFormattedTimer() : 'Code expired' }}
             </div>
 
-            <button type="submit" class="primary-btn" [disabled]="regLoading || regTimer <= 0" style="width: 100%; padding: 0.875rem; background: #4f46e5; color: white; border: none; border-radius: 0.5rem; font-weight: 600; cursor: pointer;">
+            <button type="submit" class="primary-btn" [disabled]="regLoading || regTimer <= 0" style="width: 100%; height: 44px; background: #0F172A; color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 0.92rem; cursor: pointer;">
               <span *ngIf="!regLoading">Verify & Create Account</span>
               <span *ngIf="regLoading">Verifying...</span>
             </button>
@@ -1880,11 +1880,6 @@
                 <button class="btn-delete-account" (click)="deleteAccount()">Delete Account</button>
               </div>
             </div>
-
-            <!-- Log Out Action Button -->
-            <button class="btn-profile-logout" (click)="logout()">
-              &#128682; Log Out of Session
-            </button>
 
           </div>
         </div>
