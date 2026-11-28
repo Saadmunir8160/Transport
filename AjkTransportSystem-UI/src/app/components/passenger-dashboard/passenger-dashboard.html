@@ -930,7 +930,9 @@
                 <label class="co-payment-item" [class.payment-item-active]="paymentMethod === 'Easypaisa'">
                   <div class="co-radio-wrap">
                     <input type="radio" name="payment" value="Easypaisa" [(ngModel)]="paymentMethod" class="co-radio-circle">
-                    <span class="co-pay-brand-icon icon-easypaisa"></span>
+                    <span class="co-pay-brand-icon icon-mono-wallet">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                    </span>
                   </div>
                   
                   <div class="co-pay-info">
@@ -938,14 +940,16 @@
                     <div class="co-pay-sub">Instant debit via registered Telenor/Easypaisa mobile wallet</div>
                   </div>
                   
-                  <div class="co-fee-badge badge-green-fee">0% Fee</div>
+                  <div class="co-fee-badge badge-mono-fee">0% Fee</div>
                 </label>
 
                 <!-- JazzCash Wallet -->
                 <label class="co-payment-item" [class.payment-item-active]="paymentMethod === 'JazzCash'">
                   <div class="co-radio-wrap">
                     <input type="radio" name="payment" value="JazzCash" [(ngModel)]="paymentMethod" class="co-radio-circle">
-                    <span class="co-pay-brand-icon icon-jazzcash"></span>
+                    <span class="co-pay-brand-icon icon-mono-wallet">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+                    </span>
                   </div>
                   
                   <div class="co-pay-info">
@@ -953,14 +957,16 @@
                     <div class="co-pay-sub">Direct MPIN verification on your Jazz mobile account</div>
                   </div>
                   
-                  <div class="co-fee-badge badge-red-fee">Instant</div>
+                  <div class="co-fee-badge badge-mono-fee">Instant</div>
                 </label>
 
                 <!-- Debit / Credit Card -->
                 <label class="co-payment-item" [class.payment-item-active]="paymentMethod === 'Card'">
                   <div class="co-radio-wrap">
                     <input type="radio" name="payment" value="Card" [(ngModel)]="paymentMethod" class="co-radio-circle">
-                    <span class="co-pay-brand-icon icon-card">💳</span>
+                    <span class="co-pay-brand-icon icon-mono-wallet">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                    </span>
                   </div>
                   
                   <div class="co-pay-info">
@@ -968,7 +974,24 @@
                     <div class="co-pay-sub">Visa, Mastercard, PayPak, UnionPay (3D Secure)</div>
                   </div>
                   
-                  <div class="co-fee-badge badge-blue-fee">Global</div>
+                  <div class="co-fee-badge badge-mono-fee">Global</div>
+                </label>
+
+                <!-- 4th Method: Raast & Bank Transfer (100% Equal 4 Options) -->
+                <label class="co-payment-item" [class.payment-item-active]="paymentMethod === 'Raast'">
+                  <div class="co-radio-wrap">
+                    <input type="radio" name="payment" value="Raast" [(ngModel)]="paymentMethod" class="co-radio-circle">
+                    <span class="co-pay-brand-icon icon-mono-wallet">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </span>
+                  </div>
+                  
+                  <div class="co-pay-info">
+                    <div class="co-pay-title">Raast Instant Pay / Direct Bank</div>
+                    <div class="co-pay-sub">Instant zero-fee transfer via any Pakistani banking app</div>
+                  </div>
+                  
+                  <div class="co-fee-badge badge-mono-fee">Direct</div>
                 </label>
 
               </div>

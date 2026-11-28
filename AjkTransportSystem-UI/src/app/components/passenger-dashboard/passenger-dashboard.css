@@ -4735,9 +4735,9 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .payment-item-active {
-  border-color: #2457D6 !important;
-  background: #F8FAFD !important;
-  box-shadow: 0 0 0 1px #2457D6;
+  border-color: #0F172A !important;
+  background: #F8FAFC !important;
+  box-shadow: 0 0 0 1px #0F172A;
 }
 
 .co-radio-wrap {
@@ -4749,30 +4749,32 @@ details[open] .td-summary-link .td-arrow {
 .co-radio-circle {
   width: 16px;
   height: 16px;
-  accent-color: #0F9F6E; /* Sleek Green / Blue accent */
+  accent-color: #0F172A; /* Monochrome black accent */
   cursor: pointer;
 }
 
 .co-pay-brand-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: #F1F5F9;
+  color: #0F172A;
+  border: 1px solid #E2E8F0;
 }
 
-.icon-easypaisa {
-  background: #00A651; /* Official Easypaisa Green */
+.icon-mono-wallet {
+  background: #0F172A;
+  color: #FFFFFF;
+  border-color: #0F172A;
 }
 
-.icon-jazzcash {
-  background: #ED1C24; /* Official JazzCash Red */
-}
-
-.icon-card {
-  font-size: 1.1rem;
+.payment-item-active .icon-mono-wallet {
+  background: #0F172A;
+  color: #FFFFFF;
 }
 
 .co-pay-info {
@@ -4785,15 +4787,15 @@ details[open] .td-summary-link .td-arrow {
 .co-pay-title {
   font-size: 0.8125rem;
   font-weight: 700;
-  color: #182230;
+  color: #0F172A;
 }
 
 .co-pay-sub {
   font-size: 0.6875rem;
-  color: #718096;
+  color: #64748B;
 }
 
-/* Fee Badges */
+/* Fee Badges - Pure Monochrome */
 .co-fee-badge {
   font-size: 0.6875rem;
   font-weight: 700;
@@ -4801,19 +4803,10 @@ details[open] .td-summary-link .td-arrow {
   border-radius: 4px;
 }
 
-.badge-green-fee {
-  background: #EAF8F1;
-  color: #0F9F6E;
-}
-
-.badge-red-fee {
-  background: #FDF1F1;
-  color: #D14343;
-}
-
-.badge-blue-fee {
+.badge-mono-fee {
   background: #F1F5F9;
   color: #0F172A;
+  border: 1px solid #E2E8F0;
 }
 
 /* Right Column: Order Summary Card */
