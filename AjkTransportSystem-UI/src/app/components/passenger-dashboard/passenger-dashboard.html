@@ -1885,8 +1885,127 @@
         </div>
       </div>
 
-      <!-- Feedback Tab -->
-      <div *ngIf="activeTab === 'feedback'">
+      <!-- Complaints Tab -->
+      <div *ngIf="activeTab === 'complaints'" class="complaints-container">
+        
+        <!-- Header -->
+        <div class="cmp-header-row">
+          <div>
+            <h2 class="cmp-title">Complaints &amp; Grievances</h2>
+            <p class="cmp-subtitle">Submit and monitor resolution status for your bookings, drivers, or journey feedback.</p>
+          </div>
+          <div class="cmp-stats-pill">
+            <span class="cmp-stat-item"><strong>{{ myComplaints.length }}</strong> Total</span>
+            <span class="cmp-stat-sep">/</span>
+            <span class="cmp-stat-item"><strong>1</strong> Open</span>
+          </div>
+        </div>
+
+        <div class="complaints-layout">
+          
+          <!-- Submit New Complaint Form Card -->
+          <div class="submit-card">
+            <div class="submit-card-header">
+              <h3>Submit a Grievance</h3>
+              <p>Fill out the form below. Our support team reviews all requests within 24 hours.</p>
+            </div>
+            
+            <div class="cmp-form-group">
+              <label>Issue Category <span class="req-star">*</span></label>
+              <select [(ngModel)]="newComplaint.category" class="cmp-input">
+                <option value="">-- Select Category --</option>
+                <option value="driver behaviour">Driver Behaviour / Misconduct</option>
+                <option value="vehicle condition">Vehicle Condition / AC Failure</option>
+                <option value="booking issue">Booking or Seat Allocation Issue</option>
+                <option value="route problem">Route Delay or Deviation</option>
+                <option value="payment issue">Payment / Overcharge Query</option>
+                <option value="other">Other Inquiry</option>
+              </select>
+            </div>
+
+            <div class="cmp-form-group">
+              <label>Booking Reference (Optional)</label>
+              <input type="text" [(ngModel)]="newComplaint.bookingRef" placeholder="e.g. AJK-882104" class="cmp-input">
+            </div>
+
+            <div class="cmp-form-group">
+              <label>Detailed Description <span class="req-star">*</span></label>
+              <textarea [(ngModel)]="newComplaint.description" rows="4" placeholder="Describe what happened with route, vehicle, or timings (min 20 characters)..." class="cmp-input cmp-textarea"></textarea>
+            </div>
+
+            <div class="cmp-form-group">
+              <label>Preferred Resolution</label>
+              <select [(ngModel)]="newComplaint.resolution" class="cmp-input">
+                <option value="">-- Select Preferred Resolution --</option>
+                <option value="refund">Fare Refund / Credit</option>
+                <option value="apology">Official Apology &amp; Driver Reprimand</option>
+                <option value="other">Follow-up Call / Inspection</option>
+              </select>
+            </div>
+
+            <div class="cmp-form-group">
+              <label>Preferred Contact Channel</label>
+              <div class="cmp-radio-group">
+                <label class="cmp-radio-label">
+                  <input type="radio" [(ngModel)]="newComplaint.contact" name="cmpContact" value="sms">
+                  <span>SMS</span>
+                </label>
+                <label class="cmp-radio-label">
+                  <input type="radio" [(ngModel)]="newComplaint.contact" name="cmpContact" value="email">
+                  <span>Email</span>
+                </label>
+                <label class="cmp-radio-label">
+                  <input type="radio" [(ngModel)]="newComplaint.contact" name="cmpContact" value="in-app">
+                  <span>In-App</span>
+                </label>
+              </div>
+            </div>
+
+            <div *ngIf="complaintError" class="cmp-error-message">
+              <span>&#9888;&#65039; {{ complaintError }}</span>
+            </div>
+
+            <button class="btn-submit-complaint" (click)="submitComplaint()">
+              Submit Grievance
+            </button>
+          </div>
+
+          <!-- My Complaints History List -->
+          <div class="my-complaints">
+            <div class="my-complaints-header">
+              <h3>Past Grievances</h3>
+              <p>Track responses and status from transport authorities</p>
+            </div>
+            
+            <div *ngIf="myComplaints.length === 0" class="cmp-empty-state">
+              <div class="cmp-empty-icon">&#128221;</div>
+              <h4>No complaints submitted</h4>
+              <p>Any complaint you register will appear here with live resolution status.</p>
+            </div>
+
+            <div class="complaints-list" *ngIf="myComplaints.length > 0">
+              <div *ngFor="let c of myComplaints" class="complaint-card">
+                <div class="complaint-header">
+                  <div class="complaint-id-cat">
+                    <span class="c-id">{{ c.id }}</span>
+                    <span class="c-category">{{ c.category }}</span>
+                  </div>
+                  <span class="c-status" [ngClass]="c.status === 'resolved' ? 'status-resolved' : c.status === 'in progress' ? 'status-inprogress' : 'status-open'">
+                    {{ c.status }}
+                  </span>
+                </div>
+                
+                <div class="c-date">Submitted on {{ c.date | date:'mediumDate' }}</div>
+                
+                <div *ngIf="c.adminResponse" class="admin-response">
+                  <div class="ar-title">Authority Response</div>
+                  <div class="ar-text">{{ c.adminResponse }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
       <!-- Notifications Tab -->
       <div *ngIf="activeTab === 'notifications'" class="notifications-container">
