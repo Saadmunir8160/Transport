@@ -128,13 +128,14 @@
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
           <span class="item-label">Stops Manager</span>
         </button>
+        <!-- Schedules Sub-Items -->
         <button class="nav-item" [class.active]="activeTab === 'timings' && activeScheduleSubTab === 'all'" (click)="setActiveTab('timings', 'all')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-          <span class="item-label">Schedules List</span>
+          <span class="item-label">All Schedules</span>
         </button>
         <button class="nav-item" [class.active]="activeTab === 'timings' && activeScheduleSubTab === 'add'" (click)="setActiveTab('timings', 'add')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-          <span class="item-label">Create Schedule</span>
+          <span class="item-label">Add Schedule</span>
         </button>
         <!-- Road Advisories Sub-Items -->
         <button class="nav-item" [class.active]="activeTab === 'advisories' && activeAdvisorySubTab === 'active'" (click)="setActiveTab('advisories', 'active')">
@@ -784,34 +785,7 @@
       <!-- Compliance Tab -->
       <div *ngIf="activeTab === 'compliance'">
         
-        <!-- Compliance Sub-Tabs -->
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <div style="display: flex; gap: 2rem;">
-            <button 
-              [style.border-bottom]="activeComplianceSubTab === 'expiring' ? '3px solid #0F172A' : '3px solid transparent'"
-              [style.color]="activeComplianceSubTab === 'expiring' ? '#0F172A' : '#5a6a85'"
-              style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-              (click)="activeComplianceSubTab = 'expiring'">
-              Expiring in 30 days
-              <span style="background: #0F172A; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">5</span>
-            </button>
-            <button 
-              [style.border-bottom]="activeComplianceSubTab === 'expired' ? '3px solid #0F172A' : '3px solid transparent'"
-              [style.color]="activeComplianceSubTab === 'expired' ? '#0F172A' : '#5a6a85'"
-              style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-              (click)="activeComplianceSubTab = 'expired'">
-              Expired & Blocking
-              <span style="background: #c53030; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">2</span>
-            </button>
-            <button 
-              [style.border-bottom]="activeComplianceSubTab === 'missing' ? '3px solid #0F172A' : '3px solid transparent'"
-              [style.color]="activeComplianceSubTab === 'missing' ? '#0F172A' : '#5a6a85'"
-              style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-              (click)="activeComplianceSubTab = 'missing'">
-              Missing Documents
-              <span style="background: #d69e2e; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">1</span>
-            </button>
-          </div>
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 1.5rem;">
           <div>
             <button class="add-btn" style="background: #0F172A; margin-right: 10px;">⬇️ Export Report</button>
             <button class="add-btn" style="background: #3b82f6;">⚙️ Reminder Settings</button>
@@ -1201,24 +1175,6 @@
 
       <!-- Schedules / Timings Tab -->
       <div *ngIf="activeTab === 'timings'">
-        
-        <!-- Schedules Sub-Tabs -->
-        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <button 
-            [style.border-bottom]="activeScheduleSubTab === 'all' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeScheduleSubTab === 'all' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeScheduleSubTab = 'all'">
-            All schedules
-          </button>
-          <button 
-            [style.border-bottom]="activeScheduleSubTab === 'add' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeScheduleSubTab === 'add' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeScheduleSubTab = 'add'">
-            Add schedule
-          </button>
-        </div>
 
         <!-- ALL SCHEDULES SUB-TAB -->
         <div *ngIf="activeScheduleSubTab === 'all'" class="content-card">
@@ -1572,32 +1528,6 @@
 
       <!-- Road Advisories Tab -->
       <div *ngIf="activeTab === 'advisories'">
-        
-        <!-- Advisories Sub-Tabs -->
-        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <button 
-            [style.border-bottom]="activeAdvisorySubTab === 'active' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeAdvisorySubTab === 'active' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-            (click)="activeAdvisorySubTab = 'active'">
-            Active Advisories
-            <span style="background: #0F172A; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">1</span>
-          </button>
-          <button 
-            [style.border-bottom]="activeAdvisorySubTab === 'add' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeAdvisorySubTab === 'add' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeAdvisorySubTab = 'add'">
-            Log Advisory
-          </button>
-          <button 
-            [style.border-bottom]="activeAdvisorySubTab === 'history' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeAdvisorySubTab === 'history' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeAdvisorySubTab = 'history'">
-            Past Advisories
-          </button>
-        </div>
 
         <!-- ACTIVE ADVISORIES -->
         <div *ngIf="activeAdvisorySubTab === 'active'" class="content-card">
@@ -1697,46 +1627,6 @@
       <!-- Trips Tab -->
       <!-- Trips Tab -->
       <div *ngIf="activeTab === 'trips'">
-        
-        <!-- Trips Sub-Tabs -->
-        <div style="display: flex; gap: 1.5rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <button 
-            [style.border-bottom]="activeTripSubTab === 'upcoming' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeTripSubTab === 'upcoming' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeTripSubTab = 'upcoming'">
-            Today & Upcoming
-          </button>
-          <button 
-            [style.border-bottom]="activeTripSubTab === 'live' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeTripSubTab === 'live' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-            (click)="activeTripSubTab = 'live'">
-            Active (Live)
-            <span style="background: #0F172A; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem; animation: pulse 2s infinite;">2</span>
-          </button>
-          <button 
-            [style.border-bottom]="activeTripSubTab === 'completed' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeTripSubTab === 'completed' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeTripSubTab = 'completed'">
-            Completed
-          </button>
-          <button 
-            [style.border-bottom]="activeTripSubTab === 'cancelled' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeTripSubTab === 'cancelled' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeTripSubTab = 'cancelled'">
-            Cancelled
-          </button>
-          <button 
-            [style.border-bottom]="activeTripSubTab === 'add' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeTripSubTab === 'add' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeTripSubTab = 'add'">
-            + Create Trip
-          </button>
-        </div>
 
         <!-- UPCOMING / COMPLETED / CANCELLED TABLE VIEW -->
         <div *ngIf="activeTripSubTab !== 'add' && activeTripSubTab !== 'live'" class="content-card">
@@ -1901,30 +1791,6 @@
       
       <!-- Bookings Tab -->
       <div *ngIf="activeTab === 'bookings'">
-        <!-- Bookings Sub-Tabs -->
-        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <button 
-            [style.border-bottom]="activeBookingSubTab === 'all' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeBookingSubTab === 'all' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeBookingSubTab = 'all'">
-            All Bookings
-          </button>
-          <button 
-            [style.border-bottom]="activeBookingSubTab === 'seats' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeBookingSubTab === 'seats' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeBookingSubTab = 'seats'">
-            Seat Availability Map
-          </button>
-          <button 
-            [style.border-bottom]="activeBookingSubTab === 'manifest' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeBookingSubTab === 'manifest' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeBookingSubTab = 'manifest'">
-            Passenger Lists
-          </button>
-        </div>
 
         <!-- ALL BOOKINGS -->
         <div *ngIf="activeBookingSubTab === 'all'" class="content-card">
@@ -1997,25 +1863,6 @@
       
       <!-- Complaints Tab -->
       <div *ngIf="activeTab === 'complaints'">
-        <!-- Complaints Sub-Tabs -->
-        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <button 
-            [style.border-bottom]="activeComplaintSubTab === 'passengers' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeComplaintSubTab === 'passengers' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-            (click)="activeComplaintSubTab = 'passengers'">
-            Passenger Complaints
-            <span style="background: #0F172A; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">1</span>
-          </button>
-          <button 
-            [style.border-bottom]="activeComplaintSubTab === 'drivers' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeComplaintSubTab === 'drivers' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-            (click)="activeComplaintSubTab = 'drivers'">
-            Driver Issue Reports
-            <span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">2</span>
-          </button>
-        </div>
 
         <!-- PASSENGER COMPLAINTS -->
         <div *ngIf="activeComplaintSubTab === 'passengers'" class="content-card">
