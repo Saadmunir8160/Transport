@@ -18,8 +18,8 @@
   --sa-sidebar-line: #233557;
   --sa-sidebar-text: #E2E8F0;
   --sa-sidebar-muted: #8FA2BF;
-  --sa-sidebar-accent: #2457D6;
-  --sa-sidebar-accent-bg: rgba(36, 87, 214, 0.16);
+  --sa-sidebar-accent: #0F172A;
+  --sa-sidebar-accent-bg: rgba(15, 23, 42, 0.08);
   --sa-sidebar-warning: #FEF08A;
   --sa-sidebar-warning-text: #854D0E;
 }
@@ -274,7 +274,7 @@
 }
 
 .nav-item.active {
-  background: #2457D6 !important;
+  background: #0F172A !important;
   color: #FFFFFF !important;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(36, 87, 214, 0.35);
@@ -302,7 +302,7 @@
   font-weight: 600;
 }
 .badge-live {
-  background: #10B981;
+  background: #0F172A;
   color: #FFFFFF;
   border-color: #10B981;
   font-weight: 600;

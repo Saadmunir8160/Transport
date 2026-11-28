@@ -247,7 +247,7 @@
             <path d="M13.73 21a2 2 0 0 1-3.46 0" />
           </svg>
           <span class="item-label">Notifications</span>
-          <span *ngIf="getUnreadCount() > 0" style="background: #e11d48; color: white; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; margin-left: auto;">{{ getUnreadCount() }}</span>
+          <span *ngIf="getUnreadCount() > 0" style="background: #0F172A; color: #FFFFFF; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; margin-left: auto;">{{ getUnreadCount() }}</span>
         </button>
       </div>
     </nav>
@@ -661,7 +661,7 @@
                 </div>
 
                 <div style="text-align: right;">
-                  <div style="font-size: 0.85rem; font-weight: 600; color: #059669;">+{{ stop.boardingCount }} Boarding</div>
+                  <div style="font-size: 0.85rem; font-weight: 600; color: #0F172A;">+{{ stop.boardingCount }} Boarding</div>
                   <div style="font-size: 0.85rem; font-weight: 600; color: #ef4444;">-{{ stop.droppingCount }} Drop-off</div>
                 </div>
               </div>
@@ -674,7 +674,7 @@
             <button *ngIf="getNextStop()" class="btn btn-primary" style="flex: 2; padding: 1.25rem; font-size: 1.2rem; font-weight: bold;" (click)="markNextStop()">
               Mark "{{ getNextStop().name }}" as Reached
             </button>
-            <button *ngIf="!getNextStop()" class="btn btn-primary" style="flex: 2; padding: 1.25rem; font-size: 1.2rem; font-weight: bold; background-color: #10b981;" (click)="endTrip()">
+            <button *ngIf="!getNextStop()" class="btn btn-primary" style="flex: 2; padding: 1.25rem; font-size: 1.2rem; font-weight: bold; background-color: #0F172A;" (click)="endTrip()">
               End Trip
             </button>
             <button class="btn btn-secondary" style="flex: 1;" (click)="setActiveTab('passengers')">
@@ -1002,7 +1002,7 @@
                     </div>
                   </div>
                   <span *ngIf="myVehicleData.documents.insurance.isExpired" style="color: #ef4444; font-weight: bold;">EXPIRED</span>
-                  <span *ngIf="!myVehicleData.documents.insurance.isExpired && myVehicleData.documents.insurance.expiry" style="color: #10b981; font-weight: bold;">VALID ({{ myVehicleData.documents.insurance.daysRemaining }} days)</span>
+                  <span *ngIf="!myVehicleData.documents.insurance.isExpired && myVehicleData.documents.insurance.expiry" style="color: #0F172A; font-weight: bold;">VALID ({{ myVehicleData.documents.insurance.daysRemaining }} days)</span>
                 </li>
 
                 <li style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;"
@@ -1233,7 +1233,7 @@
               <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" [title]="s.stopName">{{ s.stopName }}</h4>
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                 <div style="font-size: 0.85rem; color: #64748b;">Boarding Here</div>
-                <div style="font-weight: bold; color: #10b981; font-size: 1.2rem;">+{{ s.boardingCount }}</div>
+                <div style="font-weight: bold; color: #0F172A; font-size: 1.2rem;">+{{ s.boardingCount }}</div>
               </div>
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
                 <div style="font-size: 0.85rem; color: #64748b;">Dropping Here</div>
@@ -1317,7 +1317,7 @@
           
           <div class="enterprise-card" style="grid-column: 1 / -1;">
             <div class="card-header border-bottom">
-              <h3 class="card-title"><i class="fas fa-clipboard-check" style="color: #10b981; margin-right: 0.5rem;"></i> Pre-Departure Checks</h3>
+              <h3 class="card-title"><i class="fas fa-clipboard-check" style="color: #0F172A; margin-right: 0.5rem;"></i> Pre-Departure Checks</h3>
             </div>
             <div class="card-body">
               
@@ -1342,7 +1342,7 @@
                   <div style="font-weight: 600; color: #0f172a; font-size: 1rem;">Passengers Loaded</div>
                   <div style="font-size: 0.85rem; color: #64748b; margin-top: 0.2rem;">Total confirmed for this trip</div>
                 </div>
-                <div style="font-weight: 700; font-size: 1.1rem; color: #10b981;">{{ startTripData.passengerCount }} PAX</div>
+                <div style="font-weight: 700; font-size: 1.1rem; color: #0F172A;">{{ startTripData.passengerCount }} PAX</div>
               </div>
 
               <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid #f1f5f9;">
@@ -1410,7 +1410,7 @@
             </div>
             <div class="card-footer" style="display: flex; justify-content: flex-end; gap: 1rem;">
               <button class="btn btn-secondary" (click)="setActiveTab('active_trip')">Go Back</button>
-              <button class="btn btn-primary" style="background-color: #10b981;" (click)="confirmEndTrip()">Confirm End Trip</button>
+              <button class="btn btn-primary" style="background-color: #0F172A;" (click)="confirmEndTrip()">Confirm End Trip</button>
             </div>
           </div>
         </div>
@@ -2436,7 +2436,7 @@
             <div *ngIf="scanResult" style="background: rgba(16, 185, 129, 0.12); border: 1px solid #10B981; border-radius: 16px; padding: 1.2rem; animation: fadeIn 0.3s ease-out;">
               <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
                 <div style="display: flex; align-items: center; gap: 8px;">
-                  <span style="width: 24px; height: 24px; background: #10B981; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 900;">✓</span>
+                  <span style="width: 24px; height: 24px; background: #0F172A; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 900;">✓</span>
                   <strong style="color: #34D399; font-size: 1.1rem;">VALID TICKET (BOARDED)</strong>
                 </div>
                 <span style="font-size: 0.75rem; color: #94A3B8;">{{ scanResult.time }}</span>
