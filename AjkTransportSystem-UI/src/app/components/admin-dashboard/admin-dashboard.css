@@ -349,10 +349,6 @@
   background: rgba(255, 255, 255, 0.06) !important;
 }
 
-.profile-card:hover {
-  background: #F1F5F9;
-}
-
 .avatar-sa {
   width: 32px;
   height: 32px;

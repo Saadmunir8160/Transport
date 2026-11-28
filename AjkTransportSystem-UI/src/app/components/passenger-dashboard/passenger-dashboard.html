@@ -199,7 +199,7 @@
     </nav>
     <div class="sidebar-footer">
       <!-- Logged in User Card -->
-      <div class="sidebar-user-card" *ngIf="!isGuest" (click)="logout()" title="Logout">
+      <div class="profile-card" *ngIf="!isGuest" (click)="logout()" title="Logout">
         <div class="avatar-sa">{{ (userName || 'P').substring(0, 1).toUpperCase() }}</div>
         <div class="profile-info">
           <div class="profile-name">Logout</div>
@@ -210,7 +210,7 @@
         </div>
       </div>
       <!-- Guest User Card -->
-      <div class="sidebar-user-card guest-card" *ngIf="isGuest" routerLink="/login" title="Sign In / Register">
+      <div class="profile-card" *ngIf="isGuest" routerLink="/login" title="Sign In / Register">
         <div class="avatar-sa">?</div>
         <div class="profile-info">
           <div class="profile-name">Sign In / Register</div>

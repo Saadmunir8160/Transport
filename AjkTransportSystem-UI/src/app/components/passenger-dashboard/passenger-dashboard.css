@@ -373,47 +373,31 @@ body {
   background: #0D1628 !important;
 }
 
-.sidebar-user-card {
+.profile-card {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 10px;
+  padding: 6px 8px;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background: transparent;
+  transition: background 0.2s ease;
 }
-.sidebar-user-card:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-}
-
-.sidebar-user-card.guest-card {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-.sidebar-user-card.guest-card:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: rgba(255, 255, 255, 0.25);
+.profile-card:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
 }
 
 .avatar-sa {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: #1E293B !important;
-  color: #F8FAFC !important;
-  font-size: 12px;
+  color: #38BDF8 !important;
+  font-size: 11px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-}
-
-.sidebar-user-card.guest-card .avatar-sa {
-  background: #0F172A !important;
-  color: #F8FAFC !important;
   border: 1px solid #334155 !important;
 }
 
@@ -424,20 +408,18 @@ body {
 }
 
 .profile-name {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  color: #FFFFFF !important;
-  letter-spacing: 0.2px;
-  line-height: 1.2;
+  color: #F1F5F9 !important;
+  letter-spacing: 0.3px;
 }
 
 .profile-email {
-  font-size: 11px;
+  font-size: 12px;
   color: #94A3B8 !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 2px;
 }
 
 .logout-icon-btn {
@@ -451,18 +433,9 @@ body {
   background: rgba(239, 68, 68, 0.1) !important;
   transition: all 0.2s ease;
 }
-.sidebar-user-card:hover .logout-icon-btn {
+.profile-card:hover .logout-icon-btn {
   color: #F87171 !important;
-  background: rgba(239, 68, 68, 0.2) !important;
-}
-
-.logout-icon-btn.login-action {
-  color: #F8FAFC !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-}
-.sidebar-user-card:hover .logout-icon-btn.login-action {
-  color: #FFFFFF !important;
-  background: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(239, 68, 68, 0.15) !important;
 }
 
 
