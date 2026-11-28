@@ -2252,22 +2252,22 @@
         </div>
 
         <!-- Cargo Shipment Card Result -->
-        <div *ngIf="activeCargoShipment" style="background: white; border-radius: 18px; border: 1px solid #14B8A6; box-shadow: 0 10px 30px rgba(20, 184, 166, 0.12); overflow: hidden; margin-bottom: 2rem;">
-          <div style="background: linear-gradient(135deg, #0F766E, #115E59); color: white; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div *ngIf="activeCargoShipment" style="background: white; border-radius: 18px; border: 1px solid #E2E8F0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); overflow: hidden; margin-bottom: 2rem;">
+          <div style="background: #0F172A; color: white; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #1E293B;">
             <div>
-              <span style="font-size: 0.8rem; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px;">Official AJK Consignment</span>
-              <h3 style="margin: 0; font-size: 1.5rem; font-weight: 800; color: #5EEAD4;">Waybill # {{ activeCargoShipment.trackingNumber }}</h3>
+              <span style="font-size: 0.75rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Official AJK Consignment</span>
+              <h3 style="margin: 0.2rem 0 0 0; font-size: 1.5rem; font-weight: 800; color: #FFFFFF; font-family: monospace;">Waybill # {{ activeCargoShipment.trackingNumber }}</h3>
             </div>
-            <div style="background: rgba(255,255,255,0.18); padding: 6px 16px; border-radius: 20px; font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 8px;">
-              <span style="width: 10px; height: 10px; border-radius: 50%; background: #34D399; display: inline-block;"></span>
+            <div style="background: #1E293B; border: 1px solid #334155; color: #F8FAFC; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #FFFFFF; display: inline-block;"></span>
               {{ activeCargoShipment.status }}
             </div>
           </div>
 
-          <div style="padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.8rem;">
-            <div style="background: #F8FAFC; padding: 1.2rem; border-radius: 14px; border: 1px solid #E2E8F0;">
-              <span style="font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight: 700;">Transit Route</span>
-              <div style="font-size: 1.2rem; font-weight: 800; color: #1E293B; margin-top: 4px;">
+          <div style="padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+            <div style="background: #F8FAFC; padding: 1.25rem; border-radius: 12px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; color: #64748B; font-weight: 700; letter-spacing: 0.04em;">Transit Route</span>
+              <div style="font-size: 1.15rem; font-weight: 800; color: #0F172A; margin-top: 4px;">
                 {{ activeCargoShipment.originCity }} ➔ {{ activeCargoShipment.destinationCity }}
               </div>
               <div style="font-size: 0.85rem; color: #0F172A; font-weight: 600; margin-top: 6px;">
@@ -2275,17 +2275,17 @@
               </div>
             </div>
 
-            <div style="background: #F8FAFC; padding: 1.2rem; border-radius: 14px; border: 1px solid #E2E8F0;">
-              <span style="font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight: 700;">Package & Cargo</span>
-              <div style="font-size: 1.1rem; font-weight: 800; color: #1E293B; margin-top: 4px;">
+            <div style="background: #F8FAFC; padding: 1.25rem; border-radius: 12px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; color: #64748B; font-weight: 700; letter-spacing: 0.04em;">Package &amp; Cargo</span>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #0F172A; margin-top: 4px;">
                 {{ activeCargoShipment.packageType }} ({{ activeCargoShipment.weightKg }} kg)
               </div>
               <div style="font-size: 0.85rem; color: #64748B; margin-top: 4px;">{{ activeCargoShipment.itemDescription }}</div>
             </div>
 
-            <div style="background: #F8FAFC; padding: 1.2rem; border-radius: 14px; border: 1px solid #E2E8F0;">
-              <span style="font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight: 700;">Bus & Driver Details</span>
-              <div style="font-size: 1.1rem; font-weight: 800; color: #1E293B; margin-top: 4px;">
+            <div style="background: #F8FAFC; padding: 1.25rem; border-radius: 12px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; color: #64748B; font-weight: 700; letter-spacing: 0.04em;">Bus &amp; Driver Details</span>
+              <div style="font-size: 1.1rem; font-weight: 800; color: #0F172A; margin-top: 4px;">
                 Bus: {{ activeCargoShipment.assignedVehicleNo }}
               </div>
               <div style="font-size: 0.85rem; color: #334155; margin-top: 4px;">
@@ -2293,12 +2293,12 @@
               </div>
             </div>
 
-            <div style="background: #F8FAFC; padding: 1.2rem; border-radius: 14px; border: 1px solid #E2E8F0;">
-              <span style="font-size: 0.75rem; text-transform: uppercase; color: #64748B; font-weight: 700;">Parties (Sender / Receiver)</span>
-              <div style="font-size: 0.85rem; color: #1E293B; margin-top: 4px;">
+            <div style="background: #F8FAFC; padding: 1.25rem; border-radius: 12px; border: 1px solid #E2E8F0;">
+              <span style="font-size: 0.72rem; text-transform: uppercase; color: #64748B; font-weight: 700; letter-spacing: 0.04em;">Parties (Sender / Receiver)</span>
+              <div style="font-size: 0.85rem; color: #0F172A; margin-top: 4px;">
                 From: <strong>{{ activeCargoShipment.senderName }}</strong> ({{ activeCargoShipment.senderPhone }})
               </div>
-              <div style="font-size: 0.85rem; color: #1E293B; margin-top: 4px;">
+              <div style="font-size: 0.85rem; color: #0F172A; margin-top: 4px;">
                 To: <strong>{{ activeCargoShipment.receiverName }}</strong> ({{ activeCargoShipment.receiverPhone }})
               </div>
             </div>
