@@ -2219,17 +2219,16 @@
         </div>
       </div>
 
-            <!-- Floating Emergency SOS Button (Matching Screenshot) -->
+      <!-- Floating Emergency SOS Button (Icon Only) -->
       <div class="p-sos-floating-wrap">
-        <button (click)="openSosModal()" class="p-sos-action-btn" title="Emergency SOS Dispatch">
-          <svg class="sos-siren-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button (click)="openSosModal()" class="p-sos-action-btn" title="Emergency SOS Dispatch" aria-label="Emergency SOS Dispatch">
+          <svg class="sos-siren-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M6 18h12"/>
             <path d="M6 18a6 6 0 0 1 12 0"/>
             <path d="M12 2v4"/>
             <path d="M4.93 10.93 2.1 8.1"/>
             <path d="M19.07 10.93l2.83-2.83"/>
           </svg>
-          <span class="sos-text">SOS EMERGENCY</span>
         </button>
       </div>
       <!-- Emergency SOS Modal Dialog -->

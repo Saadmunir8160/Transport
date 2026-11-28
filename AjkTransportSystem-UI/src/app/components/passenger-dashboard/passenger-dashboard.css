@@ -3377,32 +3377,27 @@ body {
 .p-sos-action-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   background: #B91C1C; /* Deep Red as shown in screenshot */
   color: #FFFFFF;
   border: none;
-  border-radius: 9999px; /* Full capsule/pill shape */
-  padding: 10px 20px;
-  font-size: 0.8125rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  border-radius: 50%; /* Circular button for icon only */
   box-shadow: 0 4px 14px rgba(185, 28, 28, 0.45);
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 0;
 }
 
 .p-sos-action-btn:hover {
   background: #991b1b;
-  transform: translateY(-2px);
+  transform: scale(1.08);
   box-shadow: 0 6px 18px rgba(185, 28, 28, 0.6);
 }
 
 .sos-siren-icon {
   stroke: #FFFFFF;
-}
-
-.sos-text {
-  font-family: inherit;
 }
 
 /* ==========================================================================
