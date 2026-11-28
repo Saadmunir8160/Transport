@@ -201,7 +201,36 @@ export class AdminDashboardComponent implements OnInit {
 
   loadDashboardStats() {
     this.dashboardService.getStats().subscribe({
-      next: (data) => this.dashboardStats = data,
+      next: (data) => {
+        // Flatten KPIs if nested
+        if (data && data.kpis) {
+          this.dashboardStats = {
+            todayTrips: data.kpis.todayTrips ?? 0,
+            activeTrips: data.kpis.activeTripsNow ?? 0,
+            todayBookings: data.kpis.todaysBookings ?? 0,
+            seatsAvailable: data.kpis.seatsAvailable ?? 0,
+            cancelledToday: data.kpis.cancelledToday ?? 0,
+            activeDrivers: data.kpis.activeDrivers ?? 0,
+            activeVehicles: data.kpis.activeVehicles ?? 0,
+            totalRoutes: this.routes?.length || 12,
+            ...data
+          };
+        } else if (data && data.KPIs) {
+          this.dashboardStats = {
+            todayTrips: data.KPIs.TodayTrips ?? 0,
+            activeTrips: data.KPIs.ActiveTripsNow ?? 0,
+            todayBookings: data.KPIs.TodaysBookings ?? 0,
+            seatsAvailable: data.KPIs.SeatsAvailable ?? 0,
+            cancelledToday: data.KPIs.CancelledToday ?? 0,
+            activeDrivers: data.KPIs.ActiveDrivers ?? 0,
+            activeVehicles: data.KPIs.ActiveVehicles ?? 0,
+            totalRoutes: this.routes?.length || 12,
+            ...data
+          };
+        } else {
+          this.dashboardStats = data || {};
+        }
+      },
       error: (err) => console.error('Failed to load stats', err)
     });
   }

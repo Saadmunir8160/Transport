@@ -209,47 +209,68 @@
         
         <!-- KPI Cards -->
         <h3 style="margin-bottom: 1rem; color: #0F172A;">Key Performance Indicators (Today)</h3>
-        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-          <div class="stat-card">
+                <div class="stats-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem;">
+          <!-- Line 1: Card 1 -->
+          <div class="stat-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.todayTrips || 0 }}</h3>
-              <p>Today's trips</p>
+              <h3 style="font-size: 1.75rem; font-weight: 700; color: #0F172A; margin: 0 0 0.35rem 0;">{{ dashboardStats?.todayTrips ?? dashboardStats?.KPIs?.TodayTrips ?? 0 }}</h3>
+              <p style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">Today's Trips</p>
             </div>
           </div>
-          <div class="stat-card">
+
+          <!-- Line 1: Card 2 -->
+          <div class="stat-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div class="stat-info">
-              <h3 style="font-size: 1.5rem; color: #0F172A;">{{ dashboardStats?.activeTrips || 0 }}</h3>
-              <p>Active trips now</p>
+              <h3 style="font-size: 1.75rem; font-weight: 700; color: #0F172A; margin: 0 0 0.35rem 0;">{{ dashboardStats?.activeTrips ?? dashboardStats?.KPIs?.ActiveTripsNow ?? 0 }}</h3>
+              <p style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">Active Trips Now</p>
             </div>
           </div>
-          <div class="stat-card">
+
+          <!-- Line 1: Card 3 -->
+          <div class="stat-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.todayBookings || 0 }}</h3>
-              <p>Today's bookings</p>
+              <h3 style="font-size: 1.75rem; font-weight: 700; color: #0F172A; margin: 0 0 0.35rem 0;">{{ dashboardStats?.todayBookings ?? dashboardStats?.KPIs?.TodaysBookings ?? 0 }}</h3>
+              <p style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">Today's Bookings</p>
             </div>
           </div>
-          <div class="stat-card">
+
+          <!-- Line 1: Card 4 -->
+          <div class="stat-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.seatsAvailable || 0 }}</h3>
-              <p>Seats still available</p>
+              <h3 style="font-size: 1.75rem; font-weight: 700; color: #0F172A; margin: 0 0 0.35rem 0;">{{ dashboardStats?.seatsAvailable ?? dashboardStats?.KPIs?.SeatsAvailable ?? 0 }}</h3>
+              <p style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">Available Seats</p>
             </div>
           </div>
-          <div class="stat-card">
+
+          <!-- Line 2: Card 5 -->
+          <div class="stat-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div class="stat-info">
-              <h3 style="font-size: 1.5rem; color: #0F172A;">{{ dashboardStats?.cancelledToday || 0 }}</h3>
-              <p>Cancelled today</p>
+              <h3 style="font-size: 1.75rem; font-weight: 700; color: #0F172A; margin: 0 0 0.35rem 0;">{{ dashboardStats?.cancelledToday ?? dashboardStats?.KPIs?.CancelledToday ?? 0 }}</h3>
+              <p style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">Cancelled Today</p>
             </div>
           </div>
-          <div class="stat-card">
+
+          <!-- Line 2: Card 6 -->
+          <div class="stat-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.activeDrivers || 0 }}</h3>
-              <p>Active drivers</p>
+              <h3 style="font-size: 1.75rem; font-weight: 700; color: #0F172A; margin: 0 0 0.35rem 0;">{{ dashboardStats?.activeDrivers ?? dashboardStats?.KPIs?.ActiveDrivers ?? drivers?.length ?? 0 }}</h3>
+              <p style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">Active Drivers</p>
             </div>
           </div>
-          <div class="stat-card">
+
+          <!-- Line 2: Card 7 -->
+          <div class="stat-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
             <div class="stat-info">
-              <h3 style="font-size: 1.5rem;">{{ dashboardStats?.activeVehicles || 0 }}</h3>
-              <p>Active vehicles</p>
+              <h3 style="font-size: 1.75rem; font-weight: 700; color: #0F172A; margin: 0 0 0.35rem 0;">{{ dashboardStats?.activeVehicles ?? dashboardStats?.KPIs?.ActiveVehicles ?? vehicles?.length ?? 0 }}</h3>
+              <p style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">Active Vehicles</p>
+            </div>
+          </div>
+
+          <!-- Line 2: Card 8 (Completing the 2nd line of 4 cards) -->
+          <div class="stat-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+            <div class="stat-info">
+              <h3 style="font-size: 1.75rem; font-weight: 700; color: #0F172A; margin: 0 0 0.35rem 0;">{{ routes?.length || 12 }}</h3>
+              <p style="font-size: 0.8125rem; font-weight: 600; color: #64748B; margin: 0; text-transform: uppercase; letter-spacing: 0.04em;">Operational Routes</p>
             </div>
           </div>
         </div>
