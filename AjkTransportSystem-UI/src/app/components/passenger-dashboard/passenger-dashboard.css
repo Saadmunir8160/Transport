@@ -5161,9 +5161,15 @@ details[open] .td-summary-link .td-arrow {
 
 .cancel-layout-grid {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 1fr 1fr; /* 1:1 Exactly Equal Sized Columns */
   gap: 1.5rem;
-  align-items: start;
+  align-items: stretch; /* Equal full height */
+}
+
+@media (max-width: 860px) {
+  .cancel-layout-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .cancel-card-main {
@@ -5172,11 +5178,13 @@ details[open] .td-summary-link .td-arrow {
   border: 1px solid #E2E8F0;
   overflow: hidden;
   box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
 }
 
 .cancel-card-banner {
-  background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
-  border-bottom: 1px solid #FECDD3;
+  background: #F8FAFC;
+  border-bottom: 1px solid #E2E8F0;
   padding: 1.5rem;
   text-align: center;
 }
@@ -5184,7 +5192,7 @@ details[open] .td-summary-link .td-arrow {
 .cancel-card-badge {
   width: 44px;
   height: 44px;
-  background: #E11D48;
+  background: #0F172A;
   color: #FFFFFF;
   border-radius: 50%;
   display: inline-flex;
@@ -5192,26 +5200,27 @@ details[open] .td-summary-link .td-arrow {
   justify-content: center;
   font-size: 1.35rem;
   margin-bottom: 0.75rem;
-  box-shadow: 0 4px 10px rgba(225, 29, 72, 0.25);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
 }
 
 .cancel-card-banner h3 {
   margin: 0 0 0.35rem 0;
   font-size: 1.25rem;
   font-weight: 800;
-  color: #9F1239;
+  color: #0F172A;
   font-family: 'Outfit', sans-serif;
 }
 
 .cancel-card-banner p {
   margin: 0;
   font-size: 0.82rem;
-  color: #BE123C;
+  color: #64748B;
   font-weight: 500;
 }
 
 .cancel-card-body {
   padding: 1.5rem;
+  flex: 1;
 }
 
 .cancel-card-body h4 {
@@ -5257,6 +5266,8 @@ details[open] .td-summary-link .td-arrow {
   border: 1px solid #E2E8F0;
   padding: 1.5rem;
   box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
 }
 
 .cancel-sidebar-card h4 {
@@ -5269,8 +5280,8 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .refund-highlight-box {
-  background: #F0FDF4;
-  border: 1px solid #BBF7D0;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
   border-radius: 12px;
   padding: 1.25rem 1rem;
   text-align: center;
@@ -5281,7 +5292,7 @@ details[open] .td-summary-link .td-arrow {
   display: block;
   font-size: 0.68rem;
   font-weight: 700;
-  color: #166534;
+  color: #64748B;
   letter-spacing: 0.5px;
   margin-bottom: 0.35rem;
 }
@@ -5289,19 +5300,20 @@ details[open] .td-summary-link .td-arrow {
 .refund-highlight-box .rh-amount {
   font-size: 1.85rem;
   font-weight: 800;
-  color: #15803D;
+  color: #0F172A;
   margin-bottom: 0.5rem;
   line-height: 1.1;
 }
 
 .refund-highlight-box .rh-badge {
   display: inline-block;
-  background: #DCFCE7;
-  color: #15803D;
+  background: #F1F5F9;
+  color: #0F172A;
   padding: 0.2rem 0.65rem;
   border-radius: 12px;
   font-size: 0.72rem;
   font-weight: 600;
+  border: 1px solid #E2E8F0;
 }
 
 .refund-terms-text {
@@ -5316,14 +5328,15 @@ details[open] .td-summary-link .td-arrow {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
+  margin-top: auto;
 }
 
 .btn-confirm-cancel {
   width: 100%;
-  background: #E11D48;
+  background: #0F172A;
   color: #FFFFFF;
   border: none;
-  padding: 0.65rem 1rem;
+  padding: 0.75rem 1rem;
   font-size: 0.85rem;
   font-weight: 700;
   border-radius: 8px;
@@ -5332,15 +5345,15 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .btn-confirm-cancel:hover {
-  background: #BE123C;
+  background: #1E293B;
 }
 
 .btn-keep-booking {
   width: 100%;
   background: #FFFFFF;
-  color: #334155;
+  color: #0F172A;
   border: 1px solid #CBD5E1;
-  padding: 0.65rem 1rem;
+  padding: 0.75rem 1rem;
   font-size: 0.85rem;
   font-weight: 600;
   border-radius: 8px;
@@ -5350,7 +5363,7 @@ details[open] .td-summary-link .td-arrow {
 
 .btn-keep-booking:hover {
   background: #F8FAFC;
-  border-color: #94A3B8;
+  border-color: #0F172A;
 }
 
 .cancel-success-box {
