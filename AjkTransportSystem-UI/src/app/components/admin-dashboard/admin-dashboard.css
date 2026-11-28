@@ -564,15 +564,15 @@
 }
 
 .stat-card {
-  background: var(--bg-surface);
-  padding: 1.75rem;
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
+  background: #FFFFFF;
+  padding: 1.5rem 1.75rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   transition: var(--transition);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid #E2E8F0;
   position: relative;
   overflow: hidden;
 }
@@ -581,7 +581,7 @@
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; height: 4px;
-  background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+  background: #0F172A;
   opacity: 0;
   transition: var(--transition);
 }
@@ -606,10 +606,10 @@
   flex-shrink: 0;
 }
 
-.stat-icon.blue { background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(59,130,246,0.05)); color: #3B82F6; }
-.stat-icon.green { background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(16,185,129,0.05)); color: #10B981; }
-.stat-icon.orange { background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(245,158,11,0.05)); color: #F59E0B; }
-.stat-icon.purple { background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(139,92,246,0.05)); color: #8B5CF6; }
+.stat-icon.blue { background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0; }
+.stat-icon.green { background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0; }
+.stat-icon.orange { background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0; }
+.stat-icon.purple { background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0; }
 
 .stat-info h3 {
   font-size: 2.25rem;
@@ -630,12 +630,12 @@
 
 /* Content Card */
 .content-card {
-  background: var(--bg-surface);
-  padding: 2.25rem;
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  margin-bottom: 2.5rem;
-  border: 1px solid var(--border-color);
+  background: #FFFFFF;
+  padding: 1.75rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 1.75rem;
+  border: 1px solid #E2E8F0;
   transition: var(--transition);
 }
 
