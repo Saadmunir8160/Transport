@@ -148,7 +148,10 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
   recentRoutes = [
     { startPoint: 'Muzaffarabad', endPoint: 'Mirpur' },
     { startPoint: 'Rawalakot', endPoint: 'Islamabad' },
-    { startPoint: 'Bagh', endPoint: 'Muzaffarabad' }
+    { startPoint: 'Bagh', endPoint: 'Muzaffarabad' },
+    { startPoint: 'Kotli', endPoint: 'Rawalpindi' },
+    { startPoint: 'Mirpur', endPoint: 'Lahore' },
+    { startPoint: 'Muzaffarabad', endPoint: 'Rawalpindi' }
   ];
 
 
