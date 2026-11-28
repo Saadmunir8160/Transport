@@ -6121,7 +6121,7 @@ details[open] .td-summary-link .td-arrow {
 
 .profile-layout-grid {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, 1fr);
   gap: 1.5rem;
   align-items: start;
 }
@@ -6383,16 +6383,26 @@ details[open] .td-summary-link .td-arrow {
   width: 100%;
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
-  padding: 0.65rem 0.85rem;
+  padding: 0.75rem 1rem;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  color: #334155;
+  color: #0F172A;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: normal;
+  text-align: left;
+  gap: 0.75rem;
+}
+
+.btn-sec-item span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.35;
 }
 
 .btn-sec-item:hover {
@@ -6401,34 +6411,36 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .sec-arrow {
-  color: #94A3B8;
+  color: #64748B;
   font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 .danger-card {
-  border-color: #FECDD3 !important;
+  border-color: #E2E8F0 !important;
 }
 
 .danger-header {
-  background: #FFF1F2 !important;
-  border-color: #FECDD3 !important;
+  background: #F8FAFC !important;
+  border-color: #E2E8F0 !important;
 }
 
 .danger-icon {
   font-size: 1.1rem;
+  color: #0F172A;
 }
 
 .danger-title {
-  color: #9F1239 !important;
+  color: #0F172A !important;
 }
 
 .danger-desc {
-  color: #BE123C !important;
+  color: #64748B !important;
 }
 
 .danger-warning-text {
   font-size: 0.75rem;
-  color: #881337;
+  color: #64748B;
   line-height: 1.45;
   margin: 0 0 1rem 0;
 }
@@ -6436,18 +6448,18 @@ details[open] .td-summary-link .td-arrow {
 .btn-delete-account {
   width: 100%;
   background: #FFFFFF;
-  border: 1px solid #FCA5A5;
-  color: #E11D48;
-  padding: 0.55rem 1rem;
+  border: 1px solid #0F172A;
+  color: #0F172A;
+  padding: 0.65rem 1rem;
   border-radius: 8px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .btn-delete-account:hover {
-  background: #E11D48;
+  background: #0F172A;
   color: #FFFFFF;
 }
 
