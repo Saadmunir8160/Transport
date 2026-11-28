@@ -2118,7 +2118,7 @@ body {
 }
 
 .payment-val {
-  color: #059669 !important;
+  color: #0F172A !important;
   font-weight: 700 !important;
 }
 
@@ -2194,13 +2194,14 @@ body {
 }
 
 .primary-actions .btn-wa {
-  background: #10B981;
-  border: 1px solid #10B981;
+  background: #0F172A;
+  border: 1px solid #0F172A;
   color: #ffffff;
 }
 
 .primary-actions .btn-wa:hover {
-  background: #059669;
+  background: #1E293B;
+  border-color: #1E293B;
 }
 
 .primary-actions .btn-eta {
