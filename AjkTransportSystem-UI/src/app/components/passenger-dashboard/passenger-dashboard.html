@@ -128,7 +128,7 @@
         <button class="nav-item" [class.active]="activeTab === 'track-bus'" (click)="setActiveTab('track-bus')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
           <span class="item-label">Track my bus</span>
-          <span class="nav-badge" style="background:#10B981;">live</span>
+          <span class="nav-badge" style="background:#0F172A;">live</span>
         </button>
       </div>
 
@@ -151,12 +151,12 @@
         <button class="nav-item" [class.active]="activeTab === 'cargo-tracking'" (click)="setActiveTab('cargo-tracking')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
           <span class="item-label">Cargo / Luggage</span>
-          <span class="nav-badge" style="background:#0D9488;">Express</span>
+          <span class="nav-badge" style="background:#0F172A;">Express</span>
         </button>
         <button class="nav-item" [class.active]="activeTab === 'weather-advisories'" (click)="setActiveTab('weather-advisories')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
           <span class="item-label">Mountain Weather</span>
-          <span class="nav-badge" style="background:#0284C7;">Live</span>
+          <span class="nav-badge" style="background:#0F172A;">Live</span>
         </button>
       </div>
 
@@ -210,14 +210,14 @@
         </div>
       </div>
       <!-- Guest User Card -->
-      <div class="sidebar-user-card" *ngIf="isGuest" routerLink="/login" style="cursor: pointer; background: #eff6ff; border: 1px dashed #3b82f6;">
-        <div class="avatar-sa" style="background: #3b82f6; color: white;">?</div>
+      <div class="sidebar-user-card" *ngIf="isGuest" routerLink="/login" style="cursor: pointer; background: #f8fafc; border: 1px dashed #cbd5e1;">
+        <div class="avatar-sa" style="background: #0F172A; color: #FFFFFF;">?</div>
         <div class="profile-info">
-          <div class="profile-name" style="color: #1d4ed8; font-weight: 600;">Sign In / Register</div>
-          <div class="profile-email" style="color: #60a5fa;">Unlock full bookings</div>
+          <div class="profile-name" style="color: #0F172A; font-weight: 600;">Sign In / Register</div>
+          <div class="profile-email" style="color: #64748B;">Unlock full bookings</div>
         </div>
         <div class="logout-icon-btn" title="Sign In">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
         </div>
       </div>
     </div>
@@ -248,7 +248,7 @@
         <!-- 1. Road Advisory Top Alert Banner -->
         <div class="p-advisory-banner">
           <div class="advisory-icon-wrapper">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
               <line x1="12" y1="9" x2="12" y2="13"/>
               <line x1="12" y1="17" x2="12.01" y2="17"/>
@@ -1163,7 +1163,7 @@
                     </div>
                   </div>
                   
-                  <div *ngIf="b.status === 'completed'" style="margin-top: 1.5rem; color: #059669; font-weight: 600; font-size: 0.9rem;">
+                  <div *ngIf="b.status === 'completed'" style="margin-top: 1.5rem; color: #0F172A; font-weight: 600; font-size: 0.9rem;">
                     ? Arrived at {{ b.arrivalTime }} ({{ b.delay }})
                   </div>
                 </div>
@@ -1281,18 +1281,18 @@
         
         <div class="content-header" style="margin-bottom: 1.5rem; text-align: center;">
           <h2 style="font-size: 1.75rem; font-weight: 800; color: #1E293B; margin: 0 0 0.25rem 0;">My Ticket</h2>
-          <p style="color: #64748B; margin: 0; font-size: 0.9rem;">Digital Boarding Pass &mdash; <span style="color: #10B981; font-weight:600;">Available Offline</span></p>
+          <p style="color: #64748B; margin: 0; font-size: 0.9rem;">Digital Boarding Pass &mdash; <span style="color: #0F172A; font-weight:600;">Available Offline</span></p>
         </div>
 
         <div class="ticket-wrapper">
           <div class="ticket-card">
             <!-- Offline / Org Header -->
             <div style="background: #F8FAFC; padding: 1rem 1.75rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0;">
-              <div style="font-weight: 800; color: #0D766E; font-size: 1.1rem; display: flex; align-items: center; gap: 0.6rem;">
-                <div style="width: 28px; height: 28px; background: #0D766E; border-radius: 50%; display: flex; align-items:center; justify-content:center; color:white; font-size: 0.85rem;">&#128652;</div>
+              <div style="font-weight: 800; color: #0F172A; font-size: 1.1rem; display: flex; align-items: center; gap: 0.6rem;">
+                <div style="width: 28px; height: 28px; background: #0F172A; border-radius: 50%; display: flex; align-items:center; justify-content:center; color:white; font-size: 0.85rem;">&#128652;</div>
                 AJK Transport
               </div>
-              <span class="bc-status active" style="font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 12px; background: #DCFCE7; color: #15803D;">{{ (selectedTrip.status || 'SCHEDULED') | uppercase }}</span>
+              <span class="bc-status active" style="font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 12px; background: #F1F5F9; color: #0F172A; border: 1px solid #E2E8F0;">{{ (selectedTrip.status || 'SCHEDULED') | uppercase }}</span>
             </div>
 
             <!-- Top Section -->
@@ -1330,7 +1330,7 @@
                 </div>
                 <div class="t-item">
                   <span class="label">Seat(s)</span>
-                  <span class="value" style="color: #0D766E;">
+                  <span class="value" style="color: #0F172A;">
                     <ng-container *ngIf="selectedSeats && selectedSeats.length > 0; else defaultTicketSeat">
                       <span *ngFor="let s of selectedSeats; let last = last">{{ s.id }}{{ !last ? ', ' : '' }}</span>
                     </ng-container>
@@ -1343,7 +1343,7 @@
                 </div>
                 <div class="t-item" style="grid-column: span 2; border-top: 1px dashed #E2E8F0; padding-top: 0.75rem;">
                   <span class="label">Amount Paid</span>
-                  <span class="value" style="color: #10B981; font-size: 1.15rem; font-weight: 800;">Rs. {{ (selectedTrip.fare * (selectedSeats.length || 1)) + 50 }}</span>
+                  <span class="value" style="color: #0F172A; font-size: 1.15rem; font-weight: 800;">Rs. {{ (selectedTrip.fare * (selectedSeats.length || 1)) + 50 }}</span>
                 </div>
               </div>
 
@@ -1995,7 +1995,7 @@
               </div>
               <p style="font-size: 0.8rem; color: #64748B; margin-top: 0.6rem;">A secure one-time authorization push prompt will be dispatched to this mobile number.</p>
 
-              <button [disabled]="paymentProcessing" (click)="sendPaymentOtp()" style="margin-top: 1.5rem; width: 100%; background: #0D766E; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
+              <button [disabled]="paymentProcessing" (click)="sendPaymentOtp()" style="margin-top: 1.5rem; width: 100%; background: #0F172A; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
                 {{ paymentProcessing ? 'Contacting ' + paymentMethod + '...' : 'Send Approval Prompt' }}
               </button>
             </div>
@@ -2014,7 +2014,7 @@
               </label>
               <input type="password" [(ngModel)]="paymentOtp" maxlength="4" placeholder="••••" style="width: 100%; padding: 0.85rem; border: 2px solid #0D766E; border-radius: 12px; font-size: 1.5rem; letter-spacing: 8px; text-align: center; font-weight: 800; outline: none; box-sizing: border-box;">
 
-              <button [disabled]="paymentProcessing" (click)="processGatewayPayment()" style="margin-top: 1.5rem; width: 100%; background: #0D766E; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
+              <button [disabled]="paymentProcessing" (click)="processGatewayPayment()" style="margin-top: 1.5rem; width: 100%; background: #0F172A; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
                 {{ paymentProcessing ? 'Verifying & Debiting...' : 'Authorize Payment' }}
               </button>
             </div>
@@ -2024,7 +2024,7 @@
               <div style="width: 72px; height: 72px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.2rem auto;">✓</div>
               <h3 style="margin: 0 0 0.5rem 0; font-size: 1.4rem; color: #0F172A; font-weight: 800;">Payment Successful!</h3>
               <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1rem;">Transaction ID: <strong style="color: #0F766E;">{{ paymentTxnId }}</strong></p>
-              <div style="font-size: 0.85rem; color: #10B981; font-weight: 600;">Generating official digital boarding pass...</div>
+              <div style="font-size: 0.85rem; color: #0F172A; font-weight: 600;">Generating official digital boarding pass...</div>
             </div>
           </div>
 
@@ -2045,7 +2045,7 @@
                 </div>
               </div>
 
-              <button [disabled]="paymentProcessing" (click)="processGatewayPayment()" style="width: 100%; background: #0D766E; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
+              <button [disabled]="paymentProcessing" (click)="processGatewayPayment()" style="width: 100%; background: #0F172A; color: white; padding: 1rem; border: none; border-radius: 14px; font-weight: 800; font-size: 1.05rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 14px rgba(13,118,110,0.35);">
                 {{ paymentProcessing ? 'Processing 3DS Bank Token...' : 'Pay Rs. ' + ((selectedTrip.fare * selectedSeats.length) + 50) }}
               </button>
             </div>
@@ -2055,7 +2055,7 @@
               <div style="width: 72px; height: 72px; background: #DCFCE7; color: #16A34A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 1.2rem auto;">✓</div>
               <h3 style="margin: 0 0 0.5rem 0; font-size: 1.4rem; color: #0F172A; font-weight: 800;">Card Payment Verified!</h3>
               <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 1rem;">Transaction Ref: <strong style="color: #0F766E;">{{ paymentTxnId }}</strong></p>
-              <div style="font-size: 0.85rem; color: #10B981; font-weight: 600;">Issuing electronic ticket...</div>
+              <div style="font-size: 0.85rem; color: #0F172A; font-weight: 600;">Issuing electronic ticket...</div>
             </div>
           </div>
 
@@ -2085,15 +2085,15 @@
             <input type="text" [(ngModel)]="cargoTrackingQuery" placeholder="e.g. AJK-CRG-7019 or AJK-CRG-9024"
               style="flex: 1; min-width: 260px; padding: 0.9rem 1.2rem; border: 2px solid #CBD5E1; border-radius: 12px; font-size: 1.05rem; font-weight: 600; outline: none;">
             <button class="btn-primary" (click)="trackCargoShipment()" [disabled]="cargoLoading"
-              style="padding: 0.9rem 2rem; background: #0D766E; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; color: white; border: none;">
+              style="padding: 0.9rem 2rem; background: #0F172A; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; color: white; border: none;">
               {{ cargoLoading ? 'Searching Transit Network...' : '🔍 Track Parcel' }}
             </button>
           </div>
           <div style="display: flex; gap: 10px; margin-top: 0.8rem; font-size: 0.8rem; color: #64748B; align-items: center;">
             <span>Sample tracking numbers:</span>
-            <span style="color: #0D766E; font-weight: 700; cursor: pointer; text-decoration: underline;" (click)="cargoTrackingQuery = 'AJK-CRG-7019'; trackCargoShipment()">AJK-CRG-7019</span>
+            <span style="color: #0F172A; font-weight: 700; cursor: pointer; text-decoration: underline;" (click)="cargoTrackingQuery = 'AJK-CRG-7019'; trackCargoShipment()">AJK-CRG-7019</span>
             <span>•</span>
-            <span style="color: #0D766E; font-weight: 700; cursor: pointer; text-decoration: underline;" (click)="cargoTrackingQuery = 'AJK-CRG-9024'; trackCargoShipment()">AJK-CRG-9024</span>
+            <span style="color: #0F172A; font-weight: 700; cursor: pointer; text-decoration: underline;" (click)="cargoTrackingQuery = 'AJK-CRG-9024'; trackCargoShipment()">AJK-CRG-9024</span>
           </div>
           <div *ngIf="cargoError" style="color: #EF4444; font-weight: 600; font-size: 0.9rem; margin-top: 1rem;">
             ⚠️ {{ cargoError }}
@@ -2119,7 +2119,7 @@
               <div style="font-size: 1.2rem; font-weight: 800; color: #1E293B; margin-top: 4px;">
                 {{ activeCargoShipment.originCity }} ➔ {{ activeCargoShipment.destinationCity }}
               </div>
-              <div style="font-size: 0.85rem; color: #0D766E; font-weight: 600; margin-top: 6px;">
+              <div style="font-size: 0.85rem; color: #0F172A; font-weight: 600; margin-top: 6px;">
                 📍 Current: {{ activeCargoShipment.currentLocation }}
               </div>
             </div>

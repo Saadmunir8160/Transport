@@ -2,10 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700&display=swap');
 
 :root {
-  --primary: #0f766e;
-  --primary-hover: #115e59;
-  --primary-light: #ccfbf1;
-  --secondary: #3b82f6;
+  --primary: #0F172A;
+  --primary-hover: #1E293B;
+  --primary-light: #F1F5F9;
+  --secondary: #334155;
   --bg-main: #f8fafc;
   --bg-surface: #ffffff;
   --text-main: #0f172a;
@@ -55,8 +55,8 @@ body {
   --sa-sidebar-line: #233557;
   --sa-sidebar-text: #E2E8F0;
   --sa-sidebar-muted: #8FA2BF;
-  --sa-sidebar-accent: #2457D6;
-  --sa-sidebar-accent-bg: rgba(36, 87, 214, 0.16);
+  --sa-sidebar-accent: #0F172A;
+  --sa-sidebar-accent-bg: rgba(15, 23, 42, 0.08);
   --sa-sidebar-warning: #FEF08A;
   --sa-sidebar-warning-text: #854D0E;
 }
@@ -311,7 +311,7 @@ body {
 }
 
 .nav-item.active {
-  background: #2457D6 !important;
+  background: #0F172A !important;
   color: #FFFFFF !important;
   font-weight: 600;
   box-shadow: 0 2px 8px rgba(36, 87, 214, 0.35);
@@ -576,7 +576,7 @@ body {
 
 /* UI Elements */
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), #0d9488);
+  background: #0F172A;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -584,12 +584,12 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
-  box-shadow: 0 4px 6px rgba(15, 118, 110, 0.2);
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.12);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(15, 118, 110, 0.3);
+  box-shadow: 0 6px 12px rgba(15, 23, 42, 0.2);
 }
 
 .btn-secondary {
@@ -1996,7 +1996,7 @@ body {
 }
 
 .ticket-top {
-  background: #2457D6;
+  background: #0F172A;
   color: white;
   padding: 1.15rem 1.4rem 1.25rem;
   text-align: center;
@@ -2215,7 +2215,7 @@ body {
 }
 
 .primary-actions .btn-all-bookings {
-  background: #2457D6;
+  background: #0F172A;
   border: 1px solid #2457D6;
   color: #ffffff;
 }
@@ -2254,13 +2254,13 @@ body {
 }
 
 .secondary-actions .action-chip:hover {
-  border-color: #2457D6;
-  color: #2457D6;
+  border-color: #0F172A;
+  color: #0F172A;
   background: #F8FAFC;
 }
 .action-chip:hover {
-  border-color: #2457D6;
-  color: #2457D6;
+  border-color: #0F172A;
+  color: #0F172A;
   background: #F8FAFC;
 }
 
@@ -2588,7 +2588,7 @@ body {
 .form-group input[type="text"]:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: #0D766E;
+  border-color: #0F172A;
   background: white;
   box-shadow: 0 0 0 3px rgba(13, 118, 110, 0.1);
 }
@@ -2612,7 +2612,7 @@ body {
 }
 
 .radio-label input[type="radio"] {
-  accent-color: #0D766E;
+  accent-color: #0F172A;
   width: 1rem;
   height: 1rem;
 }
@@ -3186,19 +3186,19 @@ body {
 
 .p-btn-track-bus {
   padding: 9px 22px;
-  background: #0284C7; /* Vibrant Teal/Cyan from screenshot */
+  background: #0F172A; /* Vibrant Teal/Cyan from screenshot */
   border: none;
   border-radius: 8px;
   font-size: 0.8125rem;
   font-weight: 600;
   color: #FFFFFF;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(2, 132, 199, 0.3);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.15);
   transition: all 0.2s ease;
 }
 
 .p-btn-track-bus:hover {
-  background: #0369A1;
+  background: #1E293B;
 }
 
 /* 3. Quick Search Box */
@@ -3253,7 +3253,7 @@ body {
 
 .p-clean-input:focus {
   background: #FFFFFF;
-  border-color: #2457D6;
+  border-color: #0F172A;
 }
 
 .p-swap-btn {
@@ -3269,12 +3269,12 @@ body {
 }
 
 .p-swap-btn:hover {
-  color: #2457D6;
+  color: #0F172A;
 }
 
 .p-btn-search-trips {
   padding: 10px 24px;
-  background: #2457D6;
+  background: #0F172A;
   color: #FFFFFF;
   border: none;
   border-radius: 8px;
@@ -3282,12 +3282,12 @@ body {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  box-shadow: 0 1px 3px rgba(36, 87, 214, 0.3);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.15);
   transition: all 0.2s ease;
 }
 
 .p-btn-search-trips:hover {
-  background: #1d46b0;
+  background: #1E293B;
 }
 
 /* 4. Recent Routes */
@@ -3328,7 +3328,7 @@ body {
 }
 
 .p-recent-card:hover {
-  border-color: #2457D6;
+  border-color: #0F172A;
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
@@ -3462,7 +3462,7 @@ body {
 }
 
 .icon-blue {
-  background: #EEF3FD;
+  background: #F1F5F9;
 }
 
 .icon-amber {
@@ -3580,7 +3580,7 @@ body {
 .p-modern-input:focus,
 .p-modern-select:focus {
   background: #FFFFFF;
-  border-color: #2457D6;
+  border-color: #0F172A;
 }
 
 /* Filters toggle link */
@@ -3597,7 +3597,7 @@ body {
 }
 
 .p-filters-toggle:hover {
-  color: #2457D6;
+  color: #0F172A;
 }
 
 .p-filters-toggle svg {
@@ -3671,7 +3671,7 @@ body {
   width: 100%;
   padding: 8px 16px; /* Compact SaaS button size */
   height: 38px;
-  background: linear-gradient(90deg, #1D63D8 0%, #0D8B96 100%);
+  background: #0F172A;
   color: #FFFFFF;
   border: none;
   border-radius: 6px;
@@ -3679,7 +3679,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.02em;
   cursor: pointer;
-  box-shadow: 0 1px 3px rgba(29, 99, 216, 0.2);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
@@ -3689,7 +3689,7 @@ body {
 .p-search-submit-btn:hover {
   opacity: 0.95;
   transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(29, 99, 216, 0.3);
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.2);
 }
 
 /* ==========================================================================
@@ -3705,7 +3705,7 @@ body {
 .sort-icon-box {
   width: 28px;
   height: 28px;
-  background: #EEF3FD; /* Soft primary blue light */
+  background: #F1F5F9; /* Soft primary blue light */
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -3738,11 +3738,11 @@ body {
 }
 
 .sort-custom-select:hover {
-  border-color: #2457D6;
+  border-color: #0F172A;
 }
 
 .sort-custom-select:focus {
-  border-color: #2457D6;
+  border-color: #0F172A;
   box-shadow: 0 0 0 3px rgba(36, 87, 214, 0.12);
 }
 
@@ -3771,7 +3771,7 @@ body {
   gap: 6px;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: #2457D6;
+  color: #0F172A;
   cursor: pointer;
   margin-bottom: 4px;
 }
@@ -3948,8 +3948,8 @@ body {
 }
 
 .td-ai-badge {
-  background: #EEF3FD;
-  color: #2457D6;
+  background: #F1F5F9;
+  color: #0F172A;
   font-size: 0.625rem;
   font-weight: 700;
   padding: 3px 8px;
@@ -3984,7 +3984,7 @@ body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #2457D6;
+  background: #0F172A;
   margin-top: 4px;
   flex-shrink: 0;
 }
@@ -4143,7 +4143,7 @@ details[open] .td-summary-link .td-arrow {
   width: 100%;
   padding: 10px 16px;
   margin-top: 24px;
-  background: linear-gradient(90deg, #1D63D8 0%, #0D8B96 100%);
+  background: #0F172A;
   color: #FFFFFF;
   border: none;
   border-radius: 8px;
@@ -4339,8 +4339,8 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .seat-available:hover {
-  border-color: #2457D6;
-  color: #2457D6;
+  border-color: #0F172A;
+  color: #0F172A;
   transform: translateY(-1px);
 }
 
@@ -4361,7 +4361,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .seat-selected {
-  background: #2457D6 !important;
+  background: #0F172A !important;
   border: 1.5px solid #1D46B0 !important;
   color: #FFFFFF !important;
   box-shadow: 0 2px 6px rgba(36, 87, 214, 0.35);
@@ -4417,7 +4417,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .ind-yours {
-  background: #2457D6;
+  background: #0F172A;
   border: 1.5px solid #1D46B0;
 }
 
@@ -4552,7 +4552,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .btn-ready {
-  background: linear-gradient(90deg, #1D63D8 0%, #0D8B96 100%);
+  background: #0F172A;
   color: #FFFFFF;
   box-shadow: 0 2px 6px rgba(29, 99, 216, 0.25);
 }
@@ -4638,7 +4638,7 @@ details[open] .td-summary-link .td-arrow {
 .co-edit-link {
   font-size: 0.75rem;
   font-weight: 600;
-  color: #2457D6;
+  color: #0F172A;
   cursor: pointer;
 }
 
@@ -4680,7 +4680,7 @@ details[open] .td-summary-link .td-arrow {
 
 .co-input:focus {
   background: #FFFFFF;
-  border-color: #2457D6;
+  border-color: #0F172A;
 }
 
 /* Payment Option Radio Cards */
@@ -4704,7 +4704,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .co-payment-item:hover {
-  border-color: #2457D6;
+  border-color: #0F172A;
   background: #FAFAFC;
 }
 
@@ -4786,8 +4786,8 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .badge-blue-fee {
-  background: #EEF3FD;
-  color: #2457D6;
+  background: #F1F5F9;
+  color: #0F172A;
 }
 
 /* Right Column: Order Summary Card */
@@ -4881,7 +4881,7 @@ details[open] .td-summary-link .td-arrow {
 .co-pay-btn {
   width: 100%;
   padding: 11px 16px;
-  background: linear-gradient(90deg, #1D63D8 0%, #0D8B96 100%);
+  background: #0F172A;
   color: #FFFFFF;
   border: none;
   border-radius: 8px;
@@ -5076,7 +5076,7 @@ details[open] .td-summary-link .td-arrow {
 
 .btn-inv-print {
   flex: 1;
-  background: #2457D6;
+  background: #0F172A;
   color: #ffffff;
   border: none;
   padding: 0.6rem 1rem;
@@ -5402,7 +5402,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .btn-return-bookings {
-  background: #2457D6;
+  background: #0F172A;
   color: #FFFFFF;
   border: none;
   padding: 0.65rem 1.5rem;
@@ -5721,7 +5721,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .ttl-item.passed .ttl-dot {
-  background: #2457D6;
+  background: #0F172A;
   box-shadow: 0 0 0 1px #2457D6;
 }
 
@@ -5816,14 +5816,14 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .dist-pill:hover {
-  border-color: #2457D6;
-  color: #2457D6;
+  border-color: #0F172A;
+  color: #0F172A;
   background: #F8FAFC;
 }
 
 .dist-pill.active {
-  background: #2457D6;
-  border-color: #2457D6;
+  background: #0F172A;
+  border-color: #0F172A;
   color: #FFFFFF;
   box-shadow: 0 2px 6px rgba(36, 87, 214, 0.25);
 }
@@ -5872,7 +5872,7 @@ details[open] .td-summary-link .td-arrow {
 .wmc-temp {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #0284C7;
+  color: #0F172A;
   letter-spacing: -0.5px;
 }
 
@@ -5945,7 +5945,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .precip-val {
-  color: #0284C7;
+  color: #0F172A;
 }
 
 .wind-val {
@@ -6002,7 +6002,7 @@ details[open] .td-summary-link .td-arrow {
 .ptb-avatar {
   width: 58px;
   height: 58px;
-  background: linear-gradient(135deg, #2457D6 0%, #1D63D8 100%);
+  background: #0F172A;
   color: #FFFFFF;
   border-radius: 50%;
   display: flex;
@@ -6045,7 +6045,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .ptb-badge.role {
-  background: #EFF6FF;
+  background: #F8FAFC;
   color: #1D4ED8;
   border: 1px solid #BFDBFE;
 }
@@ -6184,7 +6184,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .pform-input:focus, .pform-select:focus {
-  border-color: #2457D6;
+  border-color: #0F172A;
   box-shadow: 0 0 0 3px rgba(36, 87, 214, 0.12);
 }
 
@@ -6203,7 +6203,7 @@ details[open] .td-summary-link .td-arrow {
 .btn-otp-action {
   background: #FFFFFF;
   border: 1px solid #CBD5E1;
-  color: #2457D6;
+  color: #0F172A;
   padding: 0.6rem 1rem;
   border-radius: 8px;
   font-size: 0.78rem;
@@ -6214,8 +6214,8 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .btn-otp-action:hover {
-  background: #EFF6FF;
-  border-color: #2457D6;
+  background: #F8FAFC;
+  border-color: #0F172A;
 }
 
 .pform-hint {
@@ -6233,7 +6233,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .btn-profile-save {
-  background: #2457D6;
+  background: #0F172A;
   color: #FFFFFF;
   border: none;
   padding: 0.6rem 1.4rem;
@@ -6278,7 +6278,7 @@ details[open] .td-summary-link .td-arrow {
   width: 16px;
   height: 16px;
   margin-top: 2px;
-  accent-color: #2457D6;
+  accent-color: #0F172A;
 }
 
 .pnotif-toggle-row div {
@@ -6317,7 +6317,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .recent-route-pill:hover {
-  background: #EFF6FF;
+  background: #F8FAFC;
   border-color: #93C5FD;
 }
 
@@ -6333,7 +6333,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .rr-arrow {
-  color: #2457D6;
+  color: #0F172A;
   font-size: 0.9rem;
 }
 
@@ -6472,7 +6472,7 @@ details[open] .td-summary-link .td-arrow {
 
 .unread-highlight {
   font-weight: 700;
-  color: #2457D6;
+  color: #0F172A;
 }
 
 .btn-mark-all-read {
@@ -6570,8 +6570,8 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .info-icon-bg {
-  background: #EFF6FF;
-  color: #2457D6;
+  background: #F8FAFC;
+  color: #0F172A;
   border: 1px solid #DBEAFE;
 }
 
@@ -6652,7 +6652,7 @@ details[open] .td-summary-link .td-arrow {
 }
 
 .n-chip.info-chip {
-  background: #EFF6FF;
+  background: #F8FAFC;
   color: #1D4ED8;
   border: 1px solid #BFDBFE;
 }
@@ -6665,7 +6665,7 @@ details[open] .td-summary-link .td-arrow {
 .notif-unread-dot {
   width: 8px;
   height: 8px;
-  background: #2457D6;
+  background: #0F172A;
   border-radius: 50%;
   margin-top: 0.35rem;
   flex-shrink: 0;
