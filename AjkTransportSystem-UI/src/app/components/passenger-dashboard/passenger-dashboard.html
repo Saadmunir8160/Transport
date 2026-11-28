@@ -210,14 +210,14 @@
         </div>
       </div>
       <!-- Guest User Card -->
-      <div class="sidebar-user-card" *ngIf="isGuest" routerLink="/login" style="cursor: pointer; background: #f8fafc; border: 1px dashed #cbd5e1;">
-        <div class="avatar-sa" style="background: #0F172A; color: #FFFFFF;">?</div>
+      <div class="sidebar-user-card guest-card" *ngIf="isGuest" routerLink="/login" title="Sign In / Register">
+        <div class="avatar-sa">?</div>
         <div class="profile-info">
-          <div class="profile-name" style="color: #0F172A; font-weight: 600;">Sign In / Register</div>
-          <div class="profile-email" style="color: #64748B;">Unlock full bookings</div>
+          <div class="profile-name">Sign In / Register</div>
+          <div class="profile-email">Unlock full bookings</div>
         </div>
-        <div class="logout-icon-btn" title="Sign In">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        <div class="logout-icon-btn login-action" title="Sign In">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
         </div>
       </div>
     </div>
