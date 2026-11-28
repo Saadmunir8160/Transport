@@ -357,9 +357,21 @@ export class PassengerDashboardComponent implements OnInit, OnDestroy {
     const titles: any = {
       home: 'Welcome back!',
       search: 'Search Routes',
+      results: 'Trip Results',
+      'trip-detail': 'Trip Details',
+      'seat-selection': 'Seat Selection',
+      checkout: 'Checkout & Payment',
+      'booking-confirmed': 'Booking Confirmation',
       bookings: 'My Bookings',
+      ticket: 'My Ticket',
+      'cancel-booking': 'Cancel Booking',
+      'track-bus': 'Track My Bus',
+      'cargo-tracking': 'Cargo & Luggage Tracking',
+      'weather-advisories': 'Mountain Weather Advisories',
+      register: 'Register Account',
       profile: 'My Profile',
-      feedback: 'Feedback'
+      complaints: 'Complaints & Grievances',
+      notifications: 'Notifications'
     };
     return titles[this.activeTab] || 'Dashboard';
   }
