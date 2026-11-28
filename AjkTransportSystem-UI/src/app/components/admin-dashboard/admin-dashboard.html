@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <nav aria-label="Main navigation" class="sidebar-nav">
+        <nav aria-label="Main navigation" class="sidebar-nav">
       
       <!-- Overview -->
       <button class="nav-group-header" [attr.aria-expanded]="isGroupExpanded('Overview')"
@@ -48,25 +48,46 @@
         <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
-        <span class="group-title">Fleet and people</span>
-        <span class="group-dot" [ngClass]="'bg-' + hasGroupAlert('Fleet and people')" *ngIf="hasGroupAlert('Fleet and people')"></span>
+        <span class="group-title">Fleet & People</span>
         <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Fleet and people')" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
       <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Fleet and people')">
-        <button class="nav-item" [class.active]="activeTab === 'drivers'" (click)="setActiveTab('drivers')">
+        <!-- Drivers Menu Items -->
+        <button class="nav-item" [class.active]="activeTab === 'drivers' && activeDriverSubTab === 'all'" (click)="setActiveTab('drivers', 'all')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
-          <span class="item-label">Drivers</span>
+          <span class="item-label">All Drivers</span>
         </button>
-        <button class="nav-item" [class.active]="activeTab === 'vehicles'" (click)="setActiveTab('vehicles')">
+        <button class="nav-item" [class.active]="activeTab === 'drivers' && activeDriverSubTab === 'add'" (click)="setActiveTab('drivers', 'add')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+          <span class="item-label">Add Driver</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'drivers' && activeDriverSubTab === 'alerts'" (click)="setActiveTab('drivers', 'alerts')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span class="item-label">Licence Expiry Alerts</span>
+          <span class="nav-badge" style="background:#0F172A; color:white; font-size:10px; padding:2px 6px; border-radius:10px; margin-left:auto;">3</span>
+        </button>
+
+        <!-- Vehicles Menu Items -->
+        <button class="nav-item" [class.active]="activeTab === 'vehicles' && activeVehicleSubTab === 'all'" (click)="setActiveTab('vehicles', 'all')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" /><line x1="4" y1="22" x2="4" y2="15" /></svg>
-          <span class="item-label">Vehicles</span>
+          <span class="item-label">All Vehicles</span>
         </button>
-        <button class="nav-item" [class.active]="activeTab === 'compliance'" (click)="setActiveTab('compliance')">
+        <button class="nav-item" [class.active]="activeTab === 'vehicles' && activeVehicleSubTab === 'add'" (click)="setActiveTab('vehicles', 'add')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+          <span class="item-label">Add Vehicle</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'vehicles' && activeVehicleSubTab === 'alerts'" (click)="setActiveTab('vehicles', 'alerts')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span class="item-label">Vehicle Document Alerts</span>
+          <span class="nav-badge" style="background:#0F172A; color:white; font-size:10px; padding:2px 6px; border-radius:10px; margin-left:auto;">1</span>
+        </button>
+
+        <!-- Compliance Item -->
+        <button class="nav-item" [class.active]="activeTab === 'compliance'" (click)="setActiveTab('compliance', 'expiring')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
-          <span class="item-label">Compliance</span>
-          <span class="nav-badge badge-new" style="background:#0F172A; color:white; font-size:10px; padding:2px 6px; border-radius:10px; margin-left:auto;">new</span>
+          <span class="item-label">Compliance Monitor</span>
         </button>
       </div>
 
@@ -76,25 +97,35 @@
         <svg class="group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" />
         </svg>
-        <span class="group-title">Network</span>
-        <span class="group-dot" [ngClass]="'bg-' + hasGroupAlert('Network')" *ngIf="hasGroupAlert('Network')"></span>
+        <span class="group-title">Network & Schedules</span>
         <svg class="group-chevron" [class.collapsed]="!isGroupExpanded('Network')" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
       <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Network')">
-        <button class="nav-item" [class.active]="activeTab === 'routes'" (click)="setActiveTab('routes')">
+        <button class="nav-item" [class.active]="activeTab === 'routes' && activeRouteSubTab === 'all'" (click)="setActiveTab('routes', 'all')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18" /><path d="m19 9-5 5-4-4-3 3" /></svg>
-          <span class="item-label">Routes and stops</span>
+          <span class="item-label">All Routes</span>
         </button>
-        <button class="nav-item" [class.active]="activeTab === 'timings'" (click)="setActiveTab('timings')">
+        <button class="nav-item" [class.active]="activeTab === 'routes' && activeRouteSubTab === 'add'" (click)="setActiveTab('routes', 'add')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+          <span class="item-label">Define New Route</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'routes' && activeRouteSubTab === 'stops'" (click)="setActiveTab('routes', 'stops')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+          <span class="item-label">Stops Manager</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'timings' && activeScheduleSubTab === 'all'" (click)="setActiveTab('timings', 'all')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-          <span class="item-label">Schedules</span>
+          <span class="item-label">Schedules List</span>
         </button>
-        <button class="nav-item" [class.active]="activeTab === 'advisories'" (click)="setActiveTab('advisories')">
+        <button class="nav-item" [class.active]="activeTab === 'timings' && activeScheduleSubTab === 'add'" (click)="setActiveTab('timings', 'add')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+          <span class="item-label">Create Schedule</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'advisories'" (click)="setActiveTab('advisories', 'active')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
-          <span class="item-label">Road advisories</span>
-          <span class="nav-badge badge-new" style="background:#0F172A; color:white; font-size:10px; padding:2px 6px; border-radius:10px; margin-left:auto;">new</span>
+          <span class="item-label">Road Advisories</span>
         </button>
       </div>
 
@@ -108,17 +139,25 @@
         </svg>
       </button>
       <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Operations')">
-        <button class="nav-item" [class.active]="activeTab === 'trips'" (click)="setActiveTab('trips')">
+        <button class="nav-item" [class.active]="activeTab === 'trips' && activeTripSubTab === 'upcoming'" (click)="setActiveTab('trips', 'upcoming')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11" /></svg>
-          <span class="item-label">Trips</span>
+          <span class="item-label">All Trips</span>
         </button>
-        <button class="nav-item" [class.active]="activeTab === 'bookings'" (click)="setActiveTab('bookings')">
-          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
-          <span class="item-label">Bookings</span>
+        <button class="nav-item" [class.active]="activeTab === 'trips' && activeTripSubTab === 'live'" (click)="setActiveTab('trips', 'live')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="3" /></svg>
+          <span class="item-label">Live Active Trips</span>
         </button>
-        <button class="nav-item" [class.active]="activeTab === 'complaints'" (click)="setActiveTab('complaints')">
+        <button class="nav-item" [class.active]="activeTab === 'trips' && activeTripSubTab === 'add'" (click)="setActiveTab('trips', 'add')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+          <span class="item-label">Create Trip</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'bookings'" (click)="setActiveTab('bookings', 'all')">
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
+          <span class="item-label">Passenger Bookings</span>
+        </button>
+        <button class="nav-item" [class.active]="activeTab === 'complaints'" (click)="setActiveTab('complaints', 'passengers')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /><line x1="12" y1="7" x2="12" y2="11" /><line x1="12" y1="15" x2="12.01" y2="15" /></svg>
-          <span class="item-label">Complaints & issues</span>
+          <span class="item-label">Complaints & Issues</span>
         </button>
       </div>
 
@@ -133,12 +172,12 @@
       </button>
       <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Insights')">
         <button class="nav-item" [class.active]="activeTab === 'reports'" (click)="setActiveTab('reports')">
-          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
+          <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
           <span class="item-label">Reports</span>
         </button>
         <button class="nav-item" [class.active]="activeTab === 'eta_insights'" (click)="setActiveTab('eta_insights')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2" /></svg>
-          <span class="item-label">ETA insights</span>
+          <span class="item-label">ETA Insights</span>
         </button>
       </div>
 
@@ -154,11 +193,11 @@
       <div class="nav-group-items" [class.hidden]="!isGroupExpanded('Settings')">
         <button class="nav-item" [class.active]="activeTab === 'organization'" (click)="setActiveTab('organization')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>
-          <span class="item-label">Organization</span>
+          <span class="item-label">Organization Profile</span>
         </button>
         <button class="nav-item" [class.active]="activeTab === 'profile'" (click)="setActiveTab('profile')">
           <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-          <span class="item-label">Notifications & profile</span>
+          <span class="item-label">Notifications & Profile</span>
         </button>
       </div>
     </nav>
@@ -352,29 +391,7 @@
       <div *ngIf="activeTab === 'routes'">
         
         <!-- Routes Sub-Tabs -->
-        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <button 
-            [style.border-bottom]="activeRouteSubTab === 'all' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeRouteSubTab === 'all' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeRouteSubTab = 'all'">
-            All routes
-          </button>
-          <button 
-            [style.border-bottom]="activeRouteSubTab === 'add' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeRouteSubTab === 'add' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeRouteSubTab = 'add'">
-            Add route
-          </button>
-          <button 
-            [style.border-bottom]="activeRouteSubTab === 'stops' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeRouteSubTab === 'stops' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeRouteSubTab = 'stops'">
-            Stop manager
-          </button>
-        </div>
+
 
         <!-- ALL ROUTES SUB-TAB -->
         <div *ngIf="activeRouteSubTab === 'all'" class="content-card">
@@ -566,30 +583,7 @@
       <div *ngIf="activeTab === 'vehicles'">
         
         <!-- Vehicle Sub-Tabs -->
-        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <button 
-            [style.border-bottom]="activeVehicleSubTab === 'all' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeVehicleSubTab === 'all' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeVehicleSubTab = 'all'">
-            All vehicles
-          </button>
-          <button 
-            [style.border-bottom]="activeVehicleSubTab === 'add' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeVehicleSubTab === 'add' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeVehicleSubTab = 'add'">
-            Add vehicle
-          </button>
-          <button 
-            [style.border-bottom]="activeVehicleSubTab === 'alerts' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeVehicleSubTab === 'alerts' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-            (click)="activeVehicleSubTab = 'alerts'">
-            Document expiry alerts
-            <span style="background: #0F172A; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">1</span>
-          </button>
-        </div>
+
 
         <!-- ALL VEHICLES SUB-TAB -->
         <div *ngIf="activeVehicleSubTab === 'all'" class="content-card">
@@ -1361,30 +1355,7 @@
       <div *ngIf="activeTab === 'drivers'">
         
         <!-- Driver Sub-Tabs -->
-        <div style="display: flex; gap: 2rem; border-bottom: 1px solid #e5eaef; margin-bottom: 2rem;">
-          <button 
-            [style.border-bottom]="activeDriverSubTab === 'all' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeDriverSubTab === 'all' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeDriverSubTab = 'all'">
-            All drivers
-          </button>
-          <button 
-            [style.border-bottom]="activeDriverSubTab === 'add' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeDriverSubTab === 'add' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer;"
-            (click)="activeDriverSubTab = 'add'">
-            Add driver
-          </button>
-          <button 
-            [style.border-bottom]="activeDriverSubTab === 'alerts' ? '3px solid #0F172A' : '3px solid transparent'"
-            [style.color]="activeDriverSubTab === 'alerts' ? '#0F172A' : '#5a6a85'"
-            style="background: none; border: none; padding: 0.75rem 0; font-weight: 600; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;"
-            (click)="activeDriverSubTab = 'alerts'">
-            Licence expiry alerts
-            <span style="background: #0F172A; color: white; padding: 2px 8px; border-radius: 99px; font-size: 0.75rem;">3</span>
-          </button>
-        </div>
+
 
         <!-- ALL DRIVERS SUB-TAB -->
         <div *ngIf="activeDriverSubTab === 'all'" class="content-card">

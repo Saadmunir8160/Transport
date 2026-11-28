@@ -479,8 +479,19 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  setActiveTab(tab: string) {
+  setActiveTab(tab: string, subTab?: string) {
     this.activeTab = tab;
+    if (subTab) {
+      if (tab === 'drivers') this.activeDriverSubTab = subTab;
+      else if (tab === 'vehicles') this.activeVehicleSubTab = subTab;
+      else if (tab === 'compliance') this.activeComplianceSubTab = subTab;
+      else if (tab === 'routes') this.activeRouteSubTab = subTab;
+      else if (tab === 'timings') this.activeScheduleSubTab = subTab;
+      else if (tab === 'advisories') this.activeAdvisorySubTab = subTab;
+      else if (tab === 'trips') this.activeTripSubTab = subTab;
+      else if (tab === 'bookings') this.activeBookingSubTab = subTab;
+      else if (tab === 'complaints') this.activeComplaintSubTab = subTab;
+    }
     if (window.innerWidth <= 768) {
       this.sidebarActive = false;
     }
