@@ -562,21 +562,12 @@
             <!-- Trip Detail Tab (Exact Screenshot Redesign) -->
       <div *ngIf="activeTab === 'trip-detail' && selectedTrip" class="td-page-wrapper">
         
-        <!-- Back Button -->
-        <div class="td-back-link" (click)="setActiveTab('results')">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="19" y1="12" x2="5" y2="12"/>
-            <polyline points="12 19 5 12 12 5"/>
-          </svg>
-          <span>Back to results</span>
-        </div>
-
         <!-- Cancelled Banner -->
         <div class="td-cancelled-banner" *ngIf="selectedTrip.isCancelled">
           <span>❌</span> This trip has been cancelled. Please select another trip.
         </div>
 
-        <!-- 1. AI Mountain Route & Weather Predictor Hero Banner (Exact Dark Teal Match) -->
+        <!-- 1. AI Mountain Route & Weather Predictor Hero Banner (Monochrome Enterprise Standard) -->
         <div class="td-ai-banner">
           <div class="td-ai-top-row">
             <div class="td-ai-title-wrap">
@@ -714,16 +705,46 @@
           </div>
         </div>
 
-        <!-- 3. Bottom Row: Vehicle & Driver Card (Left-Aligned Clean Box) -->
-        <div class="td-bottom-row">
-          <div class="td-card td-vehicle-card">
-            <h3 class="td-veh-title">Vehicle & Driver</h3>
-            <div class="td-veh-details">
-              <div><span class="td-veh-muted">Vehicle </span>({{ selectedTrip.vehicleType || 'Toyota Coaster' }})</div>
-              <div><span class="td-veh-muted">Registration</span>{{ selectedTrip.registration || 'AJK-4402' }}</div>
-              <div><span class="td-veh-muted">Driver</span>Ahmed</div>
-              <div><span class="td-veh-muted">Total Distance</span>135 km</div>
+        <!-- 3. Bottom Row: 4 Equal Balanced Cards Across the Screen -->
+        <div class="td-bottom-kpi-grid">
+          <!-- Card 1: Vehicle Asset -->
+          <div class="td-card td-kpi-box">
+            <div class="td-kpi-header">
+              <span class="td-kpi-icon">🚌</span>
+              <span class="td-kpi-tag">Fleet Asset</span>
             </div>
+            <h4 class="td-kpi-main">{{ selectedTrip.vehicleType || 'Toyota Coaster' }}</h4>
+            <div class="td-kpi-meta">Reg: <strong>{{ selectedTrip.registration || 'AJK-4402' }}</strong></div>
+          </div>
+
+          <!-- Card 2: Driver Assigned -->
+          <div class="td-card td-kpi-box">
+            <div class="td-kpi-header">
+              <span class="td-kpi-icon">👤</span>
+              <span class="td-kpi-tag">Verified Driver</span>
+            </div>
+            <h4 class="td-kpi-main">Ahmed</h4>
+            <div class="td-kpi-meta">Rating: <strong>4.9 ★ (Certified)</strong></div>
+          </div>
+
+          <!-- Card 3: Journey Distance -->
+          <div class="td-card td-kpi-box">
+            <div class="td-kpi-header">
+              <span class="td-kpi-icon">📍</span>
+              <span class="td-kpi-tag">Route Distance</span>
+            </div>
+            <h4 class="td-kpi-main">135 km</h4>
+            <div class="td-kpi-meta">Terrain: <strong>Mountain Highway</strong></div>
+          </div>
+
+          <!-- Card 4: Safety & Status -->
+          <div class="td-card td-kpi-box">
+            <div class="td-kpi-header">
+              <span class="td-kpi-icon">🛡️</span>
+              <span class="td-kpi-tag">Compliance</span>
+            </div>
+            <h4 class="td-kpi-main">Safety Cleared</h4>
+            <div class="td-kpi-meta">GPS Tracking: <strong>Active Online</strong></div>
           </div>
         </div>
 
