@@ -381,6 +381,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
+  background: transparent !important;
 }
 .profile-card:hover {
   background: rgba(255, 255, 255, 0.06) !important;
@@ -6137,7 +6138,7 @@ details[open] .td-summary-link .td-arrow {
   gap: 1.25rem;
 }
 
-.profile-card {
+.profile-section-card {
   background: #FFFFFF;
   border-radius: 14px;
   border: 1px solid #E2E8F0;
