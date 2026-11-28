@@ -2301,8 +2301,8 @@ body {
 }
 
 .bookings-tabs button.active {
-  background: var(--primary);
-  color: white;
+  background: #0F172A !important;
+  color: white !important;
 }
 
 .bookings-list {
@@ -2457,8 +2457,9 @@ body {
 }
 
 .bc-detail-item.amount span:last-child {
-  color: var(--primary);
+  color: #0F172A !important;
   font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .bc-footer {
@@ -2492,13 +2493,14 @@ body {
 }
 
 .bc-btn.primary {
-  background: var(--primary);
-  border: 1px solid var(--primary);
-  color: white;
+  background: #0F172A !important;
+  border: 1px solid #0F172A !important;
+  color: white !important;
 }
 
 .bc-btn.primary:hover {
-  background: var(--primary-hover);
+  background: #1E293B !important;
+  border-color: #1E293B !important;
 }
 
 .bc-btn.danger {
