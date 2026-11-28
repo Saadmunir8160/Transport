@@ -337,14 +337,10 @@
             </div>
           </div>
 
-          <!-- Main Driver Side-by-Side Grid -->
+          <!-- Main Driver Balanced 2x2 Grid -->
           <div class="driver-home-grid">
-            
-            <!-- LEFT COLUMN: Trip & Quick Ops -->
-            <div class="driver-main-col">
-              
-              <!-- Next Trip Card -->
-              <div class="dh-card next-trip-card">
+            <!-- Card 1: Next Scheduled Trip (Top-Left) -->
+            <div class="dh-card next-trip-card dh-card-home">
                 <div class="dh-card-header">
                   <div class="header-with-icon">
                     <span class="header-icon-badge">
@@ -425,8 +421,51 @@
                 </div>
               </div>
 
-              <!-- Driver Quick Actions Grid -->
-              <div class="dh-card">
+            <!-- Card 2: Today's Shift (Top-Right) -->
+            <div class="dh-card shift-stats-card dh-card-home">
+                <div class="dh-card-header">
+                  <div class="header-with-icon">
+                    <span class="header-icon-badge stat-badge">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                    </span>
+                    <div>
+                      <h3 class="dh-card-title">Today's Shift</h3>
+                      <span class="dh-card-subtitle">Performance summary</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dh-card-body">
+                  <div class="driver-stats-2x2">
+                    <div class="d-stat-box">
+                      <span class="d-stat-label">Assigned Trips</span>
+                      <span class="d-stat-num">{{ homeData?.stats?.totalTripsToday || 0 }}</span>
+                      <span class="d-stat-sub">Scheduled today</span>
+                    </div>
+
+                    <div class="d-stat-box">
+                      <span class="d-stat-label">Completed</span>
+                      <span class="d-stat-num stat-completed">{{ homeData?.stats?.completedTrips || 0 }}</span>
+                      <span class="d-stat-sub">Safely finished</span>
+                    </div>
+
+                    <div class="d-stat-box">
+                      <span class="d-stat-label">Remaining</span>
+                      <span class="d-stat-num stat-pending">{{ homeData?.stats?.remainingTrips || 0 }}</span>
+                      <span class="d-stat-sub">Trips pending</span>
+                    </div>
+
+                    <div class="d-stat-box">
+                      <span class="d-stat-label">Expected Pax</span>
+                      <span class="d-stat-num stat-pax">{{ homeData?.stats?.totalExpectedPassengers || 0 }}</span>
+                      <span class="d-stat-sub">Total passengers</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            <!-- Card 3: Driver Operations (Bottom-Left) -->
+            <div class="dh-card operations-card dh-card-home">
                 <div class="dh-card-header">
                   <div class="header-with-icon">
                     <span class="header-icon-badge action-badge">
@@ -484,56 +523,8 @@
                 </div>
               </div>
 
-            </div>
-
-            <!-- RIGHT COLUMN: Today's Shift Stats & Vehicle Info -->
-            <div class="driver-side-col">
-              
-              <!-- Shift Performance Stats Card -->
-              <div class="dh-card">
-                <div class="dh-card-header">
-                  <div class="header-with-icon">
-                    <span class="header-icon-badge stat-badge">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
-                    </span>
-                    <div>
-                      <h3 class="dh-card-title">Today's Shift</h3>
-                      <span class="dh-card-subtitle">Performance summary</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="dh-card-body">
-                  <div class="driver-stats-2x2">
-                    <div class="d-stat-box">
-                      <span class="d-stat-label">Assigned Trips</span>
-                      <span class="d-stat-num">{{ homeData?.stats?.totalTripsToday || 0 }}</span>
-                      <span class="d-stat-sub">Scheduled today</span>
-                    </div>
-
-                    <div class="d-stat-box">
-                      <span class="d-stat-label">Completed</span>
-                      <span class="d-stat-num stat-completed">{{ homeData?.stats?.completedTrips || 0 }}</span>
-                      <span class="d-stat-sub">Safely finished</span>
-                    </div>
-
-                    <div class="d-stat-box">
-                      <span class="d-stat-label">Remaining</span>
-                      <span class="d-stat-num stat-pending">{{ homeData?.stats?.remainingTrips || 0 }}</span>
-                      <span class="d-stat-sub">Trips pending</span>
-                    </div>
-
-                    <div class="d-stat-box">
-                      <span class="d-stat-label">Expected Pax</span>
-                      <span class="d-stat-num stat-pax">{{ homeData?.stats?.totalExpectedPassengers || 0 }}</span>
-                      <span class="d-stat-sub">Total passengers</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Driver Assigned Vehicle & Emergency Help -->
-              <div class="dh-card">
+            <!-- Card 4: Vehicle & Safety (Bottom-Right) -->
+            <div class="dh-card vehicle-safety-card dh-card-home">
                 <div class="dh-card-header">
                   <div class="header-with-icon">
                     <span class="header-icon-badge info-badge">
@@ -572,9 +563,6 @@
                   </div>
                 </div>
               </div>
-
-            </div>
-
           </div>
         </div>
 
